@@ -20,9 +20,9 @@
  * @version    $Id $
  */
 
-namespace ZendTest\Validator\DB\TestAsset;
+namespace ZendTest\Validator\Db\TestAsset;
 
-use Zend\DB\Adapter\AbstractAdapter;
+use Zend\Db\Adapter\AbstractAdapter;
 
 /**
  * Mock Db adapter for Zend_Validate_Db tests
