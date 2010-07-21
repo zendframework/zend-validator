@@ -22,15 +22,15 @@
 /**
  * @namespace
  */
-namespace Zend\Validator\DB;
+namespace Zend\Validator\Db;
 
 use Zend\Validator\AbstractValidator,
     Zend\Validator\Exception as ValidatorException,
     Zend\Config\Config,
-    Zend\DB\DB,
-    Zend\DB\Adapter\AbstractAdapter as AbstractDBAdapter,
-    Zend\DB\Table\AbstractTable as AbstractTable,
-    Zend\DB\Select as DBSelect;
+    Zend\Db\Db,
+    Zend\Db\Adapter\AbstractAdapter as AbstractDBAdapter,
+    Zend\Db\Table\AbstractTable as AbstractTable,
+    Zend\Db\Select as DBSelect;
 
 /**
  * Class for Database record validation
@@ -299,7 +299,7 @@ abstract class AbstractDb extends AbstractValidator
         /**
          * Run query
          */
-        $result = $this->_adapter->fetchRow($select, array(), DB::FETCH_ASSOC);
+        $result = $this->_adapter->fetchRow($select, array(), Db::FETCH_ASSOC);
 
         return $result;
     }

@@ -23,10 +23,11 @@
 /**
  * @namespace
  */
-namespace ZendTest\Validator\DB;
+namespace ZendTest\Validator\Db;
 
-use Zend\DB\Table\AbstractTable,
-    Zend\Validator\DB\RecordExists as RecordExistsValidator;
+use Zend\Db\Table\AbstractTable,
+    Zend\Validator\Db\NoRecordExists as NoRecordExistsValidator;
+
 
 /**
  * @category   Zend
@@ -36,7 +37,7 @@ use Zend\DB\Table\AbstractTable,
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Validate
  */
-class RecordExistsTest extends \PHPUnit_Framework_TestCase
+class NoRecordExistsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -58,7 +59,6 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     {
         $this->_adapterHasResult = new TestAsset\MockHasResult();
         $this->_adapterNoResult = new TestAsset\MockNoResult();
-
     }
 
     /**
@@ -69,8 +69,8 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testBasicFindsRecord()
     {
         AbstractTable::setDefaultAdapter($this->_adapterHasResult);
-        $validator = new RecordExistsValidator(array('table' => 'users', 'field' => 'field1'));
-        $this->assertTrue($validator->isValid('value1'));
+        $validator = new NoRecordExistsValidator('users', 'field1');
+        $this->assertFalse($validator->isValid('value1'));
     }
 
     /**
@@ -81,8 +81,8 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testBasicFindsNoRecord()
     {
         AbstractTable::setDefaultAdapter($this->_adapterNoResult);
-        $validator = new RecordExistsValidator(array('table' => 'users', 'field' => 'field1'));
-        $this->assertFalse($validator->isValid('nosuchvalue'));
+        $validator = new NoRecordExistsValidator('users', 'field1');
+        $this->assertTrue($validator->isValid('nosuchvalue'));
     }
 
     /**
@@ -93,8 +93,8 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testExcludeWithArray()
     {
         AbstractTable::setDefaultAdapter($this->_adapterHasResult);
-        $validator = new RecordExistsValidator(array('table' => 'users', 'field' => 'field1', 'exclude' => array('field' => 'id', 'value' => 1)));
-        $this->assertTrue($validator->isValid('value3'));
+        $validator = new NoRecordExistsValidator('users', 'field1', array('field' => 'id', 'value' => 1));
+        $this->assertFalse($validator->isValid('value3'));
     }
 
     /**
@@ -106,8 +106,8 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testExcludeWithArrayNoRecord()
     {
         AbstractTable::setDefaultAdapter($this->_adapterNoResult);
-        $validator = new RecordExistsValidator(array('table' => 'users', 'field' => 'field1', 'exclude' => array('field' => 'id', 'value' => 1)));
-        $this->assertFalse($validator->isValid('nosuchvalue'));
+        $validator = new NoRecordExistsValidator('users', 'field1', array('field' => 'id', 'value' => 1));
+        $this->assertTrue($validator->isValid('nosuchvalue'));
     }
 
     /**
@@ -119,8 +119,8 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testExcludeWithString()
     {
         AbstractTable::setDefaultAdapter($this->_adapterHasResult);
-        $validator = new RecordExistsValidator(array('table' => 'users', 'field' => 'field1', 'exclude' => 'id != 1'));
-        $this->assertTrue($validator->isValid('value3'));
+        $validator = new NoRecordExistsValidator('users', 'field1', 'id != 1');
+        $this->assertFalse($validator->isValid('value3'));
     }
 
     /**
@@ -132,8 +132,8 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testExcludeWithStringNoRecord()
     {
         AbstractTable::setDefaultAdapter($this->_adapterNoResult);
-        $validator = new RecordExistsValidator('users', 'field1', 'id != 1');
-        $this->assertFalse($validator->isValid('nosuchvalue'));
+        $validator = new NoRecordExistsValidator('users', 'field1', 'id != 1');
+        $this->assertTrue($validator->isValid('nosuchvalue'));
     }
 
     /**
@@ -145,7 +145,7 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testThrowsExceptionWithNoAdapter()
     {
         AbstractTable::setDefaultAdapter(null);
-        $validator = new RecordExistsValidator('users', 'field1', 'id != 1');
+        $validator = new NoRecordExistsValidator('users', 'field1', 'id != 1');
         $this->setExpectedException('Zend\Validator\Exception');
         $valid = $validator->isValid('nosuchvalue');
     }
@@ -158,10 +158,10 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testWithSchema()
     {
         AbstractTable::setDefaultAdapter($this->_adapterHasResult);
-        $validator = new RecordExistsValidator(array('table' => 'users',
+        $validator = new NoRecordExistsValidator(array('table' => 'users',
                                                                'schema' => 'my'),
                                                          'field1');
-        $this->assertTrue($validator->isValid('value1'));
+        $this->assertFalse($validator->isValid('value1'));
     }
 
     /**
@@ -172,10 +172,10 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testWithSchemaNoResult()
     {
         AbstractTable::setDefaultAdapter($this->_adapterNoResult);
-        $validator = new RecordExistsValidator(array('table' => 'users',
+        $validator = new NoRecordExistsValidator(array('table' => 'users',
                                                                'schema' => 'my'),
                                                          'field1');
-        $this->assertFalse($validator->isValid('value1'));
+        $this->assertTrue($validator->isValid('value1'));
     }
 
     /**
@@ -188,9 +188,9 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
         //clear the default adapter to ensure provided one is used
         AbstractTable::setDefaultAdapter(null);
         try {
-            $validator = new RecordExistsValidator('users', 'field1', null, $this->_adapterHasResult);
-            $this->assertTrue($validator->isValid('value1'));
-        } catch (\Zend\Exception $e) {
+            $validator = new NoRecordExistsValidator('users', 'field1', null, $this->_adapterHasResult);
+            $this->assertFalse($validator->isValid('value1'));
+        } catch (\Exception $e) {
             $this->markTestSkipped('No database available');
         }
     }
@@ -205,20 +205,10 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
         //clear the default adapter to ensure provided one is used
         AbstractTable::setDefaultAdapter(null);
         try {
-            $validator = new RecordExistsValidator('users', 'field1', null, $this->_adapterNoResult);
-            $this->assertFalse($validator->isValid('value1'));
+            $validator = new NoRecordExistsValidator('users', 'field1', null, $this->_adapterNoResult);
+            $this->assertTrue($validator->isValid('value1'));
         } catch (\Exception $e) {
             $this->markTestSkipped('No database available');
         }
-    }
-
-    /**
-     * @return ZF-8863
-     */
-    public function testExcludeConstructor()
-    {
-        AbstractTable::setDefaultAdapter($this->_adapterHasResult);
-        $validator = new RecordExistsValidator('users', 'field1', 'id != 1');
-        $this->assertTrue($validator->isValid('value3'));
     }
 }
