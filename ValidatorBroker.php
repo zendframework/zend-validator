@@ -13,40 +13,42 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Validate
+ * @package    Zend_Validator
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Validator\Barcode;
+namespace Zend\Validator;
+
+use Zend\Loader\PluginSpecBroker;
 
 /**
- * @uses       \Zend\Validator\Barcode\AbstractAdapter
+ * Broker for validator instances
+ *
  * @category   Zend
- * @package    Zend_Validate
+ * @package    Zend_Validator
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Ean13 extends AbstractAdapter
+class ValidatorBroker extends PluginSpecBroker
 {
     /**
-     * Allowed barcode lengths
-     * @var integer
+     * @var string Default plugin loading strategy
      */
-    protected $_length = 13;
+    protected $defaultClassLoader = 'Zend\Validator\ValidatorLoader';
 
     /**
-     * Allowed barcode characters
-     * @var string
+     * Determine if we have a valid validator
+     * 
+     * @param  mixed $plugin 
+     * @return true
+     * @throws Exception
      */
-    protected $_characters = '0123456789';
-
-    /**
-     * Checksum function
-     * @var string
-     */
-    protected $_checksum = '_gtin';
+    protected function validatePlugin($plugin)
+    {
+        if (!$plugin instanceof Validator) {
+            throw new Exception('Validators must implement Zend\Validator\Validator');
+        }
+        return true;
+    }
 }
