@@ -13,22 +13,42 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Validate
+ * @package    Zend_Validator
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
 namespace Zend\Validator;
 
+use Zend\Loader\PluginSpecBroker;
+
 /**
- * @uses       \Zend\Exception
+ * Broker for validator instances
+ *
  * @category   Zend
- * @package    Zend_Validate
+ * @package    Zend_Validator
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception
-{}
+class ValidatorBroker extends PluginSpecBroker
+{
+    /**
+     * @var string Default plugin loading strategy
+     */
+    protected $defaultClassLoader = 'Zend\Validator\ValidatorLoader';
+
+    /**
+     * Determine if we have a valid validator
+     * 
+     * @param  mixed $plugin 
+     * @return true
+     * @throws Exception
+     */
+    protected function validatePlugin($plugin)
+    {
+        if (!$plugin instanceof Validator) {
+            throw new Exception\RuntimeException('Validators must implement Zend\Validator\Validator');
+        }
+        return true;
+    }
+}
