@@ -2,8 +2,8 @@
 
 namespace Zend\Validator\Exception;
 
-class RuntimeException
-    extends \RuntimeException
+class InvalidMagicMimeFileException
+    extends \InvalidArgumentException
     implements \Zend\Validator\Exception\ExceptionInterface
 {
 }
