@@ -13,21 +13,28 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Validate
+ * @package    Zend_Validator
+ * @subpackage UnitTest
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
-namespace Zend\Validator;
+namespace ZendTest\Validator\TestAsset;
 
-/**
- * @category   Zend
- * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
-interface Exception
-{}
+use Zend\Validator\AbstractValidator;
+
+class ConcreteValidator extends AbstractValidator
+{
+    const FOO_MESSAGE = 'fooMessage';
+
+    protected $messageTemplates = array(
+        'fooMessage' => '%value% was passed',
+    );
+
+    public function isValid($value)
+    {
+        $this->setValue($value);
+        $this->error(self::FOO_MESSAGE);
+        return false;
+    }
+}

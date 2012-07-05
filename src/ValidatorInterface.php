@@ -18,9 +18,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
 namespace Zend\Validator;
 
 /**
@@ -29,7 +26,7 @@ namespace Zend\Validator;
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Validator
+interface ValidatorInterface
 {
     /**
      * Returns true if and only if $value meets the validation requirements
@@ -40,7 +37,7 @@ interface Validator
      *
      * @param  mixed $value
      * @return boolean
-     * @throws Exception If validation of $value is impossible
+     * @throws Exception\RuntimeException If validation of $value is impossible
      */
     public function isValid($value);
 

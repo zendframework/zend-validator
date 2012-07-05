@@ -18,9 +18,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * @namespace
- */
 namespace Zend\Validator\Barcode;
 
 /**
@@ -29,7 +26,7 @@ namespace Zend\Validator\Barcode;
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Adapter
+interface AdapterInterface
 {
     /**
      * Checks the length of a barcode
@@ -58,7 +55,7 @@ interface Adapter
     /**
      * Returns the allowed barcode length
      *
-     * @return integer
+     * @return int|array
      */
     public function getLength();
 
@@ -80,7 +77,7 @@ interface Adapter
      * Sets the checksum validation, if no value is given, the actual setting is returned
      *
      * @param  boolean $check
-     * @return \Zend\Validator\Barcode\AbstractAdapter|boolean
+     * @return AbstractAdapter|boolean
      */
     public function useChecksum($check = null);
 }
