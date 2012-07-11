@@ -8,8 +8,17 @@
  * @package   Zend_Validator
  */
 
-namespace Zend\Validator\Exception;
+namespace ZendTest\Validator\TestAsset;
 
-class BadMethodCallException extends \BadMethodCallException
-    implements ExceptionInterface
-{}
+use Zend\I18n\Translator;
+
+class ArrayTranslator implements Translator\Loader\LoaderInterface
+{
+    public $translations;
+
+    public function load($filename, $locale)
+    {
+        $textDomain =  new Translator\TextDomain($this->translations);
+        return $textDomain;
+    }
+}
