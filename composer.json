@@ -14,7 +14,8 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zend-stdlib": "self.version"
+        "zendframework/zend-stdlib": "self.version",
+        "zendframework/zend-i18n": "self.version"
     },
     "require-dev": {
         "zendframework/zend-db": "self.version",
@@ -31,7 +32,7 @@
     "suggest": {
         "zendframework/zend-db": "Zend\\Db component",
         "zendframework/zend-filter": "Zend\\Filter component, required by the Digits validator",
-        "zendframework/zend-i18n": "Zend\\I18n component",
+        "zendframework/zend-i18n": "Zend\\I18n component to allow translation of validation error messages as well as to use the various Date validators",
         "zendframework/zend-math": "Zend\\Math component",
         "zendframework/zend-resources": "Translations of validator messages",
         "zendframework/zend-servicemanager": "Zend\\ServiceManager component to allow using the ValidatorPluginManager and validator chains",
