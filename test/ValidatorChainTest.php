@@ -1,22 +1,11 @@
 <?php
 /**
- * Zend Framework
+ * Zend Framework (http://framework.zend.com/)
  *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Validator
- * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Zend_Validator
  */
 
 namespace ZendTest\Validator;
@@ -24,6 +13,7 @@ namespace ZendTest\Validator;
 use Zend\I18n\Translator\Translator;
 use Zend\Validator\AbstractValidator;
 use Zend\Validator\Between;
+use Zend\Validator\NotEmpty;
 use Zend\Validator\StaticValidator;
 use Zend\Validator\ValidatorChain;
 
@@ -31,8 +21,6 @@ use Zend\Validator\ValidatorChain;
  * @category   Zend
  * @package    Zend_Validator
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Validator
  */
 class ValidatorChainTest extends \PHPUnit_Framework_TestCase
@@ -51,7 +39,25 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        AbstractValidator::setMessageLength(-1);
         $this->validator = new ValidatorChain();
+    }
+
+    public function tearDown()
+    {
+        AbstractValidator::setDefaultTranslator(null);
+        AbstractValidator::setMessageLength(-1);
+    }
+
+    public function populateValidatorChain()
+    {
+        $this->validator->addValidator(new NotEmpty());
+        $this->validator->addValidator(new Between());
+    }
+
+    public function testValidatorChainIsEmptyByDefault()
+    {
+        $this->assertEquals(0, count($this->validator->getValidators()));
     }
 
     /**
@@ -159,6 +165,12 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('isEmpty', $messages);
     }
 
+    public function testCountGivesCountOfAttachedValidators()
+    {
+        $this->populateValidatorChain();
+        $this->assertEquals(2, count($this->validator->getValidators()));
+    }
+
     /**
      * Handle file not found errors
      *
@@ -214,5 +226,64 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
             ->method('getMessages')
             ->will($this->returnValue(array('error' => 'validation failed')));
         return $validator;
+    }
+
+    /**
+     * @group ZF-412
+     */
+    public function testCanAttachMultipleValidatorsOfTheSameTypeAsDiscreteInstances()
+    {
+        $this->validator->addByName('Callback', array(
+            'callback' => function ($value) {
+                return true;
+            },
+            'messages' => array(
+                'callbackValue' => 'This should not be seen in the messages',
+            ),
+        ));
+        $this->validator->addByName('Callback', array(
+            'callback' => function ($value) {
+                return false;
+            },
+            'messages' => array(
+                'callbackValue' => 'Second callback trapped',
+            ),
+        ));
+
+        $this->assertEquals(2, count($this->validator));
+        $validators = $this->validator->getValidators();
+        $compare = null;
+        foreach ($validators as $validator) {
+            $this->assertNotSame($compare, $validator);
+            $compare = $validator;
+        }
+
+        $this->assertFalse($this->validator->isValid('foo'));
+        $messages = $this->validator->getMessages();
+        $found    = false;
+        $test     = 'Second callback trapped';
+        foreach ($messages as $messageSet) {
+            if (is_string($messageSet) && $messageSet === $test) {
+                $found = true;
+                break;
+            }
+            if (is_array($messageSet) && in_array('Second callback trapped', $messageSet)) {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertTrue($found);
+    }
+
+
+    public function testCanSerializeValidatorChain()
+    {
+        $this->populateValidatorChain();
+        $serialized = serialize($this->validator);
+
+        $unserialized = unserialize($serialized);
+        $this->assertInstanceOf('Zend\Validator\ValidatorChain', $unserialized);
+        $this->assertEquals(2, count($unserialized));
+        $this->assertFalse($unserialized->isValid(''));
     }
 }

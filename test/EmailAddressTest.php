@@ -1,22 +1,11 @@
 <?php
 /**
- * Zend Framework
+ * Zend Framework (http://framework.zend.com/)
  *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Validator
- * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Zend_Validator
  */
 
 namespace ZendTest\Validator;
@@ -29,8 +18,6 @@ use Zend\Validator\Hostname;
  * @category   Zend
  * @package    Zend_Validator
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Validator
  */
 class EmailAddressTest extends \PHPUnit_Framework_TestCase
@@ -276,7 +263,6 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-
    /**
      * Ensures that the validator follows expected behavior for checking MX records
      *
@@ -293,13 +279,12 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
         // Are MX checks supported by this system?
         if (!$validator->isMxSupported()) {
             $this->markTestSkipped('Testing MX records is not supported with this configuration');
-            return;
         }
 
         $valuesExpected = array(
-            array(true, array('Bob.Jones@zend.com', 'Bob.Jones@php.net')),
+            array(true,  array('Bob.Jones@zend.com',        'Bob.Jones@php.net')),
             array(false, array('Bob.Jones@bad.example.com', 'Bob.Jones@anotherbad.example.com'))
-            );
+        );
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
@@ -315,6 +300,40 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
                 $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
         }
+    }
+
+    /**
+     * Ensures that the validator follows expected behavior for checking MX records with A record fallback.
+     * This behavior is documented in RFC 2821, section 5: "If no MX records are found, but an A RR is
+     * found, the A RR is treated as if it was associated with an implicit MX RR, with a preference of 0,
+     * pointing to that host.
+     *
+     * @return void
+     */
+    public function testNoMxRecordARecordFallback()
+    {
+        if (!constant('TESTS_ZEND_VALIDATOR_ONLINE_ENABLED')) {
+            $this->markTestSkipped('Testing MX records has been disabled');
+        }
+
+        $validator = new EmailAddress(Hostname::ALLOW_DNS, true);
+
+        // Are MX checks supported by this system?
+        if (!$validator->isMxSupported()) {
+            $this->markTestSkipped('Testing MX records is not supported with this configuration');
+        }
+
+        $email = 'good@example.com';
+        $host = preg_replace('/.*@/', null, $email);
+
+        //Assert that email host contains no MX records.
+        $this->assertFalse(checkdnsrr($host, 'MX'), 'Email host contains MX records');
+
+        //Asert that email host contains at least one A record.
+        $this->assertTrue(checkdnsrr($host, 'A'), 'Email host contains no A records');
+
+        //Assert that validtor falls back to A record.
+        $this->assertTrue($validator->isValid($email), implode("\n", $validator->getMessages()));
     }
 
    /**
@@ -500,6 +519,20 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('TestMessage', $messages[EmailAddress::INVALID]);
     }
 
+    public function testSetSingleMessageViaOptions()
+    {
+        $validator = new EmailAddress(array('message' => 'TestMessage'));
+        $messages = $validator->getMessageTemplates();
+        $this->assertEquals('TestMessage', $messages[EmailAddress::INVALID]);
+    }
+
+    public function testSetMultipleMessageViaOptions()
+    {
+        $validator = new EmailAddress(array('messages' => array(EmailAddress::INVALID => 'TestMessage')));
+        $messages = $validator->getMessageTemplates();
+        $this->assertEquals('TestMessage', $messages[EmailAddress::INVALID]);
+    }
+
     /**
      * Testing getValidateMx
      */
@@ -578,7 +611,6 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
 
         if (!$validator->isMxSupported()) {
             $this->markTestSkipped('Testing MX records is not supported with this configuration');
-            return;
         }
 
         $this->assertTrue($validator->isValid('john.doe@gmail.com'));
@@ -663,5 +695,74 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
         foreach ($emailAddresses as $input) {
             $this->assertFalse($validator->isValid($input), implode("\n", $this->validator->getMessages()) . $input);
         }
+    }
+
+    /**
+     * @group ZF-12349
+     */
+    public function testReservedIpRangeValidation()
+    {
+        $validator = new TestAsset\EmailValidatorWithExposedIsReserved();
+        // 0.0.0.0/8
+        $this->assertTrue($validator->isReserved('0.0.0.0'));
+        $this->assertTrue($validator->isReserved('0.255.255.255'));
+        // 10.0.0.0/8
+        $this->assertTrue($validator->isReserved('10.0.0.0'));
+        $this->assertTrue($validator->isReserved('10.255.255.255'));
+        // 127.0.0.0/8
+        $this->assertTrue($validator->isReserved('127.0.0.0'));
+        $this->assertTrue($validator->isReserved('127.255.255.255'));
+        // 100.64.0.0/10
+        $this->assertTrue($validator->isReserved('100.64.0.0'));
+        $this->assertTrue($validator->isReserved('100.127.255.255'));
+        // 172.16.0.0/12
+        $this->assertTrue($validator->isReserved('172.16.0.0'));
+        $this->assertTrue($validator->isReserved('172.31.255.255'));
+        // 198.18.0.0./15
+        $this->assertTrue($validator->isReserved('198.18.0.0'));
+        $this->assertTrue($validator->isReserved('198.19.255.255'));
+        // 169.254.0.0/16
+        $this->assertTrue($validator->isReserved('169.254.0.0'));
+        $this->assertTrue($validator->isReserved('169.254.255.255'));
+        // 192.168.0.0/16
+        $this->assertTrue($validator->isReserved('192.168.0.0'));
+        $this->assertTrue($validator->isReserved('192.168.255.25'));
+        // 192.0.2.0/24
+        $this->assertTrue($validator->isReserved('192.0.2.0'));
+        $this->assertTrue($validator->isReserved('192.0.2.255'));
+        // 192.88.99.0/24
+        $this->assertTrue($validator->isReserved('192.88.99.0'));
+        $this->assertTrue($validator->isReserved('192.88.99.255'));
+        // 198.51.100.0/24
+        $this->assertTrue($validator->isReserved('198.51.100.0'));
+        $this->assertTrue($validator->isReserved('198.51.100.255'));
+        // 203.0.113.0/24
+        $this->assertTrue($validator->isReserved('203.0.113.0'));
+        $this->assertTrue($validator->isReserved('203.0.113.255'));
+        // 224.0.0.0/4
+        $this->assertTrue($validator->isReserved('224.0.0.0'));
+        $this->assertTrue($validator->isReserved('239.255.255.255'));
+        // 240.0.0.0/4
+        $this->assertTrue($validator->isReserved('240.0.0.0'));
+        $this->assertTrue($validator->isReserved('255.255.255.254'));
+        // 255.255.255.255/32
+        $this->assertTrue($validator->isReserved('255.255.55.255'));
+    }
+
+    /**
+     * @group ZF-12349
+     */
+    public function testIpRangeValidationOnRangesNoLongerMarkedAsReserved()
+    {
+        $validator = new TestAsset\EmailValidatorWithExposedIsReserved();
+        // 128.0.0.0/16
+        $this->assertFalse($validator->isReserved('128.0.0.0'));
+        $this->assertFalse($validator->isReserved('128.0.255.255'));
+        // 191.255.0.0/16
+        $this->assertFalse($validator->isReserved('191.255.0.0'));
+        $this->assertFalse($validator->isReserved('191.255.255.255'));
+        // 223.255.255.0/24
+        $this->assertFalse($validator->isReserved('223.255.255.0'));
+        $this->assertFalse($validator->isReserved('223.255.255.255'));
     }
 }

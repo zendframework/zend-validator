@@ -1,35 +1,23 @@
 <?php
 /**
- * Zend Framework
+ * Zend Framework (http://framework.zend.com/)
  *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Validator
- * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Zend_Validator
  */
 
 namespace ZendTest\Validator\Db;
 
-use Zend\Validator\Db\RecordExists;
 use ArrayObject;
+use Zend\Db\Adapter\Adapter;
+use Zend\Validator\Db\RecordExists;
 
 /**
  * @category   Zend
  * @package    Zend_Validator
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Validator
  */
 class RecordExistsTest extends \PHPUnit_Framework_TestCase
@@ -232,6 +220,19 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that the supplied table and schema are successfully passed to the select
+     * statement
+     */
+    public function testSelectAcknowledgesTableAndSchema()
+    {
+        $validator = new RecordExists(array('table' => 'users', 'schema' => 'my'),
+                                      'field1', null, $this->getMockHasResult());
+        $table = $validator->getSelect()->getRawState('table');
+        $this->assertInstanceOf('Zend\Db\Sql\TableIdentifier', $table);
+        $this->assertEquals(array('users','my'), $table->getTableAndSchema());
+    }
+
+    /**
      * @group ZF-10642
      */
     public function testCreatesQueryBasedOnNamedOrPositionalAvailability()
@@ -258,5 +259,40 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
         $validator  = new RecordExists('users', 'field1');
         $this->assertAttributeEquals($validator->getOption('messageTemplates'),
                                      'messageTemplates', $validator);
+    }
+
+    /**
+     * Test that we don't get a mix of positional and named parameters
+     * @group ZF2-502
+     */
+    public function testSelectDoesNotMixPositionalAndNamedParameters()
+    {
+        if (!extension_loaded('sqlite3')) {
+            $this->markTestSkipped('Relies on SQLite extension');
+        }
+        $adapter = new Adapter(array(
+            'driver'   => 'Pdo_Sqlite',
+            'database' => 'sqlite::memory:',
+        ));
+        $validator = new RecordExists(
+            array(
+                'table' => 'users',
+                'schema' => 'my'
+            ),
+            'field1',
+            array(
+                'field' => 'foo',
+                'value' => 'bar'
+            ),
+            $adapter
+        );
+        $select = $validator->getSelect();
+        $this->assertInstanceOf('Zend\Db\Sql\Select', $select);
+        $string = $select->getSqlString();
+        if (preg_match('/:[a-zA-Z]+/', $string)) {
+            $this->assertNotContains(' != ?', $string);
+        } else {
+            $this->assertContains(' != ?', $string);
+        }
     }
 }

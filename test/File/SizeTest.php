@@ -1,22 +1,11 @@
 <?php
 /**
- * Zend Framework
+ * Zend Framework (http://framework.zend.com/)
  *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Validator_File
- * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Zend_Validator
  */
 
 namespace ZendTest\Validator\File;
@@ -28,41 +17,50 @@ use Zend\Validator;
  * @category   Zend
  * @package    Zend_Validator_File
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Validator
  */
 class SizeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Ensures that the validator follows expected behavior
-     *
-     * @return void
+     * @return array
      */
-    public function testBasic()
+    public function basicBehaviorDataProvider()
     {
-        $valuesExpected = array(
-            array(array('min' => 0, 'max' => 10000), true),
-            array(array('min' => 0, 'max' => '10 MB'), true),
-            array(array('min' => '4B', 'max' => '10 MB'), true),
-            array(array('min' => 0, 'max' => '10MB'), true),
-            array(array('min' => 0, 'max' => '10  MB'), true),
-            array(794, true),
-            array(array('min' => 794), true),
-            array(array('min' => 0, 'max' => 500), false),
-            array(500, false),
+        $testFile = __DIR__ . '/_files/testsize.mo';
+        $testData = array(
+            //    Options, isValid Param, Expected value
+            array(794,     $testFile,     true),
+            array(500,     $testFile,     false),
+            array(array('min' => 0, 'max' => 10000),      $testFile,   true),
+            array(array('min' => 0, 'max' => '10 MB'),    $testFile,   true),
+            array(array('min' => '4B', 'max' => '10 MB'), $testFile,   true),
+            array(array('min' => 0, 'max' => '10MB'),     $testFile,   true),
+            array(array('min' => 0, 'max' => '10  MB'),   $testFile,   true),
+            array(array('min' => 794),                    $testFile,   true),
+            array(array('min' => 0, 'max' => 500),        $testFile,   false),
         );
 
-        foreach ($valuesExpected as $element) {
-            $options = array_shift($element);
-            $value   = array_shift($element);
-            $validator = new File\Size($options);
-            $this->assertEquals(
-                $value,
-                $validator->isValid(__DIR__ . '/_files/testsize.mo'),
-                "Tested " . var_export($value, 1) . " against options " . var_export($options, 1)
+        // Dupe data in File Upload format
+        foreach ($testData as $data) {
+            $fileUpload = array(
+                'tmp_name' => $data[1], 'name' => basename($data[1]),
+                'size' => 200, 'error' => 0, 'type' => 'text'
             );
+            $testData[] = array($data[0], $fileUpload, $data[2]);
         }
+        return $testData;
+    }
+
+    /**
+     * Ensures that the validator follows expected behavior
+     *
+     * @dataProvider basicBehaviorDataProvider
+     * @return void
+     */
+    public function testBasic($options, $isValidParam, $expected)
+    {
+        $validator = new File\Size($options);
+        $this->assertEquals($expected, $validator->isValid($isValidParam));
     }
 
     /**
@@ -193,6 +191,6 @@ class SizeTest extends \PHPUnit_Framework_TestCase
         $validator = new File\Size(array('min' => 1, 'max' => 10000));
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $this->assertTrue(array_key_exists('fileSizeNotFound', $validator->getMessages()));
-        $this->assertContains("'nofile.mo'", current($validator->getMessages()));
+        $this->assertContains("does not exist", current($validator->getMessages()));
     }
 }

@@ -1,22 +1,11 @@
 <?php
 /**
- * Zend Framework
+ * Zend Framework (http://framework.zend.com/)
  *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Validator
- * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Zend_Validator
  */
 
 namespace ZendTest\Validator;
@@ -28,8 +17,6 @@ use Zend\Validator;
  * @category   Zend
  * @package    Zend_Validator
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Validator
  */
 class StepTest extends \PHPUnit_Framework_TestCase
@@ -109,6 +96,15 @@ class StepTest extends \PHPUnit_Framework_TestCase
             array(0.1, false),
             array(2.1, true),
             array(3.1, false),
+            array(4.2, true),
+            array(6.3, true),
+            array(8.4, true),
+            array(10.5, true),
+            array(12.6, true),
+            array(14.7, true),
+            array(16.8, true),
+            array(18.9, true),
+            array(21.0, true),
             array('2.1', true),
             array('1.1', false),
             array(1.11, false),
@@ -118,6 +114,40 @@ class StepTest extends \PHPUnit_Framework_TestCase
         $validator = new Validator\Step(array(
             'baseValue' => 0,
             'step'      => 2.1
+        ));
+
+        foreach ($valuesExpected as $element) {
+            $this->assertEquals($element[1], $validator->isValid($element[0]),
+                'Test failed with ' . var_export($element, 1));
+        }
+    }
+
+    public function testDecimalStep2()
+    {
+        $valuesExpected = array(
+            array(0.01, true),
+            array(0.02, true),
+            array(0.03, true),
+            array(0.04, true),
+            array(0.05, true),
+            array(0.06, true),
+            array(0.07, true),
+            array(0.08, true),
+            array(0.09, true),
+            array(0.001, false),
+            array(0.002, false),
+            array(0.003, false),
+            array(0.004, false),
+            array(0.005, false),
+            array(0.006, false),
+            array(0.007, false),
+            array(0.008, false),
+            array(0.009, false)
+        );
+
+        $validator = new Validator\Step(array(
+            'baseValue' => 0,
+            'step'      => 0.01
         ));
 
         foreach ($valuesExpected as $element) {

@@ -1,22 +1,11 @@
 <?php
 /**
- * Zend Framework
+ * Zend Framework (http://framework.zend.com/)
  *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Validator
- * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Zend_Validator
  */
 
 namespace ZendTest\Validator;
@@ -26,12 +15,9 @@ use stdClass;
 use Zend\Validator;
 
 /**
- * @see Zend_Validator_Date
  * @category   Zend
  * @package    Zend_Validator
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Validator
  */
 class DateTest extends \PHPUnit_Framework_TestCase
@@ -132,8 +118,8 @@ class DateTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->validator->setFormat('d/m/Y')->isValid('2008/10/22'));
         $this->assertTrue($this->validator->setFormat('d/m/Y')->isValid('22/10/08'));
         $this->assertFalse($this->validator->setFormat('d/m/Y')->isValid('22/10'));
-        // Omitting the following assertion, as it varies from 5.3.3 to 5.3.11, 
-        // and there is no indication in the PHP changelog as to when or why it 
+        // Omitting the following assertion, as it varies from 5.3.3 to 5.3.11,
+        // and there is no indication in the PHP changelog as to when or why it
         // may have changed. Leaving for posterity, to indicate original expectation.
         // $this->assertFalse($this->validator->setFormat('s')->isValid(0));
     }

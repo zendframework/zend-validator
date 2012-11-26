@@ -1,22 +1,11 @@
 <?php
 /**
- * Zend Framework
+ * Zend Framework (http://framework.zend.com/)
  *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Validator
- * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Zend_Validator
  */
 
 namespace ZendTest\Validator;
@@ -29,8 +18,6 @@ use Zend\Validator\AbstractValidator;
  * @package    Zend_Validator
  * @subpackage UnitTests
  * @group      Zend_Validator
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class AbstractTest extends \PHPUnit_Framework_TestCase
 {
@@ -47,6 +34,11 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->validator = new TestAsset\ConcreteValidator();
+    }
+
+    public function tearDown()
+    {
+        AbstractValidator::setDefaultTranslator(null, 'default');
     }
 
     public function testTranslatorNullByDefault()
@@ -154,7 +146,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         set_error_handler(array($this, 'errorHandlerIgnore'));
         $translator = new Translator();
         $this->validator->setTranslator($translator);
-        $this->assertFalse($this->validator->isTranslatorDisabled());
+        $this->assertTrue($this->validator->isTranslatorEnabled());
     }
 
     public function testCanDisableTranslator()
@@ -174,8 +166,8 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('bar', $messages['fooMessage']);
         $this->assertContains('This is the translated message for ', $messages['fooMessage']);
 
-        $this->validator->setTranslatorDisabled(true);
-        $this->assertTrue($this->validator->isTranslatorDisabled());
+        $this->validator->setTranslatorEnabled(false);
+        $this->assertFalse($this->validator->isTranslatorEnabled());
 
         $this->assertFalse($this->validator->isValid('bar'));
         $messages = $this->validator->getMessages();
@@ -201,6 +193,38 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $validator = new TestAsset\ConcreteValidator;
         $this->assertFalse($validator('foo'));
         $this->assertContains("foo was passed", $validator->getMessages());
+    }
+
+    public function testTranslatorMethods()
+    {
+        $translatorMock = $this->getMock('Zend\I18n\Translator\Translator');
+        $this->validator->setTranslator($translatorMock, 'foo');
+
+        $this->assertEquals($translatorMock, $this->validator->getTranslator());
+        $this->assertEquals('foo', $this->validator->getTranslatorTextDomain());
+        $this->assertTrue($this->validator->hasTranslator());
+        $this->assertTrue($this->validator->isTranslatorEnabled());
+
+        $this->validator->setTranslatorEnabled(false);
+        $this->assertFalse($this->validator->isTranslatorEnabled());
+    }
+
+    public function testDefaultTranslatorMethods()
+    {
+        $this->assertFalse(AbstractValidator::hasDefaultTranslator());
+        $this->assertNull(AbstractValidator::getDefaultTranslator());
+        $this->assertEquals('default', AbstractValidator::getDefaultTranslatorTextDomain());
+
+        $this->assertFalse($this->validator->hasTranslator());
+
+        $translatorMock = $this->getMock('Zend\I18n\Translator\Translator');
+        AbstractValidator::setDefaultTranslator($translatorMock, 'foo');
+
+        $this->assertEquals($translatorMock, AbstractValidator::getDefaultTranslator());
+        $this->assertEquals($translatorMock, $this->validator->getTranslator());
+        $this->assertEquals('foo', AbstractValidator::getDefaultTranslatorTextDomain());
+        $this->assertEquals('foo', $this->validator->getTranslatorTextDomain());
+        $this->assertTrue(AbstractValidator::hasDefaultTranslator());
     }
 
     /**

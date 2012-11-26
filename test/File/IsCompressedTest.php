@@ -1,22 +1,11 @@
 <?php
 /**
- * Zend Framework
+ * Zend Framework (http://framework.zend.com/)
  *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Validator_File
- * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Zend_Validator
  */
 
 namespace ZendTest\Validator\File;
@@ -29,8 +18,6 @@ use Zend\Validator\File;
  * @category   Zend
  * @package    Zend_Validator_File
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Validator
  */
 class IsCompressedTest extends \PHPUnit_Framework_TestCase
@@ -39,8 +26,10 @@ class IsCompressedTest extends \PHPUnit_Framework_TestCase
     {
         // As of PHP >= 5.3.11 and >= 5.4.1 the magic database format has changed.
         // http://doc.php.net/downloads/pdf/split/de/File-Information.pdf (page 11)
-        if (version_compare(PHP_VERSION, '5.3.10', '<=') || (version_compare(PHP_VERSION, '5.4', '>=') &&
-                                                              version_compare(PHP_VERSION, '5.4.1', '<'))) {
+        if (version_compare(PHP_VERSION, '5.3.10', '<=')
+            || (version_compare(PHP_VERSION, '5.4', '>=')
+                && version_compare(PHP_VERSION, '5.4.1', '<'))
+        ) {
             return __DIR__ . '/_files/magic.lte.5.3.10.mime';
         }
 
@@ -48,48 +37,48 @@ class IsCompressedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return array
+     */
+    public function basicBehaviorDataProvider()
+    {
+        $testFile = __DIR__ . '/_files/test.zip';
+        $fileUpload = array(
+            'tmp_name' => $testFile, 'name' => basename($testFile),
+            'size' => 200, 'error' => 0, 'type' => 'application/zip'
+        );
+        return array(
+            //    Options, isValid Param, Expected value
+            array(null,                                          $fileUpload, true),
+            array('zip',                                         $fileUpload, true),
+            array('test/notype',                                 $fileUpload, false),
+            array('application/zip, application/x-tar',          $fileUpload, true),
+            array(array('application/zip', 'application/x-tar'), $fileUpload, true),
+            array(array('zip', 'tar'),                           $fileUpload, true),
+            array(array('tar', 'arj'),                           $fileUpload, false),
+        );
+    }
+
+    /**
      * Ensures that the validator follows expected behavior
      *
+     * @dataProvider basicBehaviorDataProvider
      * @return void
      */
-    public function testBasic()
+    public function testBasic($options, $isValidParam, $expected)
     {
         if (!extension_loaded('fileinfo') &&
             function_exists('mime_content_type') && ini_get('mime_magic.magicfile') &&
             (mime_content_type(__DIR__ . '/_files/test.zip') == 'text/plain')
-            ) {
-            $this->markTestSkipped('This PHP Version has no finfo, has mime_content_type, '
-                . ' but mime_content_type exhibits buggy behavior on this system.'
-                );
-        }
-
-        $valuesExpected = array(
-            array(null, true),
-            array('zip', true),
-            array('test/notype', false),
-            array('application/zip, application/x-tar', true),
-            array(array('application/zip', 'application/x-tar'), true),
-            array(array('zip', 'tar'), true),
-            array(array('tar', 'arj'), false),
-        );
-
-        $files = array(
-            'name'     => 'test.zip',
-            'type'     => 'application/zip',
-            'size'     => 200,
-            'tmp_name' => __DIR__ . '/_files/test.zip',
-            'error'    => 0
-        );
-
-        foreach ($valuesExpected as $element) {
-            $validator = new File\IsCompressed($element[0]);
-            $validator->enableHeaderCheck();
-            $this->assertEquals(
-                $element[1],
-                $validator->isValid(__DIR__ . '/_files/test.zip', $files),
-                "Tested with " . var_export($element, 1)
+        ) {
+            $this->markTestSkipped(
+                'This PHP Version has no finfo, has mime_content_type, ' .
+                    ' but mime_content_type exhibits buggy behavior on this system.'
             );
         }
+
+        $validator = new File\IsCompressed($options);
+        $validator->enableHeaderCheck();
+        $this->assertEquals($expected, $validator->isValid($isValidParam));
     }
 
     /**
@@ -201,6 +190,6 @@ class IsCompressedTest extends \PHPUnit_Framework_TestCase
         $validator = new File\IsCompressed();
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $this->assertTrue(array_key_exists('fileIsCompressedNotReadable', $validator->getMessages()));
-        $this->assertContains("'nofile.mo'", current($validator->getMessages()));
+        $this->assertContains("does not exist", current($validator->getMessages()));
     }
 }

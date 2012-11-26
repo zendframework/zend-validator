@@ -1,22 +1,11 @@
 <?php
 /**
- * Zend Framework
+ * Zend Framework (http://framework.zend.com/)
  *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Validator_File
- * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Zend_Validator
  */
 
 namespace ZendTest\Validator\File;
@@ -29,8 +18,6 @@ use Zend\Validator\File;
  * @category   Zend
  * @package    Zend_Validator_File
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Validator
  */
 class IsImageTest extends \PHPUnit_Framework_TestCase
@@ -48,39 +35,41 @@ class IsImageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return array
+     */
+    public function basicBehaviorDataProvider()
+    {
+        $testFile = __DIR__ . '/_files/picture.jpg';
+        $fileUpload = array(
+            'tmp_name' => $testFile, 'name' => basename($testFile),
+            'size' => 200, 'error' => 0, 'type' => 'image/jpeg'
+        );
+        return array(
+            //    Options, isValid Param, Expected value
+            array(null,                              $fileUpload, true),
+            array('jpeg',                            $fileUpload, true),
+            array('test/notype',                     $fileUpload, false),
+            array('image/gif, image/jpeg',           $fileUpload, true),
+            array(array('image/vasa', 'image/jpeg'), $fileUpload, true),
+            array(array('image/jpeg', 'gif'),        $fileUpload, true),
+            array(array('image/gif', 'gif'),         $fileUpload, false),
+            array('image/jp',                        $fileUpload, false),
+            array('image/jpg2000',                   $fileUpload, false),
+            array('image/jpeg2000',                  $fileUpload, false),
+        );
+    }
+
+    /**
      * Ensures that the validator follows expected behavior
      *
+     * @dataProvider basicBehaviorDataProvider
      * @return void
      */
-    public function testBasic()
+    public function testBasic($options, $isValidParam, $expected)
     {
-        $valuesExpected = array(
-            array(null, true),
-            array('jpeg', true),
-            array('test/notype', false),
-            array('image/gif, image/jpeg', true),
-            array(array('image/vasa', 'image/jpeg'), true),
-            array(array('image/jpeg', 'gif'), true),
-            array(array('image/gif', 'gif'), false),
-        );
-
-        $files = array(
-            'name'     => 'picture.jpg',
-            'type'     => 'image/jpeg',
-            'size'     => 200,
-            'tmp_name' => __DIR__ . '/_files/picture.jpg',
-            'error'    => 0
-        );
-
-        foreach ($valuesExpected as $element) {
-            $validator = new File\IsImage($element[0]);
-            $validator->enableHeaderCheck();
-            $this->assertEquals(
-                $element[1],
-                $validator->isValid(__DIR__ . '/_files/picture.jpg', $files),
-                "Tested with " . var_export($element, 1)
-            );
-        }
+        $validator = new File\IsImage($options);
+        $validator->enableHeaderCheck();
+        $this->assertEquals($expected, $validator->isValid($isValidParam));
     }
 
     /**
@@ -192,6 +181,6 @@ class IsImageTest extends \PHPUnit_Framework_TestCase
         $validator = new File\IsImage();
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $this->assertTrue(array_key_exists('fileIsImageNotReadable', $validator->getMessages()));
-        $this->assertContains("'nofile.mo'", current($validator->getMessages()));
+        $this->assertContains("does not exist", current($validator->getMessages()));
     }
 }
