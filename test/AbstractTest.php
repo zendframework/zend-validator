@@ -1,50 +1,45 @@
 <?php
 /**
- * Zend Framework
+ * Zend Framework (http://framework.zend.com/)
  *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Validator
- * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @package   Zend_Validator
  */
 
 namespace ZendTest\Validator;
-use Zend\Validator;
-use Zend\Translator;
+
+use ReflectionMethod;
+use Zend\I18n\Translator\Translator;
+use Zend\Validator\AbstractValidator;
 
 /**
  * @category   Zend
  * @package    Zend_Validator
  * @subpackage UnitTests
  * @group      Zend_Validator
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class AbstractTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var AbstractValidator */
+    public $validator;
+
     /**
-     * Creates a new validation object for each test method
+     * Whether an error occurred
      *
-     * @return void
+     * @var bool
      */
+    protected $errorOccurred = false;
+
     public function setUp()
     {
-        $this->validator = new Concrete();
+        $this->validator = new TestAsset\ConcreteValidator();
     }
 
     public function tearDown()
     {
+        AbstractValidator::setDefaultTranslator(null, 'default');
     }
 
     public function testTranslatorNullByDefault()
@@ -56,10 +51,10 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         $this->testTranslatorNullByDefault();
         set_error_handler(array($this, 'errorHandlerIgnore'));
-        $translator = new Translator\Translator('ArrayAdapter', array(), 'en');
+        $translator = new Translator();
         restore_error_handler();
         $this->validator->setTranslator($translator);
-        $this->assertSame($translator->getAdapter(), $this->validator->getTranslator());
+        $this->assertSame($translator, $this->validator->getTranslator());
     }
 
     public function testCanSetTranslatorToNull()
@@ -73,38 +68,42 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testGlobalDefaultTranslatorNullByDefault()
     {
-        $this->assertNull(Validator\AbstractValidator::getDefaultTranslator());
+        $this->assertNull(AbstractValidator::getDefaultTranslator());
     }
-
-
 
     public function testErrorMessagesAreTranslatedWhenTranslatorPresent()
     {
-        $translator = new Translator\Translator(
-            'ArrayAdapter',
-            array('fooMessage' => 'This is the translated message for %value%'),
-            'en'
+        $loader = new TestAsset\ArrayTranslator();
+        $loader->translations = array(
+            'fooMessage' => 'This is the translated message for %value%',
         );
+        $translator = new Translator();
+        $translator->getPluginManager()->setService('default', $loader);
+        $translator->addTranslationFile('default', null);
+
         $this->validator->setTranslator($translator);
         $this->assertFalse($this->validator->isValid('bar'));
         $messages = $this->validator->getMessages();
         $this->assertTrue(array_key_exists('fooMessage', $messages));
-        $this->assertContains('bar', $messages['fooMessage']);
+        $this->assertContains('bar', $messages['fooMessage'], var_export($messages, 1));
         $this->assertContains('This is the translated message for ', $messages['fooMessage']);
     }
 
     public function testCanTranslateMessagesInsteadOfKeys()
     {
-        $translator = new Translator\Translator(
-            'ArrayAdapter',
-            array('%value% was passed' => 'This is the translated message for %value%'),
-            'en'
+        $loader = new TestAsset\ArrayTranslator();
+        $loader->translations = array(
+            '%value% was passed' => 'This is the translated message for %value%',
         );
+        $translator = new Translator();
+        $translator->getPluginManager()->setService('default', $loader);
+        $translator->addTranslationFile('default', null);
+
         $this->validator->setTranslator($translator);
         $this->assertFalse($this->validator->isValid('bar'));
         $messages = $this->validator->getMessages();
         $this->assertTrue(array_key_exists('fooMessage', $messages));
-        $this->assertContains('bar', $messages['fooMessage']);
+        $this->assertContains('bar', $messages['fooMessage'], var_export($messages, 1));
         $this->assertContains('This is the translated message for ', $messages['fooMessage']);
     }
 
@@ -146,21 +145,20 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     public function testTranslatorEnabledPerDefault()
     {
         set_error_handler(array($this, 'errorHandlerIgnore'));
-        $translator = new Translator\Translator('ArrayAdapter', array(), 'en');
-        restore_error_handler();
+        $translator = new Translator();
         $this->validator->setTranslator($translator);
-        $this->assertFalse($this->validator->isTranslatorDisabled());
+        $this->assertTrue($this->validator->isTranslatorEnabled());
     }
 
     public function testCanDisableTranslator()
     {
-        set_error_handler(array($this, 'errorHandlerIgnore'));
-        $translator = new Translator\Translator(
-            'ArrayAdapter',
-            array('fooMessage' => 'This is the translated message for %value%'),
-            'en'
+        $loader = new TestAsset\ArrayTranslator();
+        $loader->translations = array(
+            '%value% was passed' => 'This is the translated message for %value%',
         );
-        restore_error_handler();
+        $translator = new Translator();
+        $translator->getPluginManager()->setService('default', $loader);
+        $translator->addTranslationFile('default', null);
         $this->validator->setTranslator($translator);
 
         $this->assertFalse($this->validator->isValid('bar'));
@@ -169,8 +167,8 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('bar', $messages['fooMessage']);
         $this->assertContains('This is the translated message for ', $messages['fooMessage']);
 
-        $this->validator->setTranslatorDisabled(true);
-        $this->assertTrue($this->validator->isTranslatorDisabled());
+        $this->validator->setTranslatorEnabled(false);
+        $this->assertFalse($this->validator->isTranslatorEnabled());
 
         $this->assertFalse($this->validator->isValid('bar'));
         $messages = $this->validator->getMessages();
@@ -186,16 +184,59 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
             array('fooMessage' => '%value% was passed'), $messages);
 
         $this->assertEquals(
-            array(Concrete::FOO_MESSAGE => '%value% was passed'),
+            array(TestAsset\ConcreteValidator::FOO_MESSAGE => '%value% was passed'),
             $messages
             );
     }
 
     public function testInvokeProxiesToIsValid()
     {
-        $validator = new Concrete;
+        $validator = new TestAsset\ConcreteValidator;
         $this->assertFalse($validator('foo'));
         $this->assertContains("foo was passed", $validator->getMessages());
+    }
+
+    public function testTranslatorMethods()
+    {
+        $translatorMock = $this->getMock('Zend\I18n\Translator\Translator');
+        $this->validator->setTranslator($translatorMock, 'foo');
+
+        $this->assertEquals($translatorMock, $this->validator->getTranslator());
+        $this->assertEquals('foo', $this->validator->getTranslatorTextDomain());
+        $this->assertTrue($this->validator->hasTranslator());
+        $this->assertTrue($this->validator->isTranslatorEnabled());
+
+        $this->validator->setTranslatorEnabled(false);
+        $this->assertFalse($this->validator->isTranslatorEnabled());
+    }
+
+    public function testDefaultTranslatorMethods()
+    {
+        $this->assertFalse(AbstractValidator::hasDefaultTranslator());
+        $this->assertNull(AbstractValidator::getDefaultTranslator());
+        $this->assertEquals('default', AbstractValidator::getDefaultTranslatorTextDomain());
+
+        $this->assertFalse($this->validator->hasTranslator());
+
+        $translatorMock = $this->getMock('Zend\I18n\Translator\Translator');
+        AbstractValidator::setDefaultTranslator($translatorMock, 'foo');
+
+        $this->assertEquals($translatorMock, AbstractValidator::getDefaultTranslator());
+        $this->assertEquals($translatorMock, $this->validator->getTranslator());
+        $this->assertEquals('foo', AbstractValidator::getDefaultTranslatorTextDomain());
+        $this->assertEquals('foo', $this->validator->getTranslatorTextDomain());
+        $this->assertTrue(AbstractValidator::hasDefaultTranslator());
+    }
+
+    public function testMessageCreationWithNestedArrayValueDoesNotRaiseNotice()
+    {
+        $r = new ReflectionMethod($this->validator, 'createMessage');
+        $r->setAccessible(true);
+
+        $message = $r->invoke($this->validator, 'fooMessage', array('foo' => array('bar' => 'baz')));
+        $this->assertContains('foo', $message);
+        $this->assertContains('bar', $message);
+        $this->assertContains('baz', $message);
     }
 
     /**
@@ -210,23 +251,6 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
     {
-        $this->_errorOccurred = true;
+        $this->errorOccurred = true;
     }
 }
-
-class Concrete extends Validator\AbstractValidator
-{
-    const FOO_MESSAGE = 'fooMessage';
-
-    protected $_messageTemplates = array(
-        'fooMessage' => '%value% was passed',
-    );
-
-    public function isValid($value)
-    {
-        $this->setValue($value);
-        $this->error(self::FOO_MESSAGE);
-        return false;
-    }
-}
-

@@ -1,6 +1,6 @@
 {
     "name": "zendframework/zend-validator",
-    "description": "Zend\\Validator component",
+    "description": "provides a set of commonly needed validators",
     "license": "BSD-3-Clause",
     "keywords": [
         "zf2",
@@ -13,8 +13,10 @@
         }
     },
     "require": {
-        "php": ">=5.3.23",
-        "zendframework/zend-stdlib": "self.version"
+        "php": ">=5.3.3",
+        "zendframework/zend-stdlib": "self.version",
+        "zendframework/zend-i18n": "self.version",
+        "zendframework/zend-servicemanager": "self.version"
     },
     "require-dev": {
         "zendframework/zend-db": "self.version",
