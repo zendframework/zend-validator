@@ -81,7 +81,7 @@ class ExcludeMimeType extends MimeType
 
         if (empty($this->type)) {
             $this->error(self::NOT_DETECTED);
-            false;
+            return false;
         }
 
         $mimetype = $this->getMimeType(true);
