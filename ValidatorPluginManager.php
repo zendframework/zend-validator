@@ -9,7 +9,6 @@
 
 namespace Zend\Validator;
 
-use Zend\I18n\Translator\TranslatorAwareInterface;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\ConfigInterface;
 
@@ -135,10 +134,10 @@ class ValidatorPluginManager extends AbstractPluginManager
      */
     public function injectTranslator($validator)
     {
-        if ($validator instanceof TranslatorAwareInterface) {
+        if ($validator instanceof Translator\TranslatorAwareInterface) {
             $locator = $this->getServiceLocator();
-            if ($locator && $locator->has('translator')) {
-                $validator->setTranslator($locator->get('translator'));
+            if ($locator && $locator->has('MvcTranslator')) {
+                $validator->setTranslator($locator->get('MvcTranslator'));
             }
         }
     }
