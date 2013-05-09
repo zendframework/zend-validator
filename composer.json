@@ -14,9 +14,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zend-stdlib": "self.version",
-        "zendframework/zend-i18n": "self.version",
-        "zendframework/zend-servicemanager": "self.version"
+        "zendframework/zend-stdlib": "self.version"
     },
     "require-dev": {
         "zendframework/zend-db": "self.version",
@@ -42,8 +40,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.4-dev",
-            "dev-develop": "2.5-dev"
+            "dev-master": "2.2-dev",
+            "dev-develop": "2.3-dev"
         }
     },
     "autoload-dev": {
