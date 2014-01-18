@@ -368,7 +368,7 @@ class MimeType extends AbstractValidator
         $this->setValue($filename);
 
         // Is file readable ?
-        if (empty($file) || false === stream_resolve_include_path($file)) {
+        if (false === stream_resolve_include_path($file)) {
             $this->error(static::NOT_READABLE);
             return false;
         }

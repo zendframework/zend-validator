@@ -59,7 +59,7 @@ class ExcludeExtension extends Extension
         $this->setValue($filename);
 
         // Is file readable ?
-        if (empty($file) || false === stream_resolve_include_path($file)) {
+        if (false === stream_resolve_include_path($file)) {
             $this->error(self::NOT_FOUND);
             return false;
         }

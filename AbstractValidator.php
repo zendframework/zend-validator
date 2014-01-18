@@ -36,7 +36,7 @@ abstract class AbstractValidator implements
     protected static $defaultTranslatorTextDomain = 'default';
 
     /**
-     * Limits the maximum returned length of an error message
+     * Limits the maximum returned length of a error message
      *
      * @var int
      */
@@ -156,7 +156,7 @@ abstract class AbstractValidator implements
      */
     public function getMessages()
     {
-        return array_unique($this->abstractOptions['messages'], SORT_REGULAR);
+        return array_unique($this->abstractOptions['messages']);
     }
 
     /**
@@ -573,6 +573,13 @@ abstract class AbstractValidator implements
         $translator = $this->getTranslator();
         if (!$translator) {
             return $message;
+        }
+
+        $translated = $translator->translate(
+            $messageKey, $this->getTranslatorTextDomain()
+        );
+        if ($translated !== $messageKey) {
+            return $translated;
         }
 
         return $translator->translate(

@@ -72,7 +72,7 @@ class UploadFile extends AbstractValidator
         }
         $this->setValue($filename);
 
-        if (empty($file) || false === stream_resolve_include_path($file)) {
+        if (false === stream_resolve_include_path($file)) {
             $this->error(self::FILE_NOT_FOUND);
             return false;
         }

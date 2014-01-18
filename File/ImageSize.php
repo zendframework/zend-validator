@@ -14,7 +14,7 @@ use Zend\Validator\AbstractValidator;
 use Zend\Validator\Exception;
 
 /**
- * Validator for the image size of an image file
+ * Validator for the image size of a image file
  */
 class ImageSize extends AbstractValidator
 {
@@ -343,7 +343,7 @@ class ImageSize extends AbstractValidator
         $this->setValue($filename);
 
         // Is file readable ?
-        if (empty($file) || false === stream_resolve_include_path($file)) {
+        if (false === stream_resolve_include_path($file)) {
             $this->error(self::NOT_READABLE);
             return false;
         }
