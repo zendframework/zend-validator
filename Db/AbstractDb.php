@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -11,6 +11,7 @@ namespace Zend\Validator\Db;
 
 use Traversable;
 use Zend\Db\Adapter\Adapter as DbAdapter;
+use Zend\Db\Adapter\Driver\DriverInterface as DbDriverInterface;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\TableIdentifier;
@@ -189,7 +190,6 @@ abstract class AbstractDb extends AbstractValidator
     public function setExclude($exclude)
     {
         $this->exclude = $exclude;
-        $this->select  = null;
         return $this;
     }
 
@@ -211,8 +211,7 @@ abstract class AbstractDb extends AbstractValidator
      */
     public function setField($field)
     {
-        $this->field  = (string) $field;
-        $this->select = null;
+        $this->field = (string) $field;
         return $this;
     }
 
@@ -234,8 +233,7 @@ abstract class AbstractDb extends AbstractValidator
      */
     public function setTable($table)
     {
-        $this->table  = (string) $table;
-        $this->select = null;
+        $this->table = (string) $table;
         return $this;
     }
 
@@ -258,7 +256,6 @@ abstract class AbstractDb extends AbstractValidator
     public function setSchema($schema)
     {
         $this->schema = $schema;
-        $this->select = null;
         return $this;
     }
 
