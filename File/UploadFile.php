@@ -72,14 +72,15 @@ class UploadFile extends AbstractValidator
         }
         $this->setValue($filename);
 
+        if (empty($file) || false === stream_resolve_include_path($file)) {
+            $this->error(self::FILE_NOT_FOUND);
+            return false;
+        }
+
         switch ($error) {
             case UPLOAD_ERR_OK:
-                if (empty($file) || false === stream_resolve_include_path($file)) {
-                    $this->error(self::FILE_NOT_FOUND);
-                } else {
-                    if (!is_uploaded_file($file)) {
-                        $this->error(self::ATTACK);
-                    }
+                if (!is_uploaded_file($file)) {
+                    $this->error(self::ATTACK);
                 }
                 break;
 
