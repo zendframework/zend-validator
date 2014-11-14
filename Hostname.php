@@ -515,14 +515,14 @@ class Hostname extends AbstractValidator
         // Check input against DNS hostname schema
         if ((count($domainParts) > 1)
             && ($utf8StrWrapper->strlen($value) >= 4)
-            && ($utf8StrWrapper->strlen($value) <= 254)
-        ) {
+            && ($utf8StrWrapper->strlen($value) <= 254))
+        {
             $status = false;
 
             do {
                 // First check TLD
                 $matches = array();
-                if (preg_match('/([^.]{2,63})$/iu', end($domainParts), $matches)
+                if (preg_match('/([^.]{2,10})$/iu', end($domainParts), $matches)
                     || (array_key_exists(end($domainParts), $this->validIdns))) {
                     reset($domainParts);
 

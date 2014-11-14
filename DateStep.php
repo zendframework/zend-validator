@@ -271,6 +271,7 @@ class DateStep extends Date
 
             // Check time units
             if (in_array($intervalUnit, array('hours', 'minutes', 'seconds'))) {
+
                 // Simple test if $stepValue is 1.
                 if (1 == $stepValue) {
                     if ('hours' === $intervalUnit
