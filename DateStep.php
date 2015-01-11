@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -235,8 +235,8 @@ class DateStep extends Date
             if (in_array($intervalUnit, array('years', 'months', 'days'))) {
                 switch ($intervalUnit) {
                     case 'years':
-                        if (0 == $diffParts['months'] && 0 == $diffParts['days']
-                            && 0 == $diffParts['hours'] && 0 == $diffParts['minutes']
+                        if (   0 == $diffParts['months']  && 0 == $diffParts['days']
+                            && 0 == $diffParts['hours']   && 0 == $diffParts['minutes']
                             && 0 == $diffParts['seconds']
                         ) {
                             if (($diffParts['years'] % $stepValue) === 0) {
@@ -245,7 +245,7 @@ class DateStep extends Date
                         }
                         break;
                     case 'months':
-                        if (0 == $diffParts['days'] && 0 == $diffParts['hours']
+                        if (   0 == $diffParts['days']    && 0 == $diffParts['hours']
                             && 0 == $diffParts['minutes'] && 0 == $diffParts['seconds']
                         ) {
                             $months = ($diffParts['years'] * 12) + $diffParts['months'];
@@ -255,7 +255,7 @@ class DateStep extends Date
                         }
                         break;
                     case 'days':
-                        if (0 == $diffParts['hours'] && 0 == $diffParts['minutes']
+                        if (   0 == $diffParts['hours'] && 0 == $diffParts['minutes']
                             && 0 == $diffParts['seconds']
                         ) {
                             $days = $timeDiff->format('%a'); // Total days
@@ -271,6 +271,7 @@ class DateStep extends Date
 
             // Check time units
             if (in_array($intervalUnit, array('hours', 'minutes', 'seconds'))) {
+
                 // Simple test if $stepValue is 1.
                 if (1 == $stepValue) {
                     if ('hours' === $intervalUnit
