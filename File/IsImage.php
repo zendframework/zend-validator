@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -13,7 +13,7 @@ use Traversable;
 use Zend\Stdlib\ArrayUtils;
 
 /**
- * Validator which checks if the file is an image
+ * Validator which checks if the file already exists in the directory
  */
 class IsImage extends MimeType
 {
@@ -40,7 +40,8 @@ class IsImage extends MimeType
      */
     public function __construct($options = array())
     {
-        // http://www.iana.org/assignments/media-types/media-types.xhtml#image
+        // http://de.wikipedia.org/wiki/Liste_von_Dateiendungen
+        // http://www.iana.org/assignments/media-types/image/
         $default = array(
             'application/cdf',
             'application/dicom',
