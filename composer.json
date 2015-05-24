@@ -17,6 +17,7 @@
         "zendframework/zend-stdlib": "~2.4"
     },
     "require-dev": {
+        "zendframework/zend-config": "~2.4",
         "zendframework/zend-db": "~2.4",
         "zendframework/zend-filter": "~2.4",
         "zendframework/zend-i18n": "~2.4",
