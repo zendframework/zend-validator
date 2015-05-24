@@ -38,6 +38,8 @@
         "zendframework/zend-session": "Zend\\Session component",
         "zendframework/zend-uri": "Zend\\Uri component, required by the Uri and Sitemap\\Loc validators"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "branch-alias": {
             "dev-master": "2.4-dev",
