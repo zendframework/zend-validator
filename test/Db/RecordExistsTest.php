@@ -14,7 +14,7 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Db\Adapter\ParameterContainer;
 use Zend\Db\Sql\Sql;
 use Zend\Validator\Db\RecordExists;
-use ZendTest\Db\TestAsset\TrustingSql92Platform;
+use ZendTest\Validator\Db\TestAsset\TrustingSql92Platform;
 
 /**
  * @group      Zend_Validator
