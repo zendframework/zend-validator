@@ -6,6 +6,10 @@ cache:
   directories:
     - $HOME/.composer/cache
 
+env:
+  global:
+    - TESTS_ZEND_VALIDATOR_ONLINE_ENABLED=true
+
 matrix:
   fast_finish: true
   include:
