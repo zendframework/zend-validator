@@ -27,9 +27,9 @@ if (! is_writable(ZF2_HOSTNAME_VALIDATOR_FILE)) {
 
 // get current list of official TLDs
 $client = new Client();
-$client->setOptions(array(
+$client->setOptions([
     'adapter' => 'Zend\Http\Client\Adapter\Curl',
-));
+]);
 $client->setUri(IANA_URL);
 $client->setMethod('GET');
 $response = $client->send();
@@ -41,7 +41,7 @@ if (! $response->isSuccess()) {
 $decodePunycode = getPunycodeDecoder();
 
 // Get new TLDs from the list previously fetched
-$newValidTlds = array();
+$newValidTlds = [];
 foreach (preg_grep('/^[^#]/', preg_split("#\r?\n#", $response->getBody())) as $line) {
     $newValidTlds []= sprintf(
         "%s'%s',\n",
@@ -50,7 +50,7 @@ foreach (preg_grep('/^[^#]/', preg_split("#\r?\n#", $response->getBody())) as $l
     );
 }
 
-$newFileContent = array();  // new file content
+$newFileContent = [];  // new file content
 $insertDone     = false;    // becomes 'true' when we find start of $validTlds declaration
 $insertFinish   = false;    // becomes 'true' when we find end of $validTlds declaration
 foreach (file(ZF2_HOSTNAME_VALIDATOR_FILE) as $line) {
@@ -123,7 +123,7 @@ function getPunycodeDecoder()
 
     return function ($encode) use ($hostnameValidator, $method) {
         if (strpos($encode, 'xn--') === 0) {
-            return $method->invokeArgs($hostnameValidator, array(substr($encode, 4)));
+            return $method->invokeArgs($hostnameValidator, [substr($encode, 4)]);
         }
         return $encode;
     };
