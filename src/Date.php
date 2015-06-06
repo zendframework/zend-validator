@@ -127,8 +127,7 @@ class Date extends AbstractValidator
      */
     protected function convertToDateTime($param, $addErrors = true)
     {
-        // @TODO: when minimum dependency will be PHP 5.5, we can only keep check against DateTimeInterface
-        if ($param instanceof DateTime || $param instanceof DateTimeInterface) {
+        if ($param instanceof DateTimeInterface) {
             return $param;
         }
 
