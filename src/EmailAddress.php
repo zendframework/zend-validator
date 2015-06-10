@@ -69,6 +69,7 @@ class EmailAddress extends AbstractValidator
         'useDeepMxCheck'    => false,
         'useDomainCheck'    => true,
         'allow'             => Hostname::ALLOW_DNS,
+        'strict'            => true,
         'hostnameValidator' => null,
     ];
 
@@ -78,6 +79,7 @@ class EmailAddress extends AbstractValidator
      * The following additional option keys are supported:
      * 'hostnameValidator' => A hostname validator, see Zend\Validator\Hostname
      * 'allow'             => Options for the hostname validator, see Zend\Validator\Hostname::ALLOW_*
+     * 'strict'            => Whether to adhere to strictest requirements in the spec
      * 'useMxCheck'        => If MX check should be enabled, boolean
      * 'useDeepMxCheck'    => If a deep MX check should be done, boolean
      *
@@ -499,7 +501,7 @@ class EmailAddress extends AbstractValidator
             return false;
         }
 
-        if ((strlen($this->localPart) > 64) || (strlen($this->hostname) > 255)) {
+        if ($this->getOption('strict') && (strlen($this->localPart) > 64) || (strlen($this->hostname) > 255)) {
             $length = false;
             $this->error(self::LENGTH_EXCEEDED);
         }
@@ -542,7 +544,13 @@ class EmailAddress extends AbstractValidator
     protected function idnToUtf8($email)
     {
         if (extension_loaded('intl')) {
-            return idn_to_utf8($email);
+            // The documentation does not clarify what kind of failure
+            // can happen in idn_to_utf8. One can assume if the source
+            // is not IDN encoded, it would fail, but it usually returns
+            // the source string in those cases.
+            // But not when the source string is long enough.
+            // Thus we default to source string ourselves.
+            return idn_to_utf8($email) ?: $email;
         }
         return $email;
     }
