@@ -156,17 +156,16 @@ class ValidatorChain implements
         $priority = self::DEFAULT_PRIORITY;
 
         if (!$this->validators->isEmpty()) {
-            $queue = $this->validators->getIterator();
-            $queue->setExtractFlags(PriorityQueue::EXTR_PRIORITY);
-            $extractedNode = $queue->extract();
-            $priority = $extractedNode[0] + 1;
+            $extractedNodes = $this->validators->toArray(\Zend\Stdlib\PriorityQueue::EXTR_PRIORITY);
+            rsort($extractedNodes, SORT_NUMERIC);
+            $priority = $extractedNodes[0] + 1;
         }
 
         $this->validators->insert(
-            [
+            array(
                 'instance'            => $validator,
                 'breakChainOnFailure' => (bool) $breakChainOnFailure,
-            ],
+            ),
             $priority
         );
         return $this;
