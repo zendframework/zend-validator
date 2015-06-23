@@ -293,6 +293,29 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Ensures that the validator follows expected behavior for valid email addresses with the non-strict option
+     *
+     * @return void
+     */
+    public function testNonStrict()
+    {
+        $validator = new EmailAddress(['strict' => false]);
+        $emailAddresses = [
+            // RFC 5321 does mention a limit of 64 for the username,
+            // but it also states "To the maximum extent possible,
+            // implementation techniques that impose no limits on the
+            // length of these objects should be used.".
+            // http://tools.ietf.org/html/rfc5321#section-4.5.3.1
+            'line length 320' => str_repeat('x', 309).'@domain.com',
+            'line length 321' => str_repeat('x', 310).'@domain.com',
+            'line length 911' => str_repeat('x', 900).'@domain.com',
+        ];
+        foreach ($emailAddresses as $input) {
+            $this->assertTrue($validator->isValid($input));
+        }
+    }
+
    /**
      * Ensures that the validator follows expected behavior for checking MX records
      *
