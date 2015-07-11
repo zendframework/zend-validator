@@ -179,7 +179,7 @@ class HashTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(File\Hash::NOT_FOUND, $validator->getMessages());
     }
-    
+
     public function testAddHashWithInvalidParameter()
     {
         $validator = new File\Hash('12345');

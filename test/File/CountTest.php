@@ -169,7 +169,7 @@ class CountTest extends \PHPUnit_Framework_TestCase
         'Invalid options to validator provided');
         $validator->setMin($invalidParameter);
     }
-    
+
     public function testThrowErrorWithFileArrayArgument()
     {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
@@ -188,7 +188,7 @@ class CountTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
 
         $result = $method->invoke($validator, $filename, File\Count::TOO_FEW);
-        
+
         //check that false was returned and that the value set correctly.
         $this->assertEquals(false, $result);
         $this->assertEquals($filename, $property->getValue($validator));
