@@ -222,8 +222,8 @@ class SizeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(File\Size::NOT_FOUND, $validator->getMessages());
     }
-    
-        public function testSetMinWithInvalidArgument()
+
+    public function testSetMinWithInvalidArgument()
     {
         $validator = new File\Size();
 
@@ -232,6 +232,5 @@ class SizeTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
 
         $validator->setMin($invalidArgument);
-
     }
 }

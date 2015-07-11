@@ -180,5 +180,5 @@ class ExistsTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
         'Invalid options to validator provided');
         $validator->addDirectory($invalidParameter);
-	}
+    }
 }

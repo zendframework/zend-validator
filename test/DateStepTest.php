@@ -155,11 +155,11 @@ class DateStepTest extends \PHPUnit_Framework_TestCase
         $validator = new Validator\DateStep();
 
         $newBaseValue = '2013-01-23';
-		$validator->setBaseValue($newBaseValue);
+        $validator->setBaseValue($newBaseValue);
 
-		$retrievedBaseValue = $validator->getBaseValue();
+        $retrievedBaseValue = $validator->getBaseValue();
 
-		$this->assertEquals($newBaseValue, $retrievedBaseValue);
+        $this->assertEquals($newBaseValue, $retrievedBaseValue);
     }
 
     public function testGetTimezone()
@@ -167,16 +167,15 @@ class DateStepTest extends \PHPUnit_Framework_TestCase
         $validator = new Validator\DateStep();
 
         $newTimezone = new DateTimeZone("Europe/Vienna");
-		$validator->setTimezone($newTimezone);
+        $validator->setTimezone($newTimezone);
 
-		$retrievedTimezone = $validator->getTimezone();
+        $retrievedTimezone = $validator->getTimezone();
 
-		$this->assertEquals($newTimezone, $retrievedTimezone);
+        $this->assertEquals($newTimezone, $retrievedTimezone);
     }
 
     public function testConstructorWithArguments()
     {
-
         $baseValue = '2012-01-23';
         $step = new DateInterval("P1D");
         $format = 'd-m-Y';

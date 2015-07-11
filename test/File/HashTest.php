@@ -180,7 +180,7 @@ class HashTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(File\Hash::NOT_FOUND, $validator->getMessages());
     }
     
-        public function testAddHashWithInvalidParameter()
+    public function testAddHashWithInvalidParameter()
     {
         $validator = new File\Hash('12345');
 
@@ -196,10 +196,10 @@ class HashTest extends \PHPUnit_Framework_TestCase
 
         $algorithm = 'foobar123';
         $options = [
-			'algorithm' => $algorithm,
-		];
+            'algorithm' => $algorithm,
+        ];
 
-		$this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', "Unknown algorithm '{$algorithm}'");
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', "Unknown algorithm '{$algorithm}'");
         $validator->addHash($options);
     }
 
@@ -208,10 +208,10 @@ class HashTest extends \PHPUnit_Framework_TestCase
         $validator = new File\Hash('12345');
 
         $invalidArray = [
-			'foo' => 'bar',
-		];
+            'foo' => 'bar',
+        ];
 
-		$this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Value array must be in $_FILES format');
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Value array must be in $_FILES format');
         $validator->isValid($invalidArray);
     }
 

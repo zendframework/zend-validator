@@ -25,7 +25,7 @@ class AbstractDbTest extends \PHPUnit_Framework_TestCase
         $this->validator = new ConcreteDbValidator([
             'table' => 'table',
             'field' => 'field',
-			'schema' => 'schema',
+		    'schema' => 'schema',
         ]);
     }
 

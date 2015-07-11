@@ -200,7 +200,7 @@ class StepTest extends \PHPUnit_Framework_TestCase
         $this->_validator->setStep($step);
         $this->assertAttributeSame((float) $step, 'step', $this->_validator);
     }
-    
+
     public function testConstructWithArguments()
     {
         $baseValue = 1.00;
@@ -212,17 +212,17 @@ class StepTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($baseValue, $validator->getBaseValue());
     }
 
-	public function testFModReturnsOneForZero()
-	{
-		$validator = new Validator\Step();
-		$reflection = new ReflectionClass($validator);
+    public function testFModReturnsOneForZero()
+    {
+        $validator = new Validator\Step();
+        $reflection = new ReflectionClass($validator);
 
-		$property = $reflection->getMethod('fmod');
+        $property = $reflection->getMethod('fmod');
         $property->setAccessible(true);
 
         $this->assertEquals(
             $property->invoke($validator, 0, 0),
             1
         );
-	}
+    }
 }

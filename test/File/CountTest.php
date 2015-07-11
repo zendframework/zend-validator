@@ -119,7 +119,7 @@ class CountTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1000000, $validator->getMax());
     }
     
-	public function testSetMaxWithArray()
+    public function testSetMaxWithArray()
     {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
 
@@ -131,20 +131,20 @@ class CountTest extends \PHPUnit_Framework_TestCase
 
         $validator->setMax($setMaxArray);
         $this->assertEquals($maxValue, $validator->getMax());
-	}
+    }
 
-	public function testSetMaxWithInvalidArgument()
-	{
+    public function testSetMaxWithInvalidArgument()
+    {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
 
         $invalidParameter = new \stdClass();
 
-		$this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 
-		'Invalid options to validator provided');
-		
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 
+        'Invalid options to validator provided');
+        
         $validator->setMax($invalidParameter);
-	}
-	
+    }
+    
     public function testSetMinWithArray()
     {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
@@ -157,63 +157,61 @@ class CountTest extends \PHPUnit_Framework_TestCase
 
         $validator->setMin($setMinArray);
         $this->assertEquals($minValue, $validator->getMin());
-	}
+    }
 
-	public function testSetMinWithInvalidArgument()
-	{
+    public function testSetMinWithInvalidArgument()
+    {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
 
         $invalidParameter = new \stdClass();
 
-		$this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-		'Invalid options to validator provided');
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
+        'Invalid options to validator provided');
         $validator->setMin($invalidParameter);
-	}
-	
-	public function testThrowErrorWithFileArrayArgument()
-	{
-		$validator = new File\Count(['min' => 1000, 'max' => 10000]);
-		
-		$filename = 'test.txt';
-		$fileArray = [
-			'name' => $filename,
-		];
-		
-		$reflection = new ReflectionClass($validator);
+    }
+    
+    public function testThrowErrorWithFileArrayArgument()
+    {
+        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
+        
+        $filename = 'test.txt';
+        $fileArray = [
+            'name' => $filename,
+        ];
+        
+        $reflection = new ReflectionClass($validator);
 
-		$method = $reflection->getMethod('throwError');
+        $method = $reflection->getMethod('throwError');
         $method->setAccessible(true);
 
-		$property = $reflection->getProperty('value');
+        $property = $reflection->getProperty('value');
         $property->setAccessible(true);
 
-		$result = $method->invoke($validator, $filename, File\Count::TOO_FEW);
+        $result = $method->invoke($validator, $filename, File\Count::TOO_FEW);
         
         //check that false was returned and that the value set correctly.
         $this->assertEquals(false, $result);
         $this->assertEquals($filename, $property->getValue($validator));
+    }
+    
+    public function testThrowErrorWithFileStringArgument()
+    {
+        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
         
-	}
-	
-	public function testThrowErrorWithFileStringArgument()
-	{
-		$validator = new File\Count(['min' => 1000, 'max' => 10000]);
-		
-		$filename = 'test.txt';
-		
-		$reflection = new ReflectionClass($validator);
+        $filename = 'test.txt';
+        
+        $reflection = new ReflectionClass($validator);
 
-		$method = $reflection->getMethod('throwError');
+        $method = $reflection->getMethod('throwError');
         $method->setAccessible(true);
         
         $property = $reflection->getProperty('value');
         $property->setAccessible(true);
 
-		$result = $method->invoke($validator, $filename, File\Count::TOO_FEW);
+        $result = $method->invoke($validator, $filename, File\Count::TOO_FEW);
         
         //check that false was returned and that the value set correctly.
         $this->assertEquals(false, $result);
         $this->assertEquals($filename, $property->getValue($validator));
-        
-	}
+    }
 }

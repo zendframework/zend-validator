@@ -205,7 +205,7 @@ class Sha1Test extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(File\Sha1::NOT_FOUND, $validator->getMessages());
     }
-    
+
     public function testShouldThrowInvalidArgumentException()
     {
         $validator = new File\Sha1();

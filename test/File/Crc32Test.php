@@ -208,13 +208,10 @@ class Crc32Test extends \PHPUnit_Framework_TestCase
     public function testShouldThrowInvalidArgumentException()
     {
         $validator = new File\Crc32();
-
         $invalidArray = [
             'foo' => 'bar',
         ];
-
         $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
-
         $validator->isValid($invalidArray);
     }
 }

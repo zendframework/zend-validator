@@ -155,7 +155,8 @@ class WordCountTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(File\WordCount::NOT_FOUND, $validator->getMessages());
     }
-        public function testSetMinWithArray()
+
+    public function testSetMinWithArray()
     {
         $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
 
@@ -167,19 +168,19 @@ class WordCountTest extends \PHPUnit_Framework_TestCase
 
         $validator->setMin($setMinArray);
         $this->assertEquals($minValue, $validator->getMin());
-	}
+    }
 
-	public function testSetMinWithInvalidArgument()
-	{
+    public function testSetMinWithInvalidArgument()
+    {
         $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
 
         $invalidParameter = new \stdClass();
 
-		$this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-		'Invalid options to validator provided');
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
+        'Invalid options to validator provided');
         $validator->setMin($invalidParameter);
     }
-	
+    
     public function testSetMaxWithArray()
     {
         $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
@@ -192,19 +193,19 @@ class WordCountTest extends \PHPUnit_Framework_TestCase
 
         $validator->setMax($setMaxArray);
         $this->assertEquals($maxValue, $validator->getMax());
-	}
+    }
 
-	public function testSetMaxWithInvalidArgument()
-	{
+    public function testSetMaxWithInvalidArgument()
+    {
         $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
 
         $invalidParameter = new \stdClass();
 
-		$this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-		'Invalid options to validator provided');
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
+        'Invalid options to validator provided');
         $validator->setMax($invalidParameter);
-	}
-	
+    }
+    
     public function testIsValidWithInvalidArgument()
     {
         $validator = new File\WordCount(['min' => 1, 'max' => 10000]);
