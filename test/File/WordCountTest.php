@@ -180,7 +180,7 @@ class WordCountTest extends \PHPUnit_Framework_TestCase
         'Invalid options to validator provided');
         $validator->setMin($invalidParameter);
     }
-    
+
     public function testSetMaxWithArray()
     {
         $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
