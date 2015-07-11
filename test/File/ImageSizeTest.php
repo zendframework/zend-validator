@@ -282,4 +282,32 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(File\ImageSize::NOT_READABLE, $validator->getMessages());
     }
+
+    public function testConstructorWithArguments()
+    {
+        $minWidth = 20;
+        $minHeight = 10;
+        $maxWidth = 200;
+        $maxHeight = 100;
+
+        $validator = new File\ImageSize($minWidth, $minHeight, $maxWidth, $maxHeight);
+
+        $this->assertEquals($minWidth, $validator->getMinWidth());
+        $this->assertEquals($minHeight, $validator->getMinHeight());
+        $this->assertEquals($maxWidth, $validator->getMaxWidth());
+        $this->assertEquals($maxHeight, $validator->getMaxHeight());
+    }
+
+    public function testIsValidWithInvalidArray()
+    {
+        $validator = new File\ImageSize(['minWidth' => 100, 'minHeight' => 1000, 'maxWidth' => 10000, 'maxHeight' => 100000]);
+        $invalidParameterArray = [
+            'foo' => 'bar',
+        ];
+        
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 
+        'Value array must be in $_FILES format'); 
+
+        $validator->isValid($invalidParameterArray);       
+    }
 }

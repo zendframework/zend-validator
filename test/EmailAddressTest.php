@@ -847,4 +847,12 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('Testing MX records has been disabled');
         }
     }
+
+    public function testUseDomainCheck()
+    {
+        $validator = new EmailAddress();
+        $validator->useDomainCheck(false);
+
+        $this->assertFalse($validator->getDomainCheck());
+    }
 }

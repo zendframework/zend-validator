@@ -155,4 +155,81 @@ class WordCountTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(File\WordCount::NOT_FOUND, $validator->getMessages());
     }
+        public function testSetMinWithArray()
+    {
+        $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
+
+        $minValue = 33;
+
+        $setMinArray = [
+            'min' => $minValue,
+        ];
+
+        $validator->setMin($setMinArray);
+        $this->assertEquals($minValue, $validator->getMin());
+	}
+
+	public function testSetMinWithInvalidArgument()
+	{
+        $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
+
+        $invalidParameter = new \stdClass();
+
+		$this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
+		'Invalid options to validator provided');
+        $validator->setMin($invalidParameter);
+    }
+	
+    public function testSetMaxWithArray()
+    {
+        $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
+
+        $maxValue = 33333333;
+
+        $setMaxArray = [
+            'max' => $maxValue,
+        ];
+
+        $validator->setMax($setMaxArray);
+        $this->assertEquals($maxValue, $validator->getMax());
+	}
+
+	public function testSetMaxWithInvalidArgument()
+	{
+        $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
+
+        $invalidParameter = new \stdClass();
+
+		$this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
+		'Invalid options to validator provided');
+        $validator->setMax($invalidParameter);
+	}
+	
+    public function testIsValidWithInvalidArgument()
+    {
+        $validator = new File\WordCount(['min' => 1, 'max' => 10000]);
+
+        $invalidArray = [
+            'foo' => 'bar',
+        ];
+
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
+        'Value array must be in $_FILES format');
+
+        $validator->isValid($invalidArray);
+    }
+
+    public function testConstructWithArguments()
+    {
+        $min = 1;
+        $max = 10000;
+
+        $validator = new File\WordCount($min,$max);
+
+        $retrievedMin = $validator->getMin();
+        $retrievedMax = $validator->getMax();
+
+        $this->assertSame($min, $retrievedMin);
+        $this->assertSame($max, $retrievedMax);
+    }
 }

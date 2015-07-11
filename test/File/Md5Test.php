@@ -218,4 +218,17 @@ class Md5Test extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(File\Md5::NOT_FOUND, $validator->getMessages());
     }
+    
+    public function testShouldThrowInvalidArgumentException()
+    {
+        $validator = new File\Md5();
+
+        $invalidArray = [
+            'foo' => 'bar',
+        ];
+
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
+
+        $validator->isValid($invalidArray);
+    }
 }

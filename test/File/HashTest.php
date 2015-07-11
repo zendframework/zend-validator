@@ -10,6 +10,7 @@
 namespace ZendTest\Validator\File;
 
 use Zend\Validator\File;
+use ReflectionClass;
 
 /**
  * Hash testbed
@@ -178,4 +179,54 @@ class HashTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(File\Hash::NOT_FOUND, $validator->getMessages());
     }
+    
+        public function testAddHashWithInvalidParameter()
+    {
+        $validator = new File\Hash('12345');
+
+        $invalidParameter = new \stdClass();
+
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'False parameter given');
+        $validator->addHash($invalidParameter);
+    }
+
+    public function testAddHashWithInvalidHash()
+    {
+        $validator = new File\Hash('12345');
+
+        $algorithm = 'foobar123';
+        $options = [
+			'algorithm' => $algorithm,
+		];
+
+		$this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', "Unknown algorithm '{$algorithm}'");
+        $validator->addHash($options);
+    }
+
+    public function testIsValidWithInvalidParameters()
+    {
+        $validator = new File\Hash('12345');
+
+        $invalidArray = [
+			'foo' => 'bar',
+		];
+
+		$this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Value array must be in $_FILES format');
+        $validator->isValid($invalidArray);
+    }
+
+    public function testConstructorWithHashAndAlgorithm()
+    {
+        $algorithm = 'md5';
+        $validator = new File\Hash('12345', $algorithm);
+
+        $reflection = new ReflectionClass($validator);
+        $property = $reflection->getProperty('options');
+        $property->setAccessible(true);
+
+        $options = $property->getValue($validator);
+        $retrievedAlgorithm = $options['algorithm'];
+        $this->assertEquals($algorithm, $retrievedAlgorithm);
+    }
+    
 }

@@ -157,4 +157,16 @@ class IbanTest extends \PHPUnit_Framework_TestCase
             $validator
         );
     }
+
+    public function testInstanceWithCountryCodeAndAllowNonSepa()
+    {
+        $validator = new IbanValidator(['country_code' => 'AT', 'allow_non_sepa' => false]);
+        $this->assertEquals(false, $validator->allowNonSepa());
+    }
+
+    public function testIsValidWithNonStringParameter()
+    {
+        $validator = new IbanValidator();
+        $this->assertFalse($validator->isValid([]));
+    }
 }

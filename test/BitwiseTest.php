@@ -177,4 +177,66 @@ class BitwiseTest extends \PHPUnit_Framework_TestCase
         $validator = new Bitwise(0x1, Bitwise::OP_AND, true);
         $this->assertTrue($validator->getStrict());
     }
+    
+    
+    public function testConstructWithArguments()
+    {
+    
+    	$control = 0x1;
+    	$operator = Bitwise::OP_AND;
+    	$strict = true;
+    
+    	$validator = new Bitwise($control, $operator, $strict);
+    	
+    	$this->assertEquals($control, $validator->getControl());
+    	$this->assertEquals($operator, $validator->getOperator());
+    	$this->assertEquals($strict, $validator->getStrict());
+    }
+    
+    public function testGetControl()
+    {
+    	$control = 0x1;
+    	$validator = new Bitwise($control, Bitwise::OP_AND, false);
+    	
+    	$this->assertEquals($control, $validator->getControl());
+    }
+    
+    public function testGetOperator()
+    {
+    	$operator = Bitwise::OP_AND;
+    	
+    	$validator = new Bitwise(0x1, $operator, false);
+    	
+    	$this->assertEquals($operator, $validator->getOperator());
+    }
+    
+    public function testGetStrict()
+    {
+    	$strict = true;
+    	
+    	$validator = new Bitwise(0x1, Bitwise::OP_AND, $strict);
+    	
+    	$this->assertEquals($strict, $validator->getStrict());
+    }
+    
+    public function testIsValidWithInvalidOperator()
+    {
+    	$validator = new Bitwise(0x1, 'or', false);
+    	
+    	$expectedResult = false;
+    	
+    	$this->assertEquals($expectedResult, $validator->isValid(0x2));
+    }
+    
+    public function testSetControl()
+    {
+    	$validator = new Bitwise();
+    	
+    	$control = 0x2;
+    	
+    	$validator->setControl($control);
+    	
+    	$this->assertEquals($control, $validator->getControl());
+    }
+    
 }

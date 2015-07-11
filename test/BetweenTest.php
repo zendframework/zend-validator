@@ -130,4 +130,10 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
             ],
         ];
     }
+
+    public function testConstructorWithInclusiveParameter()
+    {
+        $validator = new Between(1, 10, true);
+        $this->assertTrue($validator->getInclusive());
+    }
 }

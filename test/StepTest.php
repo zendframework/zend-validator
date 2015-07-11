@@ -10,6 +10,7 @@
 namespace ZendTest\Validator;
 
 use Zend\Validator;
+use ReflectionClass;
 
 /**
  * @group      Zend_Validator
@@ -199,4 +200,29 @@ class StepTest extends \PHPUnit_Framework_TestCase
         $this->_validator->setStep($step);
         $this->assertAttributeSame((float) $step, 'step', $this->_validator);
     }
+    
+    public function testConstructWithArguments()
+    {
+        $baseValue = 1.00;
+        $step = 0.01;
+
+        $validator = new Validator\Step($baseValue, $step);
+
+        $this->assertEquals($step, $validator->getStep());
+        $this->assertEquals($baseValue, $validator->getBaseValue());
+    }
+
+	public function testFModReturnsOneForZero()
+	{
+		$validator = new Validator\Step();
+		$reflection = new ReflectionClass($validator);
+
+		$property = $reflection->getMethod('fmod');
+        $property->setAccessible(true);
+
+        $this->assertEquals(
+            $property->invoke($validator, 0, 0),
+            1
+        );
+	}
 }

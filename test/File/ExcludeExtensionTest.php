@@ -180,4 +180,17 @@ class ExcludeExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(File\ExcludeExtension::NOT_FOUND, $validator->getMessages());
     }
+
+    public function testIsValidWithInvalidArray()
+    {
+        $validator = new File\ExcludeExtension('12345');
+        $invalidParameterArray = [
+            'foo' => 'bar',
+        ];
+        
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 
+        'Value array must be in $_FILES format'); 
+
+        $validator->isValid($invalidParameterArray);       
+    }
 }

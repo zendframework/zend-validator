@@ -11,6 +11,8 @@ namespace ZendTest\Validator\File;
 
 use Zend\Validator\File;
 use Zend\Validator;
+use ReflectionClass;
+use stdClass;
 
 /**
  * MimeType testbed
@@ -241,5 +243,69 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->assertFalse($validator->isValid($filesArray));
+    }
+
+    public function testConstructorWithArray()
+    {
+        $mimeType = 'image/gif';
+        $constructorArray = [
+            'mimeType' => $mimeType,
+        ];
+        $validator = new File\MimeType($constructorArray);
+
+        $this->assertEquals($mimeType, $validator->getMimeType());
+
+    }
+
+    public function testSetMagicFileWithEmptyArray()
+    {
+        $validator = new File\MimeType();
+        $validator->setMagicFile([]);
+
+        $reflection = new ReflectionClass($validator);
+        $property = $reflection->getProperty('options');
+        $property->setAccessible(true);
+
+        $optionsArray = $property->getValue($validator);
+        $retrievedValue = $optionsArray['magicFile'];
+        $this->assertEquals(null, $retrievedValue);
+    }
+
+    public function testAddMimeTypeWithInvalidArgument()
+    {
+        $validator = new File\MimeType();
+
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 
+        'Invalid options to validator provided');
+        $validator->addMimeType(new stdClass());
+    }
+
+    public function testAddMimeTypeWithMagicFileArrayKey()
+    {
+        $validator = new File\MimeType('image/gif');
+
+        $mimeTypeArray = [
+            'magicFile' => 'test.txt',
+            'gif' => 'text',
+        ];
+
+        $validator->addMimeType($mimeTypeArray);
+
+        $this->assertEquals('image/gif,text', $validator->getMimeType());
+        $this->assertEquals(['image/gif', 'text'], $validator->getMimeType(true));
+
+    }
+
+    public function testIsValidWithInvalidArray()
+    {
+        $validator = new File\MimeType('image\gif');
+        $invalidParameterArray = [
+            'foo' => 'bar',
+        ];
+        
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 
+        'Value array must be in $_FILES format'); 
+
+        $validator->isValid($invalidParameterArray);       
     }
 }

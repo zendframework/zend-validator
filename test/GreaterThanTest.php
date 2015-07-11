@@ -122,4 +122,10 @@ class GreaterThanTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($message['notGreaterThanInclusive'], "The input is not greater or equal than '10'");
         }
     }
+
+    public function testConstructorWithInclusiveParameter()
+    {
+        $validator = new GreaterThan(10, true);
+        $this->assertTrue($validator->getInclusive());
+    }
 }

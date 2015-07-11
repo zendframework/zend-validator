@@ -152,4 +152,10 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $this->validator->setUriHandler(new \stdClass());
     }
+
+    public function testIsValidWithInvalidArgument()
+    {
+        $validatorResult = $this->validator->isValid(new \stdClass());
+        $this->assertFalse($validatorResult);
+    }
 }

@@ -204,4 +204,17 @@ class Crc32Test extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(File\Crc32::NOT_FOUND, $validator->getMessages());
     }
+    
+    public function testShouldThrowInvalidArgumentException()
+    {
+        $validator = new File\Crc32();
+
+        $invalidArray = [
+            'foo' => 'bar',
+        ];
+
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
+
+        $validator->isValid($invalidArray);
+    }
 }

@@ -10,6 +10,7 @@
 namespace ZendTest\Validator;
 
 use Zend\Validator\Callback;
+use ReflectionClass;
 
 /**
  * @group      Zend_Validator
@@ -115,5 +116,24 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
         $args = func_get_args();
         $this->assertContains('something', $args);
         return $args;
+    }
+
+    public function testIsValidWithNoCallback()
+    {
+        $validator = new Callback();
+
+        $reflection = new ReflectionClass($validator);
+        $property = $reflection->getProperty('options');
+        $property->setAccessible(true);
+        
+        $options = $property->getValue($validator);
+        $options['callback'] = [];
+
+        $property->setValue($validator, $options);
+
+
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
+        'No callback given');
+        $validator->isValid('test');
     }
 }

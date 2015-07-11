@@ -288,4 +288,22 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         $this->errorOccurred = true;
     }
+
+    public function testGetOptionWithInvalidOption()
+    {
+        $option = 'foo';
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
+        "Invalid option '$option'");
+
+        $this->validator->getOption($option);
+    }
+
+    public function testSetOptionsWithInvalidArgument()
+    {
+        $invalidOptions = new \stdClass();
+
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
+        'setOptions expects an array or Traversable');
+        $this->validator->setOptions($invalidOptions);
+    }
 }

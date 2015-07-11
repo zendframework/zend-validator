@@ -139,4 +139,28 @@ class NotExistsTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('fileNotExistsDoesExist', $validator->getMessages());
         $this->assertContains("File exists", current($validator->getMessages()));
     }
+    
+    public function testShouldThrowInvalidArgumentException()
+    {
+        $validator = new File\NotExists();
+
+        $invalidArray = [
+            'foo' => 'bar',
+        ];
+
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
+        'Value array must be in $_FILES format');
+
+        $validator->isValid($invalidArray);
+    }
+
+    public function testAddInvalidDirectoryParameter()
+    {
+        $validator = new File\NotExists();
+
+        $invalidParameter = new \stdClass();
+
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
+        $validator->addDirectory($invalidParameter);
+	}
 }

@@ -94,4 +94,10 @@ class LessThanTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals($validator->getOption('messageVariables'),
                                      'messageVariables', $validator);
     }
+
+    public function testConstructorWithInclusiveParameter()
+    {
+        $validator = new LessThan(10, true);
+        $this->assertTrue($validator->getInclusive());
+    }
 }
