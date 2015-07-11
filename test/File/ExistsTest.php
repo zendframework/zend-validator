@@ -156,8 +156,8 @@ class ExistsTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(File\Exists::DOES_NOT_EXIST, $validator->getMessages());
     }
-    
-        public function testShouldThrowInvalidArgumentException()
+
+    public function testShouldThrowInvalidArgumentException()
     {
         $validator = new File\Exists();
 

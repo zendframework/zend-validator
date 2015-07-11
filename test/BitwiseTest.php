@@ -226,5 +226,4 @@ class BitwiseTest extends \PHPUnit_Framework_TestCase
         $validator->setControl($control);
         $this->assertEquals($control, $validator->getControl());
     }
-    
 }

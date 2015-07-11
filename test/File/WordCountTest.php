@@ -225,7 +225,7 @@ class WordCountTest extends \PHPUnit_Framework_TestCase
         $min = 1;
         $max = 10000;
 
-        $validator = new File\WordCount($min,$max);
+        $validator = new File\WordCount($min, $max);
 
         $retrievedMin = $validator->getMin();
         $retrievedMax = $validator->getMax();

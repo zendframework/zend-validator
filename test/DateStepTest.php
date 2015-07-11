@@ -192,7 +192,6 @@ class DateStepTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($step, $retrievedStep);
         $this->assertEquals($format, $retrievedFormat);
         $this->assertEquals($timezone, $retrievedTimezone);
-
     }
 
     public function testConvertStringWithErrors()

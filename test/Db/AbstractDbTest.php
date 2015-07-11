@@ -25,7 +25,7 @@ class AbstractDbTest extends \PHPUnit_Framework_TestCase
         $this->validator = new ConcreteDbValidator([
             'table' => 'table',
             'field' => 'field',
-		    'schema' => 'schema',
+            'schema' => 'schema',
         ]);
     }
 
@@ -44,7 +44,7 @@ class AbstractDbTest extends \PHPUnit_Framework_TestCase
         'Field option missing!');
         $validator = new ConcreteDbValidator([
             'schema' => 'schema',
-			'table' => 'table',
+            'table' => 'table',
         ]);
     }
 

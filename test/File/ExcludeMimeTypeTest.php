@@ -156,9 +156,9 @@ class ExcludeMimeTypeTest extends \PHPUnit_Framework_TestCase
         $invalidParameterArray = [
             'foo' => 'bar',
         ];
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 
-        'Value array must be in $_FILES format'); 
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
+        'Value array must be in $_FILES format');
 
-        $validator->isValid($invalidParameterArray);       
+        $validator->isValid($invalidParameterArray);
     }
 }

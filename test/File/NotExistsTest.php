@@ -162,5 +162,5 @@ class NotExistsTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
         $validator->addDirectory($invalidParameter);
-	}
+    }
 }

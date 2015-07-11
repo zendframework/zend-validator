@@ -254,7 +254,6 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
         $validator = new File\MimeType($constructorArray);
 
         $this->assertEquals($mimeType, $validator->getMimeType());
-
     }
 
     public function testSetMagicFileWithEmptyArray()
@@ -275,7 +274,7 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
     {
         $validator = new File\MimeType();
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
         'Invalid options to validator provided');
         $validator->addMimeType(new stdClass());
     }
@@ -302,9 +301,9 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
             'foo' => 'bar',
         ];
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 
-        'Value array must be in $_FILES format'); 
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
+        'Value array must be in $_FILES format');
 
-        $validator->isValid($invalidParameterArray);       
+        $validator->isValid($invalidParameterArray);
     }
 }
