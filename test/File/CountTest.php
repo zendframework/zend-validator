@@ -187,7 +187,7 @@ class CountTest extends \PHPUnit_Framework_TestCase
         $property = $reflection->getProperty('value');
         $property->setAccessible(true);
 
-        $result = $method->invoke($validator, $filename, File\Count::TOO_FEW);
+        $result = $method->invoke($validator, $fileArray, File\Count::TOO_FEW);
 
         //check that false was returned and that the value set correctly.
         $this->assertEquals(false, $result);
@@ -213,5 +213,15 @@ class CountTest extends \PHPUnit_Framework_TestCase
         //check that false was returned and that the value set correctly.
         $this->assertEquals(false, $result);
         $this->assertEquals($filename, $property->getValue($validator));
+    }
+
+    public function testConstructorWithParameters()
+    {
+        $min = 1000;
+        $max = 10000;
+        $validator = new File\Count($min, $max);
+
+        $this->assertEquals($min, $validator->getMin());
+        $this->assertEquals($max, $validator->getMax());
     }
 }
