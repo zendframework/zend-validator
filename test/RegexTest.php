@@ -10,6 +10,7 @@
 namespace ZendTest\Validator;
 
 use Zend\Validator\Regex;
+use ReflectionClass;
 
 /**
  * @group      Zend_Validator
@@ -124,5 +125,47 @@ class RegexTest extends \PHPUnit_Framework_TestCase
         $validator = new Regex('//');
         $this->assertAttributeEquals($validator->getOption('messageVariables'),
                                      'messageVariables', $validator);
+    }
+
+    public function invalidConstructorArgumentsProvider()
+    {
+        return [
+            [1],
+            [1.0],
+            [true],
+            [new \stdClass()],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidConstructorArgumentsProvider
+     */
+    public function testConstructorWithInvalidArgumentsThrowsException($invalidArgument)
+    {
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
+        $validator = new Regex($invalidArgument);
+    }
+
+    public function testConstructorWithInvalidArrayThrowsInvalidArgumentException()
+    {
+        $invalidArray = [
+            'foo' => 'bar',
+        ];
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
+        $validator = new Regex($invalidArray);
+    }
+
+    public function testIsValidReturnsFalseWithInvalidPatternRegex()
+    {
+        $validator = new Regex('//');
+        $invalidPattern = '/';
+
+        $reflection = new ReflectionClass($validator);
+        $property = $reflection->getProperty('pattern');
+        $property->setAccessible(true);
+
+        $property->setValue($validator, $invalidPattern);
+
+        $this->assertFalse($validator->isValid('test'));
     }
 }
