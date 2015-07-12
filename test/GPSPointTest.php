@@ -48,7 +48,7 @@ class GPSPointTest extends \PHPUnit_Framework_TestCase
     public function basicDataProvider()
     {
         return [
-            ['38° 53′ 23″ N, 77° 00′ 32″ W'],
+            ['38° 53\' 23" N, 77° 00\' 32" W'],
             ['38.8897°, -77.0089°'],
             ['38.8897,-77.0089']
         ];

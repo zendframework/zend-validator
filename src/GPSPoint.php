@@ -29,55 +29,7 @@ class GPSPoint extends AbstractValidator
 
         list($lat, $long) = explode(',', $value);
 
-        if ($this->isValidLatitude($lat) && $this->isValidLongitude($long)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param string $lat
-     * @return bool
-     */
-    public function isValidLatitude($lat)
-    {
-
-        if ($this->isDMSValue($lat)) {
-            $lat = $this->convertValue($lat);
-        }
-
-        if ($lat === false) {
-            return false;
-        }
-
-        $doubleLatitude = (double)$lat;
-
-        if ($doubleLatitude <= 90.0000 && $doubleLatitude >= -90.0000) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param string $long
-     * @return bool
-     */
-    public function isValidLongitude($long)
-    {
-
-        if ($this->isDMSValue($long)) {
-            $long = $this->convertValue($long);
-        }
-
-        if ($long === false) {
-            return false;
-        }
-
-        $doubleLongitude = (double)$long;
-
-        if ($doubleLongitude <= 180.0000 && $doubleLongitude >= -180.0000) {
+        if ($this->isValidCoordinate($lat, 90.0000) && $this->isValidCoordinate($long, 180.000)) {
             return true;
         }
 
@@ -86,20 +38,31 @@ class GPSPoint extends AbstractValidator
 
     /**
      * @param string $value
-     * @return bool|string
+     * @param $maxBoundary
+     * @return bool
      */
-    private function convertValue($value)
+    public function isValidCoordinate($value, $maxBoundary)
     {
-        $matches = [];
-        $result = preg_match_all('/(-?\d{1,3})º(\d{1,2})\'(\d{1,2})"[NESW]+/', $value, $matches);
 
-        if ($result === false || $result === 0) {
+        $value = $this->removeWhiteSpace($value);
+        if ($this->isDMSValue($value)) {
+            $value = $this->convertValue($value);
+        } else {
+            $value = $this->removeDegreeSign($value);
+        }
+
+        if ($value === false) {
             return false;
         }
 
-        return $matches[0] + $matches[1]/60 + $matches[2]/3600;
-    }
+        $doubleLatitude = (double)$value;
 
+        if ($doubleLatitude <= $maxBoundary && $doubleLatitude >= $maxBoundary * -1) {
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * Determines if the give value is a Degrees Minutes Second Definition
@@ -109,7 +72,42 @@ class GPSPoint extends AbstractValidator
      */
     private function isDMSValue($value)
     {
-        return preg_match('/([º\'"NESW]*)/', $value) > 0;
+        return preg_match('/([°\'"]+[NESW])/', $value) > 0;
+    }
+
+
+    /**
+     * @param string $value
+     * @return bool|string
+     */
+    private function convertValue($value)
+    {
+        $matches = [];
+        $result = preg_match_all('/(-?\d{1,3})°(\d{1,2})\'(\d{1,2})"[NESW]/i', $value, $matches);
+
+        if ($result === false || $result === 0) {
+            return false;
+        }
+
+        return $matches[1][0] + $matches[2][0]/60 + $matches[3][0]/3600;
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    private function removeWhiteSpace($value)
+    {
+        return preg_replace('/\s/', '', $value);
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    private function removeDegreeSign($value)
+    {
+        return str_replace('°', '', $value);
     }
 
 }
