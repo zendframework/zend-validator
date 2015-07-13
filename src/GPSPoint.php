@@ -9,7 +9,7 @@
 
 namespace Zend\Validator;
 
-class GPSPoint extends AbstractValidator
+final class GPSPoint extends AbstractValidator
 {
 
     /**
