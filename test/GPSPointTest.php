@@ -31,12 +31,16 @@ class GPSPointTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider basicDataProvider
+     * @covers GPSPoint::isValid
      */
     public function testBasic($gpsPoint)
     {
         $this->assertTrue($this->validator->isValid($gpsPoint));
     }
 
+    /**
+     * @covers GPSPoint::isValid
+     */
     public function testBoundariesAreRespected()
     {
         $this->assertFalse($this->validator->isValid('181.8897,-77.0089'));
