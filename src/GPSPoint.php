@@ -12,6 +12,19 @@ namespace Zend\Validator;
 final class GPSPoint extends AbstractValidator
 {
 
+    const OUT_OF_BOUNDS = 'gpsPointOutOfBounds';
+    const CONVERT_ERROR = 'gpsPointConvertError';
+    const INCOMPLETE_COORDINATE = 'gpsPointIncompleteCoordinate';
+
+    /**
+     * @var array
+     */
+    protected $messageTemplates = [
+        'gpsPointOutOfBounds' => '%value% is out of Bounds.',
+        'gpsPointConvertError' => '%value% can not converted into a Decimal Degree Value.',
+        'gpsPointIncompleteCoordinate' => '%value% did not provided a complete Coordinate',
+    ];
+
     /**
      * Returns true if and only if $value meets the validation requirements
      *
@@ -25,6 +38,11 @@ final class GPSPoint extends AbstractValidator
      */
     public function isValid($value)
     {
+        if (strpos($value, ',') === false) {
+            $this->error(GPSPoint::INCOMPLETE_COORDINATE, $value);
+            return false;
+        }
+
         list($lat, $long) = explode(',', $value);
 
         if ($this->isValidCoordinate($lat, 90.0000) && $this->isValidCoordinate($long, 180.000)) {
@@ -41,6 +59,8 @@ final class GPSPoint extends AbstractValidator
      */
     private function isValidCoordinate($value, $maxBoundary)
     {
+        $this->value = $value;
+
         $value = $this->removeWhiteSpace($value);
         if ($this->isDMSValue($value)) {
             $value = $this->convertValue($value);
@@ -48,7 +68,8 @@ final class GPSPoint extends AbstractValidator
             $value = $this->removeDegreeSign($value);
         }
 
-        if ($value === false) {
+        if ($value === false || $value === null) {
+            $this->error(self::CONVERT_ERROR);
             return false;
         }
 
@@ -58,6 +79,7 @@ final class GPSPoint extends AbstractValidator
             return true;
         }
 
+        $this->error(self::OUT_OF_BOUNDS);
         return false;
     }
 
