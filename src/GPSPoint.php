@@ -39,7 +39,7 @@ class GPSPoint extends AbstractValidator
      * @param $maxBoundary
      * @return bool
      */
-    public function isValidCoordinate($value, $maxBoundary)
+    private function isValidCoordinate($value, $maxBoundary)
     {
         $value = $this->removeWhiteSpace($value);
         if ($this->isDMSValue($value)) {
