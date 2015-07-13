@@ -80,7 +80,7 @@ class GPSPoint extends AbstractValidator
     private function convertValue($value)
     {
         $matches = [];
-        $result = preg_match_all('/(-?\d{1,3})°(\d{1,2})\'(\d{1,2})"[NESW]/i', $value, $matches);
+        $result = preg_match_all('/(\d{1,3})°(\d{1,2})\'(\d{1,2})"[NESW]/i', $value, $matches);
 
         if ($result === false || $result === 0) {
             return false;
