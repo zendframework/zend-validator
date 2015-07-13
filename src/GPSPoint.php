@@ -9,7 +9,6 @@
 
 namespace Zend\Validator;
 
-
 class GPSPoint extends AbstractValidator
 {
 
@@ -26,7 +25,6 @@ class GPSPoint extends AbstractValidator
      */
     public function isValid($value)
     {
-
         list($lat, $long) = explode(',', $value);
 
         if ($this->isValidCoordinate($lat, 90.0000) && $this->isValidCoordinate($long, 180.000)) {
@@ -43,7 +41,6 @@ class GPSPoint extends AbstractValidator
      */
     public function isValidCoordinate($value, $maxBoundary)
     {
-
         $value = $this->removeWhiteSpace($value);
         if ($this->isDMSValue($value)) {
             $value = $this->convertValue($value);
@@ -109,5 +106,4 @@ class GPSPoint extends AbstractValidator
     {
         return str_replace('°', '', $value);
     }
-
 }

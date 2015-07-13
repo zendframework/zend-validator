@@ -53,4 +53,4 @@ class GPSPointTest extends \PHPUnit_Framework_TestCase
             ['38.8897,-77.0089']
         ];
     }
-} 
+}
