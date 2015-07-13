@@ -31,7 +31,7 @@ class GPSPointTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider basicDataProvider
-     * @covers GPSPoint::isValid
+     * @covers \Zend\Validator\GPSPoint::isValid
      */
     public function testBasic($gpsPoint)
     {
@@ -39,7 +39,7 @@ class GPSPointTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers GPSPoint::isValid
+     * @covers \Zend\Validator\GPSPoint::isValid
      */
     public function testBoundariesAreRespected()
     {
@@ -50,7 +50,7 @@ class GPSPointTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers GPSPoint::isValid
+     * @covers \Zend\Validator\GPSPoint::isValid
      * @dataProvider ErrorMessageTestValues
      */
     public function testErrorsSetOnOccur($value, $messageKey, $messageValue)
