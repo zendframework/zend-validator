@@ -9,7 +9,7 @@
 
 namespace Zend\Validator;
 
-final class GPSPoint extends AbstractValidator
+final class GpsPoint extends AbstractValidator
 {
 
     const OUT_OF_BOUNDS = 'gpsPointOutOfBounds';
@@ -39,7 +39,7 @@ final class GPSPoint extends AbstractValidator
     public function isValid($value)
     {
         if (strpos($value, ',') === false) {
-            $this->error(GPSPoint::INCOMPLETE_COORDINATE, $value);
+            $this->error(GpsPoint::INCOMPLETE_COORDINATE, $value);
             return false;
         }
 

@@ -9,7 +9,7 @@
 
 namespace ZendTest\Validator;
 
-use Zend\Validator\GPSPoint;
+use Zend\Validator\GpsPoint;
 
 
 /**
@@ -19,13 +19,13 @@ class GPSPointTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var GPSPoint
+     * @var GpsPoint
      */
     protected $validator;
 
     public function setUp()
     {
-        $this->validator = new GPSPoint();
+        $this->validator = new GpsPoint();
     }
 
 
@@ -75,9 +75,9 @@ class GPSPointTest extends \PHPUnit_Framework_TestCase
     public function ErrorMessageTestValues()
     {
         return [
-            ['63 47 24.691 N, 18 2 54.363 W', GPSPoint::OUT_OF_BOUNDS, '63 47 24.691 N'],
-            ['° \' " N,° \' " E', GPSPoint::CONVERT_ERROR, '° \' " N'],
-            ['° \' " N', GPSPoint::INCOMPLETE_COORDINATE, '° \' " N'],
+            ['63 47 24.691 N, 18 2 54.363 W', GpsPoint::OUT_OF_BOUNDS, '63 47 24.691 N'],
+            ['° \' " N,° \' " E', GpsPoint::CONVERT_ERROR, '° \' " N'],
+            ['° \' " N', GpsPoint::INCOMPLETE_COORDINATE, '° \' " N'],
         ];
     }
 }
