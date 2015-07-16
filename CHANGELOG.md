@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 2.6.0 - TBD
+
+### Added
+
+- [#18](https://github.com/zendframework/zend-validator/pull/18) adds a `GpsPoint`
+  validator for validating GPS coordinates.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 2.5.2 - TBD
 
 ### Added
