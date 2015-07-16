@@ -25,3 +25,5 @@ All notable changes to this project will be documented in this file, in reverse 
   address in the case that the function fails.
 - [#11](https://github.com/zendframework/zend-validator/pull/11) fixes
   `ValidatorChain::prependValidator()` so that it works on HHVM.
+- [#12](https://github.com/zendframework/zend-validator/pull/12) adds "6772" to
+  the Maestro range of the `CreditCard` validator.
