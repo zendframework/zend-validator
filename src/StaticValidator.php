@@ -52,6 +52,12 @@ class StaticValidator
      */
     public static function execute($value, $classBaseName, array $args = [])
     {
+        if ($args && array_values($args) === $args) {
+            throw new Exception\InvalidArgumentException(
+                'Invalid options provided via $args argument; must be an associative array'
+            );
+        }
+
         $plugins = static::getPluginManager();
 
         $validator = $plugins->get($classBaseName, $args);
