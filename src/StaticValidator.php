@@ -47,8 +47,8 @@ class StaticValidator
     /**
      * @param  mixed    $value
      * @param  string   $classBaseName
-     * @param  array    $optons OPTIONAL options to pass to the validator constructor;
-     *     must be an associative array.
+     * @param  array    $options OPTIONAL associative array of options to pass as
+     *     the sole argument to the validator constructor.
      * @return bool
      * @throws Exception\InvalidArgumentException for an invalid $options argument.
      */
