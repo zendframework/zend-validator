@@ -10,6 +10,7 @@
 namespace Zend\Validator;
 
 use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
 use Traversable;
 
@@ -127,7 +128,7 @@ class Date extends AbstractValidator
      */
     protected function convertToDateTime($param, $addErrors = true)
     {
-        if ($param instanceof DateTimeInterface) {
+        if ($param instanceof DateTime || $param instanceof DateTimeImmutable) {
             return $param;
         }
 
