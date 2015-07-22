@@ -11,7 +11,6 @@ namespace ZendTest\Validator\File;
 
 use Zend\Validator\File;
 use Zend\Validator;
-use stdClass;
 
 /**
  * @group      Zend_Validator
