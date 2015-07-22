@@ -223,14 +223,40 @@ class SizeTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(File\Size::NOT_FOUND, $validator->getMessages());
     }
 
-    public function testSetMinWithInvalidArgument()
+    public function invalidMinMaxValues()
     {
-        $validator = new File\Size();
+        return [
+            'null'               => [null],
+            'true'               => [true],
+            'false'              => [false],
+            'array'              => [[100]],
+            'object'             => [(object) []],
+        ];
+    }
 
-        $invalidArgument = new \stdClass();
+    /**
+     * @dataProvider invalidMinMaxValues
+     */
+    public function testSetMinWithInvalidArgument($value)
+    {
+        $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Invalid options to validator provided'
+        );
+        $validator->setMin($value);
+    }
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
-
-        $validator->setMin($invalidArgument);
+    /**
+     * @dataProvider invalidMinMaxValues
+     */
+    public function testSetMaxWithInvalidArgument($value)
+    {
+        $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Invalid options to validator provided'
+        );
+        $validator->setMax($value);
     }
 }

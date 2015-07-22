@@ -265,43 +265,6 @@ class FilesSizeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($useBytesAsString, $validator->getByteString());
     }
 
-    public function invalidMinMaxValues()
-    {
-        return [
-            'null'               => [null],
-            'true'               => [true],
-            'false'              => [false],
-            'array'              => [[100]],
-            'object'             => [(object) []],
-        ];
-    }
-
-    /**
-     * @dataProvider invalidMinMaxValues
-     */
-    public function testSetMinWithInvalidArgument($value)
-    {
-        $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Invalid options to validator provided'
-        );
-        $validator->setMin($value);
-    }
-
-    /**
-     * @dataProvider invalidMinMaxValues
-     */
-    public function testSetMaxWithInvalidArgument($value)
-    {
-        $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Invalid options to validator provided'
-        );
-        $validator->setMax($value);
-    }
-
     public function testIsValidRaisesExceptionForArrayValueNotInFilesFormat()
     {
         $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
