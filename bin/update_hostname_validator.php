@@ -65,7 +65,7 @@ foreach (file(ZF2_HOSTNAME_VALIDATOR_FILE) as $line) {
 
     if ($insertDone) {
         // Detect where the $validTlds declaration ends
-        if (preg_match('/^\s+\);\s*$/', $line)) {
+        if (preg_match('/^\s+\];\s*$/', $line)) {
             $newFileContent []= $line;
             $insertFinish = true;
         }
@@ -74,7 +74,7 @@ foreach (file(ZF2_HOSTNAME_VALIDATOR_FILE) as $line) {
     }
 
     // Detect where the $validTlds declaration begins
-    if (preg_match('/^\s+protected\s+\$validTlds\s+=\s+array\(\s*$/', $line)) {
+    if (preg_match('/^\s+protected\s+\$validTlds\s+=\s+\[\s*$/', $line)) {
         $newFileContent = array_merge($newFileContent, $newValidTlds);
         $insertDone = true;
     }
