@@ -157,7 +157,10 @@ class Crc32Test extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['12345' => 'crc32', '12344' => 'crc32'], $validator->getCrc32());
 
         $validator->addCrc32(['12321', '12121']);
-        $this->assertEquals(['12345' => 'crc32', '12344' => 'crc32', '12321' => 'crc32', '12121' => 'crc32'], $validator->getCrc32());
+        $this->assertEquals(
+            ['12345' => 'crc32', '12344' => 'crc32', '12321' => 'crc32', '12121' => 'crc32'],
+            $validator->getCrc32()
+        );
     }
 
     /**
@@ -172,7 +175,10 @@ class Crc32Test extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['12345' => 'crc32', '12344' => 'crc32'], $validator->getCrc32());
 
         $validator->addHash(['12321', '12121']);
-        $this->assertEquals(['12345' => 'crc32', '12344' => 'crc32', '12321' => 'crc32', '12121' => 'crc32'], $validator->getCrc32());
+        $this->assertEquals(
+            ['12345' => 'crc32', '12344' => 'crc32', '12321' => 'crc32', '12121' => 'crc32'],
+            $validator->getCrc32()
+        );
     }
 
     /**
@@ -205,12 +211,10 @@ class Crc32Test extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(File\Crc32::NOT_FOUND, $validator->getMessages());
     }
 
-    public function testShouldThrowInvalidArgumentException()
+    public function testShouldThrowInvalidArgumentExceptionForArrayValueNotInFilesFormat()
     {
-        $validator = new File\Crc32();
-        $invalidArray = [
-            'foo' => 'bar',
-        ];
+        $validator    = new File\Crc32();
+        $invalidArray = ['foo' => 'bar'];
         $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
         $validator->isValid($invalidArray);
     }
