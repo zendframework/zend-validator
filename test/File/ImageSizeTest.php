@@ -152,7 +152,12 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetImageMin()
     {
-        $validator = new File\ImageSize(['minWidth' => 100, 'minHeight' => 1000, 'maxWidth' => 10000, 'maxHeight' => 100000]);
+        $validator = new File\ImageSize([
+            'minWidth'  => 100,
+            'minHeight' => 1000,
+            'maxWidth'  => 10000,
+            'maxHeight' => 100000,
+        ]);
         $validator->setImageMin(['minWidth' => 10, 'minHeight' => 10]);
         $this->assertEquals(['minWidth' => 10, 'minHeight' => 10], $validator->getImageMin());
 
@@ -170,11 +175,24 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetImageMax()
     {
-        $validator = new File\ImageSize(['minWidth' => 10, 'minHeight' => 100, 'maxWidth' => 1000, 'maxHeight' => 10000]);
+        $validator = new File\ImageSize([
+            'minWidth'  => 10,
+            'minHeight' => 100,
+            'maxWidth'  => 1000,
+            'maxHeight' => 10000,
+        ]);
         $this->assertEquals(['maxWidth' => 1000, 'maxHeight' => 10000], $validator->getImageMax());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'greater than or equal');
-        $validator = new File\ImageSize(['minWidth' => 10000, 'minHeight' => 1000, 'maxWidth' => 100, 'maxHeight' => 10]);
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'greater than or equal'
+        );
+        $validator = new File\ImageSize([
+            'minWidth'  => 10000,
+            'minHeight' => 1000,
+            'maxWidth'  => 100,
+            'maxHeight' => 10,
+        ]);
     }
 
     /**
@@ -184,7 +202,12 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetImageMax()
     {
-        $validator = new File\ImageSize(['minWidth' => 10, 'minHeight' => 100, 'maxWidth' => 1000, 'maxHeight' => 10000]);
+        $validator = new File\ImageSize([
+            'minWidth'  => 10,
+            'minHeight' => 100,
+            'maxWidth'  => 1000,
+            'maxHeight' => 10000,
+        ]);
         $validator->setImageMax(['maxWidth' => 100, 'maxHeight' => 100]);
         $this->assertEquals(['maxWidth' => 100, 'maxHeight' => 100], $validator->getImageMax());
 
@@ -219,7 +242,12 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetImageWidth()
     {
-        $validator = new File\ImageSize(['minWidth' => 100, 'minHeight' => 1000, 'maxWidth' => 10000, 'maxHeight' => 100000]);
+        $validator = new File\ImageSize([
+            'minWidth'  => 100,
+            'minHeight' => 1000,
+            'maxWidth'  => 10000,
+            'maxHeight' => 100000,
+        ]);
         $validator->setImageWidth(['minWidth' => 2000, 'maxWidth' => 2200]);
         $this->assertEquals(['minWidth' => 2000, 'maxWidth' => 2200], $validator->getImageWidth());
 
@@ -245,7 +273,12 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetImageHeight()
     {
-        $validator = new File\ImageSize(['minWidth' => 100, 'minHeight' => 1000, 'maxWidth' => 10000, 'maxHeight' => 100000]);
+        $validator = new File\ImageSize([
+            'minWidth'  => 100,
+            'minHeight' => 1000,
+            'maxWidth'  => 10000,
+            'maxHeight' => 100000,
+        ]);
         $validator->setImageHeight(['minHeight' => 2000, 'maxHeight' => 2200]);
         $this->assertEquals(['minHeight' => 2000, 'maxHeight' => 2200], $validator->getImageHeight());
 
@@ -258,7 +291,12 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function testZF11258()
     {
-        $validator = new File\ImageSize(['minWidth' => 100, 'minHeight' => 1000, 'maxWidth' => 10000, 'maxHeight' => 100000]);
+        $validator = new File\ImageSize([
+            'minWidth'  => 100,
+            'minHeight' => 1000,
+            'maxWidth'  => 10000,
+            'maxHeight' => 100000,
+        ]);
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $this->assertArrayHasKey('fileImageSizeNotReadable', $validator->getMessages());
         $this->assertContains("does not exist", current($validator->getMessages()));
@@ -283,31 +321,35 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(File\ImageSize::NOT_READABLE, $validator->getMessages());
     }
 
-    public function testConstructorWithArguments()
+    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments()
     {
-        $minWidth = 20;
+        $minWidth  = 20;
         $minHeight = 10;
-        $maxWidth = 200;
+        $maxWidth  = 200;
         $maxHeight = 100;
-
         $validator = new File\ImageSize($minWidth, $minHeight, $maxWidth, $maxHeight);
 
-        $this->assertEquals($minWidth, $validator->getMinWidth());
-        $this->assertEquals($minHeight, $validator->getMinHeight());
-        $this->assertEquals($maxWidth, $validator->getMaxWidth());
-        $this->assertEquals($maxHeight, $validator->getMaxHeight());
+        $this->assertSame($minWidth, $validator->getMinWidth());
+        $this->assertSame($minHeight, $validator->getMinHeight());
+        $this->assertSame($maxWidth, $validator->getMaxWidth());
+        $this->assertSame($maxHeight, $validator->getMaxHeight());
     }
 
-    public function testIsValidWithInvalidArray()
+    public function testIsValidRaisesExceptionForArrayNotInFilesFormat()
     {
-        $validator = new File\ImageSize(['minWidth' => 100, 'minHeight' => 1000, 'maxWidth' => 10000, 'maxHeight' => 100000]);
-        $invalidParameterArray = [
-            'foo' => 'bar',
-        ];
+        $validator = new File\ImageSize([
+            'minWidth'  => 100,
+            'minHeight' => 1000,
+            'maxWidth'  => 10000,
+            'maxHeight' => 100000,
+        ]);
+        $value = ['foo' => 'bar'];
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-        'Value array must be in $_FILES format');
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Value array must be in $_FILES format'
+        );
 
-        $validator->isValid($invalidParameterArray);
+        $validator->isValid($value);
     }
 }
