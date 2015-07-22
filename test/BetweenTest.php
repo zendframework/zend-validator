@@ -41,8 +41,11 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
         foreach ($valuesExpected as $element) {
             $validator = new Between(['min' => $element[0], 'max' => $element[1], 'inclusive' => $element[2]]);
             foreach ($element[4] as $input) {
-                $this->assertEquals($element[3], $validator->isValid($input),
-                'Failed values: ' . $input . ":" . implode("\n", $validator->getMessages()));
+                $this->assertEquals(
+                    $element[3],
+                    $validator->isValid($input),
+                    'Failed values: ' . $input . ":" . implode("\n", $validator->getMessages())
+                );
             }
         }
     }
@@ -131,9 +134,9 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testConstructorWithInclusiveParameter()
+    public function testConstructorCanAcceptInclusiveParameter()
     {
-        $validator = new Between(1, 10, true);
-        $this->assertTrue($validator->getInclusive());
+        $validator = new Between(1, 10, false);
+        $this->assertFalse($validator->getInclusive());
     }
 }
