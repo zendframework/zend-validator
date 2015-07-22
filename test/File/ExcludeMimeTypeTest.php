@@ -150,15 +150,14 @@ class ExcludeMimeTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(ExcludeMimeType::NOT_READABLE, $validator->getMessages());
     }
 
-    public function testIsValidWithInvalidArray()
+    public function testIsValidRaisesExceptionWithArrayNotInFilesFormat()
     {
         $validator = new ExcludeMimeType('image\gif');
-        $invalidParameterArray = [
-            'foo' => 'bar',
-        ];
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-        'Value array must be in $_FILES format');
-
-        $validator->isValid($invalidParameterArray);
+        $value     = ['foo' => 'bar'];
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Value array must be in $_FILES format'
+        );
+        $validator->isValid($value);
     }
 }
