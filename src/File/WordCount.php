@@ -109,7 +109,7 @@ class WordCount extends AbstractValidator
             $min = $min['min'];
         }
 
-        if (!is_string($min) and !is_numeric($min)) {
+        if (! is_numeric($min)) {
             throw new Exception\InvalidArgumentException('Invalid options to validator provided');
         }
 
@@ -147,7 +147,7 @@ class WordCount extends AbstractValidator
             $max = $max['max'];
         }
 
-        if (!is_string($max) and !is_numeric($max)) {
+        if (! is_numeric($max)) {
             throw new Exception\InvalidArgumentException('Invalid options to validator provided');
         }
 
