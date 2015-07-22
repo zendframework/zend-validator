@@ -10,11 +10,8 @@
 namespace ZendTest\Validator;
 
 use Zend\Validator;
-use ReflectionClass;
+use ReflectionMethod;
 
-/**
- * @group      Zend_Validator
- */
 class StepTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -22,7 +19,7 @@ class StepTest extends \PHPUnit_Framework_TestCase
      *
      * @var \Zend\Validator\Step
      */
-    protected $_validator;
+    protected $validator;
 
     /**
      * Creates a new Zend\Validator\Step object for each test method
@@ -31,125 +28,136 @@ class StepTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->_validator = new Validator\Step();
+        $this->validator = new Validator\Step();
+    }
+
+    public function valuesToValidate()
+    {
+        return [
+            'float'              => [1.00, true],
+            'zero-float'         => [0.00, true],
+            'int-2'              => [2, true],
+            'int-3'              => [3, true],
+            'float-fraction'     => [2.1, false],
+            'string-2'           => ['2', true],
+            'string-1'           => ['1', true],
+            'string-decimal'     => ['1.2', false],
+            'string-hundredths'  => [1.01, false],
+            'string-non-decimal' => ['not a scalar', false],
+        ];
     }
 
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @return void
+     * @dataProvider valuesToValidate
      */
-    public function testBasic()
+    public function testBasic($value, $expected)
     {
         // By default, baseValue == 0 and step == 1
-        $valuesExpected = [
-            [1.00, true],
-            [0.00, true],
-            [2, true],
-            [3, true],
-            [2.1, false],
-            ['2', true],
-            ['1', true],
-            ['1.2', false],
-            [1.01, false],
-            ['not a scalar', false]
-        ];
-
-        foreach ($valuesExpected as $element) {
-            $this->assertEquals($element[1], $this->_validator->isValid($element[0]),
-                'Test failed with ' . var_export($element, 1));
-        }
+        $this->assertSame(
+            $expected,
+            $this->validator->isValid($value)
+        );
     }
 
-    public function testDecimalBaseValue()
+    public function decimalValues()
     {
-        $valuesExpected = [
-            [1.1, false],
-            [0.1, true],
-            [2.1, true],
-            [3.1, false],
-            ['2.1', true],
-            ['1.1', false],
-            [1.11, false],
-            ['not a scalar', false]
+        return [
+            'between-step'        => [1.1, false],
+            'base-value'          => [0.1, true],
+            'first-step'          => [2.1, true],
+            'between-steps'       => [3.1, false],
+            'string-first-step'   => ['2.1', true],
+            'string-between-step' => ['1.1', false],
+            'fine-grained'        => [1.11, false],
+            'string-non-decimal'  => ['not a scalar', false],
         ];
+    }
 
+    /**
+     * @dataProvider decimalValues
+     */
+    public function testDecimalBaseValue($value, $expected)
+    {
         $validator = new Validator\Step([
             'baseValue' => 0.1,
             'step'      => 2
         ]);
 
-        foreach ($valuesExpected as $element) {
-            $this->assertEquals($element[1], $validator->isValid($element[0]),
-                'Test failed with ' . var_export($element, 1));
-        }
+        $this->assertSame($expected, $validator->isValid($value));
     }
 
-    public function testDecimalStep()
+    public function decimalStepValues()
     {
-        $valuesExpected = [
-            [1.1, false],
-            [0.1, false],
-            [2.1, true],
-            [3.1, false],
-            [4.2, true],
-            [6.3, true],
-            [8.4, true],
-            [10.5, true],
-            [12.6, true],
-            [14.7, true],
-            [16.8, true],
-            [18.9, true],
-            [21.0, true],
-            ['2.1', true],
-            ['1.1', false],
-            [1.11, false],
-            ['not a scalar', false]
+        return [
+            'between-0.1'        => [0.1, false],
+            'between-1.1'        => [1.1, false],
+            'first-step'         => [2.1, true],
+            'between-3.1'        => [3.1, false],
+            'second-step'        => [4.2, true],
+            'third-step'         => [6.3, true],
+            'fourth-step'        => [8.4, true],
+            'fifth-step'         => [10.5, true],
+            'sixth-step'         => [12.6, true],
+            'seventh-step'       => [14.7, true],
+            'eight-step'         => [16.8, true],
+            'ninth-step'         => [18.9, true],
+            'tenth-step'         => [21.0, true],
+            'string-1.1'         => ['1.1', false],
+            'string-1.11'        => [1.11, false],
+            'string-first-step'  => ['2.1', true],
+            'string-non-decimal' => ['not a scalar', false],
         ];
+    }
 
+    /**
+     * @dataProvider decimalStepValues
+     */
+    public function testDecimalStep($value, $expected)
+    {
         $validator = new Validator\Step([
             'baseValue' => 0,
             'step'      => 2.1
         ]);
-
-        foreach ($valuesExpected as $element) {
-            $this->assertEquals($element[1], $validator->isValid($element[0]),
-                'Test failed with ' . var_export($element, 1));
-        }
+        $this->assertSame($expected, $validator->isValid($value));
     }
 
-    public function testDecimalStep2()
+    public function decimalHundredthStepValues()
     {
-        $valuesExpected = [
-            [0.01, true],
-            [0.02, true],
-            [0.03, true],
-            [0.04, true],
-            [0.05, true],
-            [0.06, true],
-            [0.07, true],
-            [0.08, true],
-            [0.09, true],
-            [0.001, false],
-            [0.002, false],
-            [0.003, false],
-            [0.004, false],
-            [0.005, false],
-            [0.006, false],
-            [0.007, false],
-            [0.008, false],
-            [0.009, false]
+        return [
+            'first-step'       => [0.01, true],
+            'second-step'      => [0.02, true],
+            'third-step'       => [0.03, true],
+            'fourth-step'      => [0.04, true],
+            'fifth-step'       => [0.05, true],
+            'sixth-step'       => [0.06, true],
+            'seventh-step'     => [0.07, true],
+            'eighth-step'      => [0.08, true],
+            'ninth-step'       => [0.09, true],
+            'thousandth-0.001' => [0.001, false],
+            'thousandth-0.002' => [0.002, false],
+            'thousandth-0.003' => [0.003, false],
+            'thousandth-0.004' => [0.004, false],
+            'thousandth-0.005' => [0.005, false],
+            'thousandth-0.006' => [0.006, false],
+            'thousandth-0.007' => [0.007, false],
+            'thousandth-0.008' => [0.008, false],
+            'thousandth-0.009' => [0.009, false]
         ];
+    }
 
+    /**
+     * @dataProvider decimalHundredthStepValues
+     */
+    public function testDecimalStep2($value, $expected)
+    {
         $validator = new Validator\Step([
             'baseValue' => 0,
             'step'      => 0.01
         ]);
 
-        foreach ($valuesExpected as $element) {
-            $this->assertEquals($element[1], $validator->isValid($element[0]),
-                'Test failed with ' . var_export($element, 1));
-        }
+        $this->assertSame($expected, $validator->isValid($value));
     }
 
     /**
@@ -159,7 +167,7 @@ class StepTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMessages()
     {
-        $this->assertEquals([], $this->_validator->getMessages());
+        $this->assertEquals([], $this->validator->getMessages());
     }
 
     /**
@@ -167,8 +175,8 @@ class StepTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanSetBaseValue()
     {
-        $this->_validator->setBaseValue(2);
-        $this->assertEquals('2', $this->_validator->getBaseValue());
+        $this->validator->setBaseValue(2);
+        $this->assertEquals('2', $this->validator->getBaseValue());
     }
 
     /**
@@ -176,53 +184,51 @@ class StepTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanSetStepValue()
     {
-        $this->_validator->setStep(2);
-        $this->assertEquals('2', $this->_validator->getStep());
+        $this->validator->setStep(2);
+        $this->assertEquals('2', $this->validator->getStep());
     }
 
     public function testEqualsMessageTemplates()
     {
         $validator = new Validator\Step();
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
     }
 
     public function testSetStepFloat()
     {
         $step = 0.01;
-        $this->_validator->setStep($step);
-        $this->assertAttributeSame($step, 'step', $this->_validator);
+        $this->validator->setStep($step);
+        $this->assertAttributeSame($step, 'step', $this->validator);
     }
 
     public function testSetStepString()
     {
         $step = '0.01';
-        $this->_validator->setStep($step);
-        $this->assertAttributeSame((float) $step, 'step', $this->_validator);
+        $this->validator->setStep($step);
+        $this->assertAttributeSame((float) $step, 'step', $this->validator);
     }
 
-    public function testConstructWithArguments()
+    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments()
     {
         $baseValue = 1.00;
-        $step = 0.01;
-
+        $step      = 0.01;
         $validator = new Validator\Step($baseValue, $step);
 
-        $this->assertEquals($step, $validator->getStep());
-        $this->assertEquals($baseValue, $validator->getBaseValue());
+        $this->assertSame($step, $validator->getStep());
+        $this->assertSame($baseValue, $validator->getBaseValue());
     }
 
-    public function testFModReturnsOneForZero()
+    public function testFModNormalizesZeroToFloatOne()
     {
         $validator = new Validator\Step();
-        $reflection = new ReflectionClass($validator);
 
-        $property = $reflection->getMethod('fmod');
-        $property->setAccessible(true);
+        $r = new ReflectionMethod($validator, 'fmod');
+        $r->setAccessible(true);
 
-        $this->assertEquals(
-            $property->invoke($validator, 0, 0),
-            1
-        );
+        $this->assertSame(1.0, $r->invoke($validator, 0, 0));
     }
 }
