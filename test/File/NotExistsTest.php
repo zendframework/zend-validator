@@ -140,27 +140,38 @@ class NotExistsTest extends \PHPUnit_Framework_TestCase
         $this->assertContains("File exists", current($validator->getMessages()));
     }
 
-    public function testShouldThrowInvalidArgumentException()
+    public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat()
     {
         $validator = new File\NotExists();
-
-        $invalidArray = [
-            'foo' => 'bar',
-        ];
-
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-        'Value array must be in $_FILES format');
-
-        $validator->isValid($invalidArray);
+        $value     = ['foo' => 'bar'];
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Value array must be in $_FILES format'
+        );
+        $validator->isValid($value);
     }
 
-    public function testAddInvalidDirectoryParameter()
+    public function invalidDirectoryArguments()
+    {
+        return [
+            'null'       => [null],
+            'true'       => [true],
+            'false'      => [false],
+            'zero'       => [0],
+            'int'        => [1],
+            'zero-float' => [0.0],
+            'float'      => [1.1],
+            'object'     => [(object) []],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidDirectoryArguments
+     */
+    public function testAddingDirectoryUsingInvalidTypeRaisesException($value)
     {
         $validator = new File\NotExists();
-
-        $invalidParameter = new \stdClass();
-
         $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
-        $validator->addDirectory($invalidParameter);
+        $validator->addDirectory($value);
     }
 }
