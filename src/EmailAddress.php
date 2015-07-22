@@ -381,9 +381,9 @@ class EmailAddress extends AbstractValidator
         $weight  = [];
         $result = getmxrr($this->idnToAscii($this->hostname), $mxHosts, $weight);
         if (!empty($mxHosts) && !empty($weight)) {
-            $this->mxRecord = array_combine($mxHosts, $weight);
+            $this->mxRecord = array_combine($mxHosts, $weight) ?: [];
         } else {
-            $this->mxRecord = $mxHosts;
+            $this->mxRecord = [];
         }
 
         arsort($this->mxRecord);
