@@ -171,7 +171,10 @@ class Md5Test extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['12345' => 'md5', '12344' => 'md5'], $validator->getMd5());
 
         $validator->addMd5(['12321', '12121']);
-        $this->assertEquals(['12345' => 'md5', '12344' => 'md5', '12321' => 'md5', '12121' => 'md5'], $validator->getMd5());
+        $this->assertEquals(
+            ['12345' => 'md5', '12344' => 'md5', '12321' => 'md5', '12121' => 'md5'],
+            $validator->getMd5()
+        );
     }
 
     /**
@@ -186,7 +189,10 @@ class Md5Test extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['12345' => 'md5', '12344' => 'md5'], $validator->getMd5());
 
         $validator->addHash(['12321', '12121']);
-        $this->assertEquals(['12345' => 'md5', '12344' => 'md5', '12321' => 'md5', '12121' => 'md5'], $validator->getMd5());
+        $this->assertEquals(
+            ['12345' => 'md5', '12344' => 'md5', '12321' => 'md5', '12121' => 'md5'],
+            $validator->getMd5()
+        );
     }
 
     /**
@@ -217,5 +223,13 @@ class Md5Test extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(File\Md5::NOT_FOUND, $validator->getMessages());
+    }
+
+    public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat()
+    {
+        $validator = new File\Md5();
+        $value     = ['foo' => 'bar'];
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
+        $validator->isValid($value);
     }
 }

@@ -13,6 +13,7 @@ use Zend\Validator;
 use DateTime;
 use DateInterval;
 use DateTimeZone;
+use ReflectionMethod;
 
 /**
  * @group      Zend_Validator
@@ -147,5 +148,69 @@ class DateStepTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertTrue($validator->isValid($dateToValidate));
+    }
+
+    public function testCanSetBaseValue()
+    {
+        $validator = new Validator\DateStep();
+
+        $newBaseValue = '2013-01-23';
+        $validator->setBaseValue($newBaseValue);
+
+        $retrievedBaseValue = $validator->getBaseValue();
+
+        $this->assertSame($newBaseValue, $retrievedBaseValue);
+    }
+
+    public function testCanRetrieveTimezone()
+    {
+        $validator = new Validator\DateStep();
+
+        $newTimezone = new DateTimeZone("Europe/Vienna");
+        $validator->setTimezone($newTimezone);
+
+        $retrievedTimezone = $validator->getTimezone();
+
+        $this->assertSame($newTimezone, $retrievedTimezone);
+    }
+
+    public function testCanProvideOptionsToConstructorAsDiscreteArguments()
+    {
+        $baseValue = '2012-01-23';
+        $step      = new DateInterval("P1D");
+        $format    = 'd-m-Y';
+        $timezone  = new DateTimeZone("Europe/Vienna");
+
+        $validator = new Validator\DateStep($baseValue, $step, $format, $timezone);
+
+        $retrievedBaseValue = $validator->getBaseValue();
+        $retrievedStep      = $validator->getStep();
+        $retrievedFormat    = $validator->getFormat();
+        $retrievedTimezone  = $validator->getTimezone();
+
+        $this->assertSame($baseValue, $retrievedBaseValue);
+        $this->assertSame($step, $retrievedStep);
+        $this->assertSame($format, $retrievedFormat);
+        $this->assertSame($timezone, $retrievedTimezone);
+    }
+
+    public function testConvertStringDoesNotRaiseErrorOnInvalidValue()
+    {
+        $validator = new Validator\DateStep([
+            'format'    => 'Y-m-d',
+            'baseValue' => '2012-01-23',
+            'step'      => new DateInterval("P10D"),
+        ]);
+
+        $r = new ReflectionMethod($validator, 'convertString');
+        $r->setAccessible(true);
+
+        $invalidValue = '20-20-20';
+
+        // Verify that the value returns false for an invalid value
+        $this->assertFalse($r->invoke($validator, $invalidValue, false));
+
+        // Verify that no message was set.
+        $this->assertEquals([], $validator->getMessages());
     }
 }

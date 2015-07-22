@@ -155,4 +155,83 @@ class WordCountTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(File\WordCount::NOT_FOUND, $validator->getMessages());
     }
+
+    public function testCanSetMinValueUsingOptionsArray()
+    {
+        $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
+        $minValue  = 33;
+        $options   = ['min' => $minValue];
+
+        $validator->setMin($options);
+        $this->assertSame($minValue, $validator->getMin());
+    }
+
+    public function invalidMinMaxValues()
+    {
+        return [
+            'null'               => [null],
+            'true'               => [true],
+            'false'              => [false],
+            'non-numeric-string' => ['not-a-good-value'],
+            'array-without-keys' => [[100]],
+            'object'             => [(object) []],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidMinMaxValues
+     */
+    public function testSettingMinValueRaisesExceptionForInvalidType($value)
+    {
+        $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Invalid options to validator provided'
+        );
+        $validator->setMin($value);
+    }
+
+    public function testCanSetMaxValueUsingOptionsArray()
+    {
+        $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
+        $maxValue  = 33333333;
+        $options   = ['max' => $maxValue];
+
+        $validator->setMax($options);
+        $this->assertSame($maxValue, $validator->getMax());
+    }
+
+    /**
+     * @dataProvider invalidMinMaxValues
+     */
+    public function testSettingMaxValueRaisesExceptionForInvalidType($value)
+    {
+        $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Invalid options to validator provided'
+        );
+        $validator->setMax($value);
+    }
+
+    public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat()
+    {
+        $validator = new File\WordCount(['min' => 1, 'max' => 10000]);
+        $value     = ['foo' => 'bar'];
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Value array must be in $_FILES format'
+        );
+        $validator->isValid($value);
+    }
+
+    public function testConstructCanAcceptAllOptionsAsDiscreteArguments()
+    {
+        $min       = 1;
+        $max       = 10000;
+        $validator = new File\WordCount($min, $max);
+
+        $this->assertSame($min, $validator->getMin());
+        $this->assertSame($max, $validator->getMax());
+    }
 }

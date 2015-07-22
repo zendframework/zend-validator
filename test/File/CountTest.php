@@ -11,6 +11,7 @@ namespace ZendTest\Validator\File;
 
 use Zend\Validator\File;
 use Zend\Validator;
+use ReflectionClass;
 
 /**
  * @group      Zend_Validator
@@ -116,5 +117,112 @@ class CountTest extends \PHPUnit_Framework_TestCase
 
         $validator->setMin(100);
         $this->assertEquals(1000000, $validator->getMax());
+    }
+
+    public function testCanSetMaxValueUsingAnArrayWithMaxKey()
+    {
+        $validator   = new File\Count(['min' => 1000, 'max' => 10000]);
+        $maxValue    = 33333333;
+        $setMaxArray = ['max' => $maxValue];
+
+        $validator->setMax($setMaxArray);
+        $this->assertSame($maxValue, $validator->getMax());
+    }
+
+    public function invalidMinMaxValues()
+    {
+        return [
+            'null'           => [null],
+            'true'           => [true],
+            'false'          => [false],
+            'invalid-string' => ['will-not-work'],
+            'invalid-array'  => [[100]],
+            'object'         => [(object) []],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidMinMaxValues
+     */
+    public function testSettingMaxWithInvalidArgumentRaisesException($max)
+    {
+        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Invalid options to validator provided'
+        );
+
+        $validator->setMax($max);
+    }
+
+    public function testCanSetMinUsingAnArrayWithAMinKey()
+    {
+        $validator   = new File\Count(['min' => 1000, 'max' => 10000]);
+        $minValue    = 33;
+        $setMinArray = ['min' => $minValue];
+
+        $validator->setMin($setMinArray);
+        $this->assertEquals($minValue, $validator->getMin());
+    }
+
+    /**
+     * @dataProvider invalidMinMaxValues
+     */
+    public function testSettingMinWithInvalidArgumentRaisesException($min)
+    {
+        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Invalid options to validator provided'
+        );
+        $validator->setMin($min);
+    }
+
+    public function testThrowErrorReturnsFalseAndSetsMessageWhenProvidedWithArrayRepresentingTooFewFiles()
+    {
+        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
+        $filename  = 'test.txt';
+        $fileArray = ['name' => $filename];
+
+        $reflection = new ReflectionClass($validator);
+
+        $method = $reflection->getMethod('throwError');
+        $method->setAccessible(true);
+
+        $property = $reflection->getProperty('value');
+        $property->setAccessible(true);
+
+        $result = $method->invoke($validator, $fileArray, File\Count::TOO_FEW);
+
+        $this->assertFalse($result);
+        $this->assertEquals($filename, $property->getValue($validator));
+    }
+
+    public function testThrowErrorReturnsFalseAndSetsMessageWhenProvidedWithASingleFilename()
+    {
+        $validator  = new File\Count(['min' => 1000, 'max' => 10000]);
+        $filename   = 'test.txt';
+        $reflection = new ReflectionClass($validator);
+
+        $method = $reflection->getMethod('throwError');
+        $method->setAccessible(true);
+
+        $property = $reflection->getProperty('value');
+        $property->setAccessible(true);
+
+        $result = $method->invoke($validator, $filename, File\Count::TOO_FEW);
+
+        $this->assertFalse($result);
+        $this->assertEquals($filename, $property->getValue($validator));
+    }
+
+    public function testCanProvideMinAndMaxAsDiscreteConstructorArguments()
+    {
+        $min       = 1000;
+        $max       = 10000;
+        $validator = new File\Count($min, $max);
+
+        $this->assertSame($min, $validator->getMin());
+        $this->assertSame($max, $validator->getMax());
     }
 }

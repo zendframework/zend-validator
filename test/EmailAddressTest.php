@@ -217,59 +217,73 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('does not appear to be a valid local network name', next($messages));
     }
 
+    public function validEmailAddresses()
+    {
+        // @codingStandardsIgnoreStart
+        return [
+            'bob@domain.com'                                                          => ['bob@domain.com'],
+            'bob.jones@domain.co.uk'                                                  => ['bob.jones@domain.co.uk'],
+            'bob.jones.smythe@domain.co.uk'                                           => ['bob.jones.smythe@domain.co.uk'],
+            'BoB@domain.museum'                                                       => ['BoB@domain.museum'],
+            'bobjones@domain.info'                                                    => ['bobjones@domain.info'],
+            'bob+jones@domain.us'                                                     => ['bob+jones@domain.us'],
+            'bob+jones@domain.co.uk'                                                  => ['bob+jones@domain.co.uk'],
+            'bob@some.domain.uk.com'                                                  => ['bob@some.domain.uk.com'],
+            'bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com' => ['bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com'],
+            "B.O'Callaghan@domain.com"                                                => ["B.O'Callaghan@domain.com"],
+        ];
+        // @codingStandardsIgnoreEnd
+    }
+
     /**
      * Ensures that the validator follows expected behavior for valid email addresses
      *
-     * @return void
+     * @dataProvider validEmailAddresses
      */
-    public function testBasicValid()
+    public function testBasicValid($value)
     {
-        $emailAddresses = [
-            'bob@domain.com',
-            'bob.jones@domain.co.uk',
-            'bob.jones.smythe@domain.co.uk',
-            'BoB@domain.museum',
-            'bobjones@domain.info',
-            "B.O'Callaghan@domain.com",
-            'bob+jones@domain.us',
-            'bob+jones@domain.co.uk',
-            'bob@some.domain.uk.com',
-            'bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com'
-            ];
-        foreach ($emailAddresses as $input) {
-            $this->assertTrue($this->validator->isValid($input), "$input failed to pass validation:\n"
-                            . implode("\n", $this->validator->getMessages()));
-        }
+        $this->assertTrue(
+            $this->validator->isValid($value),
+            sprintf(
+                '%s failed validation: %s',
+                $value,
+                implode("\n", $this->validator->getMessages())
+            )
+        );
+    }
+
+    public function invalidEmailAddresses()
+    {
+        // @codingStandardsIgnoreStart
+        return [
+            '[empty]'                                                                  => [''],
+            'bob jones@domain.com'                                                     => ['bob jones@domain.com'],
+            '.bobJones@studio24.com'                                                   => ['.bobJones@studio24.com'],
+            'bobJones.@studio24.com'                                                   => ['bobJones.@studio24.com'],
+            'bob.Jones.@studio24.com'                                                  => ['bob.Jones.@studio24.com'],
+            'bob@verylongdomainsupercalifragilisticexpialidociousaspoonfulofsugar.com' => ['bob@verylongdomainsupercalifragilisticexpialidociousaspoonfulofsugar.com'],
+            'bob+domain.com'                                                           => ['bob+domain.com'],
+            'bob.domain.com'                                                           => ['bob.domain.com'],
+            'bob @domain.com'                                                          => ['bob @domain.com'],
+            'bob@ domain.com'                                                          => ['bob@ domain.com'],
+            'bob @ domain.com'                                                         => ['bob @ domain.com'],
+            'Abc..123@example.com'                                                     => ['Abc..123@example.com'],
+            '"bob%jones@domain.com'                                                    => ['"bob%jones@domain.com'],
+            'multiline'                                                                => ['bob
+
+            @domain.com'],
+        ];
+        // @codingStandardsIgnoreEnd
     }
 
     /**
      * Ensures that the validator follows expected behavior for invalid email addresses
      *
-     * @return void
+     * @dataProvider invalidEmailAddresses
      */
-    public function testBasicInvalid()
+    public function testBasicInvalid($value)
     {
-        $emailAddresses = [
-            '',
-            'bob
-
-            @domain.com',
-            'bob jones@domain.com',
-            '.bobJones@studio24.com',
-            'bobJones.@studio24.com',
-            'bob.Jones.@studio24.com',
-            '"bob%jones@domain.com',
-            'bob@verylongdomainsupercalifragilisticexpialidociousaspoonfulofsugar.com',
-            'bob+domain.com',
-            'bob.domain.com',
-            'bob @domain.com',
-            'bob@ domain.com',
-            'bob @ domain.com',
-            'Abc..123@example.com'
-            ];
-        foreach ($emailAddresses as $input) {
-            $this->assertFalse($this->validator->isValid($input), implode("\n", $this->validator->getMessages()) . $input);
-        }
+        $this->assertFalse($this->validator->isValid($value));
     }
 
     /**
@@ -439,7 +453,8 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
         $hostnameValidator = new Hostname();
         $translations = [
             'hostnameIpAddressNotAllowed'   => 'hostnameIpAddressNotAllowed translation',
-            'hostnameUnknownTld'            => 'The input appears to be a DNS hostname but cannot match TLD against known list',
+            'hostnameUnknownTld'            => 'The input appears to be a DNS hostname '
+            . 'but cannot match TLD against known list',
             'hostnameDashCharacter'         => 'hostnameDashCharacter translation',
             'hostnameInvalidHostnameSchema' => 'hostnameInvalidHostnameSchema translation',
             'hostnameUndecipherableTld'     => 'hostnameUndecipherableTld translation',
@@ -473,10 +488,12 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmailsExceedingLength()
     {
+        // @codingStandardsIgnoreStart
         $emailAddresses = [
             'thislocalpathoftheemailadressislongerthantheallowedsizeof64characters@domain.com',
             'bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugarverylongdomainsupercalifragilisticexpialidociousspoonfulofsugarverylongdomainsupercalifragilisticexpialidociousspoonfulofsugarverylongdomainsupercalifragilisticexpialidociousspoonfulofsugarexpialidociousspoonfulofsugar.com',
-            ];
+        ];
+        // @codingStandardsIgnoreEnd
         foreach ($emailAddresses as $input) {
             $this->assertFalse($this->validator->isValid($input));
         }
@@ -681,15 +698,21 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = $this->validator;
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
     }
 
     public function testEqualsMessageVariables()
     {
         $validator = $this->validator;
-        $this->assertAttributeEquals($validator->getOption('messageVariables'),
-                                     'messageVariables', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageVariables'),
+            'messageVariables',
+            $validator
+        );
     }
 
     /**
@@ -846,5 +869,12 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
         if (!getenv('TESTS_ZEND_VALIDATOR_ONLINE_ENABLED')) {
             $this->markTestSkipped('Testing MX records has been disabled');
         }
+    }
+
+    public function testCanSetDomainCheckFlag()
+    {
+        $validator = new EmailAddress();
+        $validator->useDomainCheck(false);
+        $this->assertFalse($validator->getDomainCheck());
     }
 }

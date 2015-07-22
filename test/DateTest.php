@@ -152,4 +152,12 @@ class DateTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals($validator->getOption('messageVariables'),
                                      'messageVariables', $validator);
     }
+
+    public function testConstructorWithFormatParameter()
+    {
+        $format = 'd/m/Y';
+        $validator = new Validator\Date($format);
+
+        $this->assertEquals($format, $validator->getFormat());
+    }
 }

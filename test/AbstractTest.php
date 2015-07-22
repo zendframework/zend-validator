@@ -167,15 +167,15 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     public function testGetMessageTemplates()
     {
         $messages = $this->validator->getMessageTemplates();
-        $this->assertEquals(
-            ['fooMessage' => '%value% was passed',
-                  'barMessage' => '%value% was wrong'], $messages);
+        $this->assertEquals([
+            'fooMessage' => '%value% was passed',
+            'barMessage' => '%value% was wrong'
+        ], $messages);
 
-        $this->assertEquals(
-            [TestAsset\ConcreteValidator::FOO_MESSAGE => '%value% was passed',
-                  TestAsset\ConcreteValidator::BAR_MESSAGE => '%value% was wrong'],
-            $messages
-            );
+        $this->assertEquals([
+            TestAsset\ConcreteValidator::FOO_MESSAGE => '%value% was passed',
+            TestAsset\ConcreteValidator::BAR_MESSAGE => '%value% was wrong'
+        ], $messages);
     }
 
     public function testInvokeProxiesToIsValid()
@@ -287,5 +287,42 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
     {
         $this->errorOccurred = true;
+    }
+
+    public function testRetrievingUnknownOptionRaisesException()
+    {
+        $option = 'foo';
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            sprintf("Invalid option '%s'", $option)
+        );
+        $this->validator->getOption($option);
+    }
+
+    public function invalidOptionsArguments()
+    {
+        return [
+            'null' => [null],
+            'true' => [true],
+            'false' => [false],
+            'zero' => [0],
+            'int' => [1],
+            'zero-float' => [0.0],
+            'float' => [1.1],
+            'string' => ['string'],
+            'object' => [(object) []],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidOptionsArguments
+     */
+    public function testSettingOptionsWithNonTraversableRaisesException($options)
+    {
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'setOptions expects an array or Traversable'
+        );
+        $this->validator->setOptions($options);
     }
 }
