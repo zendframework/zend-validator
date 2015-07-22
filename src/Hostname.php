@@ -1435,7 +1435,7 @@ class Hostname extends AbstractValidator
             do {
                 // First check TLD
                 $matches = [];
-                if (preg_match('/([^.]{2,63})$/iu', end($domainParts), $matches)
+                if (preg_match('/([^.]{2,63})$/u', end($domainParts), $matches)
                     || (array_key_exists(end($domainParts), $this->validIdns))
                 ) {
                     reset($domainParts);
