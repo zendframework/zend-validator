@@ -80,13 +80,16 @@ class Count extends AbstractValidator
      */
     public function __construct($options = null)
     {
-        if (is_string($options) || is_numeric($options)) {
-            $options = ['max' => $options];
+        if (1 < func_num_args()) {
+            $args = func_get_args();
+            $options = [
+                'min' => array_shift($args),
+                'max' => array_shift($args),
+            ];
         }
 
-        if (1 < func_num_args()) {
-            $options['min'] = func_get_arg(0);
-            $options['max'] = func_get_arg(1);
+        if (is_string($options) || is_numeric($options)) {
+            $options = ['max' => $options];
         }
 
         parent::__construct($options);
