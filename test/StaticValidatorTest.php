@@ -152,9 +152,38 @@ class StaticValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertNotSame($plugins, StaticValidator::getPluginManager());
     }
 
-    public function testExecuteValidWithParameters()
+    public function parameterizedData()
     {
-        $this->assertTrue(StaticValidator::execute(5, 'Between', [1, 10]));
-        $this->assertTrue(StaticValidator::execute(5, 'Between', ['min' => 1, 'max' => 10]));
+        return [
+            'valid-positive-range'   => [5, 'Between', ['min' => 1, 'max' => 10], true],
+            'valid-negative-range'   => [-5, 'Between', ['min' => -10, 'max' => -1], true],
+            'invalid-positive-range' => [-5, 'Between', ['min' => 1, 'max' => 10], false],
+            'invalid-negative-range' => [5, 'Between', ['min' => -10, 'max' => -1], false],
+        ];
+    }
+
+    /**
+     * @dataProvider parameterizedData
+     */
+    public function testExecuteValidWithParameters($value, $validator, $options, $expected)
+    {
+        $this->assertSame($expected, StaticValidator::execute($value, $validator, $options));
+    }
+
+    public function invalidParameterizedData()
+    {
+        return [
+            'positive-range' => [5, 'Between', [1, 10]],
+            'negative-range' => [-5, 'Between', [-10, -1]],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidParameterizedData
+     */
+    public function testExecuteRaisesExceptionForIndexedOptionsArray($value, $validator, $options)
+    {
+        $this->setExpectedException('InvalidArgumentException', 'options');
+        StaticValidator::execute($value, $validator, $options);
     }
 }

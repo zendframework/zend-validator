@@ -41,6 +41,13 @@ All notable changes to this project will be documented in this file, in reverse 
   [#29](https://github.com/zendframework/zend-validator/pull/29) provide more
   test coverage, and fix a number of edge cases, primarily in validator option
   verifications.
+- [#26](https://github.com/zendframework/zend-validator/pull/26) fixes tests for
+  `StaticValidator` such that they make correct assertions now. In doing so, we
+  determined that it was possible to pass an indexed array of options, which
+  could lead to unexpected results, often leading to false positives when
+  validating. To correct this situation, `StaticValidator::execute()` now raises
+  an `InvalidArgumentException` when an indexed array is detected for the
+  `$options` argument.
 
 ## 2.5.2 - 2015-07-16
 
