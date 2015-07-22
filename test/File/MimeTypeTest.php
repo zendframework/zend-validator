@@ -11,8 +11,7 @@ namespace ZendTest\Validator\File;
 
 use Zend\Validator\File;
 use Zend\Validator;
-use ReflectionClass;
-use stdClass;
+use ReflectionProperty;
 
 /**
  * MimeType testbed
@@ -160,7 +159,10 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('This PHP Version has no finfo installed');
         }
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidMagicMimeFileException', 'could not be used by ext/finfo');
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidMagicMimeFileException',
+            'could not be used by ext/finfo'
+        );
         $validator = new File\MimeType(['image/gif', 'magicFile' => __FILE__]);
     }
 
@@ -245,65 +247,76 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid($filesArray));
     }
 
-    public function testConstructorWithArray()
+    public function testConstructorCanAcceptOptionsArray()
     {
-        $mimeType = 'image/gif';
-        $constructorArray = [
-            'mimeType' => $mimeType,
-        ];
-        $validator = new File\MimeType($constructorArray);
-
-        $this->assertEquals($mimeType, $validator->getMimeType());
+        $mimeType  = 'image/gif';
+        $options   = ['mimeType' => $mimeType];
+        $validator = new File\MimeType($options);
+        $this->assertSame($mimeType, $validator->getMimeType());
     }
 
-    public function testSetMagicFileWithEmptyArray()
+    public function testSettingMagicFileWithEmptyArrayNullifiesValue()
     {
         $validator = new File\MimeType();
         $validator->setMagicFile([]);
 
-        $reflection = new ReflectionClass($validator);
-        $property = $reflection->getProperty('options');
-        $property->setAccessible(true);
+        $r = new ReflectionProperty($validator, 'options');
+        $r->setAccessible(true);
 
-        $optionsArray = $property->getValue($validator);
-        $retrievedValue = $optionsArray['magicFile'];
-        $this->assertEquals(null, $retrievedValue);
+        $options = $r->getValue($validator);
+        $this->assertNull($options['magicFile']);
     }
 
-    public function testAddMimeTypeWithInvalidArgument()
+    public function invalidMimeTypeTypes()
+    {
+        return [
+            'null'       => [null],
+            'true'       => [true],
+            'false'      => [false],
+            'zero'       => [0],
+            'int'        => [1],
+            'zero-float' => [0.0],
+            'float'      => [1.1],
+            'object'     => [(object) []],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidMimeTypeTypes
+     */
+    public function testAddingMimeTypeWithInvalidTypeRaisesException($type)
     {
         $validator = new File\MimeType();
-
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-        'Invalid options to validator provided');
-        $validator->addMimeType(new stdClass());
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Invalid options to validator provided'
+        );
+        $validator->addMimeType($type);
     }
 
-    public function testAddMimeTypeWithMagicFileArrayKey()
+    public function testAddingMimeTypeUsingMagicFileArrayKeyIgnoresKey()
     {
         $validator = new File\MimeType('image/gif');
 
         $mimeTypeArray = [
             'magicFile' => 'test.txt',
-            'gif' => 'text',
+            'gif'       => 'text',
         ];
 
         $validator->addMimeType($mimeTypeArray);
 
-        $this->assertEquals('image/gif,text', $validator->getMimeType());
-        $this->assertEquals(['image/gif', 'text'], $validator->getMimeType(true));
+        $this->assertSame('image/gif,text', $validator->getMimeType());
+        $this->assertSame(['image/gif', 'text'], $validator->getMimeType(true));
     }
 
-    public function testIsValidWithInvalidArray()
+    public function testIsValidRaisesExceptionWithArrayNotInFilesFormat()
     {
         $validator = new File\MimeType('image\gif');
-        $invalidParameterArray = [
-            'foo' => 'bar',
-        ];
-
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-        'Value array must be in $_FILES format');
-
-        $validator->isValid($invalidParameterArray);
+        $value     = ['foo' => 'bar'];
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Value array must be in $_FILES format'
+        );
+        $validator->isValid($value);
     }
 }
