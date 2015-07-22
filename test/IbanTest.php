@@ -100,7 +100,11 @@ class IbanTest extends \PHPUnit_Framework_TestCase
     public function testBasic($iban, $expected)
     {
         $validator = new IbanValidator();
-        $this->assertEquals($expected, $validator->isValid($iban), implode("\n", array_merge($validator->getMessages())));
+        $this->assertEquals(
+            $expected,
+            $validator->isValid($iban),
+            implode("\n", array_merge($validator->getMessages()))
+        );
     }
 
     public function testSettingAndGettingCountryCode()
@@ -158,13 +162,32 @@ class IbanTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testInstanceWithCountryCodeAndAllowNonSepa()
+    public function testConstructorAllowsSettingOptionsViaOptionsArray()
     {
         $validator = new IbanValidator(['country_code' => 'AT', 'allow_non_sepa' => false]);
-        $this->assertEquals(false, $validator->allowNonSepa());
+        $this->assertSame('AT', $validator->getCountryCode());
+        $this->assertFalse($validator->allowNonSepa());
     }
 
-    public function testIsValidWithNonStringParameter()
+    public function invalidValues()
+    {
+        return [
+            'null'       => [null],
+            'true'       => [true],
+            'false'      => [false],
+            'zero'       => [0],
+            'int'        => [1],
+            'zero-float' => [0.0],
+            'float'      => [1.1],
+            'array'      => [['foo']],
+            'object'     => [(object) []],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidValues
+     */
+    public function testIsValidReturnsFalseForNonStringValue($value)
     {
         $validator = new IbanValidator();
         $this->assertFalse($validator->isValid([]));
