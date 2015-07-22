@@ -268,7 +268,10 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
             'Abc..123@example.com'
             ];
         foreach ($emailAddresses as $input) {
-            $this->assertFalse($this->validator->isValid($input), implode("\n", $this->validator->getMessages()) . $input);
+            $this->assertFalse(
+                $this->validator->isValid($input),
+                implode("\n", $this->validator->getMessages()) . $input
+            );
         }
     }
 
@@ -439,7 +442,8 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
         $hostnameValidator = new Hostname();
         $translations = [
             'hostnameIpAddressNotAllowed'   => 'hostnameIpAddressNotAllowed translation',
-            'hostnameUnknownTld'            => 'The input appears to be a DNS hostname but cannot match TLD against known list',
+            'hostnameUnknownTld'            => 'The input appears to be a DNS hostname '
+            . 'but cannot match TLD against known list',
             'hostnameDashCharacter'         => 'hostnameDashCharacter translation',
             'hostnameInvalidHostnameSchema' => 'hostnameInvalidHostnameSchema translation',
             'hostnameUndecipherableTld'     => 'hostnameUndecipherableTld translation',
@@ -473,10 +477,12 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmailsExceedingLength()
     {
+        // @codingStandardsIgnoreStart
         $emailAddresses = [
             'thislocalpathoftheemailadressislongerthantheallowedsizeof64characters@domain.com',
             'bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugarverylongdomainsupercalifragilisticexpialidociousspoonfulofsugarverylongdomainsupercalifragilisticexpialidociousspoonfulofsugarverylongdomainsupercalifragilisticexpialidociousspoonfulofsugarexpialidociousspoonfulofsugar.com',
-            ];
+        ];
+        // @codingStandardsIgnoreEnd
         foreach ($emailAddresses as $input) {
             $this->assertFalse($this->validator->isValid($input));
         }
@@ -681,15 +687,21 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = $this->validator;
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
     }
 
     public function testEqualsMessageVariables()
     {
         $validator = $this->validator;
-        $this->assertAttributeEquals($validator->getOption('messageVariables'),
-                                     'messageVariables', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageVariables'),
+            'messageVariables',
+            $validator
+        );
     }
 
     /**
@@ -848,11 +860,10 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testUseDomainCheck()
+    public function testCanSetDomainCheckFlag()
     {
         $validator = new EmailAddress();
         $validator->useDomainCheck(false);
-
         $this->assertFalse($validator->getDomainCheck());
     }
 }
