@@ -83,7 +83,12 @@ class UriTest extends \PHPUnit_Framework_TestCase
      * @dataProvider allowOptionsDataProvider
      */
     public function testUriHandlerBehaviorWithAllowSettings(
-        $allowAbsolute, $allowRelative, $isAbsolute, $isRelative, $isValid, $expects
+        $allowAbsolute,
+        $allowRelative,
+        $isAbsolute,
+        $isRelative,
+        $isValid,
+        $expects
     ) {
         $uriMock = $this->getMock(
             'Zend\Uri\Uri',
@@ -153,9 +158,26 @@ class UriTest extends \PHPUnit_Framework_TestCase
         $this->validator->setUriHandler(new \stdClass());
     }
 
-    public function testIsValidWithInvalidArgument()
+    public function invalidValueTypes()
     {
-        $validatorResult = $this->validator->isValid(new \stdClass());
-        $this->assertFalse($validatorResult);
+        return [
+            'null'       => [null],
+            'true'       => [true],
+            'false'      => [false],
+            'zero'       => [0],
+            'int'        => [1],
+            'zero-float' => [0.0],
+            'float'      => [1.1],
+            'array'      => [['http://example.com']],
+            'object'     => [(object) ['uri' => 'http://example.com']],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidValueTypes
+     */
+    public function testIsValidReturnsFalseWhenProvidedUnsupportedType($value)
+    {
+        $this->assertFalse($this->validator->isValid($value));
     }
 }
