@@ -10,7 +10,7 @@
 namespace ZendTest\Validator;
 
 use Zend\Validator\Regex;
-use ReflectionClass;
+use ReflectionProperty;
 
 /**
  * @group      Zend_Validator
@@ -91,8 +91,11 @@ class RegexTest extends \PHPUnit_Framework_TestCase
     public function testSpecialCharValidation($expected, $input)
     {
         $validator = new Regex('/^[[:alpha:]\']+$/iu');
-        $this->assertEquals($expected, $validator->isValid($input),
-                            'Reason: ' . implode('', $validator->getMessages()));
+        $this->assertEquals(
+            $expected,
+            $validator->isValid($input),
+            'Reason: ' . implode('', $validator->getMessages())
+        );
     }
 
     /**
@@ -116,55 +119,60 @@ class RegexTest extends \PHPUnit_Framework_TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = new Regex('//');
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
     }
 
     public function testEqualsMessageVariables()
     {
         $validator = new Regex('//');
-        $this->assertAttributeEquals($validator->getOption('messageVariables'),
-                                     'messageVariables', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageVariables'),
+            'messageVariables',
+            $validator
+        );
     }
 
     public function invalidConstructorArgumentsProvider()
     {
         return [
-            [1],
-            [1.0],
-            [true],
-            [new \stdClass()],
+            'true'       => [true],
+            'false'      => [false],
+            'zero'       => [0],
+            'int'        => [1],
+            'zero-float' => [0.0],
+            'float'      => [1.0],
+            'object'     => [(object) []],
         ];
     }
 
     /**
      * @dataProvider invalidConstructorArgumentsProvider
      */
-    public function testConstructorWithInvalidArgumentsThrowsException($invalidArgument)
+    public function testConstructorRaisesExceptionWhenProvidedInvalidArguments($options)
     {
         $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
-        $validator = new Regex($invalidArgument);
+        $validator = new Regex($options);
     }
 
-    public function testConstructorWithInvalidArrayThrowsInvalidArgumentException()
+    public function testConstructorRaisesExceptionWhenProvidedWithInvalidOptionsArray()
     {
-        $invalidArray = [
-            'foo' => 'bar',
-        ];
+        $options = ['foo' => 'bar'];
         $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
-        $validator = new Regex($invalidArray);
+        $validator = new Regex($options);
     }
 
-    public function testIsValidReturnsFalseWithInvalidPatternRegex()
+    public function testIsValidShouldReturnFalseWhenRegexPatternIsInvalid()
     {
         $validator = new Regex('//');
-        $invalidPattern = '/';
+        $pattern   = '/';
 
-        $reflection = new ReflectionClass($validator);
-        $property = $reflection->getProperty('pattern');
-        $property->setAccessible(true);
-
-        $property->setValue($validator, $invalidPattern);
+        $r = new ReflectionProperty($validator, 'pattern');
+        $r->setAccessible(true);
+        $r->setValue($validator, $pattern);
 
         $this->assertFalse($validator->isValid('test'));
     }
