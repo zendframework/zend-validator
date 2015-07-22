@@ -10,7 +10,7 @@
 namespace ZendTest\Validator\File;
 
 use Zend\Validator\File;
-use ReflectionClass;
+use ReflectionProperty;
 
 /**
  * Hash testbed
@@ -147,7 +147,10 @@ class HashTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['12345' => 'crc32', '12344' => 'crc32'], $validator->getHash());
 
         $validator->addHash(['12321', '12121']);
-        $this->assertEquals(['12345' => 'crc32', '12344' => 'crc32', '12321' => 'crc32', '12121' => 'crc32'], $validator->getHash());
+        $this->assertEquals(
+            ['12345' => 'crc32', '12344' => 'crc32', '12321' => 'crc32', '12121' => 'crc32'],
+            $validator->getHash()
+        );
     }
 
     /**
@@ -180,52 +183,61 @@ class HashTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(File\Hash::NOT_FOUND, $validator->getMessages());
     }
 
-    public function testAddHashWithInvalidParameter()
+    public function invalidHashTypes()
     {
-        $validator = new File\Hash('12345');
-
-        $invalidParameter = new \stdClass();
-
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'False parameter given');
-        $validator->addHash($invalidParameter);
+        return [
+            'null'       => [null],
+            'true'       => [true],
+            'false'      => [false],
+            'zero'       => [0],
+            'int'        => [1],
+            'zero-float' => [0.0],
+            'float'      => [1.1],
+            'object'     => [(object) []],
+        ];
     }
 
-    public function testAddHashWithInvalidHash()
+    /**
+     * @dataProvider invalidHashTypes
+     */
+    public function testAddHashRaisesExceptionForInvalidType($value)
     {
         $validator = new File\Hash('12345');
+        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'False parameter given');
+        $validator->addHash($value);
+    }
 
+    public function testAddHashRaisesExceptionWithInvalidAlgorithm()
+    {
+        $validator = new File\Hash('12345');
         $algorithm = 'foobar123';
-        $options = [
-            'algorithm' => $algorithm,
-        ];
-
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', "Unknown algorithm '{$algorithm}'");
+        $options   = ['algorithm' => $algorithm];
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            sprintf("Unknown algorithm '%s'", $algorithm)
+        );
         $validator->addHash($options);
     }
 
-    public function testIsValidWithInvalidParameters()
+    public function testIsValidRaisesExceptionForArrayValueNotInFilesFormat()
     {
         $validator = new File\Hash('12345');
-
-        $invalidArray = [
-            'foo' => 'bar',
-        ];
-
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Value array must be in $_FILES format');
-        $validator->isValid($invalidArray);
+        $value     = ['foo' => 'bar'];
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Value array must be in $_FILES format'
+        );
+        $validator->isValid($value);
     }
 
-    public function testConstructorWithHashAndAlgorithm()
+    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments()
     {
         $algorithm = 'md5';
         $validator = new File\Hash('12345', $algorithm);
 
-        $reflection = new ReflectionClass($validator);
-        $property = $reflection->getProperty('options');
-        $property->setAccessible(true);
-
-        $options = $property->getValue($validator);
-        $retrievedAlgorithm = $options['algorithm'];
-        $this->assertEquals($algorithm, $retrievedAlgorithm);
+        $r = new ReflectionProperty($validator, 'options');
+        $r->setAccessible(true);
+        $options = $r->getValue($validator);
+        $this->assertSame($algorithm, $options['algorithm']);
     }
 }
