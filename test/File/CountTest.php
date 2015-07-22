@@ -119,65 +119,70 @@ class CountTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1000000, $validator->getMax());
     }
 
-    public function testSetMaxWithArray()
+    public function testCanSetMaxValueUsingAnArrayWithMaxKey()
     {
-        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
-
-        $maxValue = 33333333;
-
-        $setMaxArray = [
-            'max' => $maxValue,
-        ];
+        $validator   = new File\Count(['min' => 1000, 'max' => 10000]);
+        $maxValue    = 33333333;
+        $setMaxArray = ['max' => $maxValue];
 
         $validator->setMax($setMaxArray);
-        $this->assertEquals($maxValue, $validator->getMax());
+        $this->assertSame($maxValue, $validator->getMax());
     }
 
-    public function testSetMaxWithInvalidArgument()
+    public function invalidMinMaxValues()
     {
-        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
-
-        $invalidParameter = new \stdClass();
-
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-        'Invalid options to validator provided');
-
-        $validator->setMax($invalidParameter);
-    }
-
-    public function testSetMinWithArray()
-    {
-        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
-
-        $minValue = 33;
-
-        $setMinArray = [
-            'min' => $minValue,
+        return [
+            'null'           => [null],
+            'true'           => [true],
+            'false'          => [false],
+            'invalid-string' => ['will-not-work'],
+            'invalid-array'  => [[100]],
+            'object'         => [(object) []],
         ];
+    }
+
+    /**
+     * @dataProvider invalidMinMaxValues
+     */
+    public function testSettingMaxWithInvalidArgumentRaisesException($max)
+    {
+        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Invalid options to validator provided'
+        );
+
+        $validator->setMax($max);
+    }
+
+    public function testCanSetMinUsingAnArrayWithAMinKey()
+    {
+        $validator   = new File\Count(['min' => 1000, 'max' => 10000]);
+        $minValue    = 33;
+        $setMinArray = ['min' => $minValue];
 
         $validator->setMin($setMinArray);
         $this->assertEquals($minValue, $validator->getMin());
     }
 
-    public function testSetMinWithInvalidArgument()
+    /**
+     * @dataProvider invalidMinMaxValues
+     */
+    public function testSettingMinWithInvalidArgumentRaisesException($min)
     {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
-
-        $invalidParameter = new \stdClass();
-
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-        'Invalid options to validator provided');
-        $validator->setMin($invalidParameter);
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Invalid options to validator provided'
+        );
+        $validator->setMin($min);
     }
 
-    public function testThrowErrorWithFileArrayArgument()
+    public function testThrowErrorReturnsFalseAndSetsMessageWhenProvidedWithArrayRepresentingTooFewFiles()
     {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
-
-        $filename = 'test.txt';
-        $fileArray = [
-            'name' => $filename,
-        ];
+        $filename  = 'test.txt';
+        $fileArray = ['name' => $filename];
 
         $reflection = new ReflectionClass($validator);
 
@@ -189,17 +194,14 @@ class CountTest extends \PHPUnit_Framework_TestCase
 
         $result = $method->invoke($validator, $fileArray, File\Count::TOO_FEW);
 
-        //check that false was returned and that the value set correctly.
-        $this->assertEquals(false, $result);
+        $this->assertFalse($result);
         $this->assertEquals($filename, $property->getValue($validator));
     }
 
-    public function testThrowErrorWithFileStringArgument()
+    public function testThrowErrorReturnsFalseAndSetsMessageWhenProvidedWithASingleFilename()
     {
-        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
-
-        $filename = 'test.txt';
-
+        $validator  = new File\Count(['min' => 1000, 'max' => 10000]);
+        $filename   = 'test.txt';
         $reflection = new ReflectionClass($validator);
 
         $method = $reflection->getMethod('throwError');
@@ -210,18 +212,17 @@ class CountTest extends \PHPUnit_Framework_TestCase
 
         $result = $method->invoke($validator, $filename, File\Count::TOO_FEW);
 
-        //check that false was returned and that the value set correctly.
-        $this->assertEquals(false, $result);
+        $this->assertFalse($result);
         $this->assertEquals($filename, $property->getValue($validator));
     }
 
-    public function testConstructorWithParameters()
+    public function testCanProvideMinAndMaxAsDiscreteConstructorArguments()
     {
-        $min = 1000;
-        $max = 10000;
+        $min       = 1000;
+        $max       = 10000;
         $validator = new File\Count($min, $max);
 
-        $this->assertEquals($min, $validator->getMin());
-        $this->assertEquals($max, $validator->getMax());
+        $this->assertSame($min, $validator->getMin());
+        $this->assertSame($max, $validator->getMax());
     }
 }

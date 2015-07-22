@@ -111,11 +111,11 @@ class Count extends AbstractValidator
      */
     public function setMin($min)
     {
-        if (is_array($min) and isset($min['min'])) {
+        if (is_array($min) && isset($min['min'])) {
             $min = $min['min'];
         }
 
-        if (!is_string($min) and !is_numeric($min)) {
+        if (! is_numeric($min)) {
             throw new Exception\InvalidArgumentException('Invalid options to validator provided');
         }
 
@@ -149,11 +149,11 @@ class Count extends AbstractValidator
      */
     public function setMax($max)
     {
-        if (is_array($max) and isset($max['max'])) {
+        if (is_array($max) && isset($max['max'])) {
             $max = $max['max'];
         }
 
-        if (!is_string($max) and !is_numeric($max)) {
+        if (! is_numeric($max)) {
             throw new Exception\InvalidArgumentException('Invalid options to validator provided');
         }
 
