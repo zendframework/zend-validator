@@ -158,7 +158,10 @@ class Sha1Test extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['12345' => 'sha1', '12344' => 'sha1'], $validator->getSha1());
 
         $validator->addSha1(['12321', '12121']);
-        $this->assertEquals(['12345' => 'sha1', '12344' => 'sha1', '12321' => 'sha1', '12121' => 'sha1'], $validator->getSha1());
+        $this->assertEquals(
+            ['12345' => 'sha1', '12344' => 'sha1', '12321' => 'sha1', '12121' => 'sha1'],
+            $validator->getSha1()
+        );
     }
 
     /**
@@ -173,7 +176,10 @@ class Sha1Test extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['12345' => 'sha1', '12344' => 'sha1'], $validator->getSha1());
 
         $validator->addHash(['12321', '12121']);
-        $this->assertEquals(['12345' => 'sha1', '12344' => 'sha1', '12321' => 'sha1', '12121' => 'sha1'], $validator->getSha1());
+        $this->assertEquals(
+            ['12345' => 'sha1', '12344' => 'sha1', '12321' => 'sha1', '12121' => 'sha1'],
+            $validator->getSha1()
+        );
     }
 
     /**
@@ -206,17 +212,14 @@ class Sha1Test extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(File\Sha1::NOT_FOUND, $validator->getMessages());
     }
 
-    public function testShouldThrowInvalidArgumentException()
+    public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat()
     {
         $validator = new File\Sha1();
-
-        $invalidArray = [
-            'foo' => 'bar',
-        ];
-
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-        'Value array must be in $_FILES format');
-
-        $validator->isValid($invalidArray);
+        $value     = ['foo' => 'bar'];
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Value array must be in $_FILES format'
+        );
+        $validator->isValid($value);
     }
 }
