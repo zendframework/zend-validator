@@ -10,7 +10,7 @@
 namespace ZendTest\Validator;
 
 use Zend\Validator\Callback;
-use ReflectionClass;
+use ReflectionProperty;
 
 /**
  * @group      Zend_Validator
@@ -75,8 +75,11 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = new Callback([$this, 'objectCallback']);
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
     }
 
     public function testCanAcceptContextWithoutOptions()
@@ -118,21 +121,22 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
         return $args;
     }
 
-    public function testIsValidWithNoCallback()
+    public function testIsValidRaisesExceptionWhenNoCallbackPresent()
     {
         $validator = new Callback();
 
-        $reflection = new ReflectionClass($validator);
-        $property = $reflection->getProperty('options');
-        $property->setAccessible(true);
+        $r = new ReflectionProperty($validator, 'options');
+        $r->setAccessible(true);
 
-        $options = $property->getValue($validator);
+        $options = $r->getValue($validator);
         $options['callback'] = [];
 
-        $property->setValue($validator, $options);
+        $r->setValue($validator, $options);
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-        'No callback given');
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'No callback given'
+        );
         $validator->isValid('test');
     }
 }
