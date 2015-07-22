@@ -324,6 +324,7 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($barcode->isValid('1144874X'));
 
         $this->assertTrue($barcode->isValid('9771144875007'));
+        $this->assertFalse($barcode->isValid('97711448750X7'));
     }
 
     public function testITF14()

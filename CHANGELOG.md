@@ -37,7 +37,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#17](https://github.com/zendframework/zend-validator/pull/17) and
+  [#29](https://github.com/zendframework/zend-validator/pull/29) provide more
+  test coverage, and fix a number of edge cases, primarily in validator option
+  verifications.
 
 ## 2.5.2 - 2015-07-16
 

@@ -107,7 +107,10 @@ class BitwiseTest extends \PHPUnit_Framework_TestCase
         $validator->isValid(0x8);
         $messages = $validator->getMessages();
         $this->assertArrayHasKey($validator::NOT_AND_STRICT, $messages);
-        $this->assertSame("The input doesn't have the same bits set as '$controlSum'", $messages[$validator::NOT_AND_STRICT]);
+        $this->assertSame(
+            "The input doesn't have the same bits set as '$controlSum'",
+            $messages[$validator::NOT_AND_STRICT]
+        );
 
         $this->assertTrue($validator->isValid(0x1 | 0x2));
         $this->assertTrue($validator->isValid(0x1 | 0x2 | 0x4));
@@ -176,5 +179,54 @@ class BitwiseTest extends \PHPUnit_Framework_TestCase
 
         $validator = new Bitwise(0x1, Bitwise::OP_AND, true);
         $this->assertTrue($validator->getStrict());
+    }
+
+    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments()
+    {
+        $control  = 0x1;
+        $operator = Bitwise::OP_AND;
+        $strict   = true;
+
+        $validator = new Bitwise($control, $operator, $strict);
+
+        $this->assertSame($control, $validator->getControl());
+        $this->assertSame($operator, $validator->getOperator());
+        $this->assertSame($strict, $validator->getStrict());
+    }
+
+    public function testCanRetrieveControlValue()
+    {
+        $control   = 0x1;
+        $validator = new Bitwise($control, Bitwise::OP_AND, false);
+        $this->assertSame($control, $validator->getControl());
+    }
+
+    public function testCanRetrieveOperatorValue()
+    {
+        $operator  = Bitwise::OP_AND;
+        $validator = new Bitwise(0x1, $operator, false);
+        $this->assertSame($operator, $validator->getOperator());
+    }
+
+    public function testCanRetrieveStrictValue()
+    {
+        $strict    = true;
+        $validator = new Bitwise(0x1, Bitwise::OP_AND, $strict);
+        $this->assertSame($strict, $validator->getStrict());
+    }
+
+    public function testIsValidReturnsFalseWithInvalidOperator()
+    {
+        $validator      = new Bitwise(0x1, 'or', false);
+        $expectedResult = false;
+        $this->assertEquals($expectedResult, $validator->isValid(0x2));
+    }
+
+    public function testCanSetControlValue()
+    {
+        $validator = new Bitwise();
+        $control   = 0x2;
+        $validator->setControl($control);
+        $this->assertSame($control, $validator->getControl());
     }
 }

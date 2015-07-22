@@ -183,4 +183,15 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(File\Extension::NOT_FOUND, $validator->getMessages());
     }
+
+    public function testIsValidRaisesExceptionForArrayNotInFilesFormat()
+    {
+        $validator = new File\Extension('foo');
+        $value     = ['foo' => 'bar'];
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Value array must be in $_FILES format'
+        );
+        $validator->isValid($value);
+    }
 }

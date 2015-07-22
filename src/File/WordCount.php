@@ -74,13 +74,16 @@ class WordCount extends AbstractValidator
      */
     public function __construct($options = null)
     {
-        if (is_string($options) || is_numeric($options)) {
-            $options = ['max' => $options];
+        if (1 < func_num_args()) {
+            $args = func_get_args();
+            $options = [
+                'min' => array_shift($args),
+                'max' => array_shift($args),
+            ];
         }
 
-        if (1 < func_num_args()) {
-            $options['min'] = func_get_arg(0);
-            $options['max'] = func_get_arg(1);
+        if (is_string($options) || is_numeric($options)) {
+            $options = ['max' => $options];
         }
 
         parent::__construct($options);
@@ -109,7 +112,7 @@ class WordCount extends AbstractValidator
             $min = $min['min'];
         }
 
-        if (!is_string($min) and !is_numeric($min)) {
+        if (! is_numeric($min)) {
             throw new Exception\InvalidArgumentException('Invalid options to validator provided');
         }
 
@@ -147,7 +150,7 @@ class WordCount extends AbstractValidator
             $max = $max['max'];
         }
 
-        if (!is_string($max) and !is_numeric($max)) {
+        if (! is_numeric($max)) {
             throw new Exception\InvalidArgumentException('Invalid options to validator provided');
         }
 

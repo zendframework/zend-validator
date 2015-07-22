@@ -21,6 +21,7 @@ class EmailAddress extends AbstractValidator
     const INVALID_LOCAL_PART = 'emailAddressInvalidLocalPart';
     const LENGTH_EXCEEDED    = 'emailAddressLengthExceeded';
 
+    // @codingStandardsIgnoreStart
     /**
      * @var array
      */
@@ -35,6 +36,7 @@ class EmailAddress extends AbstractValidator
         self::INVALID_LOCAL_PART => "'%localPart%' is not a valid local part for the email address",
         self::LENGTH_EXCEEDED    => "The input exceeds the allowed length",
     ];
+    // @codingStandardsIgnoreEnd
 
     /**
      * @var array
@@ -59,7 +61,7 @@ class EmailAddress extends AbstractValidator
      *
      * @var array
      */
-    protected $mxRecord;
+    protected $mxRecord = [];
 
     /**
      * Internal options array
@@ -300,6 +302,7 @@ class EmailAddress extends AbstractValidator
         }
 
         foreach ($host as $server) {
+            // @codingStandardsIgnoreStart
             // Search for 0.0.0.0/8, 10.0.0.0/8, 127.0.0.0/8
             if (!preg_match('/^(0|10|127)(\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))){3}$/', $server) &&
                 // Search for 100.64.0.0/10
@@ -317,6 +320,7 @@ class EmailAddress extends AbstractValidator
             ) {
                 return false;
             }
+            // @codingStandardsIgnoreEnd
         }
 
         return true;
@@ -377,9 +381,9 @@ class EmailAddress extends AbstractValidator
         $weight  = [];
         $result = getmxrr($this->idnToAscii($this->hostname), $mxHosts, $weight);
         if (!empty($mxHosts) && !empty($weight)) {
-            $this->mxRecord = array_combine($mxHosts, $weight);
+            $this->mxRecord = array_combine($mxHosts, $weight) ?: [];
         } else {
-            $this->mxRecord = $mxHosts;
+            $this->mxRecord = [];
         }
 
         arsort($this->mxRecord);

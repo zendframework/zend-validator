@@ -160,8 +160,8 @@ class FilesSizeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid([
             __DIR__ . '/_files/testsize.mo',
             __DIR__ . '/_files/testsize.mo',
-            __DIR__ . '/_files/testsize2.mo'])
-            );
+            __DIR__ . '/_files/testsize2.mo',
+        ]));
         $messages = $validator->getMessages();
         $this->assertContains('9.76kB', current($messages));
         $this->assertContains('1.55kB', current($messages));
@@ -170,8 +170,8 @@ class FilesSizeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid([
             __DIR__ . '/_files/testsize.mo',
             __DIR__ . '/_files/testsize.mo',
-            __DIR__ . '/_files/testsize2.mo'])
-            );
+            __DIR__ . '/_files/testsize2.mo',
+        ]));
         $messages = $validator->getMessages();
         $this->assertContains('9999', current($messages));
         $this->assertContains('1588', current($messages));
@@ -249,5 +249,29 @@ class FilesSizeTest extends \PHPUnit_Framework_TestCase
             'type'     => '',
             'size'     => filesize($file),
         ];
+    }
+
+    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments()
+    {
+        $min              = 0;
+        $max              = 10;
+        $useBytesAsString = false;
+
+        $validator = new File\FilesSize($min, $max, $useBytesAsString);
+
+        $this->assertEquals($min, $validator->getMin(true));
+        $this->assertEquals($max, $validator->getMax(true));
+        $this->assertSame($useBytesAsString, $validator->getByteString());
+    }
+
+    public function testIsValidRaisesExceptionForArrayValueNotInFilesFormat()
+    {
+        $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
+        $value     = [['foo' => 'bar']];
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Value array must be in $_FILES format'
+        );
+        $validator->isValid($value);
     }
 }
