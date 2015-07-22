@@ -84,20 +84,27 @@ class LessThanTest extends \PHPUnit_Framework_TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = new LessThan(10);
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
     }
 
     public function testEqualsMessageVariables()
     {
         $validator = new LessThan(10);
-        $this->assertAttributeEquals($validator->getOption('messageVariables'),
-                                     'messageVariables', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageVariables'),
+            'messageVariables',
+            $validator
+        );
     }
 
-    public function testConstructorWithInclusiveParameter()
+    public function testConstructorAllowsSettingAllOptionsAsDiscreteArguments()
     {
         $validator = new LessThan(10, true);
+        $this->assertSame(10, $validator->getMax());
         $this->assertTrue($validator->getInclusive());
     }
 }
