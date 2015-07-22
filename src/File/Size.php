@@ -141,7 +141,7 @@ class Size extends AbstractValidator
      */
     public function setMin($min)
     {
-        if (!is_string($min) and !is_numeric($min)) {
+        if (! is_string($min) && ! is_numeric($min)) {
             throw new Exception\InvalidArgumentException('Invalid options to validator provided');
         }
 
@@ -186,7 +186,7 @@ class Size extends AbstractValidator
      */
     public function setMax($max)
     {
-        if (!is_string($max) && !is_numeric($max)) {
+        if (! is_string($max) && ! is_numeric($max)) {
             throw new Exception\InvalidArgumentException('Invalid options to validator provided');
         }
 

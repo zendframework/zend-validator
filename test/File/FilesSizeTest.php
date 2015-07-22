@@ -161,8 +161,8 @@ class FilesSizeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid([
             __DIR__ . '/_files/testsize.mo',
             __DIR__ . '/_files/testsize.mo',
-            __DIR__ . '/_files/testsize2.mo'])
-            );
+            __DIR__ . '/_files/testsize2.mo',
+        ]));
         $messages = $validator->getMessages();
         $this->assertContains('9.76kB', current($messages));
         $this->assertContains('1.55kB', current($messages));
@@ -171,8 +171,8 @@ class FilesSizeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isValid([
             __DIR__ . '/_files/testsize.mo',
             __DIR__ . '/_files/testsize.mo',
-            __DIR__ . '/_files/testsize2.mo'])
-            );
+            __DIR__ . '/_files/testsize2.mo',
+        ]));
         $messages = $validator->getMessages();
         $this->assertContains('9999', current($messages));
         $this->assertContains('1588', current($messages));
@@ -252,49 +252,64 @@ class FilesSizeTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testConstructorWithParameters()
+    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments()
     {
-        $min = 0;
-        $max = 10;
+        $min              = 0;
+        $max              = 10;
         $useBytesAsString = false;
 
         $validator = new File\FilesSize($min, $max, $useBytesAsString);
 
         $this->assertEquals($min, $validator->getMin(true));
         $this->assertEquals($max, $validator->getMax(true));
-        $this->assertEquals($useBytesAsString, $validator->getByteString());
+        $this->assertSame($useBytesAsString, $validator->getByteString());
     }
 
-    public function testSetMinWithInvalidArgument()
+    public function invalidMinMaxValues()
     {
-        $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
-        $invalidMin = new stdClass();
-
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-        'Invalid options to validator provided');
-        $validator->setMin($invalidMin);
-    }
-
-    public function testSetMaxWithInvalidArgument()
-    {
-        $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
-        $invalidMax = new stdClass();
-
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-        'Invalid options to validator provided');
-        $validator->setMax($invalidMax);
-    }
-
-    public function testIsValidWithInvalidArray()
-    {
-        $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
-        $invalidParameterArray = [
-            ['foo' => 'bar'],
+        return [
+            'null'               => [null],
+            'true'               => [true],
+            'false'              => [false],
+            'array'              => [[100]],
+            'object'             => [(object) []],
         ];
+    }
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-        'Value array must be in $_FILES format');
+    /**
+     * @dataProvider invalidMinMaxValues
+     */
+    public function testSetMinWithInvalidArgument($value)
+    {
+        $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Invalid options to validator provided'
+        );
+        $validator->setMin($value);
+    }
 
-        $validator->isValid($invalidParameterArray);
+    /**
+     * @dataProvider invalidMinMaxValues
+     */
+    public function testSetMaxWithInvalidArgument($value)
+    {
+        $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Invalid options to validator provided'
+        );
+        $validator->setMax($value);
+    }
+
+    public function testIsValidRaisesExceptionForArrayValueNotInFilesFormat()
+    {
+        $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
+        $value     = [['foo' => 'bar']];
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Value array must be in $_FILES format'
+        );
+        $validator->isValid($value);
     }
 }
