@@ -155,19 +155,19 @@ class StaticValidatorTest extends \PHPUnit_Framework_TestCase
     public function parameterizedData()
     {
         return [
-            'valid-positive-range'   => [5, 'Between', ['min' => 1, 'max' => 10], 'assertTrue'],
-            'valid-negative-range'   => [-5, 'Between', ['min' => -10, 'max' => -1], 'assertTrue'],
-            'invalid-positive-range' => [-5, 'Between', ['min' => 1, 'max' => 10], 'assertFalse'],
-            'invalid-negative-range' => [5, 'Between', ['min' => -10, 'max' => -1], 'assertFalse'],
+            'valid-positive-range'   => [5, 'Between', ['min' => 1, 'max' => 10], true],
+            'valid-negative-range'   => [-5, 'Between', ['min' => -10, 'max' => -1], true],
+            'invalid-positive-range' => [-5, 'Between', ['min' => 1, 'max' => 10], false],
+            'invalid-negative-range' => [5, 'Between', ['min' => -10, 'max' => -1], false],
         ];
     }
 
     /**
      * @dataProvider parameterizedData
      */
-    public function testExecuteValidWithParameters($value, $validator, $options, $assertion)
+    public function testExecuteValidWithParameters($value, $validator, $options, $expected)
     {
-        $this->$assertion(StaticValidator::execute($value, $validator, $options));
+        $this->assertSame($expected, StaticValidator::execute($value, $validator, $options));
     }
 
     public function invalidParameterizedData()
