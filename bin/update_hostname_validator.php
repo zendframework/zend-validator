@@ -15,6 +15,7 @@ require __DIR__ . '/../vendor/autoload.php';
 define('IANA_URL', 'https://data.iana.org/TLD/tlds-alpha-by-domain.txt');
 define('ZF2_HOSTNAME_VALIDATOR_FILE', __DIR__.'/../src/Hostname.php');
 
+
 if (! file_exists(ZF2_HOSTNAME_VALIDATOR_FILE) || ! is_readable(ZF2_HOSTNAME_VALIDATOR_FILE)) {
     printf("Error: cannont read file '%s'%s", ZF2_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
     exit(1);
@@ -25,35 +26,33 @@ if (! is_writable(ZF2_HOSTNAME_VALIDATOR_FILE)) {
     exit(1);
 }
 
-// get current list of official TLDs
-$client = new Client();
-$client->setOptions([
-    'adapter' => 'Zend\Http\Client\Adapter\Curl',
-]);
-$client->setUri(IANA_URL);
-$client->setMethod('GET');
-$response = $client->send();
-if (! $response->isSuccess()) {
-    printf("Error: cannot get '%s'%s", IANA_URL, PHP_EOL);
+$newFileContent = [];     // new file content
+$insertDone     = false; // becomes 'true' when we find start of $validTlds declaration
+$insertFinish   = false; // becomes 'true' when we find end of $validTlds declaration
+$checkOnly = isset($argv[1]) ? $argv[1] === '--check-only' : false;
+
+$response = getOfficialTLDs();
+
+$ianaVersion = getVersionFromString(strtok($response->getBody(), "\n"));
+$validatorVersion = getVersionFromString(file_get_contents(ZF2_HOSTNAME_VALIDATOR_FILE));
+
+if ($ianaVersion > $validatorVersion && $checkOnly) {
+    printf('TLDs must be updated, please run `php bin/update_hostname_validator.php` and push your changes%s', PHP_EOL);
     exit(1);
 }
 
-$decodePunycode = getPunycodeDecoder();
-
-// Get new TLDs from the list previously fetched
-$newValidTlds = [];
-foreach (preg_grep('/^[^#]/', preg_split("#\r?\n#", $response->getBody())) as $line) {
-    $newValidTlds []= sprintf(
-        "%s'%s',\n",
-        str_repeat(' ', 8),
-        $decodePunycode(strtolower($line))
-    );
+if ($checkOnly) {
+    printf('TLDs are up to date%s', PHP_EOL);
+    exit(0);
 }
 
-$newFileContent = [];  // new file content
-$insertDone     = false;    // becomes 'true' when we find start of $validTlds declaration
-$insertFinish   = false;    // becomes 'true' when we find end of $validTlds declaration
 foreach (file(ZF2_HOSTNAME_VALIDATOR_FILE) as $line) {
+    // Replace old version number with new one
+    if (preg_match('/\*\s+Version\s+\d+/', $line, $matches)) {
+        $newFileContent[] = sprintf('     * Version %s%s', $ianaVersion, PHP_EOL);
+        continue;
+    }
+
     if ($insertDone === $insertFinish) {
         // Outside of $validTlds definition; keep line as-is
         $newFileContent []= $line;
@@ -75,7 +74,7 @@ foreach (file(ZF2_HOSTNAME_VALIDATOR_FILE) as $line) {
 
     // Detect where the $validTlds declaration begins
     if (preg_match('/^\s+protected\s+\$validTlds\s+=\s+\[\s*$/', $line)) {
-        $newFileContent = array_merge($newFileContent, $newValidTlds);
+        $newFileContent = array_merge($newFileContent, getNewValidTlds($response->getBody()));
         $insertDone = true;
     }
 }
@@ -95,8 +94,71 @@ if (false === @file_put_contents(ZF2_HOSTNAME_VALIDATOR_FILE, $newFileContent)) 
     exit(1);
 }
 
-printf("Validator TLD file updated.%s", PHP_EOL);
+printf('Validator TLD file updated.%s', PHP_EOL);
 exit(0);
+
+/**
+ * Get Official TLDs
+ *
+ * @return \Zend\Http\Response
+ * @throws Exception
+ */
+function getOfficialTLDs()
+{
+    $client = new Client();
+    $client->setOptions([
+        'adapter' => 'Zend\Http\Client\Adapter\Curl',
+    ]);
+    $client->setUri(IANA_URL);
+    $client->setMethod('GET');
+    $response = $client->send();
+    if (! $response->isSuccess()) {
+        throw new \Exception(sprintf("Error: cannot get '%s'%s", IANA_URL, PHP_EOL));
+    }
+    return $response;
+}
+
+/**
+ * Extract the first match of a string like
+ * "Version 2015072300"from the given string
+ *
+ * @param string $string
+ * @return string
+ * @throws Exception
+ */
+function getVersionFromString($string)
+{
+    $matches = [];
+
+    if (!preg_match('/Version\s+((\d+)?)/', $string, $matches)) {
+        throw new \Exception(sprintf('Error: cannot get last update date%s', PHP_EOL));
+    }
+
+    return $matches[1];
+}
+
+/**
+ * Extract new Valid TLDs from a string containing one per line.
+ *
+ * @param string $string
+ * @return array
+ */
+function getNewValidTlds($string)
+{
+    $decodePunycode = getPunycodeDecoder();
+
+    // Get new TLDs from the list previously fetched
+    $newValidTlds = [];
+    foreach (preg_grep('/^[^#]/', preg_split("#\r?\n#", $string)) as $line) {
+        $newValidTlds []= sprintf(
+            "%s'%s',\n",
+            str_repeat(' ', 8),
+            $decodePunycode(strtolower($line))
+        );
+    }
+
+    return $newValidTlds;
+}
 
 /**
  * Retrieve and return a punycode decoder.
