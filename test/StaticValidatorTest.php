@@ -48,21 +48,6 @@ class StaticValidatorTest extends \PHPUnit_Framework_TestCase
         AbstractValidator::setMessageLength(-1);
     }
 
-    /**
-     * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
-     *
-     * @param  integer $errno
-     * @param  string  $errstr
-     * @param  string  $errfile
-     * @param  integer $errline
-     * @param  array   $errcontext
-     * @return void
-     */
-    public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
-    {
-        $this->errorOccurred = true;
-    }
-
     public function testCanSetGlobalDefaultTranslator()
     {
         $translator = new TestAsset\Translator();
