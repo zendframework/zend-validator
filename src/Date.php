@@ -11,7 +11,6 @@ namespace Zend\Validator;
 
 use DateTime;
 use DateTimeImmutable;
-use DateTimeInterface;
 use Traversable;
 
 /**
