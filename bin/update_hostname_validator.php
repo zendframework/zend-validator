@@ -33,8 +33,8 @@ $checkOnly = isset($argv[1]) ? $argv[1] === '--check-only' : false;
 
 $response = getOfficialTLDs();
 
-$ianaVersion = getVersionFromString(strtok($response->getBody(), "\n"));
-$validatorVersion = getVersionFromString(file_get_contents(ZF2_HOSTNAME_VALIDATOR_FILE));
+$ianaVersion = getVersionFromString('Version', strtok($response->getBody(), "\n"));
+$validatorVersion = getVersionFromString('IanaVersion', file_get_contents(ZF2_HOSTNAME_VALIDATOR_FILE));
 
 if ($ianaVersion > $validatorVersion && $checkOnly) {
     printf('TLDs must be updated, please run `php bin/update_hostname_validator.php` and push your changes%s', PHP_EOL);
@@ -48,8 +48,8 @@ if ($checkOnly) {
 
 foreach (file(ZF2_HOSTNAME_VALIDATOR_FILE) as $line) {
     // Replace old version number with new one
-    if (preg_match('/\*\s+Version\s+\d+/', $line, $matches)) {
-        $newFileContent[] = sprintf('     * Version %s%s', $ianaVersion, PHP_EOL);
+    if (preg_match('/\*\s+IanaVersion\s+\d+/', $line, $matches)) {
+        $newFileContent[] = sprintf("     * IanaVersion %s\n", $ianaVersion);
         continue;
     }
 
@@ -120,18 +120,18 @@ function getOfficialTLDs()
 
 /**
  * Extract the first match of a string like
- * "Version 2015072300"from the given string
+ * "Version 2015072300" from the given string
  *
+ * @param string $prefix
  * @param string $string
  * @return string
  * @throws Exception
  */
-function getVersionFromString($string)
+function getVersionFromString($prefix, $string)
 {
     $matches = [];
-
-    if (!preg_match('/Version\s+((\d+)?)/', $string, $matches)) {
-        throw new \Exception(sprintf('Error: cannot get last update date%s', PHP_EOL));
+    if (!preg_match(sprintf('/%s\s+((\d+)?)/', $prefix), $string, $matches)) {
+        throw new \Exception('Error: cannot get last update date');
     }
 
     return $matches[1];
