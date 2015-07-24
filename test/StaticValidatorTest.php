@@ -24,13 +24,6 @@ class StaticValidatorTest extends \PHPUnit_Framework_TestCase
     public $validator;
 
     /**
-     * Whether an error occurred
-     *
-     * @var bool
-     */
-    protected $errorOccurred = false;
-
-    /**
      * Creates a new validation object for each test method
      *
      * @return void
