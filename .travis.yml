@@ -21,6 +21,7 @@ matrix:
     - php: 5.5
       env:
         - EXECUTE_CS_CHECK=true
+        - CHECK_HOSTNAME=true
     - php: 5.6
       env:
         - EXECUTE_TEST_COVERALLS=true
@@ -41,12 +42,12 @@ before_install:
 
 install:
   - travis_retry composer install --no-interaction --ignore-platform-reqs
-  - php bin/update_hostname_validator.php --check-only
 
 script:
   - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then ./vendor/bin/phpunit --coverage-clover clover.xml ; fi
   - if [[ $EXECUTE_TEST_COVERALLS != 'true' ]]; then ./vendor/bin/phpunit ; fi
   - if [[ $EXECUTE_CS_CHECK == 'true' ]]; then ./vendor/bin/php-cs-fixer fix -v --diff --dry-run ; fi
+  - if [[ $CHECK_HOSTNAME == 'true' ]]; then php bin/update_hostname_validator.php --check-only ; fi
 
 after_script:
   - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then ./vendor/bin/coveralls ; fi
