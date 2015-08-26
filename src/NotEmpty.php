@@ -14,19 +14,19 @@ use Zend\Stdlib\ArrayUtils;
 
 class NotEmpty extends AbstractValidator
 {
-    const BOOLEAN       = 0x001;
-    const INTEGER       = 0x002;
-    const FLOAT         = 0x004;
-    const STRING        = 0x008;
-    const ZERO          = 0x010;
-    const EMPTY_ARRAY   = 0x020;
-    const NULL          = 0x040;
-    const PHP           = 0x07F;
-    const SPACE         = 0x080;
-    const OBJECT        = 0x100;
-    const OBJECT_STRING = 0x200;
-    const OBJECT_COUNT  = 0x400;
-    const ALL           = 0x7FF;
+    const BOOLEAN       = 0b000000000001;
+    const INTEGER       = 0b000000000010;
+    const FLOAT         = 0b000000000100;
+    const STRING        = 0b000000001000;
+    const ZERO          = 0b000000010000;
+    const EMPTY_ARRAY   = 0b000000100000;
+    const NULL          = 0b000001000000;
+    const PHP           = 0b000001111111;
+    const SPACE         = 0b000010000000;
+    const OBJECT        = 0b000100000000;
+    const OBJECT_STRING = 0b001000000000;
+    const OBJECT_COUNT  = 0b010000000000;
+    const ALL           = 0b011111111111;
 
     const INVALID  = 'notEmptyInvalid';
     const IS_EMPTY = 'isEmpty';
