@@ -29,6 +29,9 @@ All notable changes to this project will be documented in this file, in reverse 
   validating. To correct this situation, `StaticValidator::execute()` now raises
   an `InvalidArgumentException` when an indexed array is detected for the
   `$options` argument.
+- [#35](https://github.com/zendframework/zend-validator/pull/35) modifies the
+  `NotEmpty` validator to no longer treat the float `0.0` as an empty value for
+  purposes of validation.
 
 ## 2.5.2 - 2015-07-16
 

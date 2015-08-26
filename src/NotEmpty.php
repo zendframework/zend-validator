@@ -48,7 +48,7 @@ class NotEmpty extends AbstractValidator
     ];
 
     /**
-     * Default value for types; value = 493
+     * Default value for types; value = 0b000111101001
      *
      * @var array
      */
@@ -58,7 +58,6 @@ class NotEmpty extends AbstractValidator
         self::NULL,
         self::EMPTY_ARRAY,
         self::STRING,
-        self::FLOAT,
         self::BOOLEAN
     ];
 
