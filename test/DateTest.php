@@ -101,6 +101,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
 
     public function testDateTimeImmutable()
     {
+        if (version_compare(PHP_VERSION, '5.5', 'lt')) {
+            $this->markTestSkipped('DateTimeImmutable was introduced in 5.5');
+        }
         $this->assertTrue($this->validator->isValid(new DateTimeImmutable()));
     }
 
