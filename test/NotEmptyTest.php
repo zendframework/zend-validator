@@ -65,7 +65,7 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
             [null, false],
             [[], false],
             [[5], true],
-            [0.0, false],
+            [0.0, true],
             [1.0, true],
             [new stdClass(), true],
         ];
@@ -975,7 +975,6 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame(
             NotEmpty::BOOLEAN
-                | NotEmpty::FLOAT
                 | NotEmpty::STRING
                 | NotEmpty::EMPTY_ARRAY
                 | NotEmpty::NULL
