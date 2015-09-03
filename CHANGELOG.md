@@ -51,6 +51,10 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#35](https://github.com/zendframework/zend-validator/pull/35) modifies the
   `NotEmpty` validator to no longer treat the float `0.0` as an empty value for
   purposes of validation.
+- [#25](https://github.com/zendframework/zend-validator/pull/25) fixes the
+  `Date` validator to check against `DateTimeImmutable` and not
+  `DateTimeInterface` (as PHP has restrictions currently on how the latter can
+  be used).
 
 ## 2.5.2 - 2015-07-16
 
