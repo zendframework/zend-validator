@@ -25,13 +25,6 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
      */
     protected $validator;
 
-    /**
-     * Whether an error occurred
-     *
-     * @var bool
-     */
-    protected $errorOccurred = false;
-
     public function setUp()
     {
         AbstractValidator::setMessageLength(-1);
@@ -235,21 +228,6 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
         if (strstr($errstr, 'No such file')) {
             $this->error = true;
         }
-    }
-
-    /**
-     * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
-     *
-     * @param  integer $errno
-     * @param  string  $errstr
-     * @param  string  $errfile
-     * @param  integer $errline
-     * @param  array   $errcontext
-     * @return void
-     */
-    public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
-    {
-        $this->errorOccurred = true;
     }
 
     /**
