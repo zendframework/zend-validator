@@ -101,10 +101,6 @@ class DateTest extends \PHPUnit_Framework_TestCase
 
     public function testDateTimeImmutable()
     {
-        if (PHP_VERSION_ID < 50500) {
-            $this->markTestSkipped('`DateTimeImmutable` is only supported in PHP >=5.5.0');
-        }
-
         $this->assertTrue($this->validator->isValid(new DateTimeImmutable()));
     }
 
