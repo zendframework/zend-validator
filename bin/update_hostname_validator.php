@@ -26,23 +26,24 @@ if (! is_writable(ZF2_HOSTNAME_VALIDATOR_FILE)) {
     exit(1);
 }
 
-$newFileContent = [];     // new file content
-$insertDone     = false; // becomes 'true' when we find start of $validTlds declaration
-$insertFinish   = false; // becomes 'true' when we find end of $validTlds declaration
-$checkOnly = isset($argv[1]) ? $argv[1] === '--check-only' : false;
-
-$response = getOfficialTLDs();
-
-$ianaVersion = getVersionFromString('Version', strtok($response->getBody(), "\n"));
+$newFileContent   = [];     // new file content
+$insertDone       = false; // becomes 'true' when we find start of $validTlds declaration
+$insertFinish     = false; // becomes 'true' when we find end of $validTlds declaration
+$checkOnly        = isset($argv[1]) ? $argv[1] === '--check-only' : false;
+$response         = getOfficialTLDs();
+$ianaVersion      = getVersionFromString('Version', strtok($response->getBody(), "\n"));
 $validatorVersion = getVersionFromString('IanaVersion', file_get_contents(ZF2_HOSTNAME_VALIDATOR_FILE));
 
-if ($ianaVersion > $validatorVersion && $checkOnly) {
-    printf('TLDs must be updated, please run `php bin/update_hostname_validator.php` and push your changes%s', PHP_EOL);
+if ($checkOnly && $ianaVersion > $validatorVersion) {
+    printf(
+        'TLDs must be updated, please run `php bin/update_hostname_validator.php` and push your changes%s',
+        PHP_EOL
+    );
     exit(1);
 }
 
 if ($checkOnly) {
-    printf('TLDs are up to date%s', PHP_EOL);
+    printf('TLDs are up-to-date%s', PHP_EOL);
     exit(0);
 }
 
@@ -55,7 +56,7 @@ foreach (file(ZF2_HOSTNAME_VALIDATOR_FILE) as $line) {
 
     if ($insertDone === $insertFinish) {
         // Outside of $validTlds definition; keep line as-is
-        $newFileContent []= $line;
+        $newFileContent[] = $line;
     }
 
     if ($insertFinish) {
@@ -65,8 +66,8 @@ foreach (file(ZF2_HOSTNAME_VALIDATOR_FILE) as $line) {
     if ($insertDone) {
         // Detect where the $validTlds declaration ends
         if (preg_match('/^\s+\];\s*$/', $line)) {
-            $newFileContent []= $line;
-            $insertFinish = true;
+            $newFileContent[] = $line;
+            $insertFinish     = true;
         }
 
         continue;
@@ -75,22 +76,22 @@ foreach (file(ZF2_HOSTNAME_VALIDATOR_FILE) as $line) {
     // Detect where the $validTlds declaration begins
     if (preg_match('/^\s+protected\s+\$validTlds\s+=\s+\[\s*$/', $line)) {
         $newFileContent = array_merge($newFileContent, getNewValidTlds($response->getBody()));
-        $insertDone = true;
+        $insertDone     = true;
     }
 }
 
 if (! $insertDone) {
-    printf("Error: cannot find line with 'protected \$validTlds'%s", PHP_EOL);
+    printf('Error: cannot find line with "protected $validTlds"%s', PHP_EOL);
     exit(1);
 }
 
 if (!$insertFinish) {
-    printf("Error: cannot find end of \$validTlds declaration%s", PHP_EOL);
+    printf('Error: cannot find end of $validTlds declaration%s', PHP_EOL);
     exit(1);
 }
 
 if (false === @file_put_contents(ZF2_HOSTNAME_VALIDATOR_FILE, $newFileContent)) {
-    printf("Error: cannot write info file '%s'%s", ZF2_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
+    printf('Error: cannot write info file "%s"%s', ZF2_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
     exit(1);
 }
 
@@ -111,6 +112,7 @@ function getOfficialTLDs()
     ]);
     $client->setUri(IANA_URL);
     $client->setMethod('GET');
+
     $response = $client->send();
     if (! $response->isSuccess()) {
         throw new \Exception(sprintf("Error: cannot get '%s'%s", IANA_URL, PHP_EOL));
@@ -130,8 +132,8 @@ function getOfficialTLDs()
 function getVersionFromString($prefix, $string)
 {
     $matches = [];
-    if (!preg_match(sprintf('/%s\s+((\d+)?)/', $prefix), $string, $matches)) {
-        throw new \Exception('Error: cannot get last update date');
+    if (! preg_match(sprintf('/%s\s+((\d+)?)/', $prefix), $string, $matches)) {
+        throw new Exception('Error: cannot get last update date');
     }
 
     return $matches[1];
@@ -179,13 +181,13 @@ function getPunycodeDecoder()
     }
 
     $hostnameValidator = new Hostname();
-    $reflection = new ReflectionClass(get_class($hostnameValidator));
-    $method = $reflection->getMethod('decodePunycode');
-    $method->setAccessible(true);
+    $reflection        = new ReflectionClass(get_class($hostnameValidator));
+    $decodePunyCode    = $reflection->getMethod('decodePunycode');
+    $decodePunyCode->setAccessible(true);
 
-    return function ($encode) use ($hostnameValidator, $method) {
+    return function ($encode) use ($hostnameValidator, $decodePunyCode) {
         if (strpos($encode, 'xn--') === 0) {
-            return $method->invokeArgs($hostnameValidator, [substr($encode, 4)]);
+            return $decodePunyCode->invokeArgs($hostnameValidator, [substr($encode, 4)]);
         }
         return $encode;
     };
