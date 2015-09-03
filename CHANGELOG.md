@@ -6,7 +6,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#30](https://github.com/zendframework/zend-validator/pull/30) adds tooling to
+  ensure that the Hostname TLD list stays up-to-date as changes are pushed for
+  the repository.
 
 ### Deprecated
 
