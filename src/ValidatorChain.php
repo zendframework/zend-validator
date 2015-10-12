@@ -280,7 +280,7 @@ class ValidatorChain implements
     /**
      * Get all the validators
      *
-     * @return PriorityQueue
+     * @return array
      */
     public function getValidators()
     {
