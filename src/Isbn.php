@@ -9,6 +9,9 @@
 
 namespace Zend\Validator;
 
+use Zend\Validator\Isbn\Isbn10;
+use Zend\Validator\Isbn\Isbn13;
+
 class Isbn extends AbstractValidator
 {
     const AUTO    = 'auto';
@@ -101,44 +104,20 @@ class Isbn extends AbstractValidator
 
         switch ($this->detectFormat()) {
             case self::ISBN10:
-                // sum
-                $isbn10 = str_replace($this->getSeparator(), '', $value);
-                $sum    = 0;
-                for ($i = 0; $i < 9; $i++) {
-                    $sum += (10 - $i) * $isbn10{$i};
-                }
-
-                // checksum
-                $checksum = 11 - ($sum % 11);
-                if ($checksum == 11) {
-                    $checksum = '0';
-                } elseif ($checksum == 10) {
-                    $checksum = 'X';
-                }
+                $isbn = new Isbn10();
                 break;
 
             case self::ISBN13:
-                // sum
-                $isbn13 = str_replace($this->getSeparator(), '', $value);
-                $sum    = 0;
-                for ($i = 0; $i < 12; $i++) {
-                    if ($i % 2 == 0) {
-                        $sum += $isbn13{$i};
-                    } else {
-                        $sum += 3 * $isbn13{$i};
-                    }
-                }
-                // checksum
-                $checksum = 10 - ($sum % 10);
-                if ($checksum == 10) {
-                    $checksum = '0';
-                }
+                $isbn = new Isbn13();
                 break;
 
             default:
                 $this->error(self::NO_ISBN);
                 return false;
         }
+
+        $value = str_replace($this->getSeparator(), '', $value);
+        $checksum = $isbn->getChecksum($value);
 
         // validate
         if (substr($this->getValue(), -1) != $checksum) {
