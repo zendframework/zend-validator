@@ -9,6 +9,8 @@
 
 namespace Zend\Validator;
 
+use Zend\ServiceManager\ServiceManager;
+
 class StaticValidator
 {
     /**
@@ -26,7 +28,7 @@ class StaticValidator
     {
         // Don't share by default to allow different arguments on subsequent calls
         if ($plugins instanceof ValidatorPluginManager) {
-            $plugins->setShareByDefault(false);
+            $plugins->configure(['shared_by_default' => false]);
         }
         static::$plugins = $plugins;
     }
@@ -39,7 +41,7 @@ class StaticValidator
     public static function getPluginManager()
     {
         if (null === static::$plugins) {
-            static::setPluginManager(new ValidatorPluginManager());
+            static::setPluginManager(new ValidatorPluginManager(new ServiceManager));
         }
         return static::$plugins;
     }
