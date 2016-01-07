@@ -10,6 +10,7 @@
 namespace ZendTest\Validator;
 
 use Zend\Validator\ValidatorPluginManager;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * @group      Zend_Validator
@@ -18,7 +19,7 @@ class ValidatorPluginManagerTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->validators = new ValidatorPluginManager();
+        $this->validators = new ValidatorPluginManager(new ServiceManager);
     }
 
     public function testAllowsInjectingTranslator()
@@ -35,11 +36,10 @@ class ValidatorPluginManagerTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('MvcTranslator'))
             ->will($this->returnValue(true));
 
-        $this->validators->setServiceLocator($serviceLocator);
-        $this->assertSame($serviceLocator, $this->validators->getServiceLocator());
+        $validators = new ValidatorPluginManager($serviceLocator);
 
-        $validator = $this->validators->get('notempty');
-        $this->assertSame($translator, $validator->getTranslator());
+        $validator = $validators->get('notempty');
+        $this->assertEquals($translator, $validator->getTranslator());
     }
 
     public function testNoTranslatorInjectedWhenTranslatorIsNotPresent()
@@ -50,23 +50,23 @@ class ValidatorPluginManagerTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('MvcTranslator'))
             ->will($this->returnValue(false));
 
-        $this->validators->setServiceLocator($serviceLocator);
-        $this->assertSame($serviceLocator, $this->validators->getServiceLocator());
+        $validators = new ValidatorPluginManager($serviceLocator);
 
-        $validator = $this->validators->get('notempty');
+        $validator = $validators->get('notempty');
         $this->assertNull($validator->getTranslator());
     }
 
     public function testRegisteringInvalidValidatorRaisesException()
     {
-        $this->setExpectedException('Zend\Validator\Exception\RuntimeException');
+        $this->setExpectedException('Zend\ServiceManager\Exception\InvalidServiceException');
         $this->validators->setService('test', $this);
+        $this->validators->get('test');
     }
 
     public function testLoadingInvalidValidatorRaisesException()
     {
         $this->validators->setInvokableClass('test', get_class($this));
-        $this->setExpectedException('Zend\Validator\Exception\RuntimeException');
+        $this->setExpectedException('Zend\ServiceManager\Exception\InvalidServiceException');
         $this->validators->get('test');
     }
 

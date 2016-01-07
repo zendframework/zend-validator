@@ -116,14 +116,14 @@ class StaticValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testCanSetCustomPluginManager()
     {
-        $plugins = new ValidatorPluginManager();
+        $plugins = new ValidatorPluginManager($this->getMockBuilder('Zend\ServiceManager\ServiceManager')->getMock());
         StaticValidator::setPluginManager($plugins);
         $this->assertSame($plugins, StaticValidator::getPluginManager());
     }
 
     public function testPassingNullWhenSettingPluginManagerResetsPluginManager()
     {
-        $plugins = new ValidatorPluginManager();
+        $plugins = new ValidatorPluginManager($this->getMockBuilder('Zend\ServiceManager\ServiceManager')->getMock());
         StaticValidator::setPluginManager($plugins);
         $this->assertSame($plugins, StaticValidator::getPluginManager());
         StaticValidator::setPluginManager(null);
@@ -133,10 +133,10 @@ class StaticValidatorTest extends \PHPUnit_Framework_TestCase
     public function parameterizedData()
     {
         return [
-            'valid-positive-range'   => [5, 'Between', ['min' => 1, 'max' => 10], true],
-            'valid-negative-range'   => [-5, 'Between', ['min' => -10, 'max' => -1], true],
-            'invalid-positive-range' => [-5, 'Between', ['min' => 1, 'max' => 10], false],
-            'invalid-negative-range' => [5, 'Between', ['min' => -10, 'max' => -1], false],
+            'valid-positive-range'   => [5, 'between', ['min' => 1, 'max' => 10], true],
+            'valid-negative-range'   => [-5, 'between', ['min' => -10, 'max' => -1], true],
+            'invalid-positive-range' => [-5, 'between', ['min' => 1, 'max' => 10], false],
+            'invalid-negative-range' => [5, 'between', ['min' => -10, 'max' => -1], false],
         ];
     }
 
@@ -151,8 +151,8 @@ class StaticValidatorTest extends \PHPUnit_Framework_TestCase
     public function invalidParameterizedData()
     {
         return [
-            'positive-range' => [5, 'Between', [1, 10]],
-            'negative-range' => [-5, 'Between', [-10, -1]],
+            'positive-range' => [5, 'between', [1, 10]],
+            'negative-range' => [-5, 'between', [-10, -1]],
         ];
     }
 

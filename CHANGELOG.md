@@ -19,7 +19,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#49](https://github.com/zendframework/zend-validator/pull/49) updates the
+  code to work with the upcoming zend-servicemanager v3.
 
 ## 2.5.4 - TBD
 
