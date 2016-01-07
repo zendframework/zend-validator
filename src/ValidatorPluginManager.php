@@ -11,6 +11,7 @@ namespace Zend\Validator;
 
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\AbstractPluginManager;
+use Zend\ServiceManager\Exception\InvalidServiceException;
 use Zend\ServiceManager\Factory\InvokableFactory;
 use Zend\I18n\Validator as I18nValidator;
 
@@ -390,6 +391,36 @@ class ValidatorPluginManager extends AbstractPluginManager
         $config['initializers'][] = [$this, 'injectTranslator'];
         $config['initializers'][] = [$this, 'injectValidatorPluginManager'];
         parent::__construct($parentLocator, $config);
+    }
+
+    /**
+     * Validate plugin instance
+     *
+     * {@inheritDoc}
+     */
+    public function validate($instance)
+    {
+        if (! $instance instanceof $this->instanceOf) {
+            throw new InvalidServiceException(sprintf(
+                '%s expects only to create instances of %s; %s is invalid',
+                get_class($this),
+                $this->instanceOf,
+                (is_object($instance) ? get_class($instance) : gettype($instance))
+            ));
+        }
+    }
+
+    /**
+     * For v2 compatibility: validate plugin instance.
+     *
+     * Proxies to `validate()`.
+     *
+     * @param mixed $instance
+     * @throws InvalidServiceException
+     */
+    public function validatePlugin($instance)
+    {
+        $this->validate($instance);
     }
 
     /**
