@@ -426,12 +426,19 @@ class ValidatorPluginManager extends AbstractPluginManager
     /**
      * Inject a validator instance with the registered translator
      *
-     * @param  ContainerInterface $locator
-     * @param  ValidatorInterface $validator
+     * @param  ContainerInterface|object $first
+     * @param  ContainerInterface|object $second
      * @return void
      */
-    public function injectTranslator(ContainerInterface $locator, $validator)
+    public function injectTranslator($first, $second)
     {
+        if ($first instanceof ContainerInterface) {
+            $locator   = $first;
+            $validator = $second;
+        } else {
+            $locator   = $second;
+            $validator = $first;
+        }
         if ($validator instanceof Translator\TranslatorAwareInterface) {
             if ($locator && $locator->has('MvcTranslator')) {
                 $validator->setTranslator($locator->get('MvcTranslator'));
@@ -442,12 +449,19 @@ class ValidatorPluginManager extends AbstractPluginManager
     /**
      * Inject a validator plugin manager
      *
-     * @param  ContainerInterface $locator
-     * @param  $validator
+     * @param  ContainerInterface|object $first
+     * @param  ContainerInterface|object $second
      * @return void
      */
-    public function injectValidatorPluginManager(ContainerInterface $locator, $validator)
+    public function injectValidatorPluginManager($first, $second)
     {
+        if ($first instanceof ContainerInterface) {
+            $locator   = $first;
+            $validator = $second;
+        } else {
+            $locator   = $second;
+            $validator = $first;
+        }
         if ($validator instanceof ValidatorPluginManagerAwareInterface) {
             $validator->setValidatorPluginManager($this);
         }
