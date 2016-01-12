@@ -364,7 +364,14 @@ class ValidatorPluginManager extends AbstractPluginManager
     ];
 
     /**
-     * Whether or not to share by default; default to false
+     * Whether or not to share by default; default to false (v2)
+     *
+     * @var bool
+     */
+    protected $shareByDefault = false;
+
+    /**
+     * Whether or not to share by default; default to false (v3)
      *
      * @var bool
      */
@@ -383,14 +390,14 @@ class ValidatorPluginManager extends AbstractPluginManager
      * After invoking parent constructor, add an initializer to inject the
      * attached translator, if any, to the currently requested helper.
      *
-     * @param  ContainerInterface $parentLocator
-     * @param  array $config
+     * {@inheritDoc}
      */
-    public function __construct(ContainerInterface $parentLocator, array $config = [])
+    public function __construct($configOrContainerInstance = null, array $v3config = [])
     {
-        $config['initializers'][] = [$this, 'injectTranslator'];
-        $config['initializers'][] = [$this, 'injectValidatorPluginManager'];
-        parent::__construct($parentLocator, $config);
+        parent::__construct($configOrContainerInstance, $v3config);
+
+        $this->addInitializer([$this, 'injectTranslator']);
+        $this->addInitializer([$this, 'injectValidatorPluginManager']);
     }
 
     /**

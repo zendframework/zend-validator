@@ -25,7 +25,7 @@
         "zendframework/zend-http": "~2.5",
         "zendframework/zend-i18n": "dev-develop as 2.6.0",
         "zendframework/zend-math": "dev-develop as 2.6.0",
-        "zendframework/zend-servicemanager": "dev-develop as 2.7.0",
+        "zendframework/zend-servicemanager": "^2.7.2 || ^3.0",
         "zendframework/zend-session": "dev-develop as 2.6.0",
         "zendframework/zend-uri": "~2.5",
         "fabpot/php-cs-fixer": "1.7.*",
