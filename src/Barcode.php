@@ -48,6 +48,10 @@ class Barcode extends AbstractValidator
      */
     public function __construct($options = null)
     {
+        if ($options === null) {
+            $options = [];
+        }
+
         if (!is_array($options) && !($options instanceof Traversable)) {
             $options = ['adapter' => $options];
         }
