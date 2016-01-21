@@ -527,4 +527,10 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
         $validator = $this->validator;
         $this->assertAttributeEquals($validator->getOption('messageVariables'), 'messageVariables', $validator);
     }
+
+    public function testHostnameWithOnlyIpChars()
+    {
+        $validator = new Hostname();
+        $this->assertTrue($validator->isValid('cafecafe.de'));
+    }
 }
