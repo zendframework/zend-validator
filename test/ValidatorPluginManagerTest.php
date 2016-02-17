@@ -9,7 +9,11 @@
 
 namespace ZendTest\Validator;
 
+use Interop\Container\ContainerInterface;
+use Zend\Validator\Exception\RuntimeException;
+use Zend\Validator\ValidatorInterface;
 use Zend\Validator\ValidatorPluginManager;
+use Zend\ServiceManager\Exception\InvalidServiceException;
 use Zend\ServiceManager\ServiceManager;
 
 /**
@@ -24,19 +28,13 @@ class ValidatorPluginManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testAllowsInjectingTranslator()
     {
-        $translator = $this->getMock('ZendTest\Validator\TestAsset\Translator');
+        $translator = $this->prophesize(TestAsset\Translator::class)->reveal();
 
-        $slContents = [['MvcTranslator', $translator]];
-        $serviceLocator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface');
-        $serviceLocator->expects($this->once())
-            ->method('get')
-            ->will($this->returnValueMap($slContents));
-        $serviceLocator->expects($this->once())
-            ->method('has')
-            ->with($this->equalTo('MvcTranslator'))
-            ->will($this->returnValue(true));
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->has('MvcTranslator')->willReturn(true);
+        $container->get('MvcTranslator')->willReturn($translator);
 
-        $validators = new ValidatorPluginManager($serviceLocator);
+        $validators = new ValidatorPluginManager($container->reveal());
 
         $validator = $validators->get('notempty');
         $this->assertEquals($translator, $validator->getTranslator());
@@ -44,13 +42,10 @@ class ValidatorPluginManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testNoTranslatorInjectedWhenTranslatorIsNotPresent()
     {
-        $serviceLocator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface');
-        $serviceLocator->expects($this->once())
-            ->method('has')
-            ->with($this->equalTo('MvcTranslator'))
-            ->will($this->returnValue(false));
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->has('MvcTranslator')->willReturn(false);
 
-        $validators = new ValidatorPluginManager($serviceLocator);
+        $validators = new ValidatorPluginManager($container->reveal());
 
         $validator = $validators->get('notempty');
         $this->assertNull($validator->getTranslator());
@@ -58,16 +53,35 @@ class ValidatorPluginManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testRegisteringInvalidValidatorRaisesException()
     {
-        $this->setExpectedException('Zend\ServiceManager\Exception\InvalidServiceException');
-        $this->validators->setService('test', $this);
-        $this->validators->get('test');
+        try {
+            $this->validators->setService('test', $this);
+        } catch (InvalidServiceException $e) {
+            $this->assertContains(ValidatorInterface::class, $e->getMessage());
+        } catch (RuntimeException $e) {
+            $this->assertContains(ValidatorInterface::class, $e->getMessage());
+        } catch (\Exception $e) {
+            $this->fail(sprintf(
+                'Unexpected exception of type "%s" when testing for invalid validator types',
+                get_class($e)
+            ));
+        }
     }
 
     public function testLoadingInvalidValidatorRaisesException()
     {
         $this->validators->setInvokableClass('test', get_class($this));
-        $this->setExpectedException('Zend\ServiceManager\Exception\InvalidServiceException');
-        $this->validators->get('test');
+        try {
+            $this->validators->get('test');
+        } catch (InvalidServiceException $e) {
+            $this->assertContains(ValidatorInterface::class, $e->getMessage());
+        } catch (RuntimeException $e) {
+            $this->assertContains(ValidatorInterface::class, $e->getMessage());
+        } catch (\Exception $e) {
+            $this->fail(sprintf(
+                'Unexpected exception of type "%s" when testing for invalid validator types',
+                get_class($e)
+            ));
+        }
     }
 
     public function testInjectedValidatorPluginManager()

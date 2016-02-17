@@ -27,87 +27,6 @@ class ValidatorPluginManager extends AbstractPluginManager
         'Alnum'                    => I18nValidator\Alnum::class,
         'alpha'                    => I18nValidator\Alpha::class,
         'Alpha'                    => I18nValidator\Alpha::class,
-        'barcodecode25interleaved' => Barcode\Code25interleaved::class,
-        'barcodeCode25interleaved' => Barcode\Code25interleaved::class,
-        'BarcodeCode25interleaved' => Barcode\Code25interleaved::class,
-        'barcodecode25'            => Barcode\Code25::class,
-        'barcodeCode25'            => Barcode\Code25::class,
-        'BarcodeCode25'            => Barcode\Code25::class,
-        'barcodecode39ext'         => Barcode\Code39ext::class,
-        'barcodeCode39ext'         => Barcode\Code39ext::class,
-        'BarcodeCode39ext'         => Barcode\Code39ext::class,
-        'barcodecode39'            => Barcode\Code39::class,
-        'barcodeCode39'            => Barcode\Code39::class,
-        'BarcodeCode39'            => Barcode\Code39::class,
-        'barcodecode93ext'         => Barcode\Code93ext::class,
-        'barcodeCode93ext'         => Barcode\Code93ext::class,
-        'BarcodeCode93ext'         => Barcode\Code93ext::class,
-        'barcodecode93'            => Barcode\Code93::class,
-        'barcodeCode93'            => Barcode\Code93::class,
-        'BarcodeCode93'            => Barcode\Code93::class,
-        'barcodeean12'             => Barcode\Ean12::class,
-        'barcodeEan12'             => Barcode\Ean12::class,
-        'BarcodeEan12'             => Barcode\Ean12::class,
-        'barcodeean13'             => Barcode\Ean13::class,
-        'barcodeEan13'             => Barcode\Ean13::class,
-        'BarcodeEan13'             => Barcode\Ean13::class,
-        'barcodeean14'             => Barcode\Ean14::class,
-        'barcodeEan14'             => Barcode\Ean14::class,
-        'BarcodeEan14'             => Barcode\Ean14::class,
-        'barcodeean18'             => Barcode\Ean18::class,
-        'barcodeEan18'             => Barcode\Ean18::class,
-        'BarcodeEan18'             => Barcode\Ean18::class,
-        'barcodeean2'              => Barcode\Ean2::class,
-        'barcodeEan2'              => Barcode\Ean2::class,
-        'BarcodeEan2'              => Barcode\Ean2::class,
-        'barcodeean5'              => Barcode\Ean5::class,
-        'barcodeEan5'              => Barcode\Ean5::class,
-        'BarcodeEan5'              => Barcode\Ean5::class,
-        'barcodeean8'              => Barcode\Ean8::class,
-        'barcodeEan8'              => Barcode\Ean8::class,
-        'BarcodeEan8'              => Barcode\Ean8::class,
-        'barcodegtin12'            => Barcode\Gtin12::class,
-        'barcodeGtin12'            => Barcode\Gtin12::class,
-        'BarcodeGtin12'            => Barcode\Gtin12::class,
-        'barcodegtin13'            => Barcode\Gtin13::class,
-        'barcodeGtin13'            => Barcode\Gtin13::class,
-        'BarcodeGtin13'            => Barcode\Gtin13::class,
-        'barcodegtin14'            => Barcode\Gtin14::class,
-        'barcodeGtin14'            => Barcode\Gtin14::class,
-        'BarcodeGtin14'            => Barcode\Gtin14::class,
-        'barcodeidentcode'         => Barcode\Identcode::class,
-        'barcodeIdentcode'         => Barcode\Identcode::class,
-        'BarcodeIdentcode'         => Barcode\Identcode::class,
-        'barcodeintelligentmail'   => Barcode\Intelligentmail::class,
-        'barcodeIntelligentmail'   => Barcode\Intelligentmail::class,
-        'BarcodeIntelligentmail'   => Barcode\Intelligentmail::class,
-        'barcodeissn'              => Barcode\Issn::class,
-        'barcodeIssn'              => Barcode\Issn::class,
-        'BarcodeIssn'              => Barcode\Issn::class,
-        'barcodeitf14'             => Barcode\Itf14::class,
-        'barcodeItf14'             => Barcode\Itf14::class,
-        'BarcodeItf14'             => Barcode\Itf14::class,
-        'barcodeleitcode'          => Barcode\Leitcode::class,
-        'barcodeleItcode'          => Barcode\Leitcode::class,
-        'BarcodeleItcode'          => Barcode\Leitcode::class,
-        'barcodeplanet'            => Barcode\Planet::class,
-        'barcodePlanet'            => Barcode\Planet::class,
-        'BarcodePlanet'            => Barcode\Planet::class,
-        'barcodepostnet'           => Barcode\Postnet::class,
-        'barcodePostnet'           => Barcode\Postnet::class,
-        'BarcodePostnet'           => Barcode\Postnet::class,
-        'barcoderoyalmail'         => Barcode\Royalmail::class,
-        'barcodeRoyalmail'         => Barcode\Royalmail::class,
-        'BarcodeRoyalmail'         => Barcode\Royalmail::class,
-        'barcodesscc'              => Barcode\Sscc::class,
-        'barcodeSscc'              => Barcode\Sscc::class,
-        'BarcodeSscc'              => Barcode\Sscc::class,
-        'barcodeupca'              => Barcode\Upca::class,
-        'barcodeUpca'              => Barcode\Upca::class,
-        'BarcodeUpca'              => Barcode\Upca::class,
-        'barcodeupce'              => Barcode\Upce::class,
-        'barcodeUpce'              => Barcode\Upce::class,
-        'BarcodeUpce'              => Barcode\Upce::class,
         'barcode'                  => Barcode::class,
         'Barcode'                  => Barcode::class,
         'between'                  => Between::class,
@@ -275,33 +194,6 @@ class ValidatorPluginManager extends AbstractPluginManager
     protected $factories = [
         I18nValidator\Alnum::class             => InvokableFactory::class,
         I18nValidator\Alpha::class             => InvokableFactory::class,
-        Barcode\Code25interleaved::class       => InvokableFactory::class,
-        Barcode\Code25::class                  => InvokableFactory::class,
-        Barcode\Code39ext::class               => InvokableFactory::class,
-        Barcode\Code39::class                  => InvokableFactory::class,
-        Barcode\Code93ext::class               => InvokableFactory::class,
-        Barcode\Code93::class                  => InvokableFactory::class,
-        Barcode\Ean12::class                   => InvokableFactory::class,
-        Barcode\Ean13::class                   => InvokableFactory::class,
-        Barcode\Ean14::class                   => InvokableFactory::class,
-        Barcode\Ean18::class                   => InvokableFactory::class,
-        Barcode\Ean2::class                    => InvokableFactory::class,
-        Barcode\Ean5::class                    => InvokableFactory::class,
-        Barcode\Ean8::class                    => InvokableFactory::class,
-        Barcode\Gtin12::class                  => InvokableFactory::class,
-        Barcode\Gtin13::class                  => InvokableFactory::class,
-        Barcode\Gtin14::class                  => InvokableFactory::class,
-        Barcode\Identcode::class               => InvokableFactory::class,
-        Barcode\Intelligentmail::class         => InvokableFactory::class,
-        Barcode\Issn::class                    => InvokableFactory::class,
-        Barcode\Itf14::class                   => InvokableFactory::class,
-        Barcode\Leitcode::class                => InvokableFactory::class,
-        Barcode\Planet::class                  => InvokableFactory::class,
-        Barcode\Postnet::class                 => InvokableFactory::class,
-        Barcode\Royalmail::class               => InvokableFactory::class,
-        Barcode\Sscc::class                    => InvokableFactory::class,
-        Barcode\Upca::class                    => InvokableFactory::class,
-        Barcode\Upce::class                    => InvokableFactory::class,
         Barcode::class                         => InvokableFactory::class,
         Between::class                         => InvokableFactory::class,
         Bitwise::class                         => InvokableFactory::class,
@@ -361,6 +253,97 @@ class ValidatorPluginManager extends AbstractPluginManager
         Step::class                            => InvokableFactory::class,
         Timezone::class                        => InvokableFactory::class,
         Uri::class                             => InvokableFactory::class,
+
+        // v2 canonical FQCNs
+
+        'zendvalidatorbarcodecode25interleaved' => InvokableFactory::class,
+        'zendvalidatorbarcodecode25'            => InvokableFactory::class,
+        'zendvalidatorbarcodecode39ext'         => InvokableFactory::class,
+        'zendvalidatorbarcodecode39'            => InvokableFactory::class,
+        'zendvalidatorbarcodecode93ext'         => InvokableFactory::class,
+        'zendvalidatorbarcodecode93'            => InvokableFactory::class,
+        'zendvalidatorbarcodeean12'             => InvokableFactory::class,
+        'zendvalidatorbarcodeean13'             => InvokableFactory::class,
+        'zendvalidatorbarcodeean14'             => InvokableFactory::class,
+        'zendvalidatorbarcodeean18'             => InvokableFactory::class,
+        'zendvalidatorbarcodeean2'              => InvokableFactory::class,
+        'zendvalidatorbarcodeean5'              => InvokableFactory::class,
+        'zendvalidatorbarcodeean8'              => InvokableFactory::class,
+        'zendvalidatorbarcodegtin12'            => InvokableFactory::class,
+        'zendvalidatorbarcodegtin13'            => InvokableFactory::class,
+        'zendvalidatorbarcodegtin14'            => InvokableFactory::class,
+        'zendvalidatorbarcodeidentcode'         => InvokableFactory::class,
+        'zendvalidatorbarcodeintelligentmail'   => InvokableFactory::class,
+        'zendvalidatorbarcodeissn'              => InvokableFactory::class,
+        'zendvalidatorbarcodeitf14'             => InvokableFactory::class,
+        'zendvalidatorbarcodeleitcode'          => InvokableFactory::class,
+        'zendvalidatorbarcodeplanet'            => InvokableFactory::class,
+        'zendvalidatorbarcodepostnet'           => InvokableFactory::class,
+        'zendvalidatorbarcoderoyalmail'         => InvokableFactory::class,
+        'zendvalidatorbarcodesscc'              => InvokableFactory::class,
+        'zendvalidatorbarcodeupca'              => InvokableFactory::class,
+        'zendvalidatorbarcodeupce'              => InvokableFactory::class,
+        'zendvalidatorbarcode'                  => InvokableFactory::class,
+        'zendvalidatorbetween'                  => InvokableFactory::class,
+        'zendvalidatorbitwise'                  => InvokableFactory::class,
+        'zendvalidatorcallback'                 => InvokableFactory::class,
+        'zendvalidatorcreditcard'               => InvokableFactory::class,
+        'zendvalidatorcsrf'                     => InvokableFactory::class,
+        'zendvalidatordatestep'                 => InvokableFactory::class,
+        'zendvalidatordate'                     => InvokableFactory::class,
+        'zendvalidatordbnorecordexists'         => InvokableFactory::class,
+        'zendvalidatordbrecordexists'           => InvokableFactory::class,
+        'zendvalidatordigits'                   => InvokableFactory::class,
+        'zendvalidatoremailaddress'             => InvokableFactory::class,
+        'zendvalidatorexplode'                  => InvokableFactory::class,
+        'zendvalidatorfilecount'                => InvokableFactory::class,
+        'zendvalidatorfilecrc32'                => InvokableFactory::class,
+        'zendvalidatorfileexcludeextension'     => InvokableFactory::class,
+        'zendvalidatorfileexcludemimetype'      => InvokableFactory::class,
+        'zendvalidatorfileexists'               => InvokableFactory::class,
+        'zendvalidatorfileextension'            => InvokableFactory::class,
+        'zendvalidatorfilefilessize'            => InvokableFactory::class,
+        'zendvalidatorfilehash'                 => InvokableFactory::class,
+        'zendvalidatorfileimagesize'            => InvokableFactory::class,
+        'zendvalidatorfileiscompressed'         => InvokableFactory::class,
+        'zendvalidatorfileisimage'              => InvokableFactory::class,
+        'zendvalidatorfilemd5'                  => InvokableFactory::class,
+        'zendvalidatorfilemimetype'             => InvokableFactory::class,
+        'zendvalidatorfilenotexists'            => InvokableFactory::class,
+        'zendvalidatorfilesha1'                 => InvokableFactory::class,
+        'zendvalidatorfilesize'                 => InvokableFactory::class,
+        'zendvalidatorfileupload'               => InvokableFactory::class,
+        'zendvalidatorfileuploadfile'           => InvokableFactory::class,
+        'zendvalidatorfilewordcount'            => InvokableFactory::class,
+        'zendvalidatorgreaterthan'              => InvokableFactory::class,
+        'zendvalidatorhex'                      => InvokableFactory::class,
+        'zendvalidatorhostname'                 => InvokableFactory::class,
+        'zendi18nvalidatoralnum'                => InvokableFactory::class,
+        'zendi18nvalidatoralpha'                => InvokableFactory::class,
+        'zendi18nvalidatordatetime'             => InvokableFactory::class,
+        'zendi18nvalidatorisfloat'              => InvokableFactory::class,
+        'zendi18nvalidatorisint'                => InvokableFactory::class,
+        'zendi18nvalidatorisfloat'              => InvokableFactory::class,
+        'zendi18nvalidatorisint'                => InvokableFactory::class,
+        'zendi18nvalidatorphonenumber'          => InvokableFactory::class,
+        'zendi18nvalidatorpostcode'             => InvokableFactory::class,
+        'zendvalidatoriban'                     => InvokableFactory::class,
+        'zendvalidatoridentical'                => InvokableFactory::class,
+        'zendvalidatorinarray'                  => InvokableFactory::class,
+        'zendvalidatorip'                       => InvokableFactory::class,
+        'zendvalidatorisbn'                     => InvokableFactory::class,
+        'zendvalidatorisinstanceof'             => InvokableFactory::class,
+        'zendvalidatorlessthan'                 => InvokableFactory::class,
+        'zendvalidatornotempty'                 => InvokableFactory::class,
+        'zendvalidatorregex'                    => InvokableFactory::class,
+        'zendvalidatorsitemapchangefreq'        => InvokableFactory::class,
+        'zendvalidatorsitemaplastmod'           => InvokableFactory::class,
+        'zendvalidatorsitemaploc'               => InvokableFactory::class,
+        'zendvalidatorsitemappriority'          => InvokableFactory::class,
+        'zendvalidatorstringlength'             => InvokableFactory::class,
+        'zendvalidatorstep'                     => InvokableFactory::class,
+        'zendvalidatortimezone'                 => InvokableFactory::class,
+        'zendvalidatoruri'                      => InvokableFactory::class,
     ];
 
     /**
@@ -405,14 +388,14 @@ class ValidatorPluginManager extends AbstractPluginManager
      *
      * {@inheritDoc}
      */
-    public function validate($instance)
+    public function validate($plugin)
     {
-        if (! $instance instanceof $this->instanceOf) {
+        if (! $plugin instanceof $this->instanceOf) {
             throw new InvalidServiceException(sprintf(
                 '%s expects only to create instances of %s; %s is invalid',
                 get_class($this),
                 $this->instanceOf,
-                (is_object($instance) ? get_class($instance) : gettype($instance))
+                (is_object($plugin) ? get_class($plugin) : gettype($plugin))
             ));
         }
     }
@@ -422,12 +405,20 @@ class ValidatorPluginManager extends AbstractPluginManager
      *
      * Proxies to `validate()`.
      *
-     * @param mixed $instance
-     * @throws InvalidServiceException
+     * @param mixed $plugin
+     * @throws Exception\RuntimeException
      */
-    public function validatePlugin($instance)
+    public function validatePlugin($plugin)
     {
-        $this->validate($instance);
+        try {
+            $this->validate($plugin);
+        } catch (InvalidServiceException $e) {
+            throw new Exception\RuntimeException(sprintf(
+                'Plugin of type %s is invalid; must implement %s',
+                (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
+                ValidatorInterface::class
+            ), $e->getCode(), $e);
+        }
     }
 
     /**
@@ -440,15 +431,21 @@ class ValidatorPluginManager extends AbstractPluginManager
     public function injectTranslator($first, $second)
     {
         if ($first instanceof ContainerInterface) {
-            $locator   = $first;
+            $container = $first;
             $validator = $second;
         } else {
-            $locator   = $second;
+            $container = $second;
             $validator = $first;
         }
+
+        // V2 means we pull it from the parent container
+        if ($container === $this && method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
+            $container = $container->getServiceLocator();
+        }
+
         if ($validator instanceof Translator\TranslatorAwareInterface) {
-            if ($locator && $locator->has('MvcTranslator')) {
-                $validator->setTranslator($locator->get('MvcTranslator'));
+            if ($container && $container->has('MvcTranslator')) {
+                $validator->setTranslator($container->get('MvcTranslator'));
             }
         }
     }
@@ -463,10 +460,10 @@ class ValidatorPluginManager extends AbstractPluginManager
     public function injectValidatorPluginManager($first, $second)
     {
         if ($first instanceof ContainerInterface) {
-            $locator   = $first;
+            $container = $first;
             $validator = $second;
         } else {
-            $locator   = $second;
+            $container = $second;
             $validator = $first;
         }
         if ($validator instanceof ValidatorPluginManagerAwareInterface) {

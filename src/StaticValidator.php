@@ -28,7 +28,12 @@ class StaticValidator
     {
         // Don't share by default to allow different arguments on subsequent calls
         if ($plugins instanceof ValidatorPluginManager) {
-            $plugins->configure(['shared_by_default' => false]);
+            // Vary how the share by default flag is set based on zend-servicemanager version
+            if (method_exists($plugins, 'configure')) {
+                $plugins->configure(['shared_by_default' => false]);
+            } else {
+                $plugins->setShareByDefault(false);
+            }
         }
         static::$plugins = $plugins;
     }
