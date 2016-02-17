@@ -20,8 +20,10 @@ class ValidatorPluginManager extends AbstractPluginManager
      * @var array
      */
     protected $aliases = [
-        'Zend\I18n\Validator\Float'=> 'Zend\I18n\Validator\IsFloat',
-        'Zend\I18n\Validator\Int'  => 'Zend\I18n\Validator\IsInt',
+        'Zend\I18n\Validator\Float' => 'isfloat',
+        'Zend\I18n\Validator\Int'   => 'isint',
+        'zendi18nvalidatorfloat'    => 'isfloat',
+        'zendi18nvalidatorint'      => 'isint',
     ];
 
     /**
