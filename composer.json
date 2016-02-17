@@ -14,22 +14,22 @@
     },
     "require": {
         "php": "^5.5 || ^7.0",
-        "zendframework/zend-stdlib": "dev-develop as 2.8.0",
+        "zendframework/zend-stdlib": "^2.7 || ^3.0",
         "container-interop/container-interop": "^1.1"
     },
     "require-dev": {
-        "zendframework/zend-cache": "dev-develop as 2.6.0",
-        "zendframework/zend-config": "dev-develop as 2.6.0",
-        "zendframework/zend-db": "dev-develop as 2.7.0",
-        "zendframework/zend-filter": "dev-develop as 2.6.0",
-        "zendframework/zend-http": "~2.5",
-        "zendframework/zend-i18n": "dev-develop as 2.6.0",
-        "zendframework/zend-math": "dev-develop as 2.6.0",
-        "zendframework/zend-servicemanager": "dev-develop as 2.7.0",
-        "zendframework/zend-session": "dev-develop as 2.6.0",
-        "zendframework/zend-uri": "~2.5",
+        "zendframework/zend-cache": "^2.6.1",
+        "zendframework/zend-config": "^2.6",
+        "zendframework/zend-db": "^2.5",
+        "zendframework/zend-filter": "^2.6",
+        "zendframework/zend-http": "^2.5.4",
+        "zendframework/zend-i18n": "^2.6",
+        "zendframework/zend-math": "^2.6",
+        "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
+        "zendframework/zend-session": "^2.5",
+        "zendframework/zend-uri": "^2.5",
         "fabpot/php-cs-fixer": "1.7.*",
-        "phpunit/PHPUnit": "~4.0"
+        "phpunit/PHPUnit": "^4.0"
     },
     "suggest": {
         "zendframework/zend-db": "Zend\\Db component",
