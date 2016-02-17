@@ -20,6 +20,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#44](https://github.com/zendframework/zend-validator/pull/44) corrects the
   grammar on the `NOT_GREATER_INCLUSIVE` validation error message.
+- [#45](https://github.com/zendframework/zend-validator/pull/45) adds normalized
+  aliases for the i18n isfloat/isint validators.
 
 ## 2.5.3 - 2015-09-03
 
