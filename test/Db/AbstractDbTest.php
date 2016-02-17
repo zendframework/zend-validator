@@ -10,6 +10,8 @@
 namespace ZendTest\Validator\Db;
 
 use ZendTest\Validator\Db\TestAsset\ConcreteDbValidator;
+use Zend\Db\Adapter\AdapterAwareInterface;
+use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Select;
 
 /**
@@ -22,6 +24,13 @@ class AbstractDbTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        if (! class_exists('Zend\Db\Adapter\Adapter')) {
+            $this->markTestSkipped(
+                'Skipping zend-db-related tests until that component is updated '
+                . 'to zend-servicemanager/zend-eventmanager v3'
+            );
+        }
+
         $this->validator = new ConcreteDbValidator([
             'table' => 'table',
             'field' => 'field',
@@ -31,8 +40,10 @@ class AbstractDbTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorWithNoTableAndSchemaKey()
     {
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-        'Table or Schema option missing!');
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Table or Schema option missing!'
+        );
         $this->validator = new ConcreteDbValidator([
             'field' => 'field',
         ]);
@@ -40,8 +51,10 @@ class AbstractDbTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorWithNoFieldKey()
     {
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException',
-        'Field option missing!');
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'Field option missing!'
+        );
         $validator = new ConcreteDbValidator([
             'schema' => 'schema',
             'table' => 'table',
@@ -86,5 +99,28 @@ class AbstractDbTest extends \PHPUnit_Framework_TestCase
         $this->validator->setField($field);
 
         $this->assertEquals($field, $this->validator->getField());
+    }
+
+    /**
+     * @group #46
+     */
+    public function testImplementationsAreDbAdapterAware()
+    {
+        $this->assertInstanceOf(AdapterAwareInterface::class, $this->validator);
+    }
+
+    /**
+     * @group #46
+     */
+    public function testSetAdapterIsEquivalentToSetDbAdapter()
+    {
+        $adapterFirst = $this->prophesize(Adapter::class)->reveal();
+        $adapterSecond = $this->prophesize(Adapter::class)->reveal();
+
+        $this->validator->setAdapter($adapterFirst);
+        $this->assertAttributeSame($adapterFirst, 'adapter', $this->validator);
+
+        $this->validator->setDbAdapter($adapterSecond);
+        $this->assertAttributeSame($adapterSecond, 'adapter', $this->validator);
     }
 }

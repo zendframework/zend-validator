@@ -9,7 +9,12 @@
 
 namespace ZendTest\Validator;
 
+use Interop\Container\ContainerInterface;
+use Zend\Validator\Exception\RuntimeException;
+use Zend\Validator\ValidatorInterface;
 use Zend\Validator\ValidatorPluginManager;
+use Zend\ServiceManager\Exception\InvalidServiceException;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * @group      Zend_Validator
@@ -18,56 +23,65 @@ class ValidatorPluginManagerTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->validators = new ValidatorPluginManager();
+        $this->validators = new ValidatorPluginManager(new ServiceManager);
     }
 
     public function testAllowsInjectingTranslator()
     {
-        $translator = $this->getMock('ZendTest\Validator\TestAsset\Translator');
+        $translator = $this->prophesize(TestAsset\Translator::class)->reveal();
 
-        $slContents = [['MvcTranslator', $translator]];
-        $serviceLocator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface');
-        $serviceLocator->expects($this->once())
-            ->method('get')
-            ->will($this->returnValueMap($slContents));
-        $serviceLocator->expects($this->once())
-            ->method('has')
-            ->with($this->equalTo('MvcTranslator'))
-            ->will($this->returnValue(true));
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->has('MvcTranslator')->willReturn(true);
+        $container->get('MvcTranslator')->willReturn($translator);
 
-        $this->validators->setServiceLocator($serviceLocator);
-        $this->assertSame($serviceLocator, $this->validators->getServiceLocator());
+        $validators = new ValidatorPluginManager($container->reveal());
 
-        $validator = $this->validators->get('notempty');
-        $this->assertSame($translator, $validator->getTranslator());
+        $validator = $validators->get('notempty');
+        $this->assertEquals($translator, $validator->getTranslator());
     }
 
     public function testNoTranslatorInjectedWhenTranslatorIsNotPresent()
     {
-        $serviceLocator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface');
-        $serviceLocator->expects($this->once())
-            ->method('has')
-            ->with($this->equalTo('MvcTranslator'))
-            ->will($this->returnValue(false));
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->has('MvcTranslator')->willReturn(false);
 
-        $this->validators->setServiceLocator($serviceLocator);
-        $this->assertSame($serviceLocator, $this->validators->getServiceLocator());
+        $validators = new ValidatorPluginManager($container->reveal());
 
-        $validator = $this->validators->get('notempty');
+        $validator = $validators->get('notempty');
         $this->assertNull($validator->getTranslator());
     }
 
     public function testRegisteringInvalidValidatorRaisesException()
     {
-        $this->setExpectedException('Zend\Validator\Exception\RuntimeException');
-        $this->validators->setService('test', $this);
+        try {
+            $this->validators->setService('test', $this);
+        } catch (InvalidServiceException $e) {
+            $this->assertContains(ValidatorInterface::class, $e->getMessage());
+        } catch (RuntimeException $e) {
+            $this->assertContains(ValidatorInterface::class, $e->getMessage());
+        } catch (\Exception $e) {
+            $this->fail(sprintf(
+                'Unexpected exception of type "%s" when testing for invalid validator types',
+                get_class($e)
+            ));
+        }
     }
 
     public function testLoadingInvalidValidatorRaisesException()
     {
         $this->validators->setInvokableClass('test', get_class($this));
-        $this->setExpectedException('Zend\Validator\Exception\RuntimeException');
-        $this->validators->get('test');
+        try {
+            $this->validators->get('test');
+        } catch (InvalidServiceException $e) {
+            $this->assertContains(ValidatorInterface::class, $e->getMessage());
+        } catch (RuntimeException $e) {
+            $this->assertContains(ValidatorInterface::class, $e->getMessage());
+        } catch (\Exception $e) {
+            $this->fail(sprintf(
+                'Unexpected exception of type "%s" when testing for invalid validator types',
+                get_class($e)
+            ));
+        }
     }
 
     public function testInjectedValidatorPluginManager()

@@ -2,8 +2,8 @@
 /**
  * Zend Framework (http://framework.zend.com/)
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-validator for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -101,44 +101,20 @@ class Isbn extends AbstractValidator
 
         switch ($this->detectFormat()) {
             case self::ISBN10:
-                // sum
-                $isbn10 = str_replace($this->getSeparator(), '', $value);
-                $sum    = 0;
-                for ($i = 0; $i < 9; $i++) {
-                    $sum += (10 - $i) * $isbn10{$i};
-                }
-
-                // checksum
-                $checksum = 11 - ($sum % 11);
-                if ($checksum == 11) {
-                    $checksum = '0';
-                } elseif ($checksum == 10) {
-                    $checksum = 'X';
-                }
+                $isbn = new Isbn\Isbn10();
                 break;
 
             case self::ISBN13:
-                // sum
-                $isbn13 = str_replace($this->getSeparator(), '', $value);
-                $sum    = 0;
-                for ($i = 0; $i < 12; $i++) {
-                    if ($i % 2 == 0) {
-                        $sum += $isbn13{$i};
-                    } else {
-                        $sum += 3 * $isbn13{$i};
-                    }
-                }
-                // checksum
-                $checksum = 10 - ($sum % 10);
-                if ($checksum == 10) {
-                    $checksum = '0';
-                }
+                $isbn = new Isbn\Isbn13();
                 break;
 
             default:
                 $this->error(self::NO_ISBN);
                 return false;
         }
+
+        $value = str_replace($this->getSeparator(), '', $value);
+        $checksum = $isbn->getChecksum($value);
 
         // validate
         if (substr($this->getValue(), -1) != $checksum) {

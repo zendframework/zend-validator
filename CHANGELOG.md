@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 2.6.0 - TBD
+
+### Added
+
+- [#18](https://github.com/zendframework/zend-validator/pull/18) adds a `GpsPoint`
+  validator for validating GPS coordinates.
+- [#47](https://github.com/zendframework/zend-validator/pull/47) adds two new
+  classes, `Zend\Validator\Isbn\Isbn10` and `Isbn13`; these classes are the
+  result of an extract class refactoring, and contain the logic specific to
+  calcualting the checksum for each ISBN style. `Zend\Validator\Isbn` now
+  instantiates the appropriate one and invokes it.
+- [#46](https://github.com/zendframework/zend-validator/pull/46) updates
+  `Zend\Validator\Db\AbstractDb` to implement `Zend\Db\Adapter\AdapterAwareInterface`,
+  by composing `Zend\Db\Adapter\AdapterAwareTrait`.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- [#55](https://github.com/zendframework/zend-validator/pull/55) removes some
+  checks for `safe_mode` within the `MimeType` validator, as `safe_mode` became
+  obsolete starting with PHP 5.4.
+
+### Fixed
+
+- [#45](https://github.com/zendframework/zend-validator/pull/45) fixes aliases
+  mapping the deprecated `Float` and `Int` validators to their `Is*` counterparts.
+- [#49](https://github.com/zendframework/zend-validator/pull/49)
+  [#50](https://github.com/zendframework/zend-validator/pull/50), and
+  [#51](https://github.com/zendframework/zend-validator/pull/51) update the
+  code to be forwards-compatible with zend-servicemanager and zend-stdlib v3.
+- [#56](https://github.com/zendframework/zend-validator/pull/56) fixes the regex
+  in the `Ip` validator to escape `.` characters used as IP delimiters.
+
 ## 2.5.5 - TBD
 
 ### Added
