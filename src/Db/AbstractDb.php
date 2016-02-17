@@ -11,6 +11,7 @@ namespace Zend\Validator\Db;
 
 use Traversable;
 use Zend\Db\Adapter\Adapter as DbAdapter;
+use Zend\Db\Adapter\AdapterAwareInterface;
 use Zend\Db\Adapter\AdapterAwareTrait;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Sql;
@@ -22,7 +23,7 @@ use Zend\Validator\Exception;
 /**
  * Class for Database record validation
  */
-abstract class AbstractDb extends AbstractValidator
+abstract class AbstractDb extends AbstractValidator implements AdapterAwareInterface
 {
     use AdapterAwareTrait;
 
