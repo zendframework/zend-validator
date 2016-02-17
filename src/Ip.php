@@ -97,7 +97,7 @@ class Ip extends AbstractValidator
      */
     protected function validateIPv4($value)
     {
-	if (preg_match('/^([01]{8}\.){3}[01]{8}\z/i', $value)) {
+        if (preg_match('/^([01]{8}\.){3}[01]{8}\z/i', $value)) {
             // binary format  00000000.00000000.00000000.00000000
             $value = bindec(substr($value, 0, 8)) . '.' . bindec(substr($value, 9, 8)) . '.'
                    . bindec(substr($value, 18, 8)) . '.' . bindec(substr($value, 27, 8));
