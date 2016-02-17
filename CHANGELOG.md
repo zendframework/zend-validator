@@ -18,7 +18,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#44](https://github.com/zendframework/zend-validator/pull/44) corrects the
+  grammar on the `NOT_GREATER_INCLUSIVE` validation error message.
 
 ## 2.5.3 - 2015-09-03
 
