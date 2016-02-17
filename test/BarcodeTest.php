@@ -21,8 +21,8 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
     public function provideBarcodeConstructor()
     {
         return [
-            [null, Barcode\Ean13::class],
-            [[], Barcode\Ean13::class],
+            'null' => [null, Barcode\Ean13::class],
+            'empty-array' => [[], Barcode\Ean13::class],
         ];
     }
     /**
@@ -482,14 +482,20 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = new Barcode('code25');
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
     }
 
     public function testEqualsMessageVariables()
     {
         $validator = new Barcode('code25');
-        $this->assertAttributeEquals($validator->getOption('messageVariables'),
-                                     'messageVariables', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageVariables'),
+            'messageVariables',
+            $validator
+        );
     }
 }
