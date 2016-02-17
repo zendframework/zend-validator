@@ -18,6 +18,22 @@ use Zend\Validator\Barcode;
  */
 class BarcodeTest extends \PHPUnit_Framework_TestCase
 {
+    public function provideBarcodeConstructor()
+    {
+        return [
+            [null, Barcode\Ean13::class],
+            [[], Barcode\Ean13::class],
+        ];
+    }
+    /**
+     * @dataProvider provideBarcodeConstructor
+     */
+    public function testBarcodeConstructor($options, $expectedInstance)
+    {
+        $barcode = new Barcode($options);
+        $this->assertInstanceOf($expectedInstance, $barcode->getAdapter());
+    }
+
     public function testNoneExisting()
     {
         $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'not found');
