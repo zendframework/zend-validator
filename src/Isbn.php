@@ -2,15 +2,12 @@
 /**
  * Zend Framework (http://framework.zend.com/)
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-validator for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Validator;
-
-use Zend\Validator\Isbn\Isbn10;
-use Zend\Validator\Isbn\Isbn13;
 
 class Isbn extends AbstractValidator
 {
@@ -104,11 +101,11 @@ class Isbn extends AbstractValidator
 
         switch ($this->detectFormat()) {
             case self::ISBN10:
-                $isbn = new Isbn10();
+                $isbn = new Isbn\Isbn10();
                 break;
 
             case self::ISBN13:
-                $isbn = new Isbn13();
+                $isbn = new Isbn\Isbn13();
                 break;
 
             default:
