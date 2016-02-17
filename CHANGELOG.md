@@ -31,8 +31,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#45](https://github.com/zendframework/zend-validator/pull/45) fixes aliases
   mapping the deprecated `Float` and `Int` validators to their `Is*` counterparts.
-- [#49](https://github.com/zendframework/zend-validator/pull/49) updates the
-  code to work with the upcoming zend-servicemanager v3.
+- [#49](https://github.com/zendframework/zend-validator/pull/49)
+  [#50](https://github.com/zendframework/zend-validator/pull/50), and
+  [#51](https://github.com/zendframework/zend-validator/pull/51) update the
+  code to be forwards-compatible with zend-servicemanager and zend-stdlib v3.
 - [#56](https://github.com/zendframework/zend-validator/pull/56) fixes the regex
   in the `Ip` validator to escape `.` characters used as IP delimiters.
 
