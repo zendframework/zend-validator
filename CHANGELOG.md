@@ -24,6 +24,9 @@ All notable changes to this project will be documented in this file, in reverse 
   aliases for the i18n isfloat/isint validators.
 - Updates the hostname validator regexes per the canonical service on which they
   are based.
+- [#52](https://github.com/zendframework/zend-validator/pull/52) updates the
+  `Barcode` validator to cast empty options passed to the constructor to an
+  empty array, fixing type mismatch errors.
 
 ## 2.5.3 - 2015-09-03
 
