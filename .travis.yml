@@ -24,21 +24,21 @@ matrix:
         - EXECUTE_HOSTNAME_CHECK=true
     - php: 5.5
       env:
-        - SERVICE_MANAGER_V2=true
+        - SERVICE_MANAGER_VERSION="^2.7.5"
     - php: 5.6
       env:
         - EXECUTE_TEST_COVERALLS=true
     - php: 5.6
       env:
-        - SERVICE_MANAGER_V2=true
+        - SERVICE_MANAGER_VERSION="^2.7.5"
     - php: 7
     - php: 7
       env:
-        - SERVICE_MANAGER_V2=true
+        - SERVICE_MANAGER_VERSION="^2.7.5"
     - php: hhvm 
     - php: hhvm 
       env:
-        - SERVICE_MANAGER_V2=true
+        - SERVICE_MANAGER_VERSION="^2.7.5"
   allow_failures:
     - php: hhvm
 
@@ -50,8 +50,9 @@ before_install:
   - if [[ $EXECUTE_TEST_COVERALLS != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
   - composer self-update
   - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then composer require --dev --no-update satooshi/php-coveralls ; fi
-  - if [[ $SERVICE_MANAGER_V2 == 'true' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:^2.7.2" ; fi
-  - if [[ $SERVICE_MANAGER_V2 != 'true' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:^3.0" ; fi
+  - if [[ $SERVICE_MANAGER_VERSION != '' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:$SERVICE_MANAGER_VERSION" ; fi
+  - if [[ $SERVICE_MANAGER_VERSION == '' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:^3.0.3" ; fi
+  - if [[ $SERVICE_MANAGER_VERSION == '' ]]; then composer remove --dev --no-update zendframework/zend-db zendframework/zend-session ; fi
 
 install:
   - travis_retry composer install --no-interaction --ignore-platform-reqs

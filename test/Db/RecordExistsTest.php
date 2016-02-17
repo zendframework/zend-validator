@@ -21,6 +21,16 @@ use ZendTest\Validator\Db\TestAsset\TrustingSql92Platform;
  */
 class RecordExistsTest extends \PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        if (! class_exists(Adapter::class)) {
+            $this->markTestSkipped(
+                'Skipping zend-db-related tests until that component is updated '
+                . 'to zend-servicemanager/zend-eventmanager v3'
+            );
+        }
+    }
+
     /**
      * Return a Mock object for a Db result with rows
      *
@@ -102,9 +112,11 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
      */
     public function testBasicFindsRecord()
     {
-        $validator = new RecordExists(['table'   => 'users',
-                                            'field'   => 'field1',
-                                            'adapter' => $this->getMockHasResult()]);
+        $validator = new RecordExists([
+            'table'   => 'users',
+            'field'   => 'field1',
+            'adapter' => $this->getMockHasResult()
+        ]);
         $this->assertTrue($validator->isValid('value1'));
     }
 
@@ -197,8 +209,10 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testThrowsExceptionWithNoAdapter()
     {
         $validator = new RecordExists('users', 'field1', 'id != 1');
-        $this->setExpectedException('Zend\Validator\Exception\RuntimeException',
-                                    'No database adapter present');
+        $this->setExpectedException(
+            'Zend\Validator\Exception\RuntimeException',
+            'No database adapter present'
+        );
         $validator->isValid('nosuchvalue');
     }
 
@@ -209,8 +223,10 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithSchema()
     {
-        $validator = new RecordExists(['table' => 'users', 'schema' => 'my'],
-                                      'field1', null, $this->getMockHasResult());
+        $validator = new RecordExists([
+            'table' => 'users',
+            'schema' => 'my'
+        ], 'field1', null, $this->getMockHasResult());
         $this->assertTrue($validator->isValid('value1'));
     }
 
@@ -221,8 +237,10 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithSchemaNoResult()
     {
-        $validator = new RecordExists(['table' => 'users', 'schema' => 'my'],
-                                      'field1', null, $this->getMockNoResult());
+        $validator = new RecordExists([
+            'table' => 'users',
+            'schema' => 'my'
+        ], 'field1', null, $this->getMockNoResult());
         $this->assertFalse($validator->isValid('value1'));
     }
 
@@ -232,8 +250,10 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
      */
     public function testSelectAcknowledgesTableAndSchema()
     {
-        $validator = new RecordExists(['table' => 'users', 'schema' => 'my'],
-                                      'field1', null, $this->getMockHasResult());
+        $validator = new RecordExists([
+            'table' => 'users',
+            'schema' => 'my'
+        ], 'field1', null, $this->getMockHasResult());
         $table = $validator->getSelect()->getRawState('table');
         $this->assertInstanceOf('Zend\Db\Sql\TableIdentifier', $table);
         $this->assertEquals(['users', 'my'], $table->getTableAndSchema());
@@ -242,8 +262,11 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testEqualsMessageTemplates()
     {
         $validator  = new RecordExists('users', 'field1');
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
     }
 
     /**
