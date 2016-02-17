@@ -8,6 +8,11 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#18](https://github.com/zendframework/zend-validator/pull/18) adds a `GpsPoint`
   validator for validating GPS coordinates.
+- [#47](https://github.com/zendframework/zend-validator/pull/47) adds two new
+  classes, `Zend\Validator\Isbn\Isbn10` and `Isbn13`; these classes are the
+  result of an extract class refactoring, and contain the logic specific to
+  calcualting the checksum for each ISBN style. `Zend\Validator\Isbn` now
+  instantiates the appropriate one and invokes it.
 
 ### Deprecated
 
