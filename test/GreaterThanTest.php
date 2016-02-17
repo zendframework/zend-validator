@@ -125,7 +125,7 @@ class GreaterThanTest extends \PHPUnit_Framework_TestCase
             $message = $validator->getMessages();
 
             $this->assertArrayHaskey('notGreaterThanInclusive', $message);
-            $this->assertEquals($message['notGreaterThanInclusive'], "The input is not greater or equal than '10'");
+            $this->assertEquals($message['notGreaterThanInclusive'], "The input is not greater than or equal to '10'");
         }
     }
 
