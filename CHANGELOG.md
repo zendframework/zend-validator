@@ -15,7 +15,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#55](https://github.com/zendframework/zend-validator/pull/55) removes some
+  checks for `safe_mode` within the `MimeType` validator, as `safe_mode` became
+  obsolete starting with PHP 5.4.
 
 ### Fixed
 
