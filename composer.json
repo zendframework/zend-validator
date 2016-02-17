@@ -13,7 +13,7 @@
         }
     },
     "require": {
-        "php": ">=5.5",
+        "php": "^5.5 || ^7.0",
         "zendframework/zend-stdlib": "dev-develop as 2.8.0",
         "container-interop/container-interop": "^1.1"
     },
