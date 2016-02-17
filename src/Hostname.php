@@ -1671,7 +1671,8 @@ class Hostname extends AbstractValidator
 
         $this->setValue($value);
         // Check input against IP address schema
-        if (preg_match('/^[0-9a-f:.]*$/i', $value)
+        if (((preg_match('/^[0-9.]*$/', $value) && strpos($value, '.') !== false)
+                || (preg_match('/^[0-9a-f:.]*$/i', $value) && strpos($value, ':') !== false))
             && $this->getIpValidator()->setTranslator($this->getTranslator())->isValid($value)
         ) {
             if (!($this->getAllow() & self::ALLOW_IP)) {

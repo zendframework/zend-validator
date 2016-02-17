@@ -27,6 +27,9 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#52](https://github.com/zendframework/zend-validator/pull/52) updates the
   `Barcode` validator to cast empty options passed to the constructor to an
   empty array, fixing type mismatch errors.
+- [#54](https://github.com/zendframework/zend-validator/pull/54) fixes the IP
+  address detection in the `Hostname` validator to ensure that IPv6 is detected
+  correctly.
 
 ## 2.5.3 - 2015-09-03
 
