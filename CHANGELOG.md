@@ -50,6 +50,9 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#54](https://github.com/zendframework/zend-validator/pull/54) fixes the IP
   address detection in the `Hostname` validator to ensure that IPv6 is detected
   correctly.
+- [#56](https://github.com/zendframework/zend-validator/pull/56) updates the
+  regexes used by the `IP` validator when comparing ipv4 addresses to ensure a
+  literal `.` is tested between network segments.
 
 ## 2.5.3 - 2015-09-03
 
