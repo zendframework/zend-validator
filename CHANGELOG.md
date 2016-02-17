@@ -13,6 +13,9 @@ All notable changes to this project will be documented in this file, in reverse 
   result of an extract class refactoring, and contain the logic specific to
   calcualting the checksum for each ISBN style. `Zend\Validator\Isbn` now
   instantiates the appropriate one and invokes it.
+- [#46](https://github.com/zendframework/zend-validator/pull/46) updates
+  `Zend\Validator\Db\AbstractDb` to implement `Zend\Db\Adapter\AdapterAwareInterface`,
+  by composing `Zend\Db\Adapter\AdapterAwareTrait`.
 
 ### Deprecated
 
