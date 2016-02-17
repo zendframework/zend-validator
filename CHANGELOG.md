@@ -42,6 +42,8 @@ All notable changes to this project will be documented in this file, in reverse 
   grammar on the `NOT_GREATER_INCLUSIVE` validation error message.
 - [#45](https://github.com/zendframework/zend-validator/pull/45) adds normalized
   aliases for the i18n isfloat/isint validators.
+- Updates the hostname validator regexes per the canonical service on which they
+  are based.
 
 ## 2.5.3 - 2015-09-03
 
