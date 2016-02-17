@@ -367,7 +367,31 @@ class IpTest extends \PHPUnit_Framework_TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = $this->validator;
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
+    }
+
+    public function invalidIpV4Addresses()
+    {
+        return [
+            'all-numeric' => ['111111111111'],
+            'first-quartet' => ['111.111111111'],
+            'first-octet' => ['111111.111111'],
+            'last-quartet' => ['111111111.111'],
+            'first-second-quartet' => ['111.111.111111'],
+            'first-fourth-quartet' => ['111.111111.111'],
+            'third-fourth-quartet' => ['111111.111.111'],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidIpV4Addresses
+     */
+    public function testIpV4ValidationShouldFailForIpV4AddressesMissingQuartets($address)
+    {
+        $this->assertFalse($this->validator->isValid($address));
     }
 }
