@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.6.0 - TBD
+## 2.6.0 - 2016-02-17
 
 ### Added
 
@@ -37,24 +37,6 @@ All notable changes to this project will be documented in this file, in reverse 
   code to be forwards-compatible with zend-servicemanager and zend-stdlib v3.
 - [#56](https://github.com/zendframework/zend-validator/pull/56) fixes the regex
   in the `Ip` validator to escape `.` characters used as IP delimiters.
-
-## 2.5.5 - TBD
-
-### Added
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
 
 ## 2.5.4 - 2016-02-17
 
