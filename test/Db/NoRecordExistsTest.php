@@ -18,16 +18,6 @@ use ArrayObject;
  */
 class NoRecordExistsTest extends \PHPUnit_Framework_TestCase
 {
-    public function setUp()
-    {
-        if (! class_exists('Zend\Db\Adapter\Adapter')) {
-            $this->markTestSkipped(
-                'Skipping zend-db-related tests until that component is updated '
-                . 'to zend-servicemanager/zend-eventmanager v3'
-            );
-        }
-    }
-
     /**
      * Return a Mock object for a Db result with rows
      *

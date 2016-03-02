@@ -21,16 +21,6 @@ use ZendTest\Validator\Db\TestAsset\TrustingSql92Platform;
  */
 class RecordExistsTest extends \PHPUnit_Framework_TestCase
 {
-    public function setUp()
-    {
-        if (! class_exists(Adapter::class)) {
-            $this->markTestSkipped(
-                'Skipping zend-db-related tests until that component is updated '
-                . 'to zend-servicemanager/zend-eventmanager v3'
-            );
-        }
-    }
-
     /**
      * Return a Mock object for a Db result with rows
      *
