@@ -28,13 +28,6 @@ class CsrfTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (! class_exists(Container::class)) {
-            $this->markTestSkipped(
-                'Skipping zend-session-related tests until the component is updated '
-                . ' to zend-servicemanager/zend-eventmanager v3'
-            );
-        }
-
         // Setup session handling
         $_SESSION = [];
         $sessionConfig = new StandardConfig([

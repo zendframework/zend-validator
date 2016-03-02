@@ -24,13 +24,6 @@ class AbstractDbTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (! class_exists('Zend\Db\Adapter\Adapter')) {
-            $this->markTestSkipped(
-                'Skipping zend-db-related tests until that component is updated '
-                . 'to zend-servicemanager/zend-eventmanager v3'
-            );
-        }
-
         $this->validator = new ConcreteDbValidator([
             'table' => 'table',
             'field' => 'field',
