@@ -66,15 +66,15 @@ final class UuidTest extends \PHPUnit_Framework_TestCase
      */
     public function validUuidProvider()
     {
-        return array(
-            array('00000000-0000-0000-0000-000000000000'),
-            array('ff6f8cb0-c57d-11e1-9b21-0800200c9a66'),
-            array('ff6f8cb0-c57d-21e1-9b21-0800200c9a66'),
-            array('ff6f8cb0-c57d-31e1-9b21-0800200c9a66'),
-            array('ff6f8cb0-c57d-41e1-9b21-0800200c9a66'),
-            array('ff6f8cb0-c57d-51e1-9b21-0800200c9a66'),
-            array('FF6F8CB0-C57D-11E1-9B21-0800200C9A66'),
-        );
+        return [
+            ['00000000-0000-0000-0000-000000000000'],
+            ['ff6f8cb0-c57d-11e1-9b21-0800200c9a66'],
+            ['ff6f8cb0-c57d-21e1-9b21-0800200c9a66'],
+            ['ff6f8cb0-c57d-31e1-9b21-0800200c9a66'],
+            ['ff6f8cb0-c57d-41e1-9b21-0800200c9a66'],
+            ['ff6f8cb0-c57d-51e1-9b21-0800200c9a66'],
+            ['FF6F8CB0-C57D-11E1-9B21-0800200C9A66'],
+        ];
     }
 
     /**
@@ -84,16 +84,16 @@ final class UuidTest extends \PHPUnit_Framework_TestCase
      */
     public function invalidUuidProvider()
     {
-        return array(
-            array('zf6f8cb0-c57d-11e1-9b21-0800200c9a66', Uuid::INVALID),
-            array('af6f8cb0c57d11e19b210800200c9a66', Uuid::INVALID),
-            array('ff6f8cb0-c57da-51e1-9b21-0800200c9a66', Uuid::INVALID),
-            array('af6f8cb-c57d-11e1-9b21-0800200c9a66', Uuid::INVALID),
-            array('3f6f8cb0-c57d-11e1-9b21-0800200c9a6', Uuid::INVALID),
-            array('3f6f8cb0', Uuid::INVALID),
-            array('', Uuid::INVALID),
-            array(123, Uuid::NOT_STRING),
-            array(new \stdClass(), Uuid::NOT_STRING),
-        );
+        return [
+            ['zf6f8cb0-c57d-11e1-9b21-0800200c9a66', Uuid::INVALID],
+            ['af6f8cb0c57d11e19b210800200c9a66', Uuid::INVALID],
+            ['ff6f8cb0-c57da-51e1-9b21-0800200c9a66', Uuid::INVALID],
+            ['af6f8cb-c57d-11e1-9b21-0800200c9a66', Uuid::INVALID],
+            ['3f6f8cb0-c57d-11e1-9b21-0800200c9a6', Uuid::INVALID],
+            ['3f6f8cb0', Uuid::INVALID],
+            ['', Uuid::INVALID],
+            [123, Uuid::NOT_STRING],
+            [new \stdClass(), Uuid::NOT_STRING],
+        ];
     }
 }
