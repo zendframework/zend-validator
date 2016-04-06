@@ -47,6 +47,10 @@
         "branch-alias": {
             "dev-master": "2.6-dev",
             "dev-develop": "2.7-dev"
+        },
+        "zf": {
+            "component": "Zend\\Validator",
+            "config-provider": "Zend\\Validator\\ConfigProvider"
         }
     },
     "autoload-dev": {
