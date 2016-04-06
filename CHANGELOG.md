@@ -6,7 +6,17 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#63](https://github.com/zendframework/zend-validator/pull/63) exposes the
+  package as a ZF component and/or generic configuration provider, by adding the
+  following:
+  - `ValidatorPluginManagerFactory`, which can be consumed by container-interop /
+    zend-servicemanager to create and return a `ValidatorPluginManager` instance.
+  - `ConfigProvider`, which maps the service `ValidatorManager` to the above
+    factory.
+  - `Module`, which does the same as `ConfigProvider`, but specifically for
+    zend-mvc applications. It also provices a specification to
+    `Zend\ModuleManager\Listener\ServiceListener` to allow modules to provide
+    validator configuration.
 
 ### Deprecated
 
