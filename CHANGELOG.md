@@ -20,7 +20,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
-## 2.7.1 - TBD
+## 2.7.1 - 2016-04-06
 
 ### Added
 
@@ -36,7 +36,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- This release updates the TLD list to the latest version from the IANA.
 
 ## 2.7.0 - 2016-04-06
 
