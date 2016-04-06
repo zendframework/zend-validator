@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.7.0 - TBD
+## 2.7.0 - 2016-04-06
 
 ### Added
 
@@ -17,24 +17,6 @@ All notable changes to this project will be documented in this file, in reverse 
     zend-mvc applications. It also provices a specification to
     `Zend\ModuleManager\Listener\ServiceListener` to allow modules to provide
     validator configuration.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
-
-## 2.6.1 - TBD
-
-### Added
-
-- Nothing.
 
 ### Deprecated
 
