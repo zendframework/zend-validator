@@ -35,7 +35,7 @@ class Module
         $serviceListener->addServiceManager(
             'ValidatorManager',
             'validators',
-            'Zend\ModuleManager\Feature\ValidatorProviderInterface',
+            ValidatorProviderInterface::class,
             'getValidatorConfig'
         );
     }
