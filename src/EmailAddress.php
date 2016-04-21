@@ -473,7 +473,7 @@ class EmailAddress extends AbstractValidator
         }
 
         $this->localPart = $matches[1];
-        $this->hostname  = $matches[2];
+        $this->hostname  = $this->idnToUtf8($matches[2]);
 
         return true;
     }
@@ -497,7 +497,7 @@ class EmailAddress extends AbstractValidator
         }
 
         $length  = true;
-        $this->setValue($this->idnToUtf8($value));
+        $this->setValue($value);
 
         // Split email address up and disallow '..'
         if (! $this->splitEmailParts($this->getValue())) {
