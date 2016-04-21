@@ -741,8 +741,8 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
         ];
 
         if (extension_loaded('intl')) {
-            $emailAddresses[] = 'иван@письмо.рф';
-            $emailAddresses[] = 'xn--@-7sbfxdyelgv5j.xn--p1ai';
+            $emailAddresses[] = 'test@письмо.рф';
+            $emailAddresses[] = 'test@xn--h1aigbl0e.xn--p1ai';
         }
 
         foreach ($emailAddresses as $input) {
