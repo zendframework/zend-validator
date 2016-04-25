@@ -379,7 +379,7 @@ class EmailAddress extends AbstractValidator
     {
         $mxHosts = [];
         $weight  = [];
-        $result = getmxrr($this->idnToAscii($this->hostname), $mxHosts, $weight);
+        $result = getmxrr($this->hostname, $mxHosts, $weight);
         if (! empty($mxHosts) && ! empty($weight)) {
             $this->mxRecord = array_combine($mxHosts, $weight) ?: [];
         } else {
@@ -473,7 +473,7 @@ class EmailAddress extends AbstractValidator
         }
 
         $this->localPart = $matches[1];
-        $this->hostname  = $this->idnToUtf8($matches[2]);
+        $this->hostname  = $this->idnToAscii($matches[2]);
 
         return true;
     }
