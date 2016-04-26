@@ -220,7 +220,7 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
     public function validEmailAddresses()
     {
         // @codingStandardsIgnoreStart
-        return [
+        $return = [
             'bob@domain.com'                                                          => ['bob@domain.com'],
             'bob.jones@domain.co.uk'                                                  => ['bob.jones@domain.co.uk'],
             'bob.jones.smythe@domain.co.uk'                                           => ['bob.jones.smythe@domain.co.uk'],
@@ -232,6 +232,13 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
             'bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com' => ['bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com'],
             "B.O'Callaghan@domain.com"                                                => ["B.O'Callaghan@domain.com"],
         ];
+        
+        if (extension_loaded('intl')) {
+            $return['bob@موقع.إختبار']             = ['bob@موقع.إختبار'];
+            $return['bob@xn--4gbrim.xn--kgbechtv'] = ['bob@xn--4gbrim.xn--kgbechtv'];
+        }
+        
+        return $return;
         // @codingStandardsIgnoreEnd
     }
 
@@ -269,6 +276,7 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
             'bob @ domain.com'                                                         => ['bob @ domain.com'],
             'Abc..123@example.com'                                                     => ['Abc..123@example.com'],
             '"bob%jones@domain.com'                                                    => ['"bob%jones@domain.com'],
+            'иван@письмо.рф'                                                           => ['иван@письмо.рф'],
             'multiline'                                                                => ['bob
 
             @domain.com'],
