@@ -506,6 +506,25 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testAdditionalPunycodedTLDs()
+    {
+        $validator = new Hostname(Hostname::ALLOW_ALL);
+        // Check UTF-8 TLD matching
+        $valuesExpected = [
+            [true, ['test123.xn--80asehdb', 'xn--e1aybc.xn--p1ai', 'xn--h1aggjjdd5b4a.xn--l1acc']],
+            [false, ['xn--3-owe4au9mpa.xn--xkc2al3hye2a', 'xn--mgbgt.xn--l1acc']]
+        ];
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals(
+                    $element[0],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) .' - '. $input
+                );
+            }
+        }
+    }
+
     public function testIDNIT()
     {
         $validator = new Hostname(Hostname::ALLOW_ALL);
