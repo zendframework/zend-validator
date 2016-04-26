@@ -1772,8 +1772,16 @@ class Hostname extends AbstractValidator
                     // id-prefix: alpha / digit
                     // ldh: alpha / digit / dash
 
-                    // Match TLD against known list
                     $this->tld = strtoupper($matches[1]);
+                    // Decode Punycode TLD to IDN
+                    if (strpos($this->tld, 'xn--') === 0) {
+                        $this->tld = $this->decodePunycode(substr($this->tld, 4));
+                        if ($this->tld === false) {
+                            return false;
+                        }
+                    }
+
+                    // Match TLD against known list
                     if ($this->getTldCheck()) {
                         if (!in_array(strtolower($this->tld), $this->validTlds)
                             && !in_array($this->tld, $this->validTlds)) {
