@@ -1,0 +1,41 @@
+docs_dir: doc/book
+site_dir: doc/html
+pages:
+    - index.md
+    - Intro: intro.md
+    - Reference:
+        - "Standard Validation Classes": set.md
+        - Validators
+            - Barcode: barcode.md
+            - Between: between.md
+            - Callback: callback.md
+            - CreditCard: credit-card.md
+            - Date: date.md
+            - "Db\RecordExists and Db\NoRecordExists": db.md
+            - Digits: digits.md
+            - EmailAddress: email-address.md
+            - "File Validation Classes": file.md
+            - GreaterThan: greater-than.md
+            - Hex: hex.md
+            - Hostname: hostname.md
+            - Iban: iban.md
+            - Identical: identical.md
+            - InArray: in-array.md
+            - Ip: ip.md
+            - Isbn: isbn.md
+            - IsInstanceOf: isinstanceof.md
+            - LessThan: less-than.md
+            - NotEmpty: not-empty.md
+            - Regex: regex.md
+            - Sitemap: sitemap.md
+            - Step: step.md
+            - StringLength: string-length.md
+            - Timezone: timezone.md
+            - Uri: uri.md
+        - "Validator Chains": validator-chains.md
+        - "Writing Validators": writing-validators.md
+        - "Validation Messages": validation-messages.md
+site_name: zend-validator
+site_description: zend-validator
+repo_url: 'https://github.com/zendframework/zend-validator'
+copyright: 'Copyright (c) 2016 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a>'
