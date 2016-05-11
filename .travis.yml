@@ -10,10 +10,17 @@ branches:
 cache:
   directories:
     - $HOME/.composer/cache
+    - $HOME/.local
+    - zf-mkdoc-theme
 
 env:
   global:
     - TESTS_ZEND_VALIDATOR_ONLINE_ENABLED=true
+    - SITE_URL: https://zendframework.github.io/zend-validator
+    - GH_USER_NAME: "Matthew Weier O'Phinney"
+    - GH_USER_EMAIL: matthew@weierophinney.net
+    - GH_REF: github.com/zendframework/zend-validator.git
+    - secure: ""
 
 matrix:
   fast_finish: true
@@ -28,6 +35,8 @@ matrix:
     - php: 5.6
       env:
         - EXECUTE_TEST_COVERALLS=true
+        - DEPLOY_DOCS="$(if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then echo -n 'true' ; else echo -n 'false' ; fi)"
+        - PATH="$HOME/.local/bin:$PATH"
     - php: 5.6
       env:
         - SERVICE_MANAGER_VERSION="^2.7.5"
@@ -61,6 +70,11 @@ script:
   - if [[ $EXECUTE_TEST_COVERALLS != 'true' ]]; then ./vendor/bin/phpunit ; fi
   - if [[ $EXECUTE_CS_CHECK == 'true' ]]; then ./vendor/bin/php-cs-fixer fix -v --diff --dry-run ; fi
   - if [[ $EXECUTE_HOSTNAME_CHECK == "true" && $TRAVIS_PULL_REQUEST == "false" ]]; then php bin/update_hostname_validator.php --check-only; fi
+  - if [[ $DEPLOY_DOCS == "true" && "$TRAVIS_TEST_RESULT" == "0" ]]; then wget -O theme-installer.sh "https://raw.githubusercontent.com/zendframework/zf-mkdoc-theme/master/theme-installer.sh" ; chmod 755 theme-installer.sh ; ./theme-installer.sh ; fi
+
+after_success:
+  - if [[ $DEPLOY_DOCS == "true" ]]; then echo "Preparing to build and deploy documentation" ; ./zf-mkdoc-theme/deploy.sh ; echo "Completed deploying documentation" ; fi
+
 
 after_script:
   - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then ./vendor/bin/coveralls ; fi
