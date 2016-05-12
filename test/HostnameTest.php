@@ -486,24 +486,55 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testAdditionalUTF8TLDs()
+    /**
+     * Ensures that the validator follows expected behavior for UTF-8 and Punycoded (ACE) TLDs
+     *
+     * @dataProvider validTLDHostnames
+     */
+    public function testValidTLDHostnames($value)
     {
-        $validator = new Hostname(Hostname::ALLOW_ALL);
+        $this->assertTrue(
+            $this->validator->isValid($value),
+            sprintf(
+                '%s failed validation: %s',
+                $value,
+                implode("\n", $this->validator->getMessages())
+            )
+        );
+    }
 
-        // Check UTF-8 TLD matching
-        $valuesExpected = [
-            [true, ['test123.онлайн', 'тест.рф', 'туршилтын.мон']],
-            [false, ['சோதனை3.இலங்கை', 'رات.мон']]
+    public function validTLDHostnames()
+    {
+        // @codingStandardsIgnoreStart
+        return [
+            'ASCII label + UTF-8 TLD'                    => ['test123.онлайн'],
+            'ASCII label + Punycoded TLD'                => ['test123.xn--80asehdb'],
+            'UTF-8 label + UTF-8 TLD (cyrillic)'         => ['тест.рф'],
+            'Punycoded label + Punycoded TLD (cyrillic)' => ['xn--e1aybc.xn--p1ai'],
         ];
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals(
-                    $element[0],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) .' - '. $input
-                );
-            }
-        }
+        // @codingStandardsIgnoreEnd
+    }
+
+    /**
+     * Ensures that the validator follows expected behavior for invalid UTF-8 and Punycoded (ACE) TLDs
+     *
+     * @dataProvider invalidTLDHostnames
+     */
+    public function testInalidTLDHostnames($value)
+    {
+        $this->assertFalse($this->validator->isValid($value));
+    }
+
+    public function invalidTLDHostnames()
+    {
+        // @codingStandardsIgnoreStart
+        return [
+            'Invalid mix of UTF-8 and ASCII in label'                              => ['சோதனை3.இலங்கை'],
+            'Invalid mix of UTF-8 and ASCII in label (Punycoded)'                  => ['xn--3-owe4au9mpa.xn--xkc2al3hye2a'],
+            'Invalid use of non-cyrillic characters with cyrillic TLD'             => ['رات.мон'],
+            'Invalid use of non-cyrillic characters with cyrillic TLD (Punycoded)' => ['xn--mgbgt.xn--l1acc'],
+        ];
+        // @codingStandardsIgnoreEnd
     }
 
     public function testIDNIT()
