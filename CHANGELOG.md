@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#67](https://github.com/zendframework/zend-validator/pull/67) adds support
+  for Punycoded top-level domains in the `Hostname` validator.
 
 ### Deprecated
 
