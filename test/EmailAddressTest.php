@@ -232,12 +232,12 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
             'bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com' => ['bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com'],
             "B.O'Callaghan@domain.com"                                                => ["B.O'Callaghan@domain.com"],
         ];
-        
+
         if (extension_loaded('intl')) {
-            $return['bob@موقع.إختبار']             = ['bob@موقع.إختبار'];
-            $return['bob@xn--4gbrim.xn--kgbechtv'] = ['bob@xn--4gbrim.xn--kgbechtv'];
+            $return['bob@тест.рф']             = ['bob@тест.рф'];
+            $return['bob@xn--e1aybc.xn--p1ai'] = ['bob@xn--e1aybc.xn--p1ai'];
         }
-        
+
         return $return;
         // @codingStandardsIgnoreEnd
     }
