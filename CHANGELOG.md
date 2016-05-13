@@ -26,6 +26,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#67](https://github.com/zendframework/zend-validator/pull/67) adds support
   for Punycoded top-level domains in the `Hostname` validator.
+- [#79](https://github.com/zendframework/zend-validator/pull/79) adds and
+  publishes the documentation to https://zendframework.github.io/zend-validator/
 
 ### Deprecated
 
