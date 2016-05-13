@@ -20,7 +20,7 @@ env:
     - GH_USER_NAME: "Matthew Weier O'Phinney"
     - GH_USER_EMAIL: matthew@weierophinney.net
     - GH_REF: github.com/zendframework/zend-validator.git
-    - secure: ""
+    - secure: "SoUsUxBFCuC0rVQyDJ/+IB38glC5WeWvg0XxtNj79di7wsQ92Jofp6Uu3NJBB8H1+at1pHetphRm4N+GPQmZGMFTG7LyF5u8duV8t4nDpAz5WfoP1y0IyacP6IrWzANeszOTZ04dlHu3dBdHusNpNxxUHl97bSx4XQUAm2GUTqNkuXNgQJFAAxx91jb5txG4W8KeMnfRm9jeDHP17BCnBMaSkYEXeLpHkYa9wA4lBJ7ZD6LuSC+MhrJCtREBTsWKLJY6xeBjRorUug+uCrNyArPtcOAaOLMSDJ1XIi3L5/Q7HdoldV7aC3V5HjNlpdIEFl33IGiCOyictFCpT1KaKx7TL8zDTMCiqe0cCyfTnq28lzULz2hXg0Kov7BFcRr2Ht/1f96RgrakWQiYTmk+C3YYYA16Fb+MndkMI3WH7WI0suC+5nhPdGl53MCWsd5x2+dDk/ifB/VvxHdGhhgxzAxsYJ41gV/LlzjbCQJNDCnTaL/GHCTUGJEPgwLrn2W52uZx6VggE9wl5z4XkiPqBy6zAAdwF55RRJgCxFttGOMVGdegFLHTf6+13S4sEImNmyVTeuJBZEHxaYRJ21wweOocjC2StKC9V54uPysDcEYwhu8WOsYU34fQdpMx3OHfPmXvhNGqoZ1rVsd5HM0QZZMT+7SI0r3UNKxrPC8LEAU="
 
 matrix:
   fast_finish: true
