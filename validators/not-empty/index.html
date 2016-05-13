@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    <title>NotEmpty - zend-validator</title>
+
+    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href="//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic,700&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/zf.css" rel="stylesheet">
+    <link href="../../css/prism-zf.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <span class="navbar-brand">
+              <a class="logo-link" href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Zend Framework"><img src="../../img/zf-logo-mark.png" height="28" alt="Zend Framework" /></a>
+              <a href="../..">zend-validator</a>
+            </span>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../intro/">Intro</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../validator-chains/">Validator Chains</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../writing-validators/">Writing Validators</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../messages/">Validation Messages</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../set/">Standard Validation Classes</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">Validators</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../barcode/">Barcode</a>
+</li>
+
+        
+            
+<li >
+    <a href="../between/">Between</a>
+</li>
+
+        
+            
+<li >
+    <a href="../callback/">Callback</a>
+</li>
+
+        
+            
+<li >
+    <a href="../credit-card/">CreditCard</a>
+</li>
+
+        
+            
+<li >
+    <a href="../date/">Date</a>
+</li>
+
+        
+            
+<li >
+    <a href="../db/">Db\RecordExists and Db\NoRecordExists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../digits/">Digits</a>
+</li>
+
+        
+            
+<li >
+    <a href="../email-address/">EmailAddress</a>
+</li>
+
+        
+            
+<li >
+    <a href="../greater-than/">GreaterThan</a>
+</li>
+
+        
+            
+<li >
+    <a href="../hex/">Hex</a>
+</li>
+
+        
+            
+<li >
+    <a href="../hostname/">Hostname</a>
+</li>
+
+        
+            
+<li >
+    <a href="../iban/">Iban</a>
+</li>
+
+        
+            
+<li >
+    <a href="../identical/">Identical</a>
+</li>
+
+        
+            
+<li >
+    <a href="../in-array/">InArray</a>
+</li>
+
+        
+            
+<li >
+    <a href="../ip/">Ip</a>
+</li>
+
+        
+            
+<li >
+    <a href="../isbn/">Isbn</a>
+</li>
+
+        
+            
+<li >
+    <a href="../isinstanceof/">IsInstanceOf</a>
+</li>
+
+        
+            
+<li >
+    <a href="../less-than/">LessThan</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">NotEmpty</a>
+</li>
+
+        
+            
+<li >
+    <a href="../post-code/">PostCode</a>
+</li>
+
+        
+            
+<li >
+    <a href="../regex/">Regex</a>
+</li>
+
+        
+            
+<li >
+    <a href="../sitemap/">Sitemap</a>
+</li>
+
+        
+            
+<li >
+    <a href="../step/">Step</a>
+</li>
+
+        
+            
+<li >
+    <a href="../string-length/">StringLength</a>
+</li>
+
+        
+            
+<li >
+    <a href="../timezone/">Timezone</a>
+</li>
+
+        
+            
+<li >
+    <a href="../uri/">Uri</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">File Validators</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../file/intro/">Intro</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/count/">Count</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/crc32/">Crc32</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/exclude-extension/">ExcludeExtension</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/exclude-mime-type/">ExcludeMimeType</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/exists/">Exists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/extension/">Extension</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/files-size/">FilesSize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/hash/">Hash</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/image-size/">ImageSize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/is-compressed/">IsCompressed</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/is-image/">IsImage</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/md5/">Md5</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/mime-type/">MimeType</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/not-exists/">NotExists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/sha1/">Sha1</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/size/">Size</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/upload/">Upload</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/upload-file/">UploadFile</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/word-count/">WordCount</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" class="component-toggle" data-toggle="tooltip" data-placement="bottom" title="Show component list">
+                        <i class="fa fa-book"></i> Components
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li>
+                        <a href="https://github.com/zendframework/zend-validator">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <!-- content:begin -->
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#notempty-validator">NotEmpty Validator</a></li>
+        
+            <li><a href="#supported-options">Supported options</a></li>
+        
+            <li><a href="#default-behaviour">Default behaviour</a></li>
+        
+            <li><a href="#specifying-empty-behavior">Specifying empty behavior</a></li>
+        
+    
+    </ul>
+
+    
+    <ul class="pager hidden-print">
+      <li class="previous">
+        <a rel="prev" href="../less-than/"><i class="fa fa-arrow-left"></i> Previous</a>
+      </li>
+      <li class="next">
+        <a rel="next" href="../post-code/">Next <i class="fa fa-arrow-right"></i></a>
+      </li>
+    </ul>
+    
+</div></div>
+        <div class="col-md-9" role="main">
+
+<ol class="breadcrumb" role="navigation" aria-label="breadcrumbs navigation">
+  <li><a href="../..">Docs</a> &raquo;</li>
+  
+    
+      
+        <li>Reference &raquo;</li>
+      
+    
+      
+        <li>Validators &raquo;</li>
+      
+    
+  
+  <li class="active">NotEmpty</li>
+</ol>
+
+<h1 id="notempty-validator">NotEmpty Validator</h1>
+<p>This validator allows you to validate if a given value is not empty. This is
+often useful when working with form elements or other user input, where you can
+use it to ensure required elements have values associated with them.</p>
+<h2 id="supported-options">Supported options</h2>
+<p>The following options are supported for <code>Zend\Validator\NotEmpty</code>:</p>
+<ul>
+<li><code>type</code>: Sets the type of validation which will be processed; for details, see
+  the section on <a href="#specifying-empty-behavior">specifying empty behavior</a>.</li>
+</ul>
+<h2 id="default-behaviour">Default behaviour</h2>
+<p>By default, this validator works differently than you would expect when you've
+worked with PHP's <code>empty()</code> operator. In particular, this validator will
+evaluate both the integer <code>0</code> and string <code>'0'</code> as empty.</p>
+<pre class="codehilite"><code class="language-php">$valid = new Zend\Validator\NotEmpty();
+$value  = '';
+$result = $valid-&gt;isValid($value);
+// returns false</code></pre>
+
+
+<h2 id="specifying-empty-behavior">Specifying empty behavior</h2>
+<p>Some projects have differing opinions of what is considered an "empty" value: a
+string with only whitespace might be considered empty, or <code>0</code> may be
+considered non-empty (particularly for boolean sequences). To accommodate
+differing needs, <code>Zend\Validator\NotEmpty</code> allows you to configure which types
+should be validated as empty and which not.</p>
+<p>The following types can be handled:</p>
+<ul>
+<li><code>boolean</code>: Returns <code>false</code> when the boolean value is <code>false</code>.</li>
+<li><code>integer</code>: Returns <code>false</code> when an integer <code>0</code> value is given. By default,
+  this validation is not activate and returns <code>true</code> for any integer values.</li>
+<li><code>float</code>: Returns <code>false</code> when a float <code>0.0</code> value is given. By default, this
+  validation is not activate and returns <code>true</code> on any float values.</li>
+<li><code>string</code>: Returns <code>false</code> when an empty string <code>''</code> is given.</li>
+<li><code>zero</code>: Returns <code>false</code> when the single character zero (<code>'0'</code>) is given.</li>
+<li><code>empty_array</code>: Returns <code>false</code> when an empty <code>array</code> is given.</li>
+<li><code>null</code>: Returns <code>false</code> when a <code>null</code> value is given.</li>
+<li><code>php</code>: Returns <code>false</code> on wherever PHP's <code>empty()</code> would return <code>true</code>.</li>
+<li><code>space</code>: Returns <code>false</code> when an string is given which contains only
+  whitespace.</li>
+<li><code>object</code>: Returns <code>true</code>. <code>false</code> will be returned when <code>object</code> is not
+  allowed but an object is given.</li>
+<li><code>object_string</code>: Returns <code>false</code> when an object is given and its
+  <code>__toString()</code> method returns an empty string.</li>
+<li><code>object_count</code>: Returns <code>false</code> when an object is given, it implements
+  <code>Countable</code>, and its count is 0.</li>
+<li><code>all</code>: Returns <code>false</code> on all above types.</li>
+</ul>
+<p>All other given values will return <code>true</code> per default.</p>
+<p>There are several ways to select which of the above types are validated. You can
+give one or multiple types and add them, you can provide an array, you can use
+constants, or you can provide a textual string. See the following examples:</p>
+<pre class="codehilite"><code class="language-php">use Zend\Validator\NotEmpty;
+
+// Returns false on 0
+$validator = new NotEmpty(NotEmpty::INTEGER);
+
+// Returns false on 0 or '0'
+$validator = new NotEmpty( NotEmpty::INTEGER + NotEmpty::ZERO);
+
+// Returns false on 0 or '0'
+$validator = new NotEmpty([ NotEmpty::INTEGER, NotEmpty::ZERO ]);
+
+// Returns false on 0 or '0'
+$validator = new NotEmpty(['integer', 'zero']);</code></pre>
+
+
+<p>You can also provide an instance of <code>Traversable</code> to set the desired types. To
+set types after instantiation, use the <code>setType()</code> method.</p>
+
+<hr />
+
+
+<nav>
+  <ul class="pager hidden-print">
+    <li class="previous">
+      <a rel="prev" href="../less-than/"><i class="fa fa-arrow-left"></i> Previous</a>
+    </li>
+    <li class="next">
+      <a rel="next" href="../post-code/">Next <i class="fa fa-arrow-right"></i></a>
+    </li>
+  </ul>
+</nav>
+</div>
+        
+    </div>
+    <!-- content:end -->
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright (c) 2016 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a><br></small>
+        </p>
+        <p><small><a href="http://framework.zend.com">Learn more about Zend Framework</a></small></p>
+    </footer>
+
+    <script src="../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../js/prism-zf.js"></script>
+
+    <script>var base_url = '../..';</script>
+    <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+    <script src="../../js/base.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="zf-components">
+  <div class="zf-components-grid">
+    <div class="zf-logo">
+      <a href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="../../img/zf-logo-mark.png" alt="Zend Framework" width="250" /></a>
+    </div>
+
+    <div class="component-list"></div>
+
+    <p class="zf-components-rollup"><a href="#">Hide list</a></p>
+  </div>
+</div>
+
+    <script>
+  // Prepare the component list dropdown for display
+  $(function () {
+    var components = $(".zf-components"),
+        componentList = components.find(".component-list"),
+        sidebar = $(".bs-sidebar.affix"),
+        sidebarInitialPos = sidebar.css("position"),
+        hidden,
+        componentToggle = $(".component-toggle"),
+        navbar = $(".navbar-fixed-top"),
+        rollUpLink = $(".zf-components-rollup a");
+
+    // Initial setup on document load
+    components.insertBefore(navbar);
+    $(".zf-logo a").tooltip();
+    componentToggle.tooltip();
+    rollUpLink.attr({ href: "#", alt: "Hide component list" });
+
+    // Cast initial sidebar position value
+    if (undefined === sidebarInitialPos) {
+      sidebarInitialPos = "fixed";
+    }
+
+    // Setup onclick events to toggle list
+    componentToggle.click(toggleComponentList);
+    rollUpLink.click(toggleComponentList);
+
+    // Toggle the component list display
+    function toggleComponentList(event) {
+      event.preventDefault();
+
+      if (hidden === undefined) {
+        // Not loaded yet; load and display.
+        loadComponentList();
+        return;
+      }
+
+      if (hidden) {
+        // Hidden; display.
+        showComponentList();
+        return;
+      }
+
+      // Currently visible; hide
+      hideComponentList();
+    }
+
+    // Show the component list
+    function showComponentList() {
+      navbar.css({position: "relative"});
+      sidebar.css({position: "relative"});
+      components
+        .css({"margin-top": "-" + components.outerHeight() + "px"})
+        .show()
+        .animate({"margin-top": 0}, {
+          complete: function () {
+            componentToggle
+              .data("placement", "top")
+              .attr("data-original-title", "Hide component list");
+            hidden = false;
+          },
+          queue: false
+        });
+    }
+
+    // Hide the component list
+    function hideComponentList() {
+      components.animate({"margin-top": "-" + components.outerHeight() + "px"}, {
+        complete: function () {
+          navbar.css({position: "fixed"});
+          sidebar.css({position: sidebarInitialPos});
+          componentToggle
+            .data("placement", "bottom")
+            .attr("data-original-title", "Show component list");
+          components.hide();
+          hidden = true;
+        },
+        queue: false
+      });
+      sidebar.animate({ top: sidebarInitialTop + "px" }, { queue: false});
+    }
+
+    // Inject a component into the componet list DOM.
+    function injectComponent(index, component) {
+      componentList.append('<div class="component"><h4><a href="' + component.url + '">' + component.name + '</a></h4><p>' + component.description + '</p></div>');
+    }
+
+    // Parse the component list, build the DOM, and display it.
+    function parseComponentList(components) {
+      $.each(components, injectComponent);
+      showComponentList();
+    }
+
+    // Fetch the component list and display it.
+    function loadComponentList () {
+      $.ajax({
+        url: "//zendframework.github.io/zf-mkdoc-theme/scripts/zf-component-list.json",
+        dataType: "text json",
+        success: parseComponentList,
+        error: function (e) {
+          console.log("Error occurred with XHR call", e);
+        }
+      });
+    }
+  });
+</script>
+    </body>
+
+</html>

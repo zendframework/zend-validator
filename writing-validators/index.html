@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    <title>Writing Validators - zend-validator</title>
+
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href="//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic,700&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="../css/base.css" rel="stylesheet">
+    <link href="../css/zf.css" rel="stylesheet">
+    <link href="../css/prism-zf.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <span class="navbar-brand">
+              <a class="logo-link" href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Zend Framework"><img src="../img/zf-logo-mark.png" height="28" alt="Zend Framework" /></a>
+              <a href="..">zend-validator</a>
+            </span>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../intro/">Intro</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../validator-chains/">Validator Chains</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Writing Validators</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../messages/">Validation Messages</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../set/">Standard Validation Classes</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">Validators</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../validators/barcode/">Barcode</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/between/">Between</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/callback/">Callback</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/credit-card/">CreditCard</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/date/">Date</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/db/">Db\RecordExists and Db\NoRecordExists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/digits/">Digits</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/email-address/">EmailAddress</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/greater-than/">GreaterThan</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/hex/">Hex</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/hostname/">Hostname</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/iban/">Iban</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/identical/">Identical</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/in-array/">InArray</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/ip/">Ip</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/isbn/">Isbn</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/isinstanceof/">IsInstanceOf</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/less-than/">LessThan</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/not-empty/">NotEmpty</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/post-code/">PostCode</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/regex/">Regex</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/sitemap/">Sitemap</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/step/">Step</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/string-length/">StringLength</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/timezone/">Timezone</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/uri/">Uri</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">File Validators</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../validators/file/intro/">Intro</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/count/">Count</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/crc32/">Crc32</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/exclude-extension/">ExcludeExtension</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/exclude-mime-type/">ExcludeMimeType</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/exists/">Exists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/extension/">Extension</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/files-size/">FilesSize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/hash/">Hash</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/image-size/">ImageSize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/is-compressed/">IsCompressed</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/is-image/">IsImage</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/md5/">Md5</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/mime-type/">MimeType</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/not-exists/">NotExists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/sha1/">Sha1</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/size/">Size</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/upload/">Upload</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/upload-file/">UploadFile</a>
+</li>
+
+        
+            
+<li >
+    <a href="../validators/file/word-count/">WordCount</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" class="component-toggle" data-toggle="tooltip" data-placement="bottom" title="Show component list">
+                        <i class="fa fa-book"></i> Components
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li>
+                        <a href="https://github.com/zendframework/zend-validator">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <!-- content:begin -->
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#writing-validators">Writing Validators</a></li>
+        
+            <li><a href="#creating-a-validation-class">Creating a Validation Class</a></li>
+        
+            <li><a href="#writing-a-validation-class-having-dependent-conditions">Writing a Validation Class having Dependent Conditions</a></li>
+        
+            <li><a href="#validation-with-independent-conditions-multiple-reasons-for-failure">Validation with Independent Conditions, Multiple Reasons for Failure</a></li>
+        
+    
+    </ul>
+
+    
+    <ul class="pager hidden-print">
+      <li class="previous">
+        <a rel="prev" href="../validator-chains/"><i class="fa fa-arrow-left"></i> Previous</a>
+      </li>
+      <li class="next">
+        <a rel="next" href="../messages/">Next <i class="fa fa-arrow-right"></i></a>
+      </li>
+    </ul>
+    
+</div></div>
+        <div class="col-md-9" role="main">
+
+<ol class="breadcrumb" role="navigation" aria-label="breadcrumbs navigation">
+  <li><a href="..">Docs</a> &raquo;</li>
+  
+    
+      
+        <li>Reference &raquo;</li>
+      
+    
+  
+  <li class="active">Writing Validators</li>
+</ol>
+
+<h1 id="writing-validators">Writing Validators</h1>
+<p>zend-validator supplies a set of commonly needed validators, but many
+applications have needs for custom validators. The component allows this via
+implementations of <code>Zend\Validator\ValidatorInterface</code>.</p>
+<p><code>Zend\Validator\ValidatorInterface</code> defines two methods: <code>isValid()</code> and
+<code>getMessages()</code>. An object that implements the interface may be added to a
+validator chain using <code>Zend\Validator\ValidatorChain::addValidator()</code>. Such
+objects may also be used with
+<a href="https://zendframework.github.io/zend-inputfilter">zend-inputfilter</a>.</p>
+<p>Validators will return a boolean value from <code>isValid()</code>, and report information
+regarding <strong>why</strong> a value failed validation via <code>getMessages()</code>. The
+availability of the reasons for validation failures may be valuable to an
+application for various purposes, such as providing statistics for usability
+analysis.</p>
+<p>Basic validation failure message functionality is implemented in
+<code>Zend\Validator\AbstractValidator</code>, which you may extend for your custom
+validators.  Extending class you would implement the <code>isValid()</code> method logic
+and define the message variables and message templates that correspond to the
+types of validation failures that can occur. If a value fails your validation
+tests, then <code>isValid()</code> should return <code>false</code>. If the value passes your
+validation tests, then <code>isValid()</code> should return <code>true</code>.</p>
+<p>In general, the <code>isValid()</code> method should not throw any exceptions, except where
+it is impossible to determine whether or not the input value is valid. A few
+examples of reasonable cases for throwing an exception might be if a file cannot
+be opened, an LDAP server could not be contacted, or a database connection is
+unavailable, where such a thing may be required for validation success or
+failure to be determined.</p>
+<h2 id="creating-a-validation-class">Creating a Validation Class</h2>
+<p>The following example demonstrates how a custom validator might be written. In
+this case, the validator tests that a value is a floating point value.</p>
+<pre class="codehilite"><code class="language-php">namespace MyValid;
+
+use Zend\Validator\AbstractValidator;
+
+class Float extends AbstractValidator
+{
+    const FLOAT = 'float';
+
+    protected $messageTemplates = [
+        self::FLOAT =&gt; &quot;'%value%' is not a floating point value&quot;,
+    ];
+
+    public function isValid($value)
+    {
+        $this-&gt;setValue($value);
+
+        if (! is_float($value)) {
+            $this-&gt;error(self::FLOAT);
+            return false;
+        }
+
+        return true;
+    }
+}</code></pre>
+
+
+<p>The class defines a template for its single validation failure message, which
+includes the built-in magic parameter, <code>%value%</code>. The call to <code>setValue()</code>
+prepares the object to insert the tested value into the failure message
+automatically, should the value fail validation. The call to <code>error()</code> tracks a
+reason for validation failure. Since this class only defines one failure
+message, it is not necessary to provide <code>error()</code> with the name of the failure
+message template.</p>
+<h2 id="writing-a-validation-class-having-dependent-conditions">Writing a Validation Class having Dependent Conditions</h2>
+<p>The following example demonstrates a more complex set of validation rules:</p>
+<ul>
+<li>The input must be numeric.</li>
+<li>The input must fall within a range of bouncary values.</li>
+</ul>
+<p>An input value would fail validation for exactly one of the following reasons:</p>
+<ul>
+<li>The input value is not numeric.</li>
+<li>The input value is less than the minimum allowed value.</li>
+<li>The input value is more than the maximum allowed value.</li>
+</ul>
+<p>These validation failure reasons are then translated to definitions in the
+class:</p>
+<pre class="codehilite"><code class="language-php">namespace MyValid;
+
+use Zend\Validator\AbstractValidator;
+
+class NumericBetween extends AbstractValidator
+{
+    const MSG_NUMERIC = 'msgNumeric';
+    const MSG_MINIMUM = 'msgMinimum';
+    const MSG_MAXIMUM = 'msgMaximum';
+
+    public $minimum = 0;
+    public $maximum = 100;
+
+    protected $messageVariables = [
+        'min' =&gt; 'minimum',
+        'max' =&gt; 'maximum',
+    ];
+
+    protected $messageTemplates = [
+        self::MSG_NUMERIC =&gt; &quot;'%value%' is not numeric&quot;,
+        self::MSG_MINIMUM =&gt; &quot;'%value%' must be at least '%min%'&quot;,
+        self::MSG_MAXIMUM =&gt; &quot;'%value%' must be no more than '%max%'&quot;,
+    ];
+
+    public function isValid($value)
+    {
+        $this-&gt;setValue($value);
+
+        if (! is_numeric($value)) {
+            $this-&gt;error(self::MSG_NUMERIC);
+            return false;
+        }
+
+        if ($value &lt; $this-&gt;minimum) {
+            $this-&gt;error(self::MSG_MINIMUM);
+            return false;
+        }
+
+        if ($value &gt; $this-&gt;maximum) {
+            $this-&gt;error(self::MSG_MAXIMUM);
+            return false;
+        }
+
+        return true;
+    }
+}</code></pre>
+
+
+<p>The public properties <code>$minimum</code> and <code>$maximum</code> have been established to provide
+the minimum and maximum boundaries, respectively, for a value to successfully
+validate. The class also defines two message variables that correspond to the
+public properties and allow <code>min</code> and <code>max</code> to be used in message templates as
+magic parameters, just as with <code>value</code>.</p>
+<p>Note that if any one of the validation checks in <code>isValid()</code> fails, an
+appropriate failure message is prepared, and the method immediately returns
+<code>false</code>. These validation rules are therefore sequentially dependent; that is,
+if one test should fail, there is no need to test any subsequent validation
+rules. This need not be the case, however. The following example illustrates how
+to write a class having independent validation rules, where the validation
+object may return multiple reasons why a particular validation attempt failed.</p>
+<h2 id="validation-with-independent-conditions-multiple-reasons-for-failure">Validation with Independent Conditions, Multiple Reasons for Failure</h2>
+<p>Consider writing a validation class for password strength enforcement - when a
+user is required to choose a password that meets certain criteria for helping
+secure user accounts. Let us assume that the password security criteria enforce
+that the password:</p>
+<ul>
+<li>is at least 8 characters in length,</li>
+<li>contains at least one uppercase letter,</li>
+<li>contains at least one lowercase letter,</li>
+<li>and contains at least one digit character.</li>
+</ul>
+<p>The following class implements these validation criteria:</p>
+<pre class="codehilite"><code class="language-php">namespace MyValid;
+
+use Zend\Validator\AbstractValidator;
+
+class PasswordStrength extends AbstractValidator
+{
+    const LENGTH = 'length';
+    const UPPER  = 'upper';
+    const LOWER  = 'lower';
+    const DIGIT  = 'digit';
+
+    protected $messageTemplates = [
+        self::LENGTH =&gt; &quot;'%value%' must be at least 8 characters in length&quot;,
+        self::UPPER  =&gt; &quot;'%value%' must contain at least one uppercase letter&quot;,
+        self::LOWER  =&gt; &quot;'%value%' must contain at least one lowercase letter&quot;,
+        self::DIGIT  =&gt; &quot;'%value%' must contain at least one digit character&quot;,
+    ];
+
+    public function isValid($value)
+    {
+        $this-&gt;setValue($value);
+
+        $isValid = true;
+
+        if (strlen($value) &lt; 8) {
+            $this-&gt;error(self::LENGTH);
+            $isValid = false;
+        }
+
+        if (! preg_match('/[A-Z]/', $value)) {
+            $this-&gt;error(self::UPPER);
+            $isValid = false;
+        }
+
+        if (! preg_match('/[a-z]/', $value)) {
+            $this-&gt;error(self::LOWER);
+            $isValid = false;
+        }
+
+        if (! preg_match('/\d/', $value)) {
+            $this-&gt;error(self::DIGIT);
+            $isValid = false;
+        }
+
+        return $isValid;
+    }
+}</code></pre>
+
+
+<p>Note that the four criteria tests in <code>isValid()</code> do not immediately return
+<code>false</code>. This allows the validation class to provide <strong>all</strong> of the reasons that
+the input password failed to meet the validation requirements. If, for example,
+a user were to input the string <code>#$%</code> as a password, <code>isValid()</code> would cause
+all four validation failure messages to be returned by a subsequent call to
+<code>getMessages()</code>.</p>
+
+<hr />
+
+
+<nav>
+  <ul class="pager hidden-print">
+    <li class="previous">
+      <a rel="prev" href="../validator-chains/"><i class="fa fa-arrow-left"></i> Previous</a>
+    </li>
+    <li class="next">
+      <a rel="next" href="../messages/">Next <i class="fa fa-arrow-right"></i></a>
+    </li>
+  </ul>
+</nav>
+</div>
+        
+    </div>
+    <!-- content:end -->
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright (c) 2016 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a><br></small>
+        </p>
+        <p><small><a href="http://framework.zend.com">Learn more about Zend Framework</a></small></p>
+    </footer>
+
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../js/prism-zf.js"></script>
+
+    <script>var base_url = '..';</script>
+    <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+    <script src="../js/base.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="zf-components">
+  <div class="zf-components-grid">
+    <div class="zf-logo">
+      <a href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="../img/zf-logo-mark.png" alt="Zend Framework" width="250" /></a>
+    </div>
+
+    <div class="component-list"></div>
+
+    <p class="zf-components-rollup"><a href="#">Hide list</a></p>
+  </div>
+</div>
+
+    <script>
+  // Prepare the component list dropdown for display
+  $(function () {
+    var components = $(".zf-components"),
+        componentList = components.find(".component-list"),
+        sidebar = $(".bs-sidebar.affix"),
+        sidebarInitialPos = sidebar.css("position"),
+        hidden,
+        componentToggle = $(".component-toggle"),
+        navbar = $(".navbar-fixed-top"),
+        rollUpLink = $(".zf-components-rollup a");
+
+    // Initial setup on document load
+    components.insertBefore(navbar);
+    $(".zf-logo a").tooltip();
+    componentToggle.tooltip();
+    rollUpLink.attr({ href: "#", alt: "Hide component list" });
+
+    // Cast initial sidebar position value
+    if (undefined === sidebarInitialPos) {
+      sidebarInitialPos = "fixed";
+    }
+
+    // Setup onclick events to toggle list
+    componentToggle.click(toggleComponentList);
+    rollUpLink.click(toggleComponentList);
+
+    // Toggle the component list display
+    function toggleComponentList(event) {
+      event.preventDefault();
+
+      if (hidden === undefined) {
+        // Not loaded yet; load and display.
+        loadComponentList();
+        return;
+      }
+
+      if (hidden) {
+        // Hidden; display.
+        showComponentList();
+        return;
+      }
+
+      // Currently visible; hide
+      hideComponentList();
+    }
+
+    // Show the component list
+    function showComponentList() {
+      navbar.css({position: "relative"});
+      sidebar.css({position: "relative"});
+      components
+        .css({"margin-top": "-" + components.outerHeight() + "px"})
+        .show()
+        .animate({"margin-top": 0}, {
+          complete: function () {
+            componentToggle
+              .data("placement", "top")
+              .attr("data-original-title", "Hide component list");
+            hidden = false;
+          },
+          queue: false
+        });
+    }
+
+    // Hide the component list
+    function hideComponentList() {
+      components.animate({"margin-top": "-" + components.outerHeight() + "px"}, {
+        complete: function () {
+          navbar.css({position: "fixed"});
+          sidebar.css({position: sidebarInitialPos});
+          componentToggle
+            .data("placement", "bottom")
+            .attr("data-original-title", "Show component list");
+          components.hide();
+          hidden = true;
+        },
+        queue: false
+      });
+      sidebar.animate({ top: sidebarInitialTop + "px" }, { queue: false});
+    }
+
+    // Inject a component into the componet list DOM.
+    function injectComponent(index, component) {
+      componentList.append('<div class="component"><h4><a href="' + component.url + '">' + component.name + '</a></h4><p>' + component.description + '</p></div>');
+    }
+
+    // Parse the component list, build the DOM, and display it.
+    function parseComponentList(components) {
+      $.each(components, injectComponent);
+      showComponentList();
+    }
+
+    // Fetch the component list and display it.
+    function loadComponentList () {
+      $.ajax({
+        url: "//zendframework.github.io/zf-mkdoc-theme/scripts/zf-component-list.json",
+        dataType: "text json",
+        success: parseComponentList,
+        error: function (e) {
+          console.log("Error occurred with XHR call", e);
+        }
+      });
+    }
+  });
+</script>
+    </body>
+
+</html>

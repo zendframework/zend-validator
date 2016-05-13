@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    <title>Barcode - zend-validator</title>
+
+    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href="//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic,700&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/zf.css" rel="stylesheet">
+    <link href="../../css/prism-zf.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <span class="navbar-brand">
+              <a class="logo-link" href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Zend Framework"><img src="../../img/zf-logo-mark.png" height="28" alt="Zend Framework" /></a>
+              <a href="../..">zend-validator</a>
+            </span>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../intro/">Intro</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../validator-chains/">Validator Chains</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../writing-validators/">Writing Validators</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../messages/">Validation Messages</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../set/">Standard Validation Classes</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">Validators</a>
+    <ul class="dropdown-menu">
+        
+            
+<li class="active">
+    <a href="./">Barcode</a>
+</li>
+
+        
+            
+<li >
+    <a href="../between/">Between</a>
+</li>
+
+        
+            
+<li >
+    <a href="../callback/">Callback</a>
+</li>
+
+        
+            
+<li >
+    <a href="../credit-card/">CreditCard</a>
+</li>
+
+        
+            
+<li >
+    <a href="../date/">Date</a>
+</li>
+
+        
+            
+<li >
+    <a href="../db/">Db\RecordExists and Db\NoRecordExists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../digits/">Digits</a>
+</li>
+
+        
+            
+<li >
+    <a href="../email-address/">EmailAddress</a>
+</li>
+
+        
+            
+<li >
+    <a href="../greater-than/">GreaterThan</a>
+</li>
+
+        
+            
+<li >
+    <a href="../hex/">Hex</a>
+</li>
+
+        
+            
+<li >
+    <a href="../hostname/">Hostname</a>
+</li>
+
+        
+            
+<li >
+    <a href="../iban/">Iban</a>
+</li>
+
+        
+            
+<li >
+    <a href="../identical/">Identical</a>
+</li>
+
+        
+            
+<li >
+    <a href="../in-array/">InArray</a>
+</li>
+
+        
+            
+<li >
+    <a href="../ip/">Ip</a>
+</li>
+
+        
+            
+<li >
+    <a href="../isbn/">Isbn</a>
+</li>
+
+        
+            
+<li >
+    <a href="../isinstanceof/">IsInstanceOf</a>
+</li>
+
+        
+            
+<li >
+    <a href="../less-than/">LessThan</a>
+</li>
+
+        
+            
+<li >
+    <a href="../not-empty/">NotEmpty</a>
+</li>
+
+        
+            
+<li >
+    <a href="../post-code/">PostCode</a>
+</li>
+
+        
+            
+<li >
+    <a href="../regex/">Regex</a>
+</li>
+
+        
+            
+<li >
+    <a href="../sitemap/">Sitemap</a>
+</li>
+
+        
+            
+<li >
+    <a href="../step/">Step</a>
+</li>
+
+        
+            
+<li >
+    <a href="../string-length/">StringLength</a>
+</li>
+
+        
+            
+<li >
+    <a href="../timezone/">Timezone</a>
+</li>
+
+        
+            
+<li >
+    <a href="../uri/">Uri</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">File Validators</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../file/intro/">Intro</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/count/">Count</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/crc32/">Crc32</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/exclude-extension/">ExcludeExtension</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/exclude-mime-type/">ExcludeMimeType</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/exists/">Exists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/extension/">Extension</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/files-size/">FilesSize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/hash/">Hash</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/image-size/">ImageSize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/is-compressed/">IsCompressed</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/is-image/">IsImage</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/md5/">Md5</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/mime-type/">MimeType</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/not-exists/">NotExists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/sha1/">Sha1</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/size/">Size</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/upload/">Upload</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/upload-file/">UploadFile</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/word-count/">WordCount</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" class="component-toggle" data-toggle="tooltip" data-placement="bottom" title="Show component list">
+                        <i class="fa fa-book"></i> Components
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li>
+                        <a href="https://github.com/zendframework/zend-validator">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <!-- content:begin -->
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#barcode-validator">Barcode Validator</a></li>
+        
+            <li><a href="#supported-barcodes">Supported barcodes</a></li>
+        
+            <li><a href="#supported-options">Supported options</a></li>
+        
+            <li><a href="#basic-usage">Basic usage</a></li>
+        
+            <li><a href="#optional-checksum">Optional checksum</a></li>
+        
+            <li><a href="#writing-custom-adapters">Writing custom adapters</a></li>
+        
+    
+    </ul>
+
+    
+    <ul class="pager hidden-print">
+      <li class="previous">
+        <a rel="prev" href="../../set/"><i class="fa fa-arrow-left"></i> Previous</a>
+      </li>
+      <li class="next">
+        <a rel="next" href="../between/">Next <i class="fa fa-arrow-right"></i></a>
+      </li>
+    </ul>
+    
+</div></div>
+        <div class="col-md-9" role="main">
+
+<ol class="breadcrumb" role="navigation" aria-label="breadcrumbs navigation">
+  <li><a href="../..">Docs</a> &raquo;</li>
+  
+    
+      
+        <li>Reference &raquo;</li>
+      
+    
+      
+        <li>Validators &raquo;</li>
+      
+    
+  
+  <li class="active">Barcode</li>
+</ol>
+
+<h1 id="barcode-validator">Barcode Validator</h1>
+<p><code>Zend\Validator\Barcode</code> allows you to check if a given value can be represented
+as a barcode.</p>
+<h2 id="supported-barcodes">Supported barcodes</h2>
+<p><code>Zend\Validator\Barcode</code> supports multiple barcode standards and can be extended
+with proprietary barcode implementations. The following barcode standards are
+supported:</p>
+<h3 id="codabar">CODABAR</h3>
+<p>Also known as Code-a-bar.</p>
+<p>This barcode has no length limitation. It supports only digits, and 6 special
+chars. Codabar is a self-checking barcode. This standard is very old. Common use
+cases are within airbills or photo labs where multi-part forms are used with
+dot-matrix printers.</p>
+<h3 id="code128">CODE128</h3>
+<p>CODE128 is a high density barcode.</p>
+<p>This barcode has no length limitation. It supports the first 128 ascii
+characters. When used with printing characters it has an checksum which is
+calculated modulo 103. This standard is used worldwide as it supports upper and
+lowercase characters.</p>
+<h3 id="code25">CODE25</h3>
+<p>Often called "two of five" or "Code25 Industrial".</p>
+<p>This barcode has no length limitation. It supports only digits, and the last
+digit can be an optional checksum which is calculated with modulo 10. This
+standard is very old and nowadays not often used. Common use cases are within
+the industry.</p>
+<h3 id="code25interleaved">CODE25INTERLEAVED</h3>
+<p>Often called "Code 2 of 5 Interleaved".</p>
+<p>This standard is a variant of CODE25. It has no length limitation, but it must
+contain an even amount of characters. It supports only digits, and the last
+digit can be an optional checksum which is calculated with modulo 10. It is used
+worldwide and common on the market.</p>
+<h3 id="code39">CODE39</h3>
+<p>CODE39 is one of the oldest available codes.</p>
+<p>This barcode has a variable length. It supports digits, upper cased alphabetical
+characters and 7 special characters like whitespace, point and dollar sign. It
+can have an optional checksum which is calculated with modulo 43. This standard
+is used worldwide and common within the industry.</p>
+<h3 id="code39ext">CODE39EXT</h3>
+<p>CODE39EXT is an extension of CODE39.</p>
+<p>This barcode has the same properties as CODE39. Additionally it allows the usage
+of all 128 ASCII characters. This standard is used worldwide and common within
+the industry.</p>
+<h3 id="code93">CODE93</h3>
+<p>CODE93 is the successor of CODE39.</p>
+<p>This barcode has a variable length. It supports digits, alphabetical characters
+and 7 special characters. It has an optional checksum which is calculated with
+modulo 47 and contains 2 characters. This standard produces a denser code than
+CODE39 and is more secure.</p>
+<h3 id="code93ext">CODE93EXT</h3>
+<p>CODE93EXT is an extension of CODE93.</p>
+<p>This barcode has the same properties as CODE93. Additionally it allows the usage
+of all 128 ASCII characters. This standard is used worldwide and common within
+the industry.</p>
+<h3 id="ean2">EAN2</h3>
+<p>EAN is the shortcut for "European Article Number".</p>
+<p>These barcode must have 2 characters. It supports only digits and does not have
+a checksum. This standard is mainly used as addition to EAN13 (ISBN) when
+printed on books.</p>
+<h3 id="ean5">EAN5</h3>
+<p>EAN is the shortcut for "European Article Number".</p>
+<p>These barcode must have 5 characters. It supports only digits and does not have
+a checksum. This standard is mainly used as addition to EAN13 (ISBN) when
+printed on books.</p>
+<h3 id="ean8">EAN8</h3>
+<p>EAN is the shortcut for "European Article Number".</p>
+<p>These barcode can have 7 or 8 characters. It supports only digits. When it has a
+length of 8 characters it includes a checksum. This standard is used worldwide
+but has a very limited range. It can be found on small articles where a longer
+barcode could not be printed.</p>
+<h3 id="ean12">EAN12</h3>
+<p>EAN is the shortcut for "European Article Number".</p>
+<p>This barcode must have a length of 12 characters. It supports only digits, and
+the last digit is always a checksum which is calculated with modulo 10. This
+standard is used within the USA and common on the market. It has been superseded
+by EAN13.</p>
+<h3 id="ean13">EAN13</h3>
+<p>EAN is the shortcut for "European Article Number".</p>
+<p>This barcode must have a length of 13 characters. It supports only digits, and
+the last digit is always a checksum which is calculated with modulo 10. This
+standard is used worldwide and common on the market.</p>
+<h3 id="ean14">EAN14</h3>
+<p>EAN is the shortcut for "European Article Number".</p>
+<p>This barcode must have a length of 14 characters. It supports only digits, and
+the last digit is always a checksum which is calculated with modulo 10. This
+standard is used worldwide and common on the market. It is the successor for
+EAN13.</p>
+<h3 id="ean18">EAN18</h3>
+<p>EAN is the shortcut for "European Article Number".</p>
+<p>This barcode must have a length of 18 characters. It support only digits. The
+last digit is always a checksum digit which is calculated with modulo 10. This
+code is often used for the identification of shipping containers.</p>
+<h3 id="gtin12">GTIN12</h3>
+<p>GTIN is the shortcut for "Global Trade Item Number".</p>
+<p>This barcode uses the same standard as EAN12 and is its successor. It's commonly
+used within the USA.</p>
+<h3 id="gtin13">GTIN13</h3>
+<p>GTIN is the shortcut for "Global Trade Item Number".</p>
+<p>This barcode uses the same standard as EAN13 and is its successor. It is used
+worldwide by industry.</p>
+<h3 id="gtin14">GTIN14</h3>
+<p>GTIN is the shortcut for "Global Trade Item Number".</p>
+<p>This barcode uses the same standard as EAN14 and is its successor. It is used
+worldwide and common on the market.</p>
+<h3 id="identcode">IDENTCODE</h3>
+<p>Identcode is used by Deutsche Post and DHL. It's an specialized implementation of Code25.</p>
+<p>This barcode must have a length of 12 characters. It supports only digits, and
+the last digit is always a checksum which is calculated with modulo 10. This
+standard is mainly used by the companies DP and DHL.</p>
+<h3 id="intelligentmail">INTELLIGENTMAIL</h3>
+<p>Intelligent Mail is a postal barcode.</p>
+<p>This barcode can have a length of 20, 25, 29 or 31 characters. It supports only
+digits, and contains no checksum. This standard is the successor of PLANET and
+POSTNET. It is mainly used by the United States Postal Services.</p>
+<h3 id="issn">ISSN</h3>
+<p>ISSN is the abbreviation for International Standard Serial Number.</p>
+<p>This barcode can have a length of 8 or 13 characters. It supports only digits,
+and the last digit must be a checksum digit which is calculated with modulo 11.
+It is used worldwide for printed publications.</p>
+<h3 id="itf14">ITF14</h3>
+<p>ITF14 is the GS1 implementation of an Interleaved Two of Five bar code.</p>
+<p>This barcode is a special variant of Interleaved 2 of 5. It must have a length
+of 14 characters and is based on GTIN14. It supports only digits, and the last
+digit must be a checksum digit which is calculated with modulo 10. It is used
+worldwide and common within the market.</p>
+<h3 id="leitcode">LEITCODE</h3>
+<p>Leitcode is used by Deutsche Post and DHL. It's an specialized implementation of Code25.</p>
+<p>This barcode must have a length of 14 characters. It supports only digits, and
+the last digit is always a checksum which is calculated with modulo 10. This
+standard is mainly used by the companies DP and DHL.</p>
+<h3 id="planet">PLANET</h3>
+<p>Planet is the abbreviation for Postal Alpha Numeric Encoding Technique.</p>
+<p>This barcode can have a length of 12 or 14 characters. It supports only digits,
+and the last digit is always a checksum. This standard is mainly used by the
+United States Postal Services.</p>
+<h3 id="postnet">POSTNET</h3>
+<p>Postnet is used by the US Postal Service.</p>
+<p>This barcode can have a length of 6, 7, 10 or 12 characters. It supports only
+digits, and the last digit is always a checksum. This standard is mainly used by
+the United States Postal Services.</p>
+<h3 id="royalmail">ROYALMAIL</h3>
+<p>Royalmail is used by Royal Mail.</p>
+<p>This barcode has no defined length. It supports digits, uppercase letters, and
+the last digit is always a checksum. This standard is mainly used by Royal Mail
+for their Cleanmail Service. It is also called RM4SCC.</p>
+<h3 id="sscc">SSCC</h3>
+<p>SSCC is the shortcut for "Serial Shipping Container Code".</p>
+<p>This barcode is a variant of EAN barcode. It must have a length of 18 characters
+and supports only digits. The last digit must be a checksum digit which is
+calculated with modulo 10. It is commonly used by the transport industry.</p>
+<h3 id="upca">UPCA</h3>
+<p>UPC is the shortcut for "Universal Product Code".</p>
+<p>This barcode preceded EAN13. It must have a length of 12 characters and supports
+only digits. The last digit must be a checksum digit which is calculated with
+modulo 10. It is commonly used within the USA.</p>
+<h3 id="upce">UPCE</h3>
+<p>UPCE is the short variant from UPCA.</p>
+<p>This barcode is a smaller variant of UPCA. It can have a length of 6, 7 or 8
+characters and supports only digits. When the barcode is 8 chars long it
+includes a checksum which is calculated with modulo 10. It is commonly used with
+small products where a UPCA barcode would not fit.</p>
+<h2 id="supported-options">Supported options</h2>
+<p>The following options are supported for <code>Zend\Validator\Barcode</code>:</p>
+<ul>
+<li><code>adapter</code>: Sets the barcode adapter which will be used. Supported are all
+  above noted adapters. When using a self defined adapter, then you have to set
+  the complete class name.</li>
+<li><code>checksum</code>: <code>TRUE</code> when the barcode should contain a checksum. The default
+  value depends on the used adapter. Note that some adapters don't allow to set
+  this option.</li>
+<li><code>options</code>: Defines optional options for a self written adapters.</li>
+</ul>
+<h2 id="basic-usage">Basic usage</h2>
+<p>To validate if a given string is a barcode you must know its type. See the
+following example for an EAN13 barcode:</p>
+<pre class="codehilite"><code class="language-php">$valid = new Zend\Validator\Barcode('EAN13');
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
+
+
+<h2 id="optional-checksum">Optional checksum</h2>
+<p>Some barcodes can be provided with an optional checksum. These barcodes would be
+valid even without checksum. Still, when you provide a checksum, then you should
+also validate it. By default, these barcode types perform no checksum
+validation. By using the <code>checksum</code> option you can define if the checksum will
+be validated or ignored.</p>
+<pre class="codehilite"><code class="language-php">$valid = new Zend\Validator\Barcode([
+    'adapter'  =&gt; 'EAN13',
+    'checksum' =&gt; false,
+]);
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
+
+
+<blockquote>
+<h3 id="reduced-security-by-disabling-checksum-validation">Reduced security by disabling checksum validation</h3>
+<p>By switching off checksum validation you will also reduce the security of the
+used barcodes. Additionally you should note that you can also turn off the
+checksum validation for those barcode types which must contain a checksum
+value. Barcodes which would not be valid could then be returned as valid even
+if they are not.</p>
+</blockquote>
+<h2 id="writing-custom-adapters">Writing custom adapters</h2>
+<p>You may write custom barcode validators for usage with <code>Zend\Validator\Barcode</code>;
+this is often necessary when dealing with proprietary barcode types. To write
+your own barcode validator, you need the following information.</p>
+<ul>
+<li><code>Length</code>: The length your barcode must have. It can have one of the following
+  values:</li>
+<li><code>Integer</code>: A value greater 0, which means that the barcode must have this
+    length.</li>
+<li><code>-1</code>: There is no limitation for the length of this barcode.</li>
+<li><code>"even"</code>: The length of this barcode must have a even amount of digits.</li>
+<li><code>"odd"</code>: The length of this barcode must have a odd amount of digits.</li>
+<li><code>array</code>: An array of integer values. The length of this barcode must have
+    one of the set array values.</li>
+<li><code>Characters</code>: A string which contains all allowed characters for this barcode.
+  Also the integer value 128 is allowed, which means the first 128 characters of
+  the ASCII table.</li>
+<li><code>Checksum</code>: A string which will be used as callback for a method which does
+  the checksum validation.</li>
+</ul>
+<p>Your custom barcode validator must extend <code>Zend\Validator\Barcode\AbstractAdapter</code>
+or implement <code>Zend\Validator\Barcode\AdapterInterface</code>.</p>
+<p>As an example, let's create a validator that expects an even number of
+characters that include all digits and the letters 'ABCDE', and which requires a
+checksum.</p>
+<pre class="codehilite"><code class="language-php">namespace My\Barcode;
+
+use Zend\Validator\Barcode;
+use Zend\Validator\Barcode\AbstractAdapter;
+
+class MyBar extends AbstractAdapter
+{
+    protected $length     = 'even';
+    protected $characters = '0123456789ABCDE';
+    protected $checksum   = 'mod66';
+
+    protected function mod66($barcode)
+    {
+        // do some validations and return a boolean
+    }
+}
+
+$valid = Barcode(MyBar::class);
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
+
+<hr />
+
+
+<nav>
+  <ul class="pager hidden-print">
+    <li class="previous">
+      <a rel="prev" href="../../set/"><i class="fa fa-arrow-left"></i> Previous</a>
+    </li>
+    <li class="next">
+      <a rel="next" href="../between/">Next <i class="fa fa-arrow-right"></i></a>
+    </li>
+  </ul>
+</nav>
+</div>
+        
+    </div>
+    <!-- content:end -->
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright (c) 2016 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a><br></small>
+        </p>
+        <p><small><a href="http://framework.zend.com">Learn more about Zend Framework</a></small></p>
+    </footer>
+
+    <script src="../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../js/prism-zf.js"></script>
+
+    <script>var base_url = '../..';</script>
+    <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+    <script src="../../js/base.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="zf-components">
+  <div class="zf-components-grid">
+    <div class="zf-logo">
+      <a href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="../../img/zf-logo-mark.png" alt="Zend Framework" width="250" /></a>
+    </div>
+
+    <div class="component-list"></div>
+
+    <p class="zf-components-rollup"><a href="#">Hide list</a></p>
+  </div>
+</div>
+
+    <script>
+  // Prepare the component list dropdown for display
+  $(function () {
+    var components = $(".zf-components"),
+        componentList = components.find(".component-list"),
+        sidebar = $(".bs-sidebar.affix"),
+        sidebarInitialPos = sidebar.css("position"),
+        hidden,
+        componentToggle = $(".component-toggle"),
+        navbar = $(".navbar-fixed-top"),
+        rollUpLink = $(".zf-components-rollup a");
+
+    // Initial setup on document load
+    components.insertBefore(navbar);
+    $(".zf-logo a").tooltip();
+    componentToggle.tooltip();
+    rollUpLink.attr({ href: "#", alt: "Hide component list" });
+
+    // Cast initial sidebar position value
+    if (undefined === sidebarInitialPos) {
+      sidebarInitialPos = "fixed";
+    }
+
+    // Setup onclick events to toggle list
+    componentToggle.click(toggleComponentList);
+    rollUpLink.click(toggleComponentList);
+
+    // Toggle the component list display
+    function toggleComponentList(event) {
+      event.preventDefault();
+
+      if (hidden === undefined) {
+        // Not loaded yet; load and display.
+        loadComponentList();
+        return;
+      }
+
+      if (hidden) {
+        // Hidden; display.
+        showComponentList();
+        return;
+      }
+
+      // Currently visible; hide
+      hideComponentList();
+    }
+
+    // Show the component list
+    function showComponentList() {
+      navbar.css({position: "relative"});
+      sidebar.css({position: "relative"});
+      components
+        .css({"margin-top": "-" + components.outerHeight() + "px"})
+        .show()
+        .animate({"margin-top": 0}, {
+          complete: function () {
+            componentToggle
+              .data("placement", "top")
+              .attr("data-original-title", "Hide component list");
+            hidden = false;
+          },
+          queue: false
+        });
+    }
+
+    // Hide the component list
+    function hideComponentList() {
+      components.animate({"margin-top": "-" + components.outerHeight() + "px"}, {
+        complete: function () {
+          navbar.css({position: "fixed"});
+          sidebar.css({position: sidebarInitialPos});
+          componentToggle
+            .data("placement", "bottom")
+            .attr("data-original-title", "Show component list");
+          components.hide();
+          hidden = true;
+        },
+        queue: false
+      });
+      sidebar.animate({ top: sidebarInitialTop + "px" }, { queue: false});
+    }
+
+    // Inject a component into the componet list DOM.
+    function injectComponent(index, component) {
+      componentList.append('<div class="component"><h4><a href="' + component.url + '">' + component.name + '</a></h4><p>' + component.description + '</p></div>');
+    }
+
+    // Parse the component list, build the DOM, and display it.
+    function parseComponentList(components) {
+      $.each(components, injectComponent);
+      showComponentList();
+    }
+
+    // Fetch the component list and display it.
+    function loadComponentList () {
+      $.ajax({
+        url: "//zendframework.github.io/zf-mkdoc-theme/scripts/zf-component-list.json",
+        dataType: "text json",
+        success: parseComponentList,
+        error: function (e) {
+          console.log("Error occurred with XHR call", e);
+        }
+      });
+    }
+  });
+</script>
+    </body>
+
+</html>

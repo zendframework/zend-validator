@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    <title>EmailAddress - zend-validator</title>
+
+    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href="//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic,700&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/zf.css" rel="stylesheet">
+    <link href="../../css/prism-zf.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <span class="navbar-brand">
+              <a class="logo-link" href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Zend Framework"><img src="../../img/zf-logo-mark.png" height="28" alt="Zend Framework" /></a>
+              <a href="../..">zend-validator</a>
+            </span>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../intro/">Intro</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../validator-chains/">Validator Chains</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../writing-validators/">Writing Validators</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../messages/">Validation Messages</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../set/">Standard Validation Classes</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">Validators</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../barcode/">Barcode</a>
+</li>
+
+        
+            
+<li >
+    <a href="../between/">Between</a>
+</li>
+
+        
+            
+<li >
+    <a href="../callback/">Callback</a>
+</li>
+
+        
+            
+<li >
+    <a href="../credit-card/">CreditCard</a>
+</li>
+
+        
+            
+<li >
+    <a href="../date/">Date</a>
+</li>
+
+        
+            
+<li >
+    <a href="../db/">Db\RecordExists and Db\NoRecordExists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../digits/">Digits</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">EmailAddress</a>
+</li>
+
+        
+            
+<li >
+    <a href="../greater-than/">GreaterThan</a>
+</li>
+
+        
+            
+<li >
+    <a href="../hex/">Hex</a>
+</li>
+
+        
+            
+<li >
+    <a href="../hostname/">Hostname</a>
+</li>
+
+        
+            
+<li >
+    <a href="../iban/">Iban</a>
+</li>
+
+        
+            
+<li >
+    <a href="../identical/">Identical</a>
+</li>
+
+        
+            
+<li >
+    <a href="../in-array/">InArray</a>
+</li>
+
+        
+            
+<li >
+    <a href="../ip/">Ip</a>
+</li>
+
+        
+            
+<li >
+    <a href="../isbn/">Isbn</a>
+</li>
+
+        
+            
+<li >
+    <a href="../isinstanceof/">IsInstanceOf</a>
+</li>
+
+        
+            
+<li >
+    <a href="../less-than/">LessThan</a>
+</li>
+
+        
+            
+<li >
+    <a href="../not-empty/">NotEmpty</a>
+</li>
+
+        
+            
+<li >
+    <a href="../post-code/">PostCode</a>
+</li>
+
+        
+            
+<li >
+    <a href="../regex/">Regex</a>
+</li>
+
+        
+            
+<li >
+    <a href="../sitemap/">Sitemap</a>
+</li>
+
+        
+            
+<li >
+    <a href="../step/">Step</a>
+</li>
+
+        
+            
+<li >
+    <a href="../string-length/">StringLength</a>
+</li>
+
+        
+            
+<li >
+    <a href="../timezone/">Timezone</a>
+</li>
+
+        
+            
+<li >
+    <a href="../uri/">Uri</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">File Validators</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../file/intro/">Intro</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/count/">Count</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/crc32/">Crc32</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/exclude-extension/">ExcludeExtension</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/exclude-mime-type/">ExcludeMimeType</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/exists/">Exists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/extension/">Extension</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/files-size/">FilesSize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/hash/">Hash</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/image-size/">ImageSize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/is-compressed/">IsCompressed</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/is-image/">IsImage</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/md5/">Md5</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/mime-type/">MimeType</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/not-exists/">NotExists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/sha1/">Sha1</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/size/">Size</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/upload/">Upload</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/upload-file/">UploadFile</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/word-count/">WordCount</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" class="component-toggle" data-toggle="tooltip" data-placement="bottom" title="Show component list">
+                        <i class="fa fa-book"></i> Components
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li>
+                        <a href="https://github.com/zendframework/zend-validator">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <!-- content:begin -->
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#emailaddress-validator">EmailAddress Validator</a></li>
+        
+            <li><a href="#basic-usage">Basic usage</a></li>
+        
+            <li><a href="#supported-options">Supported Options</a></li>
+        
+            <li><a href="#complex-local-parts">Complex local parts</a></li>
+        
+            <li><a href="#validating-only-the-local-part">Validating only the local part</a></li>
+        
+            <li><a href="#validating-different-types-of-hostnames">Validating different types of hostnames</a></li>
+        
+            <li><a href="#checking-if-the-hostname-actually-accepts-email">Checking if the hostname actually accepts email</a></li>
+        
+            <li><a href="#validating-international-domains-names">Validating International Domains Names</a></li>
+        
+            <li><a href="#validating-top-level-domains">Validating Top Level Domains</a></li>
+        
+            <li><a href="#setting-messages">Setting messages</a></li>
+        
+    
+    </ul>
+
+    
+    <ul class="pager hidden-print">
+      <li class="previous">
+        <a rel="prev" href="../digits/"><i class="fa fa-arrow-left"></i> Previous</a>
+      </li>
+      <li class="next">
+        <a rel="next" href="../greater-than/">Next <i class="fa fa-arrow-right"></i></a>
+      </li>
+    </ul>
+    
+</div></div>
+        <div class="col-md-9" role="main">
+
+<ol class="breadcrumb" role="navigation" aria-label="breadcrumbs navigation">
+  <li><a href="../..">Docs</a> &raquo;</li>
+  
+    
+      
+        <li>Reference &raquo;</li>
+      
+    
+      
+        <li>Validators &raquo;</li>
+      
+    
+  
+  <li class="active">EmailAddress</li>
+</ol>
+
+<h1 id="emailaddress-validator">EmailAddress Validator</h1>
+<p><code>Zend\Validator\EmailAddress</code> allows you to validate an email address. The
+validator first splits the email address on <code>local-part @ hostname</code> and attempts
+to match these against known specifications for email addresses and hostnames.</p>
+<h2 id="basic-usage">Basic usage</h2>
+<p>A basic example of usage is below:</p>
+<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\EmailAddress();
+
+if ($validator-&gt;isValid($email)) {
+    // email appears to be valid
+} else {
+    // email is invalid; print the reasons
+    foreach ($validator-&gt;getMessages() as $message) {
+        echo &quot;$message\n&quot;;
+    }
+}</code></pre>
+
+
+<p>This will match the email address <code>$email</code> and on failure populate
+<code>getMessages()</code> with useful error messages.</p>
+<h2 id="supported-options">Supported Options</h2>
+<p><code>Zend\Validator\EmailAddress</code> supports several options which can either be set
+at instantiation, by giving an array with the related options, or afterwards, by
+using <code>setOptions()</code>. The following options are supported:</p>
+<ul>
+<li><code>allow</code>: Defines which type of domain names are accepted. This option is used
+  in conjunction with the hostname option to set the hostname validator. For
+  more information about possible values of this option, look at
+  <a href="../hostname/">Hostname</a> and possible <code>ALLOW_*</code> constants. This option
+  defaults to <code>ALLOW_DNS</code>.</li>
+<li><code>deep</code>: Defines if the servers MX records should be verified by a deep check.
+  When this option is set to <code>true</code> then additionally to MX records also the <code>A</code>,
+  <code>A6</code> and <code>AAAA</code> records are used to verify if the server accepts emails. This
+  option defaults to <code>false</code>.</li>
+<li><code>domain</code>: Defines if the domain part should be checked. When this option is
+  set to <code>false</code>, then only the local part of the email address will be checked.
+  In this case the hostname validator will not be called. This option defaults
+  to <code>true</code>.</li>
+<li><code>hostname</code>: Sets the hostname validator with which the domain part of the
+  email address will be validated.</li>
+<li><code>mx</code>: Defines if the MX records from the server should be detected. If this
+  option is defined to <code>true</code> then the MX records are used to verify if the
+  server accepts emails. This option defaults to <code>false</code>.</li>
+</ul>
+<h2 id="complex-local-parts">Complex local parts</h2>
+<p><code>Zend\Validator\EmailAddress</code> will match any valid email address according to
+RFC2822. For example, valid emails include <code>bob@domain.com</code>,
+<code>bob+jones@domain.us</code>, <code>"bob@jones"@domain.com*</code> and <code>"bob jones"@domain.com</code></p>
+<p>Some obsolete email formats will not currently validate (e.g. carriage returns
+or a <code>\\</code> character in an email address).</p>
+<h2 id="validating-only-the-local-part">Validating only the local part</h2>
+<p>If you need <code>Zend\Validator\EmailAddress</code> to check only the local part of an
+email address, and want to disable validation of the hostname, you can set the
+<code>domain</code> option to <code>false</code>. This forces <code>Zend\Validator\EmailAddress</code> not to
+validate the hostname part of the email address.</p>
+<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\EmailAddress();
+$validator-&gt;setOptions(['domain' =&gt; FALSE]);</code></pre>
+
+
+<h2 id="validating-different-types-of-hostnames">Validating different types of hostnames</h2>
+<p>The hostname part of an email address is validated against the <a href="../hostname/">Hostname validator</a>.
+By default only DNS hostnames of the form <code>domain.com</code> are accepted, though if
+you wish you can accept IP addresses and Local hostnames too.</p>
+<p>To do this you need to instantiate <code>Zend\Validator\EmailAddress</code> passing a
+parameter to indicate the type of hostnames you want to accept. More details are
+included in <code>Zend\Validator\Hostname</code>, though an example of how to accept both
+DNS and Local hostnames appears below:</p>
+<pre class="codehilite"><code class="language-php">use Zend\Validator\EmailAddress;
+use Zend\Validator\Hostname;
+
+$validator = new EmailAddress( Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL);
+
+if ($validator-&gt;isValid($email)) {
+    // email appears to be valid
+} else {
+    // email is invalid; print the reasons
+    foreach ($validator-&gt;getMessages() as $message) {
+        echo &quot;$message\n&quot;;
+    }
+}</code></pre>
+
+
+<h2 id="checking-if-the-hostname-actually-accepts-email">Checking if the hostname actually accepts email</h2>
+<p>Just because an email address is in the correct format, it doesn't necessarily
+mean that email address actually exists. To help solve this problem, you can use
+MX validation to check whether an MX (email) entry exists in the DNS record for
+the email's hostname. This tells you that the hostname accepts email, but
+doesn't tell you the exact email address itself is valid.</p>
+<p>MX checking is not enabled by default. To enable MX checking you can pass a
+second parameter to the <code>Zend\Validator\EmailAddress</code> constructor.</p>
+<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\EmailAddress([
+    'allow' =&gt; Zend\Validator\Hostname::ALLOW_DNS,
+    'useMxCheck'    =&gt; true,
+]);</code></pre>
+
+
+<p>Alternatively you can either pass <code>true</code> or <code>false</code> to <code>setValidateMx()</code> to
+enable or disable MX validation.</p>
+<p>By enabling this setting, network functions will be used to check for the
+presence of an MX record on the hostname of the email address you wish to
+validate. Please be aware this will likely slow your script down.</p>
+<p>Sometimes validation for MX records returns <code>false</code>, even if emails are
+accepted. The reason behind this behaviour is, that servers can accept emails
+even if they do not provide a MX record. In this case they can provide <code>A</code>,
+<code>A6</code>, or <code>AAAA</code> records. To allow <code>Zend\Validator\EmailAddress</code> to check also
+for these other records, you need to set deep MX validation. This can be done at
+initiation by setting the <code>deep</code> option or by using <code>setOptions()</code>.</p>
+<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\EmailAddress([
+    'allow' =&gt; Zend\Validator\Hostname::ALLOW_DNS,
+    'useMxCheck'    =&gt; true,
+    'useDeepMxCheck'  =&gt; true,
+]);</code></pre>
+
+
+<p>Sometimes it can be useful to get the server's MX information which have been
+used to do further processing. Simply use <code>getMXRecord()</code> after validation. This
+method returns the received MX record including weight and sorted by it.</p>
+<blockquote>
+<h3 id="performance-warning">Performance warning**</h3>
+<p>You should be aware that enabling MX check will slow down you script because
+of the used network functions. Enabling deep check will slow down your script
+even more as it searches the given server for 3 additional types.</p>
+<h3 id="disallowed-ip-addresses">Disallowed IP addresses</h3>
+<p>You should note that MX validation is only accepted for external servers. When
+deep MX validation is enabled, then local IP addresses like <code>192.168.*</code> or
+<code>169.254.*</code> are not accepted.</p>
+</blockquote>
+<h2 id="validating-international-domains-names">Validating International Domains Names</h2>
+<p><code>Zend\Validator\EmailAddress</code> will also match international characters that
+exist in some domains. This is known as International Domain Name (IDN) support.
+This is enabled by default, though you can disable this by changing the setting
+via the internal <code>Zend\Validator\Hostname</code> object that exists within
+<code>Zend\Validator\EmailAddress</code>.</p>
+<pre class="codehilite"><code class="language-php">$validator-&gt;getHostnameValidator()-&gt;setValidateIdn(false);</code></pre>
+
+
+<p>More information on the usage of <code>setValidateIdn()</code> appears in the
+<a href="../hostname/">Hostname documentation</a>.</p>
+<p>Please note IDNs are only validated if you allow DNS hostnames to be validated.</p>
+<h2 id="validating-top-level-domains">Validating Top Level Domains</h2>
+<p>By default a hostname will be checked against a list of known TLDs. This is
+enabled by default, though you can disable this by changing the setting via the
+internal <code>Zend\Validator\Hostname</code> object that exists within
+<code>Zend\Validator\EmailAddress</code>.</p>
+<pre class="codehilite"><code class="language-php">$validator-&gt;getHostnameValidator()-&gt;setValidateTld(false);</code></pre>
+
+
+<p>More information on the usage of <code>setValidateTld()</code> appears in the
+<a href="../hostname/">Hostname documentation</a>.</p>
+<p>Please note TLDs are only validated if you allow DNS hostnames to be validated.</p>
+<h2 id="setting-messages">Setting messages</h2>
+<p><code>Zend\Validator\EmailAddress</code> makes also use of <code>Zend\Validator\Hostname</code> to
+check the hostname part of a given email address. You can specify messages for
+<code>Zend\Validator\Hostname</code> from within <code>Zend\Validator\EmailAddress</code>.</p>
+<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\EmailAddress();
+$validator-&gt;setMessages([
+    Zend\Validator\Hostname::UNKNOWN_TLD =&gt; 'I don\'t know the TLD you gave'
+]);</code></pre>
+
+<hr />
+
+
+<nav>
+  <ul class="pager hidden-print">
+    <li class="previous">
+      <a rel="prev" href="../digits/"><i class="fa fa-arrow-left"></i> Previous</a>
+    </li>
+    <li class="next">
+      <a rel="next" href="../greater-than/">Next <i class="fa fa-arrow-right"></i></a>
+    </li>
+  </ul>
+</nav>
+</div>
+        
+    </div>
+    <!-- content:end -->
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright (c) 2016 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a><br></small>
+        </p>
+        <p><small><a href="http://framework.zend.com">Learn more about Zend Framework</a></small></p>
+    </footer>
+
+    <script src="../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../js/prism-zf.js"></script>
+
+    <script>var base_url = '../..';</script>
+    <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+    <script src="../../js/base.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="zf-components">
+  <div class="zf-components-grid">
+    <div class="zf-logo">
+      <a href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="../../img/zf-logo-mark.png" alt="Zend Framework" width="250" /></a>
+    </div>
+
+    <div class="component-list"></div>
+
+    <p class="zf-components-rollup"><a href="#">Hide list</a></p>
+  </div>
+</div>
+
+    <script>
+  // Prepare the component list dropdown for display
+  $(function () {
+    var components = $(".zf-components"),
+        componentList = components.find(".component-list"),
+        sidebar = $(".bs-sidebar.affix"),
+        sidebarInitialPos = sidebar.css("position"),
+        hidden,
+        componentToggle = $(".component-toggle"),
+        navbar = $(".navbar-fixed-top"),
+        rollUpLink = $(".zf-components-rollup a");
+
+    // Initial setup on document load
+    components.insertBefore(navbar);
+    $(".zf-logo a").tooltip();
+    componentToggle.tooltip();
+    rollUpLink.attr({ href: "#", alt: "Hide component list" });
+
+    // Cast initial sidebar position value
+    if (undefined === sidebarInitialPos) {
+      sidebarInitialPos = "fixed";
+    }
+
+    // Setup onclick events to toggle list
+    componentToggle.click(toggleComponentList);
+    rollUpLink.click(toggleComponentList);
+
+    // Toggle the component list display
+    function toggleComponentList(event) {
+      event.preventDefault();
+
+      if (hidden === undefined) {
+        // Not loaded yet; load and display.
+        loadComponentList();
+        return;
+      }
+
+      if (hidden) {
+        // Hidden; display.
+        showComponentList();
+        return;
+      }
+
+      // Currently visible; hide
+      hideComponentList();
+    }
+
+    // Show the component list
+    function showComponentList() {
+      navbar.css({position: "relative"});
+      sidebar.css({position: "relative"});
+      components
+        .css({"margin-top": "-" + components.outerHeight() + "px"})
+        .show()
+        .animate({"margin-top": 0}, {
+          complete: function () {
+            componentToggle
+              .data("placement", "top")
+              .attr("data-original-title", "Hide component list");
+            hidden = false;
+          },
+          queue: false
+        });
+    }
+
+    // Hide the component list
+    function hideComponentList() {
+      components.animate({"margin-top": "-" + components.outerHeight() + "px"}, {
+        complete: function () {
+          navbar.css({position: "fixed"});
+          sidebar.css({position: sidebarInitialPos});
+          componentToggle
+            .data("placement", "bottom")
+            .attr("data-original-title", "Show component list");
+          components.hide();
+          hidden = true;
+        },
+        queue: false
+      });
+      sidebar.animate({ top: sidebarInitialTop + "px" }, { queue: false});
+    }
+
+    // Inject a component into the componet list DOM.
+    function injectComponent(index, component) {
+      componentList.append('<div class="component"><h4><a href="' + component.url + '">' + component.name + '</a></h4><p>' + component.description + '</p></div>');
+    }
+
+    // Parse the component list, build the DOM, and display it.
+    function parseComponentList(components) {
+      $.each(components, injectComponent);
+      showComponentList();
+    }
+
+    // Fetch the component list and display it.
+    function loadComponentList () {
+      $.ajax({
+        url: "//zendframework.github.io/zf-mkdoc-theme/scripts/zf-component-list.json",
+        dataType: "text json",
+        success: parseComponentList,
+        error: function (e) {
+          console.log("Error occurred with XHR call", e);
+        }
+      });
+    }
+  });
+</script>
+    </body>
+
+</html>

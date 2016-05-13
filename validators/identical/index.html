@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+
+    <title>Identical - zend-validator</title>
+
+    <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href="//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic,700&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/zf.css" rel="stylesheet">
+    <link href="../../css/prism-zf.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <span class="navbar-brand">
+              <a class="logo-link" href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Zend Framework"><img src="../../img/zf-logo-mark.png" height="28" alt="Zend Framework" /></a>
+              <a href="../..">zend-validator</a>
+            </span>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../../intro/">Intro</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../validator-chains/">Validator Chains</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../writing-validators/">Writing Validators</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../messages/">Validation Messages</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../set/">Standard Validation Classes</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">Validators</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../barcode/">Barcode</a>
+</li>
+
+        
+            
+<li >
+    <a href="../between/">Between</a>
+</li>
+
+        
+            
+<li >
+    <a href="../callback/">Callback</a>
+</li>
+
+        
+            
+<li >
+    <a href="../credit-card/">CreditCard</a>
+</li>
+
+        
+            
+<li >
+    <a href="../date/">Date</a>
+</li>
+
+        
+            
+<li >
+    <a href="../db/">Db\RecordExists and Db\NoRecordExists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../digits/">Digits</a>
+</li>
+
+        
+            
+<li >
+    <a href="../email-address/">EmailAddress</a>
+</li>
+
+        
+            
+<li >
+    <a href="../greater-than/">GreaterThan</a>
+</li>
+
+        
+            
+<li >
+    <a href="../hex/">Hex</a>
+</li>
+
+        
+            
+<li >
+    <a href="../hostname/">Hostname</a>
+</li>
+
+        
+            
+<li >
+    <a href="../iban/">Iban</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">Identical</a>
+</li>
+
+        
+            
+<li >
+    <a href="../in-array/">InArray</a>
+</li>
+
+        
+            
+<li >
+    <a href="../ip/">Ip</a>
+</li>
+
+        
+            
+<li >
+    <a href="../isbn/">Isbn</a>
+</li>
+
+        
+            
+<li >
+    <a href="../isinstanceof/">IsInstanceOf</a>
+</li>
+
+        
+            
+<li >
+    <a href="../less-than/">LessThan</a>
+</li>
+
+        
+            
+<li >
+    <a href="../not-empty/">NotEmpty</a>
+</li>
+
+        
+            
+<li >
+    <a href="../post-code/">PostCode</a>
+</li>
+
+        
+            
+<li >
+    <a href="../regex/">Regex</a>
+</li>
+
+        
+            
+<li >
+    <a href="../sitemap/">Sitemap</a>
+</li>
+
+        
+            
+<li >
+    <a href="../step/">Step</a>
+</li>
+
+        
+            
+<li >
+    <a href="../string-length/">StringLength</a>
+</li>
+
+        
+            
+<li >
+    <a href="../timezone/">Timezone</a>
+</li>
+
+        
+            
+<li >
+    <a href="../uri/">Uri</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">File Validators</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../file/intro/">Intro</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/count/">Count</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/crc32/">Crc32</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/exclude-extension/">ExcludeExtension</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/exclude-mime-type/">ExcludeMimeType</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/exists/">Exists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/extension/">Extension</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/files-size/">FilesSize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/hash/">Hash</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/image-size/">ImageSize</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/is-compressed/">IsCompressed</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/is-image/">IsImage</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/md5/">Md5</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/mime-type/">MimeType</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/not-exists/">NotExists</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/sha1/">Sha1</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/size/">Size</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/upload/">Upload</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/upload-file/">UploadFile</a>
+</li>
+
+        
+            
+<li >
+    <a href="../file/word-count/">WordCount</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" class="component-toggle" data-toggle="tooltip" data-placement="bottom" title="Show component list">
+                        <i class="fa fa-book"></i> Components
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li>
+                        <a href="https://github.com/zendframework/zend-validator">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <!-- content:begin -->
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#identical-validator">Identical Validator</a></li>
+        
+            <li><a href="#supported-options">Supported options</a></li>
+        
+            <li><a href="#basic-usage">Basic usage</a></li>
+        
+            <li><a href="#identical-objects">Identical objects</a></li>
+        
+            <li><a href="#form-elements">Form elements</a></li>
+        
+            <li><a href="#strict-validation">Strict validation</a></li>
+        
+            <li><a href="#configuration">Configuration</a></li>
+        
+    
+    </ul>
+
+    
+    <ul class="pager hidden-print">
+      <li class="previous">
+        <a rel="prev" href="../iban/"><i class="fa fa-arrow-left"></i> Previous</a>
+      </li>
+      <li class="next">
+        <a rel="next" href="../in-array/">Next <i class="fa fa-arrow-right"></i></a>
+      </li>
+    </ul>
+    
+</div></div>
+        <div class="col-md-9" role="main">
+
+<ol class="breadcrumb" role="navigation" aria-label="breadcrumbs navigation">
+  <li><a href="../..">Docs</a> &raquo;</li>
+  
+    
+      
+        <li>Reference &raquo;</li>
+      
+    
+      
+        <li>Validators &raquo;</li>
+      
+    
+  
+  <li class="active">Identical</li>
+</ol>
+
+<h1 id="identical-validator">Identical Validator</h1>
+<p><code>Zend\Validator\Identical</code> allows you to validate if a given value is identical
+with a set token.</p>
+<h2 id="supported-options">Supported options</h2>
+<p>The following options are supported for <code>Zend\Validator\Identical</code>:</p>
+<ul>
+<li><code>strict</code>: Defines if the validation should be strict (i.e., if types should
+  also be considered). The default value is <code>true</code>.</li>
+<li><code>token</code>: Sets the token against which the input will be validated.</li>
+<li><code>literal</code>: If set to <code>true</code>, the validation will skip the lookup for elements
+  in the form context, and validate the token just the way it was provided. The
+  default value is <code>false</code>.</li>
+</ul>
+<h2 id="basic-usage">Basic usage</h2>
+<p>To validate if two values are identical, you need to set the original value as
+the token, as demonstrated in the following example:
+token.</p>
+<pre class="codehilite"><code class="language-php">$valid = new Zend\Validator\Identical('origin');
+
+if ($valid-&gt;isValid($value)) {
+    return true;
+}</code></pre>
+
+
+<p>The validation will only then return <code>true</code> when both values are 100% identical.
+In our example, when <code>$value</code> is <code>'origin'</code>.</p>
+<p>You can set the token after instantiation by using the method <code>setToken()</code>.</p>
+<h2 id="identical-objects">Identical objects</h2>
+<p><code>Zend\Validator\Identical</code> can validate not only strings, but any other variable
+type, such as booleans, integers, floats, arrays, or even objects. As already
+noted, the token and value must be identical.</p>
+<pre class="codehilite"><code class="language-php">$valid = new Zend\Validator\Identical(123);
+
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
+
+
+<blockquote>
+<h3 id="type-comparison">Type comparison</h3>
+<p>You should be aware of the variable type used for validation. This means that
+the string <code>'3'</code> is not identical to integer <code>3</code>. When you want non-strict
+validation, you must set the <code>strict</code> option to <code>false</code>.</p>
+</blockquote>
+<h2 id="form-elements">Form elements</h2>
+<p><code>Zend\Validator\Identical</code> supports the comparison of form elements. This can be
+done by using the element's name as the <code>token</code>:</p>
+<pre class="codehilite"><code class="language-php">$form-&gt;add([
+    'name' =&gt; 'elementOne',
+    'type' =&gt; 'Password',
+]);
+$form-&gt;add([
+    'name'       =&gt; 'elementTwo',
+    'type'       =&gt; 'Password',
+    'validators' =&gt; array(
+        [
+            'name'    =&gt; 'Identical',
+            'options' =&gt; [
+                'token' =&gt; 'elementOne',
+            ],
+        ],
+    ],
+]);</code></pre>
+
+
+<p>By using the element's name from the first element as the <code>token</code> for the second
+element, the validator validates if the second element is equal with the first
+element. In the case your user does not enter two identical values, you will get
+a validation error.</p>
+<h3 id="validating-a-value-from-a-fieldset">Validating a Value From a Fieldset</h3>
+<p>Sometimes you will need to validate an input that lives inside a fieldset, and
+this can be accomplished as follows:</p>
+<pre class="codehilite"><code class="language-php">use Zend\Form\Element;
+use Zend\Form\Fieldset;
+use Zend\Form\Form;
+use Zend\InputFilter\Input;
+use Zend\InputFilter\InputFilter;
+
+$userFieldset = new Fieldset('user'); // (1)
+$userFieldset-&gt;add([
+    'name' =&gt; 'email', // (2)
+    'type' =&gt; 'Email',
+]);
+
+// Let's add one fieldset inside the 'user' fieldset,
+// so we can see how to manage the token in a different deepness
+$deeperFieldset = new Fieldset('deeperFieldset'); // (3)
+$deeperFieldset-&gt;add([
+    'name'    =&gt; 'deeperFieldsetInput', // (4)
+    'type'    =&gt; 'Text',
+    'options' =&gt; [
+        'label' =&gt; 'What validator are we testing?',
+    ],
+]);
+$userFieldset-&gt;add($deeperFieldset);
+
+$signUpForm = new Form('signUp');
+$signUpForm-&gt;add($userFieldset);
+
+// Add an input that will validate the 'email' input from 'user' fieldset
+$signUpForm-&gt;add([
+    'name' =&gt; 'confirmEmail', // (5)
+    'type' =&gt; 'Email',
+]);
+
+// Add an input that will validate the 'deeperFieldsetInput' from
+// 'deeperFieldset' that lives inside the 'user' fieldset
+$signUpForm-&gt;add([
+    'name' =&gt; 'confirmTestingValidator', // (6)
+    'type' =&gt; 'Text',
+]);
+
+// This will ensure the user enter the same email in 'email' (2) and
+// 'confirmEmail' (5)
+$inputFilter = new InputFilter();
+$inputFilter-&gt;add([
+    'name' =&gt; 'confirmEmail', // references (5)
+    'validators' =&gt; [
+        array(
+            'name' =&gt; 'Identical',
+            'options' =&gt; [
+                // 'user' key references 'user' fieldset (1), and 'email'
+                // references 'email' element inside 'user' fieldset (2)
+                'token' =&gt; ['user' =&gt; 'email'],
+            ],
+        ],
+    ],
+]);
+
+// This will ensure the user enter the same string in 'deeperFieldsetInput' (4)
+// and 'confirmTestingValidator' (6)
+$inputFilter-&gt;add([
+    'name' =&gt; 'confirmTestingValidator', // references (6)
+    'validators' =&gt; [
+        [
+            'name' =&gt; 'Identical',
+            'options' =&gt; [
+                'token' =&gt; [
+                    'user' =&gt; [ // references 'user' fieldset (1)
+                        // 'deeperFieldset' key references 'deeperFieldset'
+                        // fieldset (3); 'deeperFieldsetInput' references
+                        // 'deeperFieldsetInput' element (4)
+                        'deeperFieldset' =&gt; 'deeperFieldsetInput',
+                    ],
+               ],
+            ],
+        ],
+    ],
+]);
+
+$signUpForm-&gt;setInputFilter($inputFilter);</code></pre>
+
+
+<blockquote>
+<h4 id="use-one-token-per-leaf">Use one token per leaf</h4>
+<p>Aways make sure that your token array have just one key per level all the way
+till the leaf, otherwise you can end up with unexpected results.</p>
+</blockquote>
+<h2 id="strict-validation">Strict validation</h2>
+<p>As mentioned before, <code>Zend\Validator\Identical</code> validates tokens using strict
+typing. You can change this behaviour by using the <code>strict</code> option. The default
+value for this property is <code>true</code>.</p>
+<pre class="codehilite"><code class="language-php">$valid = new Zend\Validator\Identical(['token' =&gt; 123, 'strict' =&gt; false]);
+$input = '123';
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
+
+
+<p>The difference to the previous example is that the validation returns in this
+case <code>true</code>, even if you compare a integer with string value as long as the
+content is identical but not the type.</p>
+<p>For convenience you can also use <code>setStrict()</code> and <code>getStrict()</code>.</p>
+<h2 id="configuration">Configuration</h2>
+<p>As all other validators, <code>Zend\Validator\Identical</code> also supports the usage of
+configuration settings during instantiation. This means that you can configure
+this validator with a <code>Traversable</code> object.</p>
+<p>There is a case which you should be aware of. If you are using an array as
+token, and it contains a <code>token</code> key, you should wrap it within another
+<code>token</code> key. See the examples below to undestand this situation.</p>
+<pre class="codehilite"><code class="language-php">// This will not validate ['token' =&gt; 123], it will actually validate the
+// integer 123
+$valid = new Zend\Validator\Identical(['token' =&gt; 123]);
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
+
+
+<p>The reason for this special case is that you can configure the token which has
+to be used by giving the <code>token</code> key.</p>
+<p>So, when you are using an array as the token, and it contains one element with a
+<code>token</code> key, then you have to wrap it as shown in the example below:</p>
+<pre class="codehilite"><code class="language-php">// Unlike the previous example, this will validate ['token' =&gt; 123]
+$valid = new Zend\Validator\Identical(['token' =&gt; ['token' =&gt; 123]]);
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
+
+
+<p>If the array you are willing to validate does not have a <code>token</code> key, you do not
+need to wrap it.</p>
+
+<hr />
+
+
+<nav>
+  <ul class="pager hidden-print">
+    <li class="previous">
+      <a rel="prev" href="../iban/"><i class="fa fa-arrow-left"></i> Previous</a>
+    </li>
+    <li class="next">
+      <a rel="next" href="../in-array/">Next <i class="fa fa-arrow-right"></i></a>
+    </li>
+  </ul>
+</nav>
+</div>
+        
+    </div>
+    <!-- content:end -->
+
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Copyright (c) 2016 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a><br></small>
+        </p>
+        <p><small><a href="http://framework.zend.com">Learn more about Zend Framework</a></small></p>
+    </footer>
+
+    <script src="../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../../js/prism-zf.js"></script>
+
+    <script>var base_url = '../..';</script>
+    <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+    <script src="../../js/base.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="zf-components">
+  <div class="zf-components-grid">
+    <div class="zf-logo">
+      <a href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="../../img/zf-logo-mark.png" alt="Zend Framework" width="250" /></a>
+    </div>
+
+    <div class="component-list"></div>
+
+    <p class="zf-components-rollup"><a href="#">Hide list</a></p>
+  </div>
+</div>
+
+    <script>
+  // Prepare the component list dropdown for display
+  $(function () {
+    var components = $(".zf-components"),
+        componentList = components.find(".component-list"),
+        sidebar = $(".bs-sidebar.affix"),
+        sidebarInitialPos = sidebar.css("position"),
+        hidden,
+        componentToggle = $(".component-toggle"),
+        navbar = $(".navbar-fixed-top"),
+        rollUpLink = $(".zf-components-rollup a");
+
+    // Initial setup on document load
+    components.insertBefore(navbar);
+    $(".zf-logo a").tooltip();
+    componentToggle.tooltip();
+    rollUpLink.attr({ href: "#", alt: "Hide component list" });
+
+    // Cast initial sidebar position value
+    if (undefined === sidebarInitialPos) {
+      sidebarInitialPos = "fixed";
+    }
+
+    // Setup onclick events to toggle list
+    componentToggle.click(toggleComponentList);
+    rollUpLink.click(toggleComponentList);
+
+    // Toggle the component list display
+    function toggleComponentList(event) {
+      event.preventDefault();
+
+      if (hidden === undefined) {
+        // Not loaded yet; load and display.
+        loadComponentList();
+        return;
+      }
+
+      if (hidden) {
+        // Hidden; display.
+        showComponentList();
+        return;
+      }
+
+      // Currently visible; hide
+      hideComponentList();
+    }
+
+    // Show the component list
+    function showComponentList() {
+      navbar.css({position: "relative"});
+      sidebar.css({position: "relative"});
+      components
+        .css({"margin-top": "-" + components.outerHeight() + "px"})
+        .show()
+        .animate({"margin-top": 0}, {
+          complete: function () {
+            componentToggle
+              .data("placement", "top")
+              .attr("data-original-title", "Hide component list");
+            hidden = false;
+          },
+          queue: false
+        });
+    }
+
+    // Hide the component list
+    function hideComponentList() {
+      components.animate({"margin-top": "-" + components.outerHeight() + "px"}, {
+        complete: function () {
+          navbar.css({position: "fixed"});
+          sidebar.css({position: sidebarInitialPos});
+          componentToggle
+            .data("placement", "bottom")
+            .attr("data-original-title", "Show component list");
+          components.hide();
+          hidden = true;
+        },
+        queue: false
+      });
+      sidebar.animate({ top: sidebarInitialTop + "px" }, { queue: false});
+    }
+
+    // Inject a component into the componet list DOM.
+    function injectComponent(index, component) {
+      componentList.append('<div class="component"><h4><a href="' + component.url + '">' + component.name + '</a></h4><p>' + component.description + '</p></div>');
+    }
+
+    // Parse the component list, build the DOM, and display it.
+    function parseComponentList(components) {
+      $.each(components, injectComponent);
+      showComponentList();
+    }
+
+    // Fetch the component list and display it.
+    function loadComponentList () {
+      $.ajax({
+        url: "//zendframework.github.io/zf-mkdoc-theme/scripts/zf-component-list.json",
+        dataType: "text json",
+        success: parseComponentList,
+        error: function (e) {
+          console.log("Error occurred with XHR call", e);
+        }
+      });
+    }
+  });
+</script>
+    </body>
+
+</html>
