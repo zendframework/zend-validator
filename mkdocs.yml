@@ -35,6 +35,7 @@ pages:
             - StringLength: validators/string-length.md
             - Timezone: validators/timezone.md
             - Uri: validators/uri.md
+            - Uuid: validators/uuid.md
         - "File Validators":
             - Intro: validators/file/intro.md
             - Count: validators/file/count.md

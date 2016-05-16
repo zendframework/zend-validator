@@ -29,6 +29,7 @@ The following validators come with the zend-validator distribution.
 - [StringLength](validators/string-length.md)
 - [Timezone](validators/timezone.md)
 - [Uri](validators/uri.md)
+- [Uuid](validators/uuid.md)
 
 ## Additional validators
 
