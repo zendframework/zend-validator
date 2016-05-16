@@ -1,11 +1,7 @@
 <?php
-
 /**
- * Zend Framework (http://framework.zend.com/).
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- *
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-validator for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -28,8 +24,8 @@ final class Uuid extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = [
-        self::NOT_STRING => 'Invalid type given. String expected',
-        self::INVALID => 'Invalid Uuid format',
+        self::NOT_STRING => 'Invalid type given; string expected',
+        self::INVALID => 'Invalid UUID format',
     ];
 
     /**
@@ -47,18 +43,18 @@ final class Uuid extends AbstractValidator
      */
     public function isValid($value)
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             $this->error(self::NOT_STRING);
-
             return false;
         }
 
         $this->setValue($value);
 
-        if (empty($value) || $value !== '00000000-0000-0000-0000-000000000000'
-            && !preg_match(self::REGEX_UUID, $value)) {
+        if (empty($value)
+            || $value !== '00000000-0000-0000-0000-000000000000'
+            && ! preg_match(self::REGEX_UUID, $value)
+        ) {
             $this->error(self::INVALID);
-
             return false;
         }
 
