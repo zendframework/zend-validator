@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#58](https://github.com/zendframework/zend-validator/pull/58) adds a new
+  `Uuid` validator, capable of validating if Versions 1-5 UUIDs are well-formed.
 
 ### Deprecated
 
