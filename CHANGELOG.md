@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#58](https://github.com/zendframework/zend-validator/pull/58) adds a new
   `Uuid` validator, capable of validating if Versions 1-5 UUIDs are well-formed.
+- [#64](https://github.com/zendframework/zend-validator/pull/64) ports
+  `Zend\ModuleManager\Feature\ValidatorProviderInterface` to
+  `Zend\Validator\ValidatorProviderInterface`, and updates the `Module::init()`
+  to typehint against the new interface instead of the one from
+  zend-modulemanager. Applications targeting zend-mvc v3 can start updating
+  their code to implement the new interface, or simply duck-type against it.
 
 ### Deprecated
 
