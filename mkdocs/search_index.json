@@ -117,12 +117,12 @@
         }, 
         {
             "location": "/set/", 
-            "text": "Standard Validation Classes\n\n\nThe following validators come with the zend-validator distribution.\n\n\n\n\nBarcode\n\n\nBetween\n\n\nCallback\n\n\nCreditCard\n\n\nDate\n\n\nRecordExists and NoRecordExists (database)\n\n\nDigits\n\n\nEmailAddress\n\n\nFile Validation Classes\n\n\nGreaterThan\n\n\nHex\n\n\nHostname\n\n\nIban\n\n\nIdentical\n\n\nInArray\n\n\nIp\n\n\nIsbn\n\n\nIsInstanceOf\n\n\nLessThan\n\n\nNotEmpty\n\n\nPostCode\n\n\nRegex\n\n\nSitemap\n\n\nStep\n\n\nStringLength\n\n\nTimezone\n\n\nUri\n\n\n\n\nAdditional validators\n\n\nSeveral other components offer validators as well:\n\n\n\n\nzend-i18n\n\n\n\n\nDeprecated Validators\n\n\nCcnum\n\n\nThe \nCcnum\n validator has been deprecated in favor of the \nCreditCard\n\nvalidator. For security reasons you should use \nCreditCard\n instead of \nCcnum\n.", 
+            "text": "Standard Validation Classes\n\n\nThe following validators come with the zend-validator distribution.\n\n\n\n\nBarcode\n\n\nBetween\n\n\nCallback\n\n\nCreditCard\n\n\nDate\n\n\nRecordExists and NoRecordExists (database)\n\n\nDigits\n\n\nEmailAddress\n\n\nFile Validation Classes\n\n\nGreaterThan\n\n\nHex\n\n\nHostname\n\n\nIban\n\n\nIdentical\n\n\nInArray\n\n\nIp\n\n\nIsbn\n\n\nIsInstanceOf\n\n\nLessThan\n\n\nNotEmpty\n\n\nPostCode\n\n\nRegex\n\n\nSitemap\n\n\nStep\n\n\nStringLength\n\n\nTimezone\n\n\nUri\n\n\nUuid\n\n\n\n\nAdditional validators\n\n\nSeveral other components offer validators as well:\n\n\n\n\nzend-i18n\n\n\n\n\nDeprecated Validators\n\n\nCcnum\n\n\nThe \nCcnum\n validator has been deprecated in favor of the \nCreditCard\n\nvalidator. For security reasons you should use \nCreditCard\n instead of \nCcnum\n.", 
             "title": "Standard Validation Classes"
         }, 
         {
             "location": "/set/#standard-validation-classes", 
-            "text": "The following validators come with the zend-validator distribution.   Barcode  Between  Callback  CreditCard  Date  RecordExists and NoRecordExists (database)  Digits  EmailAddress  File Validation Classes  GreaterThan  Hex  Hostname  Iban  Identical  InArray  Ip  Isbn  IsInstanceOf  LessThan  NotEmpty  PostCode  Regex  Sitemap  Step  StringLength  Timezone  Uri", 
+            "text": "The following validators come with the zend-validator distribution.   Barcode  Between  Callback  CreditCard  Date  RecordExists and NoRecordExists (database)  Digits  EmailAddress  File Validation Classes  GreaterThan  Hex  Hostname  Iban  Identical  InArray  Ip  Isbn  IsInstanceOf  LessThan  NotEmpty  PostCode  Regex  Sitemap  Step  StringLength  Timezone  Uri  Uuid", 
             "title": "Standard Validation Classes"
         }, 
         {
@@ -1153,6 +1153,31 @@
         {
             "location": "/validators/uri/#basic-usage", 
             "text": "$validator = new Zend\\Validator\\Uri();\n$uri = 'http://framework.zend.com/manual';\n\nif ($validator- isValid($uri)) {\n    // $uri was valid\n} else {\n    // false. You can use $validator- getMessages() to retrieve error messages\n}", 
+            "title": "Basic usage"
+        }, 
+        {
+            "location": "/validators/uuid/", 
+            "text": "UUID Validator\n\n\nZend\\Validator\\Uuid\n allows validating \nUniversally Unique IDentifiers\n\n(UUIDs). UUIDs are 128-bit values that are guaranteed to be \"practically unique\"\nin order to help prevent identifier conflicts. Five separate UUID versions\nexist:\n\n\n\n\nVersion 1, which uses a combination of date-time and hardware MAC addresses to\n  generate the hash.\n\n\nVersion 2, which uses a combination of date-time and system user/group identifiers.\n\n\nVersion 3, which uses an MD5sum of a URI or distinguished name to generate the\n  hash.\n\n\nVersion 4, which uses a CSPRNG to generate the hash.\n\n\nVersion 5, which uses the same idea as Version 3, but using SHA-1 for hashing.\n\n\n\n\nThe \nUuid\n validator is capable of validating whether a string is a valid UUID\nof any version. It does not validate that the UUID exists in your system,\nhowever, only that it is well-formed.\n\n\n\n\nIntroduced in 2.8.0\n\n\nZend\\Validator\\Uuid\n was introduced with version 2.8.0.\n\n\n\n\nSupported options\n\n\nThe \nUuid\n validator has no additional options.\n\n\nBasic usage\n\n\n$validator = new Zend\\Validator\\Uuid();\n\nif ($validator-\nisValid($uuid)) {\n    // UUID was valid\n} else {\n    // Invalid/mal-formed UUID; use $validator-\ngetMessages() for more detail\n}", 
+            "title": "Uuid"
+        }, 
+        {
+            "location": "/validators/uuid/#uuid-validator", 
+            "text": "Zend\\Validator\\Uuid  allows validating  Universally Unique IDentifiers \n(UUIDs). UUIDs are 128-bit values that are guaranteed to be \"practically unique\"\nin order to help prevent identifier conflicts. Five separate UUID versions\nexist:   Version 1, which uses a combination of date-time and hardware MAC addresses to\n  generate the hash.  Version 2, which uses a combination of date-time and system user/group identifiers.  Version 3, which uses an MD5sum of a URI or distinguished name to generate the\n  hash.  Version 4, which uses a CSPRNG to generate the hash.  Version 5, which uses the same idea as Version 3, but using SHA-1 for hashing.   The  Uuid  validator is capable of validating whether a string is a valid UUID\nof any version. It does not validate that the UUID exists in your system,\nhowever, only that it is well-formed.", 
+            "title": "UUID Validator"
+        }, 
+        {
+            "location": "/validators/uuid/#introduced-in-280", 
+            "text": "Zend\\Validator\\Uuid  was introduced with version 2.8.0.", 
+            "title": "Introduced in 2.8.0"
+        }, 
+        {
+            "location": "/validators/uuid/#supported-options", 
+            "text": "The  Uuid  validator has no additional options.", 
+            "title": "Supported options"
+        }, 
+        {
+            "location": "/validators/uuid/#basic-usage", 
+            "text": "$validator = new Zend\\Validator\\Uuid();\n\nif ($validator- isValid($uuid)) {\n    // UUID was valid\n} else {\n    // Invalid/mal-formed UUID; use $validator- getMessages() for more detail\n}", 
             "title": "Basic usage"
         }, 
         {

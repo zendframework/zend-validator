@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
-    <title>LessThan - zend-validator</title>
+    <title>Uuid - zend-validator</title>
 
     <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -216,8 +216,8 @@
 
         
             
-<li class="active">
-    <a href="./">LessThan</a>
+<li >
+    <a href="../less-than/">LessThan</a>
 </li>
 
         
@@ -270,8 +270,8 @@
 
         
             
-<li >
-    <a href="../uuid/">Uuid</a>
+<li class="active">
+    <a href="./">Uuid</a>
 </li>
 
         
@@ -448,13 +448,13 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#lessthan-validator">LessThan Validator</a></li>
+        <li class="main active"><a href="#uuid-validator">UUID Validator</a></li>
+        
+            <li><a href="#introduced-in-280">Introduced in 2.8.0</a></li>
         
             <li><a href="#supported-options">Supported options</a></li>
         
             <li><a href="#basic-usage">Basic usage</a></li>
-        
-            <li><a href="#inclusive-validation">Inclusive validation</a></li>
         
     
     </ul>
@@ -462,10 +462,10 @@
     
     <ul class="pager hidden-print">
       <li class="previous">
-        <a rel="prev" href="../isinstanceof/"><i class="fa fa-arrow-left"></i> Previous</a>
+        <a rel="prev" href="../uri/"><i class="fa fa-arrow-left"></i> Previous</a>
       </li>
       <li class="next">
-        <a rel="next" href="../not-empty/">Next <i class="fa fa-arrow-right"></i></a>
+        <a rel="next" href="../file/intro/">Next <i class="fa fa-arrow-right"></i></a>
       </li>
     </ul>
     
@@ -485,47 +485,40 @@
       
     
   
-  <li class="active">LessThan</li>
+  <li class="active">Uuid</li>
 </ol>
 
-<h1 id="lessthan-validator">LessThan Validator</h1>
-<p><code>Zend\Validator\LessThan</code> allows you to validate if a given value is less than a
-maximum value.</p>
+<h1 id="uuid-validator">UUID Validator</h1>
+<p><code>Zend\Validator\Uuid</code> allows validating <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">Universally Unique IDentifiers</a>
+(UUIDs). UUIDs are 128-bit values that are guaranteed to be "practically unique"
+in order to help prevent identifier conflicts. Five separate UUID versions
+exist:</p>
+<ul>
+<li>Version 1, which uses a combination of date-time and hardware MAC addresses to
+  generate the hash.</li>
+<li>Version 2, which uses a combination of date-time and system user/group identifiers.</li>
+<li>Version 3, which uses an MD5sum of a URI or distinguished name to generate the
+  hash.</li>
+<li>Version 4, which uses a CSPRNG to generate the hash.</li>
+<li>Version 5, which uses the same idea as Version 3, but using SHA-1 for hashing.</li>
+</ul>
+<p>The <code>Uuid</code> validator is capable of validating whether a string is a valid UUID
+of any version. It does not validate that the UUID exists in your system,
+however, only that it is well-formed.</p>
 <blockquote>
-<p>Supports only number validation</p>
-<p><code>Zend\Validator\LessThan</code> supports only the validation of numbers. Strings or
-dates can not be validated with this validator.</p>
+<h3 id="introduced-in-280">Introduced in 2.8.0</h3>
+<p><code>Zend\Validator\Uuid</code> was introduced with version 2.8.0.</p>
 </blockquote>
 <h2 id="supported-options">Supported options</h2>
-<p>The following options are supported for <code>Zend\Validator\LessThan</code>:</p>
-<ul>
-<li><code>inclusive</code>: Defines if the validation is inclusive the maximum value or
-  exclusive. It defaults to <code>false</code>.</li>
-<li><code>max</code>: Sets the maximum allowed value.</li>
-</ul>
+<p>The <code>Uuid</code> validator has no additional options.</p>
 <h2 id="basic-usage">Basic usage</h2>
-<p>To validate if a given value is less than a defined maximum:</p>
-<pre class="codehilite"><code class="language-php">$valid  = new Zend\Validator\LessThan(['max' =&gt; 10]);
-$value  = 12;
-$return = $valid-&gt;isValid($value);
-// returns false</code></pre>
+<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Uuid();
 
-
-<p>The above example returns <code>true</code> for all values lower than 10.</p>
-<h2 id="inclusive-validation">Inclusive validation</h2>
-<p>Sometimes it is useful to validate a value by including the maximum value:</p>
-<pre class="codehilite"><code class="language-php">$valid  = new Zend\Validator\LessThan([
-    'max' =&gt; 10,
-    'inclusive' =&gt; true,
-]);
-$value  = 10;
-$result = $valid-&gt;isValid($value);
-// returns true</code></pre>
-
-
-<p>The example is identical to our first example, with the exception that we've
-specified that the maximum is inclusive. Now the value '10' is allowed and will
-return <code>true</code>.</p>
+if ($validator-&gt;isValid($uuid)) {
+    // UUID was valid
+} else {
+    // Invalid/mal-formed UUID; use $validator-&gt;getMessages() for more detail
+}</code></pre>
 
 <hr />
 
@@ -533,10 +526,10 @@ return <code>true</code>.</p>
 <nav>
   <ul class="pager hidden-print">
     <li class="previous">
-      <a rel="prev" href="../isinstanceof/"><i class="fa fa-arrow-left"></i> Previous</a>
+      <a rel="prev" href="../uri/"><i class="fa fa-arrow-left"></i> Previous</a>
     </li>
     <li class="next">
-      <a rel="next" href="../not-empty/">Next <i class="fa fa-arrow-right"></i></a>
+      <a rel="next" href="../file/intro/">Next <i class="fa fa-arrow-right"></i></a>
     </li>
   </ul>
 </nav>
