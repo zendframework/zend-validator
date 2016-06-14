@@ -106,7 +106,7 @@ class NotEmpty extends AbstractValidator
                 foreach ($options as $option) {
                     if (in_array($option, $this->constants, true)) {
                         $found = true;
-                        $detected += array_search($option, $this->constants);
+                        $detected |= array_search($option, $this->constants);
                     }
                 }
 
