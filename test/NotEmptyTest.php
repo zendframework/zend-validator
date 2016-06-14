@@ -27,6 +27,21 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
         $this->validator = new NotEmpty();
     }
 
+    public function testConstructorWithTypeArray()
+    {
+        $validator = new NotEmpty([
+            'php',
+            'boolean'
+        ]);
+        $this->assertEquals(NotEmpty::PHP, $validator->getType());
+
+        $validator = new NotEmpty([
+            'boolean',
+            'boolean'
+        ]);
+        $this->assertEquals(NotEmpty::BOOLEAN, $validator->getType());
+    }
+
     /**
      * Ensures that the validator follows expected behavior
      *
