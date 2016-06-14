@@ -40,6 +40,18 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
             'boolean'
         ]);
         $this->assertEquals(NotEmpty::BOOLEAN, $validator->getType());
+
+        $validator = new NotEmpty([
+            NotEmpty::PHP,
+            NotEmpty::BOOLEAN
+        ]);
+        $this->assertEquals(NotEmpty::PHP, $validator->getType());
+
+        $validator = new NotEmpty([
+            NotEmpty::BOOLEAN,
+            NotEmpty::BOOLEAN
+        ]);
+        $this->assertEquals(NotEmpty::BOOLEAN, $validator->getType());
     }
 
     /**
