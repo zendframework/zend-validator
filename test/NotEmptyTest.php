@@ -754,11 +754,27 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider singleStringNotationProvider
      */
-    public function testSingleStringNotation($value, $valid)
+    public function testSingleStringConstructorNotation($value, $valid)
     {
         $this->validator = new NotEmpty(
             'boolean'
         );
+        $this->checkValidationValue($value, $valid);
+    }
+
+    /**
+     * Ensures that the validator follows expected behavior
+     *
+     * @param mixed $value Value to test
+     * @param boolean $valid Expected validity of value
+     *
+     * @return void
+     *
+     * @dataProvider singleStringNotationProvider
+     */
+    public function testSingleStringSetTypeNotation($value, $valid)
+    {
+        $this->validator->setType('boolean');
         $this->checkValidationValue($value, $valid);
     }
 
