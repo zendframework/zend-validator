@@ -27,31 +27,29 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
         $this->validator = new NotEmpty();
     }
 
-    public function testConstructorWithTypeArray()
+    /**
+     * Ensures that the validator follows expected behavior
+     *
+     * @param array $types Array of type strings or constants
+     * @param integer $expected Expected value of calculated type
+     *
+     * @return void
+     * @dataProvider constructorWithTypeArrayProvider
+     */
+    public function testConstructorWithTypeArray($types, $expected)
     {
-        $validator = new NotEmpty([
-            'php',
-            'boolean'
-        ]);
-        $this->assertEquals(NotEmpty::PHP, $validator->getType());
+        $validator = new NotEmpty($types);
+        $this->assertEquals($expected, $validator->getType());
+    }
 
-        $validator = new NotEmpty([
-            'boolean',
-            'boolean'
-        ]);
-        $this->assertEquals(NotEmpty::BOOLEAN, $validator->getType());
-
-        $validator = new NotEmpty([
-            NotEmpty::PHP,
-            NotEmpty::BOOLEAN
-        ]);
-        $this->assertEquals(NotEmpty::PHP, $validator->getType());
-
-        $validator = new NotEmpty([
-            NotEmpty::BOOLEAN,
-            NotEmpty::BOOLEAN
-        ]);
-        $this->assertEquals(NotEmpty::BOOLEAN, $validator->getType());
+    public function constructorWithTypeArrayProvider()
+    {
+        return [
+            [['php', 'boolean'], NotEmpty::PHP],
+            [['boolean', 'boolean'], NotEmpty::BOOLEAN],
+            [[NotEmpty::PHP, NotEmpty::BOOLEAN], NotEmpty::PHP],
+            [[NotEmpty::BOOLEAN, NotEmpty::BOOLEAN], NotEmpty::BOOLEAN],
+        ];
     }
 
     /**
