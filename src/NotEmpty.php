@@ -83,8 +83,6 @@ class NotEmpty extends AbstractValidator
      */
     public function __construct($options = null)
     {
-        $this->setType($this->defaultType);
-
         if ($options instanceof Traversable) {
             $options = ArrayUtils::iteratorToArray($options);
         }
@@ -99,9 +97,11 @@ class NotEmpty extends AbstractValidator
             $options = $temp;
         }
 
-        if (is_array($options)) {
+        if (!isset($options['type'])) {
             if (($type = $this->calculateTypeValue($options)) != 0) {
                 $options['type'] = $type;
+            } else {
+                $options['type'] = $this->defaultType;
             }
         }
 
