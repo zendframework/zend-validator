@@ -51,6 +51,10 @@ class ExcludeMimeTypeTest extends \PHPUnit_Framework_TestCase
         $validator = new ExcludeMimeType($options);
         $validator->enableHeaderCheck();
         $this->assertEquals($expected, $validator->isValid($isValidParam));
+        if (!$expected) {
+            $this->assertArrayHasKey($validator::FALSE_TYPE, $validator->getMessages());
+            $this->assertNotEmpty($validator->getMessages()[$validator::FALSE_TYPE]);
+        }
     }
 
     /**
@@ -137,6 +141,12 @@ class ExcludeMimeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($validator->isValid(''));
         $this->assertArrayHasKey(ExcludeMimeType::NOT_READABLE, $validator->getMessages());
+        $this->assertNotEmpty($validator->getMessages()[ExcludeMimeType::NOT_READABLE]);
+    }
+
+    public function testEmptyArrayFileShouldReturnFalseAdnDisplayNotFoundMessage()
+    {
+        $validator = new ExcludeMimeType();
 
         $filesArray = [
             'name'      => '',
@@ -148,6 +158,7 @@ class ExcludeMimeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($validator->isValid($filesArray));
         $this->assertArrayHasKey(ExcludeMimeType::NOT_READABLE, $validator->getMessages());
+        $this->assertNotEmpty($validator->getMessages()[ExcludeMimeType::NOT_READABLE]);
     }
 
     public function testIsValidRaisesExceptionWithArrayNotInFilesFormat()
