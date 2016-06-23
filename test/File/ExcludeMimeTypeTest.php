@@ -25,17 +25,21 @@ class ExcludeMimeTypeTest extends \PHPUnit_Framework_TestCase
     {
         $testFile = __DIR__ . '/_files/picture.jpg';
         $fileUpload = [
-            'tmp_name' => $testFile, 'name' => basename($testFile),
-            'size' => 200, 'error' => 0, 'type' => 'image/jpeg'
+            'tmp_name' => $testFile,
+            'name'     => basename($testFile),
+            'size'     => 200,
+            'error'    => 0,
+            'type'     => 'image/jpeg',
         ];
+
         return [
-            //    Options, isValid Param, Expected value
-            ['image/gif',                      $fileUpload, true],
-            ['image',                          $fileUpload, false],
-            ['test/notype',                    $fileUpload, true],
-            ['image/gif, image/jpeg',          $fileUpload, false],
+            //    Options, isValid Param, Expected value, messages
+            ['image/gif',                 $fileUpload, true],
+            ['image',                     $fileUpload, false, [ExcludeMimeType::FALSE_TYPE => "File has an incorrect mimetype of 'image/jpeg'"]],
+            ['test/notype',               $fileUpload, true],
+            ['image/gif, image/jpeg',     $fileUpload, false, [ExcludeMimeType::FALSE_TYPE => "File has an incorrect mimetype of 'image/jpeg'"]],
             [['image/vasa', 'image/gif'], $fileUpload, true],
-            [['image/gif', 'jpeg'],       $fileUpload, false],
+            [['image/gif', 'jpeg'],       $fileUpload, false, [ExcludeMimeType::FALSE_TYPE => "File has an incorrect mimetype of 'image/jpeg'"]],
             [['image/gif', 'gif'],        $fileUpload, true],
         ];
     }
@@ -44,17 +48,18 @@ class ExcludeMimeTypeTest extends \PHPUnit_Framework_TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     *
+     * @param string|array $options
+     * @param array $isValidParam
+     * @param bool $expected
+     * @param array $messages
      */
-    public function testBasic($options, $isValidParam, $expected)
+    public function testBasic($options, array $isValidParam, $expected, array $messages = [])
     {
         $validator = new ExcludeMimeType($options);
         $validator->enableHeaderCheck();
         $this->assertEquals($expected, $validator->isValid($isValidParam));
-        if (!$expected) {
-            $this->assertArrayHasKey($validator::FALSE_TYPE, $validator->getMessages());
-            $this->assertNotEmpty($validator->getMessages()[$validator::FALSE_TYPE]);
-        }
+        $this->assertEquals($messages, $validator->getMessages());
     }
 
     /**
