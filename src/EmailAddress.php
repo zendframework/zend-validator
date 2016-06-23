@@ -547,8 +547,9 @@ class EmailAddress extends AbstractValidator
      */
     protected function idnToUtf8($email)
     {
-        if (strlen($email) == 0)
+        if (strlen($email) == 0) {
             return $email;
+        }
             
         if (extension_loaded('intl')) {
             // The documentation does not clarify what kind of failure
