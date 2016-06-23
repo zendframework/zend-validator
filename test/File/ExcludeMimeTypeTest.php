@@ -32,15 +32,17 @@ class ExcludeMimeTypeTest extends \PHPUnit_Framework_TestCase
             'type'     => 'image/jpeg',
         ];
 
+        $falseTypeMessage = [ExcludeMimeType::FALSE_TYPE => "File has an incorrect mimetype of 'image/jpeg'"];
+
         return [
             //    Options, isValid Param, Expected value, messages
-            ['image/gif',                 $fileUpload, true],
-            ['image',                     $fileUpload, false, [ExcludeMimeType::FALSE_TYPE => "File has an incorrect mimetype of 'image/jpeg'"]],
-            ['test/notype',               $fileUpload, true],
-            ['image/gif, image/jpeg',     $fileUpload, false, [ExcludeMimeType::FALSE_TYPE => "File has an incorrect mimetype of 'image/jpeg'"]],
-            [['image/vasa', 'image/gif'], $fileUpload, true],
-            [['image/gif', 'jpeg'],       $fileUpload, false, [ExcludeMimeType::FALSE_TYPE => "File has an incorrect mimetype of 'image/jpeg'"]],
-            [['image/gif', 'gif'],        $fileUpload, true],
+            ['image/gif',                 $fileUpload, true,  []],
+            ['image',                     $fileUpload, false, $falseTypeMessage],
+            ['test/notype',               $fileUpload, true,  []],
+            ['image/gif, image/jpeg',     $fileUpload, false, $falseTypeMessage],
+            [['image/vasa', 'image/gif'], $fileUpload, true,  []],
+            [['image/gif', 'jpeg'],       $fileUpload, false, $falseTypeMessage],
+            [['image/gif', 'gif'],        $fileUpload, true,  []],
         ];
     }
 
@@ -54,7 +56,7 @@ class ExcludeMimeTypeTest extends \PHPUnit_Framework_TestCase
      * @param bool $expected
      * @param array $messages
      */
-    public function testBasic($options, array $isValidParam, $expected, array $messages = [])
+    public function testBasic($options, array $isValidParam, $expected, array $messages)
     {
         $validator = new ExcludeMimeType($options);
         $validator->enableHeaderCheck();
