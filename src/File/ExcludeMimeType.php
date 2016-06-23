@@ -22,6 +22,15 @@ class ExcludeMimeType extends MimeType
     const NOT_READABLE = 'fileExcludeMimeTypeNotReadable';
 
     /**
+     * @var array Error message templates
+     */
+    protected $messageTemplates = [
+        self::FALSE_TYPE   => "File has an incorrect mimetype of '%type%'",
+        self::NOT_DETECTED => "The mimetype could not be detected from the file",
+        self::NOT_READABLE => "File is not readable or does not exist",
+    ];
+
+    /**
      * Returns true if the mimetype of the file does not matche the given ones. Also parts
      * of mimetypes can be checked. If you give for example "image" all image
      * mime types will not be accepted like "image/gif", "image/jpeg" and so on.
