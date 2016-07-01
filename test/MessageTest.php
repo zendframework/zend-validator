@@ -93,6 +93,24 @@ class MessageTest extends TestCase
     }
 
     /**
+     * Ensures that we can include the %length% parameter in the message,
+     * and that it is substituted with the length of the value we are validating.
+     *
+     * @return void
+     */
+    public function testSetMessageWithLengthParam()
+    {
+        $this->validator->setMessage(
+            "The length of your value is '%length%'",
+            StringLength::TOO_LONG
+        );
+        $inputInvalid = 'abcdefghij';
+        $this->assertFalse($this->validator->isValid($inputInvalid));
+        $messages = $this->validator->getMessages();
+        $this->assertEquals("The length of your value is '10'", current($messages));
+    }
+
+    /**
      * Ensures that we can include another parameter, defined on a
      * class-by-class basis, in the message string.
      * In the case of Zend_Validate_StringLength, one such parameter
@@ -234,7 +252,7 @@ class MessageTest extends TestCase
         $vars = $this->validator->getMessageVariables();
 
         $this->assertInternalType('array', $vars);
-        $this->assertEquals(['min', 'max'], $vars);
+        $this->assertEquals(['min', 'max', 'length'], $vars);
         $message = 'variables: %notvar% ';
         foreach ($vars as $var) {
             $message .= "%$var% ";
@@ -243,7 +261,7 @@ class MessageTest extends TestCase
 
         $this->assertFalse($this->validator->isValid('abc'));
         $messages = $this->validator->getMessages();
-        $this->assertEquals('variables: %notvar% 4 8 ', current($messages));
+        $this->assertEquals('variables: %notvar% 4 8 3', current($messages));
     }
 
     public function testEqualsMessageTemplates()
