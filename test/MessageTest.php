@@ -261,7 +261,7 @@ class MessageTest extends TestCase
 
         $this->assertFalse($this->validator->isValid('abc'));
         $messages = $this->validator->getMessages();
-        $this->assertEquals('variables: %notvar% 4 8 3', current($messages));
+        $this->assertEquals('variables: %notvar% 4 8 3 ', current($messages));
     }
 
     public function testEqualsMessageTemplates()
