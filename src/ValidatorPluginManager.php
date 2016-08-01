@@ -323,8 +323,6 @@ class ValidatorPluginManager extends AbstractPluginManager
         'zendi18nvalidatordatetime'             => InvokableFactory::class,
         'zendi18nvalidatorisfloat'              => InvokableFactory::class,
         'zendi18nvalidatorisint'                => InvokableFactory::class,
-        'zendi18nvalidatorisfloat'              => InvokableFactory::class,
-        'zendi18nvalidatorisint'                => InvokableFactory::class,
         'zendi18nvalidatorphonenumber'          => InvokableFactory::class,
         'zendi18nvalidatorpostcode'             => InvokableFactory::class,
         'zendvalidatoriban'                     => InvokableFactory::class,
