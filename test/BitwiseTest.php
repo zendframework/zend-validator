@@ -38,6 +38,23 @@ class BitwiseTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($options['operator'], $validator->getOperator());
         $this->assertSame($options['strict'], $validator->getStrict());
     }
+    /**
+     * @covers \Zend\Validator\Bitwise::__construct()
+     * @dataProvider constructDataProvider
+     *
+     * @param array $args
+     * @param array $options
+     */
+    public function testConstructWithTravesableOptions(array $args, array $options)
+    {
+        $validator = new Bitwise(
+            new \ArrayObject($args)
+        );
+
+        $this->assertSame($options['control'], $validator->getControl());
+        $this->assertSame($options['operator'], $validator->getOperator());
+        $this->assertSame($options['strict'], $validator->getStrict());
+    }
 
     public function constructDataProvider()
     {
