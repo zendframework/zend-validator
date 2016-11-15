@@ -73,7 +73,7 @@ class TimezoneTest extends \PHPUnit_Framework_TestCase
             ['Europe/Copenhagen', true],
             ['Indian/Maldives', true],
 
-            ['anast', false],              // abbreviation of Anadyr Summer Time
+            ['cest', false],              // abbreviation of Anadyr Summer Time
 
             ['Asia/London', false],        // wrong location
             ['', false],                   // empty string
@@ -115,14 +115,11 @@ class TimezoneTest extends \PHPUnit_Framework_TestCase
     public function abbreviationProvider()
     {
         return [
-            ['anast', true],               // Anadyr Summer Time
             ['bnt', true],                 // Brunei Darussalam Time
             ['cest', true],                // Central European Summer Time
             ['easst', true],               // Easter Island Summer Time
             ['egst', true],                // Eastern Greenland Summer Time
             ['hkt', true],                 // Hong Kong Time
-            ['irkst', true],               // Irkutsk Summer Time
-            ['krast', true],               // Krasnoyarsk Summer Time
             ['nzdt', true],                // New Zealand Daylight Time
             ['sast', true],                // South Africa Standard Time
 
@@ -188,8 +185,6 @@ class TimezoneTest extends \PHPUnit_Framework_TestCase
             ['Australia/Broken_Hill', true],
 
             ['hkt', true],                 // Hong Kong Time
-            ['irkst', true],               // Irkutsk Summer Time
-            ['krast', true],               // Krasnoyarsk Summer Time
             ['nzdt', true],                // New Zealand Daylight Time
             ['sast', true],                // South Africa Standard Time
 
