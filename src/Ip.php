@@ -40,7 +40,8 @@ class Ip extends AbstractValidator
      * Sets the options for this validator
      *
      * @param array|Traversable $options
-     * @throws Exception\InvalidArgumentException If there is any kind of IP allowed or $options is not an array or Traversable.
+     * @throws Exception\InvalidArgumentException If there is any kind of IP allowed or $options is not an array
+     *                                            or Traversable.
      * @return AbstractValidator
      */
     public function setOptions($options = [])

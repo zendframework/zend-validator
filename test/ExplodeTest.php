@@ -52,10 +52,19 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getExpectedData
      */
-    public function testExpectedBehavior($value, $delimiter, $breakOnFirst, $numIsValidCalls, $isValidReturn, $messages, $expects)
-    {
+    public function testExpectedBehavior(
+        $value,
+        $delimiter,
+        $breakOnFirst,
+        $numIsValidCalls,
+        $isValidReturn,
+        $messages,
+        $expects
+    ) {
         $mockValidator = $this->getMock('Zend\Validator\ValidatorInterface');
-        $mockValidator->expects($this->exactly($numIsValidCalls))->method('isValid')->will($this->returnValue($isValidReturn));
+        $mockValidator->expects(
+            $this->exactly($numIsValidCalls)
+        )->method('isValid')->will($this->returnValue($isValidReturn));
         $mockValidator->expects($this->any())->method('getMessages')->will($this->returnValue('X'));
 
         $validator = new Explode([
@@ -154,7 +163,8 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
 
         $messages = [
             0 => [
-                'regexNotMatch' => "The input does not match against pattern '/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/'",
+                'regexNotMatch' => "The input does not match against pattern "
+                    . "'/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/'",
             ],
         ];
 

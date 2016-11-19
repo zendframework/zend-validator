@@ -137,8 +137,11 @@ class ValidatorChain implements
      * @param  int                  $priority
      * @return ValidatorChain Provides a fluent interface
      */
-    public function addValidator(ValidatorInterface $validator, $breakChainOnFailure = false, $priority = self::DEFAULT_PRIORITY)
-    {
+    public function addValidator(
+        ValidatorInterface $validator,
+        $breakChainOnFailure = false,
+        $priority = self::DEFAULT_PRIORITY
+    ) {
         return $this->attach($validator, $breakChainOnFailure, $priority);
     }
 

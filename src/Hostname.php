@@ -35,6 +35,7 @@ class Hostname extends AbstractValidator
     const UNDECIPHERABLE_TLD      = 'hostnameUndecipherableTld';
     const UNKNOWN_TLD             = 'hostnameUnknownTld';
 
+    // @codingStandardsIgnoreStart
     /**
      * @var array
      */
@@ -51,6 +52,7 @@ class Hostname extends AbstractValidator
         self::UNDECIPHERABLE_TLD      => "The input appears to be a DNS hostname but cannot extract TLD part",
         self::UNKNOWN_TLD             => "The input appears to be a DNS hostname but cannot match TLD against known list",
     ];
+    // @codingStandardsIgnoreEnd
 
     /**
      * @var array
@@ -1604,6 +1606,7 @@ class Hostname extends AbstractValidator
         'zw',
     ];
 
+    // @codingStandardsIgnoreStart
     /**
      * Array for valid Idns
      * @see http://www.iana.org/domains/idn-tables/ Official list of supported IDN Chars
@@ -1786,6 +1789,7 @@ class Hostname extends AbstractValidator
         'فلسطين' => [1 => '/^[\x{0621}-\x{0624}\x{0626}-\x{063A}\x{0641}\x{0642}\x{0644}-\x{0648}\x{067E}\x{0686}\x{0698}\x{06A9}\x{06AF}\x{06CC}\x{06F0}-\x{06F9}]{1,30}$/iu'],
         'شبكة'  => [1 => '/^[\x{0621}-\x{0624}\x{0626}-\x{063A}\x{0641}\x{0642}\x{0644}-\x{0648}\x{067E}\x{0686}\x{0698}\x{06A9}\x{06AF}\x{06CC}\x{06F0}-\x{06F9}]{1,30}$/iu'],
     ];
+    // @codingStandardsIgnoreEnd
 
     protected $idnLength = [
         'BIZ' => [5 => 17, 11 => 15, 12 => 20],
@@ -2084,7 +2088,11 @@ class Hostname extends AbstractValidator
                                 && $utf8StrWrapper->strpos($domainPart, '-', 2) == 2
                                 && $utf8StrWrapper->strpos($domainPart, '-', 3) == 3
                             )
-                            || ($utf8StrWrapper->strpos($domainPart, '-') === ($utf8StrWrapper->strlen($domainPart) - 1))
+                            || (
+                                $utf8StrWrapper->strpos($domainPart, '-') === (
+                                $utf8StrWrapper->strlen($domainPart) - 1
+                                )
+                            )
                         ) {
                             $this->error(self::INVALID_DASH);
                             $status = false;

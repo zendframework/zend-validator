@@ -141,7 +141,10 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $keyInvalid = 'invalidKey';
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'No message template exists for key');
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'No message template exists for key'
+        );
         $this->validator->setMessage(
             'Your value is too long',
             $keyInvalid
@@ -216,7 +219,10 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $messages = $this->validator->getMessages();
         $this->assertEquals('Your value is too long', current($messages));
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'No property exists by the name ');
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'No property exists by the name '
+        );
         $this->validator->unknownProperty;
     }
 

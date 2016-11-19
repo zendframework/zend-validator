@@ -65,7 +65,9 @@ class Isbn extends AbstractValidator
                 $pattern = '/^[0-9]{13}$/';
                 $length  = 13;
             } else {
+                // @codingStandardsIgnoreStart
                 $pattern = "/^[0-9]{1,9}[{$sep}]{1}[0-9]{1,5}[{$sep}]{1}[0-9]{1,9}[{$sep}]{1}[0-9]{1,9}[{$sep}]{1}[0-9]{1}$/";
+                // @codingStandardsIgnoreEnd
                 $length  = 17;
             }
 

@@ -70,9 +70,10 @@ class GPSPointTest extends \PHPUnit_Framework_TestCase
             ['38.8897,-77.0089']
         ];
     }
-
+    // @codingStandardsIgnoreStart
     public function ErrorMessageTestValues()
     {
+        // @codingStandardsIgnoreEnd
         return [
             ['63 47 24.691 N, 18 2 54.363 W', GpsPoint::OUT_OF_BOUNDS, '63 47 24.691 N'],
             ['° \' " N,° \' " E', GpsPoint::CONVERT_ERROR, '° \' " N'],
