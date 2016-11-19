@@ -50,14 +50,14 @@ class StringLength extends AbstractValidator
      */
     public function __construct($options = [])
     {
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             $options     = func_get_args();
             $temp['min'] = array_shift($options);
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['max'] = array_shift($options);
             }
 
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['encoding'] = array_shift($options);
             }
 
@@ -135,7 +135,7 @@ class StringLength extends AbstractValidator
      */
     public function getStringWrapper()
     {
-        if (!$this->stringWrapper) {
+        if (! $this->stringWrapper) {
             $this->stringWrapper = StringUtils::getWrapper($this->getEncoding());
         }
         return $this->stringWrapper;
@@ -186,7 +186,7 @@ class StringLength extends AbstractValidator
      */
     public function isValid($value)
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             $this->error(self::INVALID);
             return false;
         }

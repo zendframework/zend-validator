@@ -89,10 +89,10 @@ class NotEmpty extends AbstractValidator
             $options = ArrayUtils::iteratorToArray($options);
         }
 
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             $options = func_get_args();
             $temp    = [];
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['type'] = array_shift($options);
             }
 
@@ -100,7 +100,7 @@ class NotEmpty extends AbstractValidator
         }
 
         if (is_array($options)) {
-            if (!array_key_exists('type', $options)) {
+            if (! array_key_exists('type', $options)) {
                 $detected = 0;
                 $found    = false;
                 foreach ($options as $option) {
@@ -172,7 +172,7 @@ class NotEmpty extends AbstractValidator
     {
         $type = $this->calculateTypeValue($type);
 
-        if (!is_int($type) || ($type < 0) || ($type > self::ALL)) {
+        if (! is_int($type) || ($type < 0) || ($type > self::ALL)) {
             throw new Exception\InvalidArgumentException('Unknown type');
         }
 
@@ -189,8 +189,8 @@ class NotEmpty extends AbstractValidator
      */
     public function isValid($value)
     {
-        if ($value !== null && !is_string($value) && !is_int($value) && !is_float($value) &&
-            !is_bool($value) && !is_array($value) && !is_object($value)
+        if ($value !== null && ! is_string($value) && ! is_int($value) && ! is_float($value) &&
+            ! is_bool($value) && ! is_array($value) && ! is_object($value)
         ) {
             $this->error(self::INVALID);
             return false;
@@ -214,7 +214,7 @@ class NotEmpty extends AbstractValidator
         if ($type & self::OBJECT_STRING) {
             $object = true;
 
-            if ((is_object($value) && (!method_exists($value, '__toString'))) ||
+            if ((is_object($value) && (! method_exists($value, '__toString'))) ||
                 (is_object($value) && (method_exists($value, '__toString')) && (((string) $value) == ""))) {
                 $this->error(self::IS_EMPTY);
                 return false;

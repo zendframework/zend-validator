@@ -98,8 +98,8 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
     {
         $validator = new File\ImageSize($options);
         $this->assertEquals($expected, $validator->isValid($isValidParam));
-        if (!$expected) {
-            if (!is_array($messageKeys)) {
+        if (! $expected) {
+            if (! is_array($messageKeys)) {
                 $messageKeys = [$messageKeys];
             }
             foreach ($messageKeys as $messageKey) {
@@ -120,8 +120,8 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
         if (is_array($isValidParam)) {
             $validator = new File\ImageSize($options);
             $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
-            if (!$expected) {
-                if (!is_array($messageKeys)) {
+            if (! $expected) {
+                if (! is_array($messageKeys)) {
                     $messageKeys = [$messageKeys];
                 }
                 foreach ($messageKeys as $messageKey) {

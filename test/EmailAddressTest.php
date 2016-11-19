@@ -342,7 +342,7 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
         $validator = new EmailAddress(Hostname::ALLOW_DNS, true);
 
         // Are MX checks supported by this system?
-        if (!$validator->isMxSupported()) {
+        if (! $validator->isMxSupported()) {
             $this->markTestSkipped('Testing MX records is not supported with this configuration');
         }
 
@@ -382,7 +382,7 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
         $validator = new EmailAddress(Hostname::ALLOW_DNS, true);
 
         // Are MX checks supported by this system?
-        if (!$validator->isMxSupported()) {
+        if (! $validator->isMxSupported()) {
             $this->markTestSkipped('Testing MX records is not supported with this configuration');
         }
 
@@ -446,7 +446,7 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
      */
     public function testHostnameValidatorMessagesShouldBeTranslated()
     {
-        if (!extension_loaded('intl')) {
+        if (! extension_loaded('intl')) {
             $this->markTestSkipped('ext/intl not enabled');
         }
 
@@ -686,7 +686,7 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
         $validator = new EmailAddress(['useMxCheck' => true, 'allow' => Hostname::ALLOW_ALL]);
         $validator = new EmailAddress(['useMxCheck' => true, 'allow' => Hostname::ALLOW_ALL]);
 
-        if (!$validator->isMxSupported()) {
+        if (! $validator->isMxSupported()) {
             $this->markTestSkipped('Testing MX records is not supported with this configuration');
         }
 
@@ -780,7 +780,7 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
             'Abc..123@example.com'
             ];
 
-        if (!extension_loaded('intl')) {
+        if (! extension_loaded('intl')) {
             $emailAddresses[] = 'иван@письмо.рф';
             $emailAddresses[] = 'xn--@-7sbfxdyelgv5j.xn--p1ai';
         }
@@ -866,7 +866,7 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
      */
     private function skipIfOnlineTestsDisabled()
     {
-        if (!getenv('TESTS_ZEND_VALIDATOR_ONLINE_ENABLED')) {
+        if (! getenv('TESTS_ZEND_VALIDATOR_ONLINE_ENABLED')) {
             $this->markTestSkipped('Testing MX records has been disabled');
         }
     }

@@ -11,7 +11,6 @@ namespace ZendTest\Validator;
 
 use Zend\Validator\GpsPoint;
 
-
 /**
  * @group      Zend_Validator
  */

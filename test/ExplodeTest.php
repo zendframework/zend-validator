@@ -64,7 +64,7 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
             'breakOnFirstFailure' => $breakOnFirst,
         ]);
 
-        $this->assertEquals($expects,  $validator->isValid($value));
+        $this->assertEquals($expects, $validator->isValid($value));
         $this->assertEquals($messages, $validator->getMessages());
     }
 
@@ -77,15 +77,21 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = new Explode([]);
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
     }
 
     public function testEqualsMessageVariables()
     {
         $validator = new Explode([]);
-        $this->assertAttributeEquals($validator->getOption('messageVariables'),
-                                     'messageVariables', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageVariables'),
+            'messageVariables',
+            $validator
+        );
     }
 
     public function testSetValidatorAsArray()
@@ -106,7 +112,8 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
         $inArrayValidator = $validator->getValidator();
         $this->assertInstanceOf('Zend\Validator\InArray', $inArrayValidator);
         $this->assertSame(
-            ['a', 'b', 'c'], $inArrayValidator->getHaystack()
+            ['a', 'b', 'c'],
+            $inArrayValidator->getHaystack()
         );
     }
 

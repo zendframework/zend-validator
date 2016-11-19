@@ -454,7 +454,7 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
      */
     public function testCODE128()
     {
-        if (!extension_loaded('iconv')) {
+        if (! extension_loaded('iconv')) {
             $this->markTestSkipped('Missing ext/iconv');
         }
 

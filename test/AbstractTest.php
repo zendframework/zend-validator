@@ -70,7 +70,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testErrorMessagesAreTranslatedWhenTranslatorPresent()
     {
-        if (!extension_loaded('intl')) {
+        if (! extension_loaded('intl')) {
             $this->markTestSkipped('ext/intl not enabled');
         }
 
@@ -135,7 +135,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testCanDisableTranslator()
     {
-        if (!extension_loaded('intl')) {
+        if (! extension_loaded('intl')) {
             $this->markTestSkipped('ext/intl not enabled');
         }
 

@@ -66,7 +66,7 @@ class Sha1Test extends \PHPUnit_Framework_TestCase
     {
         $validator = new File\Sha1($options);
         $this->assertEquals($expected, $validator->isValid($isValidParam));
-        if (!$expected) {
+        if (! $expected) {
             $this->assertArrayHasKey($messageKey, $validator->getMessages());
         }
     }
@@ -82,7 +82,7 @@ class Sha1Test extends \PHPUnit_Framework_TestCase
         if (is_array($isValidParam)) {
             $validator = new File\Sha1($options);
             $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
-            if (!$expected) {
+            if (! $expected) {
                 $this->assertArrayHasKey($messageKey, $validator->getMessages());
             }
         }
