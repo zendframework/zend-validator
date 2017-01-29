@@ -214,6 +214,44 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Data provider
+     *
+     * @return string[][]|bool[][]
+     */
+    public function mastercardValues()
+    {
+        return [
+            ['4111111111111111', false],
+            ['5011642326344731', false],
+            ['5130982099822729', true],
+            ['2220993834549400', false],
+            ['2221006548643366', true],
+            ['2222007329134574', true],
+            ['2393923057923090', true],
+            ['2484350479254492', true],
+            ['2518224476613101', true],
+            ['2659969950495289', true],
+            ['2720992392889757', true],
+            ['2721008996056187', false],
+        ];
+    }
+
+    /**
+     * Test mastercard number validity
+     *
+     * @dataProvider mastercardValues
+     *
+     * @param string $input
+     * @param bool   $expected
+     */
+    public function testMastercardCard($input, $expected)
+    {
+        $validator = new CreditCard(['type' => CreditCard::MASTERCARD]);
+
+        $this->assertEquals($expected, $validator->isValid($input));
+    }
+
+    /**
      * Test an invalid service class
      *
      * @return void
