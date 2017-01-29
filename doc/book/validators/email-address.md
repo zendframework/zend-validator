@@ -48,8 +48,8 @@ using `setOptions()`. The following options are supported:
   set to `false`, then only the local part of the email address will be checked.
   In this case the hostname validator will not be called. This option defaults
   to `true`.
-- `hostnameValidator`: Sets the hostname validator options with which the domain part of the
-  email address will be validated.
+- `hostnameValidator`: Sets the hostname validator object instance with which the
+  domain part of the email address will be validated.
 - `useMxCheck`: Defines if the MX records from the server should be detected. If this
   option is defined to `true` then the MX records are used to verify if the
   server accepts emails. This option defaults to `false`.
