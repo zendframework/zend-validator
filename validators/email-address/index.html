@@ -526,21 +526,29 @@ at instantiation, by giving an array with the related options, or afterwards, by
 using <code>setOptions()</code>. The following options are supported:</p>
 <ul>
 <li><code>allow</code>: Defines which type of domain names are accepted. This option is used
-  in conjunction with the hostname option to set the hostname validator. For
-  more information about possible values of this option, look at
-  <a href="../hostname/">Hostname</a> and possible <code>ALLOW_*</code> constants. This option
-  defaults to <code>ALLOW_DNS</code>.</li>
-<li><code>deep</code>: Defines if the servers MX records should be verified by a deep check.
+  in conjunction with the hostnameValidator option to set the hostname validator. 
+  Possible values of this option defined in <a href="../hostname/">Hostname</a> validator's 
+  <code>ALLOW_*</code> constants:</li>
+<li><code>ALLOW_DNS</code> (default) - Allows Internet domain names <em>(e.g. example.com)</em></li>
+<li><code>ALLOW_IP</code> - Allows IP addresses <em>(e.g. 192.168.0.1)</em></li>
+<li><code>ALLOW_LOCAL</code> - Allows local network such as <em>localhost</em> or <em>www.localdomain</em></li>
+<li><code>ALLOW_URI</code>  - Allows hostnames in URI generic syntax. See <a href="https://www.ietf.org/rfc/rfc3986.txt">RFC 3986</a></li>
+<li>
+<p><code>ALLOW_ALL</code> - Allows all types of hostnames</p>
+</li>
+<li>
+<p><code>useDeepMxCheck</code>: Defines if the servers MX records should be verified by a deep check.
   When this option is set to <code>true</code> then additionally to MX records also the <code>A</code>,
   <code>A6</code> and <code>AAAA</code> records are used to verify if the server accepts emails. This
-  option defaults to <code>false</code>.</li>
-<li><code>domain</code>: Defines if the domain part should be checked. When this option is
+  option defaults to <code>false</code>.</p>
+</li>
+<li><code>useDomainCheck</code>: Defines if the domain part should be checked. When this option is
   set to <code>false</code>, then only the local part of the email address will be checked.
   In this case the hostname validator will not be called. This option defaults
   to <code>true</code>.</li>
-<li><code>hostname</code>: Sets the hostname validator with which the domain part of the
-  email address will be validated.</li>
-<li><code>mx</code>: Defines if the MX records from the server should be detected. If this
+<li><code>hostnameValidator</code>: Sets the hostname validator object instance with which the
+  domain part of the email address will be validated.</li>
+<li><code>useMxCheck</code>: Defines if the MX records from the server should be detected. If this
   option is defined to <code>true</code> then the MX records are used to verify if the
   server accepts emails. This option defaults to <code>false</code>.</li>
 </ul>
