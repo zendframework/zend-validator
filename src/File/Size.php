@@ -331,7 +331,7 @@ class Size extends AbstractValidator
 
         $value = substr($size, 0, -1);
         if (!is_numeric($value)) {
-            $value = substr($value, 0, -1);
+            $value = trim(substr($value, 0, -1));
         }
 
         switch (strtoupper($type)) {
