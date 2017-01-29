@@ -3,16 +3,16 @@
 
     
     <url>
-     <loc>None/</loc>
-     <lastmod>2016-07-05</lastmod>
+     <loc>/</loc>
+     <lastmod>2017-01-29</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>None/intro/</loc>
-     <lastmod>2016-07-05</lastmod>
+     <loc>/intro/</loc>
+     <lastmod>2017-01-29</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -20,37 +20,37 @@
     
         
     <url>
-     <loc>None/validator-chains/</loc>
-     <lastmod>2016-07-05</lastmod>
+     <loc>/validator-chains/</loc>
+     <lastmod>2017-01-29</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/writing-validators/</loc>
-     <lastmod>2016-07-05</lastmod>
+     <loc>/writing-validators/</loc>
+     <lastmod>2017-01-29</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/messages/</loc>
-     <lastmod>2016-07-05</lastmod>
+     <loc>/messages/</loc>
+     <lastmod>2017-01-29</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/set/</loc>
-     <lastmod>2016-07-05</lastmod>
+     <loc>/set/</loc>
+     <lastmod>2017-01-29</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None</loc>
+     <loc></loc>
      <lastmod></lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None</loc>
+     <loc></loc>
      <lastmod></lastmod>
      <changefreq>daily</changefreq>
     </url>
