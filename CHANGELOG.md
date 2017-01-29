@@ -18,7 +18,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#81](https://github.com/zendframework/zend-validator/pull/81) registers the
+  Uuid validator into ValidatorPluginManager.
 
 ## 2.8.1 - 2016-06-23
 
