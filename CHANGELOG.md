@@ -24,7 +24,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#110](https://github.com/zendframework/zend-validator/pull/110) adds new
+  Mastercard 2-series BINs
 
 ### Deprecated
 
