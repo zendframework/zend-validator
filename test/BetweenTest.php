@@ -139,4 +139,13 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
         $validator = new Between(1, 10, false);
         $this->assertFalse($validator->getInclusive());
     }
+
+    public function testConstructWithTravesableOptions()
+    {
+        $options = new \ArrayObject(['min' => 1, 'max' => 10, 'inclusive' => false]);
+        $validator = new Between($options);
+
+        $this->assertTrue($validator->isValid(5));
+        $this->assertFalse($validator->isValid(10));
+    }
 }
