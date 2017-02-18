@@ -37,7 +37,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#147](https://github.com/zendframework/zend-validator/issues/147)
+  [#148](https://github.com/zendframework/zend-validator/pull/110) adds further
+  `"suggest"` clauses in `composer.json`, since some dependencies are not always
+  required, and may lead to runtime failures.
 
 
 ## 2.8.2 - 2017-01-29
