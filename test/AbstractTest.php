@@ -189,7 +189,7 @@ class AbstractTest extends TestCase
 
     public function testTranslatorMethods()
     {
-        $translatorMock = $this->getMock('ZendTest\Validator\TestAsset\Translator');
+        $translatorMock = $this->createMock(TestAsset\Translator::class);
         $this->validator->setTranslator($translatorMock, 'foo');
 
         $this->assertEquals($translatorMock, $this->validator->getTranslator());
@@ -209,7 +209,7 @@ class AbstractTest extends TestCase
 
         $this->assertFalse($this->validator->hasTranslator());
 
-        $translatorMock = $this->getMock('ZendTest\Validator\TestAsset\Translator');
+        $translatorMock = $this->createMock(TestAsset\Translator::class);
         AbstractValidator::setDefaultTranslator($translatorMock, 'foo');
 
         $this->assertEquals($translatorMock, AbstractValidator::getDefaultTranslator());

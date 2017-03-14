@@ -12,6 +12,7 @@ namespace ZendTest\Validator;
 use PHPUnit\Framework\TestCase;
 use Zend\Validator\Barcode;
 use Zend\Validator\Exception\InvalidArgumentException;
+use Zend\Validator\Barcode\AdapterInterface;
 
 /**
  * \Zend\Barcode
@@ -55,10 +56,10 @@ class BarcodeTest extends TestCase
     public function testSetCustomAdapter()
     {
         $barcode = new Barcode([
-            'adapter' => $this->getMock('Zend\Validator\Barcode\AdapterInterface')
+            'adapter' => $this->createMock(AdapterInterface::class)
         ]);
 
-        $this->assertInstanceOf('Zend\Validator\Barcode\AdapterInterface', $barcode->getAdapter());
+        $this->assertInstanceOf(AdapterInterface::class, $barcode->getAdapter());
     }
 
     /**

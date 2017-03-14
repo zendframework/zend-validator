@@ -14,6 +14,7 @@ use Zend\Validator\Explode;
 use Zend\Validator\Regex;
 use Zend\Validator\Callback;
 use Zend\Validator\Exception\RuntimeException;
+use Zend\Validator\ValidatorInterface;
 
 /**
  * @group      Zend_Validator
@@ -64,7 +65,7 @@ class ExplodeTest extends TestCase
         $messages,
         $expects
     ) {
-        $mockValidator = $this->getMock('Zend\Validator\ValidatorInterface');
+        $mockValidator = $this->createMock(ValidatorInterface::class);
         $mockValidator->expects(
             $this->exactly($numIsValidCalls)
         )->method('isValid')->will($this->returnValue($isValidReturn));

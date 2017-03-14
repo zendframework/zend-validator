@@ -16,6 +16,7 @@ use Zend\Validator\NotEmpty;
 use Zend\Validator\StaticValidator;
 use Zend\Validator\ValidatorChain;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
+use Zend\Validator\ValidatorInterface;
 
 /**
  * @group      Zend_Validator
@@ -237,7 +238,7 @@ class ValidatorChainTest extends TestCase
      */
     public function getValidatorTrue()
     {
-        $validator = $this->getMock('Zend\Validator\ValidatorInterface');
+        $validator = $this->createMock(ValidatorInterface::class);
         $validator->expects($this->any())
             ->method('isValid')
             ->will($this->returnValue(true));
@@ -249,7 +250,7 @@ class ValidatorChainTest extends TestCase
      */
     public function getValidatorFalse()
     {
-        $validator = $this->getMock('Zend\Validator\ValidatorInterface');
+        $validator = $this->createMock(ValidatorInterface::class);
         $validator->expects($this->any())
             ->method('isValid')
             ->will($this->returnValue(false));
