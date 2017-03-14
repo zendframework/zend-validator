@@ -11,7 +11,6 @@ namespace ZendTest\Validator\File;
 
 use PHPUnit\Framework\TestCase;
 use Zend\Validator\File;
-use Zend\Validator;
 use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
