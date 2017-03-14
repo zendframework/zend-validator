@@ -81,7 +81,7 @@ matrix:
         - DEPS=locked
         - SERVICE_MANAGER_VERSION="^2.7.5"
   allow_failures:
-    - php: hhvm:
+    - php: hhvm
 
 before_install:
   - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
