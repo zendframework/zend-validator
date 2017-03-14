@@ -15,55 +15,88 @@ cache:
 
 env:
   global:
+    - COMPOSER_ARGS="--no-interaction"
+    - COVERAGE_DEPS="satooshi/php-coveralls"
+    - LEGACY_DEPS="phpunit/phpunit"
     - TESTS_ZEND_VALIDATOR_ONLINE_ENABLED=true
-    - SITE_URL: https://zendframework.github.io/zend-validator
-    - GH_USER_NAME: "Matthew Weier O'Phinney"
-    - GH_USER_EMAIL: matthew@weierophinney.net
-    - GH_REF: github.com/zendframework/zend-validator.git
-    - secure: "SoUsUxBFCuC0rVQyDJ/+IB38glC5WeWvg0XxtNj79di7wsQ92Jofp6Uu3NJBB8H1+at1pHetphRm4N+GPQmZGMFTG7LyF5u8duV8t4nDpAz5WfoP1y0IyacP6IrWzANeszOTZ04dlHu3dBdHusNpNxxUHl97bSx4XQUAm2GUTqNkuXNgQJFAAxx91jb5txG4W8KeMnfRm9jeDHP17BCnBMaSkYEXeLpHkYa9wA4lBJ7ZD6LuSC+MhrJCtREBTsWKLJY6xeBjRorUug+uCrNyArPtcOAaOLMSDJ1XIi3L5/Q7HdoldV7aC3V5HjNlpdIEFl33IGiCOyictFCpT1KaKx7TL8zDTMCiqe0cCyfTnq28lzULz2hXg0Kov7BFcRr2Ht/1f96RgrakWQiYTmk+C3YYYA16Fb+MndkMI3WH7WI0suC+5nhPdGl53MCWsd5x2+dDk/ifB/VvxHdGhhgxzAxsYJ41gV/LlzjbCQJNDCnTaL/GHCTUGJEPgwLrn2W52uZx6VggE9wl5z4XkiPqBy6zAAdwF55RRJgCxFttGOMVGdegFLHTf6+13S4sEImNmyVTeuJBZEHxaYRJ21wweOocjC2StKC9V54uPysDcEYwhu8WOsYU34fQdpMx3OHfPmXvhNGqoZ1rVsd5HM0QZZMT+7SI0r3UNKxrPC8LEAU="
+    - SITE_URL=https://zendframework.github.io/zend-validator
+    - GH_USER_NAME="Matthew Weier O'Phinney"
+    - GH_USER_EMAIL=matthew@weierophinney.net
+    - GH_REF=github.com/zendframework/zend-validator.git
+    - secure="SoUsUxBFCuC0rVQyDJ/+IB38glC5WeWvg0XxtNj79di7wsQ92Jofp6Uu3NJBB8H1+at1pHetphRm4N+GPQmZGMFTG7LyF5u8duV8t4nDpAz5WfoP1y0IyacP6IrWzANeszOTZ04dlHu3dBdHusNpNxxUHl97bSx4XQUAm2GUTqNkuXNgQJFAAxx91jb5txG4W8KeMnfRm9jeDHP17BCnBMaSkYEXeLpHkYa9wA4lBJ7ZD6LuSC+MhrJCtREBTsWKLJY6xeBjRorUug+uCrNyArPtcOAaOLMSDJ1XIi3L5/Q7HdoldV7aC3V5HjNlpdIEFl33IGiCOyictFCpT1KaKx7TL8zDTMCiqe0cCyfTnq28lzULz2hXg0Kov7BFcRr2Ht/1f96RgrakWQiYTmk+C3YYYA16Fb+MndkMI3WH7WI0suC+5nhPdGl53MCWsd5x2+dDk/ifB/VvxHdGhhgxzAxsYJ41gV/LlzjbCQJNDCnTaL/GHCTUGJEPgwLrn2W52uZx6VggE9wl5z4XkiPqBy6zAAdwF55RRJgCxFttGOMVGdegFLHTf6+13S4sEImNmyVTeuJBZEHxaYRJ21wweOocjC2StKC9V54uPysDcEYwhu8WOsYU34fQdpMx3OHfPmXvhNGqoZ1rVsd5HM0QZZMT+7SI0r3UNKxrPC8LEAU="
 
 matrix:
-  fast_finish: true
   include:
-    - php: 5.5
-      env:
-        - CS_CHECK=true
-        - EXECUTE_HOSTNAME_CHECK=true
-    - php: 5.5
-      env:
-        - SERVICE_MANAGER_VERSION="^2.7.5"
     - php: 5.6
       env:
+        - DEPS=lowest
+    - php: 5.6
+      env:
+        - DEPS=locked
+        - EXECUTE_HOSTNAME_CHECK=true
         - TEST_COVERAGE=true
         - DEPLOY_DOCS="$(if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then echo -n 'true' ; else echo -n 'false' ; fi)"
         - PATH="$HOME/.local/bin:$PATH"
     - php: 5.6
       env:
+        - DEPS=locked
         - SERVICE_MANAGER_VERSION="^2.7.5"
-    - php: 7
+    - php: 5.6
+      env:
+        - DEPS=latest
     - php: 7
       env:
+        - DEPS=lowest
+    - php: 7
+      env:
+        - DEPS=locked
+        - CS_CHECK=true
+    - php: 7
+      env:
+        - DEPS=locked
         - SERVICE_MANAGER_VERSION="^2.7.5"
-    - php: hhvm 
+    - php: 7
+      env:
+        - DEPS=latest
+    - php: 7.1
+      env:
+        - DEPS=lowest
+    - php: 7.1
+      env:
+        - DEPS=locked
+    - php: 7.1
+      env:
+        - DEPS=latest
+    - php: hhvm
+      env:
+        - DEPS=lowest
+    - php: hhvm
+      env:
+        - DEPS=locked
+    - php: hhvm
+      env:
+        - DEPS=latest
     - php: hhvm 
       env:
+        - DEPS=locked
         - SERVICE_MANAGER_VERSION="^2.7.5"
   allow_failures:
-    - php: hhvm
-
-notifications:
-  irc: "irc.freenode.org#zftalk.dev"
-  email: false
+    - php: hhvm:
 
 before_install:
   - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
-  - composer self-update
-  - if [[ $TEST_COVERAGE == 'true' ]]; then composer require --dev --no-update satooshi/php-coveralls ; fi
-  - if [[ $SERVICE_MANAGER_VERSION != '' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:$SERVICE_MANAGER_VERSION" ; fi
-  - if [[ $SERVICE_MANAGER_VERSION == '' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:^3.0.3" ; fi
+  - travis_retry composer self-update
 
 install:
-  - travis_retry composer install --no-interaction --ignore-platform-reqs
+  - travis_retry composer install $COMPOSER_ARGS --ignore-platform-reqs
+  - if [[ $TRAVIS_PHP_VERSION =~ ^5.6 ]]; then travis_retry composer update $COMPOSER_ARGS --with-dependencies $LEGACY_DEPS ; fi
+  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
+  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
+  - if [[ $SERVICE_MANAGER_VERSION != '' ]]; then travis_retry composer require --dev --no-update $COMPOSER_ARGS "zendframework/zend-servicemanager:$SERVICE_MANAGER_VERSION" ; fi
+  - if [[ $SERVICE_MANAGER_VERSION == '' ]]; then travis_retry composer require --dev --no-update $COMPOSER_ARGS "zendframework/zend-servicemanager:^3.0.3" ; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require --dev $COMPOSER_ARGS $COVERAGE_DEPS ; fi
+  - stty cols 120
+  - COLUMNS=120 composer show
 
 script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
@@ -71,8 +104,12 @@ script:
   - if [[ $EXECUTE_HOSTNAME_CHECK == "true" && $TRAVIS_PULL_REQUEST == "false" ]]; then php bin/update_hostname_validator.php --check-only; fi
   - if [[ $DEPLOY_DOCS == "true" && "$TRAVIS_TEST_RESULT" == "0" ]]; then wget -O theme-installer.sh "https://raw.githubusercontent.com/zendframework/zf-mkdoc-theme/master/theme-installer.sh" ; chmod 755 theme-installer.sh ; ./theme-installer.sh ; fi
 
+after_script:
+  - if [[ $TEST_COVERAGE == 'true' ]]; then composer upload-coverage ; fi
+
 after_success:
   - if [[ $DEPLOY_DOCS == "true" ]]; then echo "Preparing to build and deploy documentation" ; ./zf-mkdoc-theme/deploy.sh ; echo "Completed deploying documentation" ; fi
 
-after_script:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then composer upload-coverage ; fi
+notifications:
+  irc: "irc.freenode.org#zftalk.dev"
+  email: false
