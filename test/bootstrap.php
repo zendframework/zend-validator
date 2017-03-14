@@ -10,7 +10,7 @@
  */
 error_reporting(E_ALL | E_STRICT);
 
-if (class_exists('PHPUnit_Runner_Version', true)) {
+if (class_exists(\PHPUnit_Runner_Version::class, true)) {
     $phpUnitVersion = PHPUnit_Runner_Version::id();
     if ('@package_version@' !== $phpUnitVersion && version_compare($phpUnitVersion, '4.0.0', '<')) {
         echo 'This version of PHPUnit (' . PHPUnit_Runner_Version::id() . ') is not supported'

@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
 use Zend\Session\Config\StandardConfig;
 use Zend\Session\Container;
 use Zend\Validator\Csrf;
+use Zend\Session\Storage\ArrayStorage;
 
 /**
  * Zend\Csrf
@@ -32,7 +33,7 @@ class CsrfTest extends TestCase
         // Setup session handling
         $_SESSION = [];
         $sessionConfig = new StandardConfig([
-            'storage' => 'Zend\Session\Storage\ArrayStorage',
+            'storage' => ArrayStorage::class,
         ]);
         $sessionManager       = new TestAsset\SessionManager($sessionConfig);
         $this->sessionManager = $sessionManager;
@@ -65,7 +66,7 @@ class CsrfTest extends TestCase
     public function testSessionContainerIsLazyLoadedIfNotSet()
     {
         $container = $this->validator->getSession();
-        $this->assertInstanceOf('Zend\Session\Container', $container);
+        $this->assertInstanceOf(Container::class, $container);
     }
 
     public function testSessionContainerIsMutable()

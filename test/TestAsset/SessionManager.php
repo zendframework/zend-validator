@@ -11,13 +11,14 @@ namespace ZendTest\Validator\TestAsset;
 
 use Zend\Session\AbstractManager;
 use Zend\EventManager\EventManagerInterface;
+use Zend\Session\Storage\ArrayStorage;
 
 class SessionManager extends AbstractManager
 {
     public $started = false;
 
     protected $configDefaultClass  = 'Zend\Session\Configuration\StandardConfiguration';
-    protected $storageDefaultClass = 'Zend\Session\Storage\ArrayStorage';
+    protected $storageDefaultClass = ArrayStorage::class;
 
     public function start()
     {

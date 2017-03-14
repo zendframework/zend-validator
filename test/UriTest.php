@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
 use Zend\Validator;
 use Zend\Uri\Exception\InvalidArgumentException;
 use Zend\Uri\Uri;
+use Zend\Uri\Http;
 
 /**
  * @group      Zend_Validator
@@ -38,7 +39,7 @@ class UriTest extends TestCase
     {
         $validator = $this->validator;
         $uriHandler = $validator->getUriHandler();
-        $this->assertInstanceOf('Zend\Uri\Uri', $uriHandler);
+        $this->assertInstanceOf(Uri::class, $uriHandler);
         $this->assertTrue($validator->getAllowRelative());
         $this->assertTrue($validator->getAllowAbsolute());
     }
@@ -139,14 +140,14 @@ class UriTest extends TestCase
 
     public function testUriHandlerCanBeSpecifiedAsString()
     {
-        $this->validator->setUriHandler('Zend\Uri\Http');
-        $this->assertInstanceOf('Zend\Uri\Http', $this->validator->getUriHandler());
+        $this->validator->setUriHandler(Http::class);
+        $this->assertInstanceOf(Http::class, $this->validator->getUriHandler());
     }
 
     public function testUriHandlerStringInvalidClassThrowsException()
     {
         $this->expectException(Validator\Exception\InvalidArgumentException::class);
-        $this->validator->setUriHandler('stdClass');
+        $this->validator->setUriHandler(\stdClass::class);
     }
 
     public function testUriHandlerInvalidTypeThrowsException()

@@ -33,7 +33,7 @@ class CallbackTest extends TestCase
     public function testStaticCallback()
     {
         $valid = new Callback(
-            ['\ZendTest\Validator\CallbackTest', 'staticCallback']
+            [CallbackTest::class, 'staticCallback']
         );
         $this->assertTrue($valid->isValid('test'));
     }

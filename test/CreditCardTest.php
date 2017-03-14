@@ -145,7 +145,7 @@ class CreditCardTest extends TestCase
     {
         $validator = new CreditCard();
         $this->assertEquals(null, $validator->getService());
-        $validator->setService(['ZendTest\Validator\CreditCardTest', 'staticCallback']);
+        $validator->setService([CreditCardTest::class, 'staticCallback']);
         $this->assertEquals($expected, $validator->isValid($input));
     }
 
@@ -170,7 +170,7 @@ class CreditCardTest extends TestCase
         $validator = new CreditCard(
             [
                 'type' => CreditCard::VISA,
-                'service' => ['ZendTest\Validator\CreditCardTest', 'staticCallback']
+                'service' => [CreditCardTest::class, 'staticCallback']
             ]
         );
 
@@ -265,7 +265,7 @@ class CreditCardTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid callback given');
-        $validator->setService(['ZendTest\Validator\CreditCardTest', 'nocallback']);
+        $validator->setService([CreditCardTest::class, 'nocallback']);
     }
 
     /**
@@ -290,12 +290,12 @@ class CreditCardTest extends TestCase
     public function testOptionalConstructorParameterByConfigObject()
     {
         $config = new Config\Config(
-            ['type' => 'Visa', 'service' => ['ZendTest\Validator\CreditCardTest', 'staticCallback']]
+            ['type' => 'Visa', 'service' => [CreditCardTest::class, 'staticCallback']]
         );
 
         $validator = new CreditCard($config);
         $this->assertEquals(['Visa'], $validator->getType());
-        $this->assertEquals(['ZendTest\Validator\CreditCardTest', 'staticCallback'], $validator->getService());
+        $this->assertEquals([CreditCardTest::class, 'staticCallback'], $validator->getService());
     }
 
     /**
@@ -305,9 +305,9 @@ class CreditCardTest extends TestCase
      */
     public function testOptionalConstructorParameter()
     {
-        $validator = new CreditCard('Visa', ['ZendTest\Validator\CreditCardTest', 'staticCallback']);
+        $validator = new CreditCard('Visa', [CreditCardTest::class, 'staticCallback']);
         $this->assertEquals(['Visa'], $validator->getType());
-        $this->assertEquals(['ZendTest\Validator\CreditCardTest', 'staticCallback'], $validator->getService());
+        $this->assertEquals([CreditCardTest::class, 'staticCallback'], $validator->getService());
     }
 
     /**

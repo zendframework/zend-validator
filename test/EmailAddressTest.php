@@ -674,7 +674,7 @@ class EmailAddressTest extends TestCase
     public function testNotSetHostnameValidator()
     {
         $hostname = $this->validator->getHostnameValidator();
-        $this->assertInstanceOf('Zend\Validator\Hostname', $hostname);
+        $this->assertInstanceOf(Hostname::class, $hostname);
     }
 
     /**

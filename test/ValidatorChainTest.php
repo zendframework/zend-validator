@@ -17,6 +17,7 @@ use Zend\Validator\StaticValidator;
 use Zend\Validator\ValidatorChain;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\Validator\ValidatorInterface;
+use Zend\Validator\GreaterThan;
 
 /**
  * @group      Zend_Validator
@@ -314,7 +315,7 @@ class ValidatorChainTest extends TestCase
         $serialized = serialize($this->validator);
 
         $unserialized = unserialize($serialized);
-        $this->assertInstanceOf('Zend\Validator\ValidatorChain', $unserialized);
+        $this->assertInstanceOf(ValidatorChain::class, $unserialized);
         $this->assertEquals(2, count($unserialized));
         $this->assertFalse($unserialized->isValid(''));
     }
@@ -344,7 +345,7 @@ class ValidatorChainTest extends TestCase
         $this->assertInternalType('array', $spec);
         $this->assertArrayHasKey('instance', $spec);
         $validator = $spec['instance'];
-        $this->assertInstanceOf('Zend\Validator\GreaterThan', $validator);
+        $this->assertInstanceOf(GreaterThan::class, $validator);
         $this->assertArrayHasKey('breakChainOnFailure', $spec);
         $this->assertTrue($spec['breakChainOnFailure']);
     }

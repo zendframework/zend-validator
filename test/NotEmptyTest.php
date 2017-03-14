@@ -894,7 +894,7 @@ class NotEmptyTest extends TestCase
     {
         $valid = new NotEmpty(NotEmpty::STRING);
 
-        $object = $this->getMockBuilder('\stdClass')
+        $object = $this->getMockBuilder(stdClass::class)
             ->setMethods(['__toString'])
             ->getMock();
 
@@ -907,7 +907,7 @@ class NotEmptyTest extends TestCase
         $valid = new NotEmpty(NotEmpty::OBJECT_STRING);
         $this->assertTrue($valid->isValid($object));
 
-        $object = $this->getMockBuilder('\stdClass')
+        $object = $this->getMockBuilder(stdClass::class)
             ->setMethods(['__toString'])
             ->getMock();
         $object->expects($this->atLeastOnce())

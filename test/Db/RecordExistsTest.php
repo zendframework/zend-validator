@@ -21,6 +21,8 @@ use Zend\Db\Adapter\Driver\ConnectionInterface;
 use Zend\Db\Adapter\Driver\ResultInterface;
 use Zend\Db\Adapter\Driver\StatementInterface;
 use Zend\Db\Adapter\Driver\DriverInterface;
+use Zend\Db\Sql\Select;
+use Zend\Db\Sql\TableIdentifier;
 
 /**
  * @group      Zend_Validator
@@ -255,7 +257,7 @@ class RecordExistsTest extends TestCase
             'schema' => 'my'
         ], 'field1', null, $this->getMockHasResult());
         $table = $validator->getSelect()->getRawState('table');
-        $this->assertInstanceOf('Zend\Db\Sql\TableIdentifier', $table);
+        $this->assertInstanceOf(TableIdentifier::class, $table);
         $this->assertEquals(['users', 'my'], $table->getTableAndSchema());
     }
 
@@ -287,7 +289,7 @@ class RecordExistsTest extends TestCase
             $this->getMockHasResult()
         );
         $select = $validator->getSelect();
-        $this->assertInstanceOf('Zend\Db\Sql\Select', $select);
+        $this->assertInstanceOf(Select::class, $select);
         $this->assertEquals(
             'SELECT "my"."users"."field1" AS "field1" FROM "my"."users" WHERE "field1" = \'\' AND "foo" != \'bar\'',
             $select->getSqlString(new TrustingSql92Platform())
@@ -319,7 +321,7 @@ class RecordExistsTest extends TestCase
             $this->getMockHasResult()
         );
         $select = $validator->getSelect();
-        $this->assertInstanceOf('Zend\Db\Sql\Select', $select);
+        $this->assertInstanceOf(Select::class, $select);
         $this->assertEquals(
             'SELECT "my"."users"."field1" AS "field1" FROM "my"."users" WHERE "field1" = \'\' AND "foo" != \'bar\'',
             $select->getSqlString(new TrustingSql92Platform())
@@ -334,7 +336,7 @@ class RecordExistsTest extends TestCase
             'value' => 'fieldvalueexclude',
         ]);
         $select = $validator->getSelect();
-        $this->assertInstanceOf('Zend\Db\Sql\Select', $select);
+        $this->assertInstanceOf(Select::class, $select);
         $this->assertEquals(
             'SELECT "otherschema"."othertable"."fieldother" AS "fieldother" FROM "otherschema"."othertable" '
             . 'WHERE "fieldother" = \'\' AND "fieldexclude" != \'fieldvalueexclude\'',

@@ -15,6 +15,7 @@ use Zend\Validator\Regex;
 use Zend\Validator\Callback;
 use Zend\Validator\Exception\RuntimeException;
 use Zend\Validator\ValidatorInterface;
+use Zend\Validator\InArray;
 
 /**
  * @group      Zend_Validator
@@ -123,7 +124,7 @@ class ExplodeTest extends TestCase
 
         /** @var $inArrayValidator \Zend\Validator\InArray */
         $inArrayValidator = $validator->getValidator();
-        $this->assertInstanceOf('Zend\Validator\InArray', $inArrayValidator);
+        $this->assertInstanceOf(InArray::class, $inArrayValidator);
         $this->assertSame(
             ['a', 'b', 'c'],
             $inArrayValidator->getHaystack()

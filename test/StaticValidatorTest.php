@@ -15,6 +15,7 @@ use Zend\I18n\Validator\Alpha;
 use Zend\Validator\Between;
 use Zend\Validator\StaticValidator;
 use Zend\Validator\ValidatorPluginManager;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * @group      Zend_Validator
@@ -112,19 +113,19 @@ class StaticValidatorTest extends TestCase
     public function testLazyLoadsValidatorPluginManagerByDefault()
     {
         $plugins = StaticValidator::getPluginManager();
-        $this->assertInstanceOf('Zend\Validator\ValidatorPluginManager', $plugins);
+        $this->assertInstanceOf(ValidatorPluginManager::class, $plugins);
     }
 
     public function testCanSetCustomPluginManager()
     {
-        $plugins = new ValidatorPluginManager($this->getMockBuilder('Zend\ServiceManager\ServiceManager')->getMock());
+        $plugins = new ValidatorPluginManager($this->getMockBuilder(ServiceManager::class)->getMock());
         StaticValidator::setPluginManager($plugins);
         $this->assertSame($plugins, StaticValidator::getPluginManager());
     }
 
     public function testPassingNullWhenSettingPluginManagerResetsPluginManager()
     {
-        $plugins = new ValidatorPluginManager($this->getMockBuilder('Zend\ServiceManager\ServiceManager')->getMock());
+        $plugins = new ValidatorPluginManager($this->getMockBuilder(ServiceManager::class)->getMock());
         StaticValidator::setPluginManager($plugins);
         $this->assertSame($plugins, StaticValidator::getPluginManager());
         StaticValidator::setPluginManager(null);
