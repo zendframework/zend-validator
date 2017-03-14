@@ -89,14 +89,14 @@ class EmailAddress extends AbstractValidator
      */
     public function __construct($options = [])
     {
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             $options = func_get_args();
             $temp['allow'] = array_shift($options);
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['useMxCheck'] = array_shift($options);
             }
 
-            if (!empty($options)) {
+            if (! empty($options)) {
                 $temp['hostnameValidator'] = array_shift($options);
             }
 
@@ -122,7 +122,7 @@ class EmailAddress extends AbstractValidator
             return $this;
         }
 
-        if (!isset($this->messageTemplates[$messageKey])) {
+        if (! isset($this->messageTemplates[$messageKey])) {
             $this->getHostnameValidator()->setMessage($messageString, $messageKey);
         } else {
             parent::setMessage($messageString, $messageKey);
@@ -140,7 +140,7 @@ class EmailAddress extends AbstractValidator
      */
     public function getHostnameValidator()
     {
-        if (!isset($this->options['hostnameValidator'])) {
+        if (! isset($this->options['hostnameValidator'])) {
             $this->options['hostnameValidator'] = new Hostname($this->getAllow());
         }
 
@@ -291,7 +291,7 @@ class EmailAddress extends AbstractValidator
      */
     protected function isReserved($host)
     {
-        if (!preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $host)) {
+        if (! preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $host)) {
             $host = gethostbynamel($host);
         } else {
             $host = [$host];
@@ -380,7 +380,7 @@ class EmailAddress extends AbstractValidator
         $mxHosts = [];
         $weight  = [];
         $result = getmxrr($this->idnToAscii($this->hostname), $mxHosts, $weight);
-        if (!empty($mxHosts) && !empty($weight)) {
+        if (! empty($mxHosts) && ! empty($weight)) {
             $this->mxRecord = array_combine($mxHosts, $weight) ?: [];
         } else {
             $this->mxRecord = [];
@@ -389,19 +389,19 @@ class EmailAddress extends AbstractValidator
         arsort($this->mxRecord);
 
         // Fallback to IPv4 hosts if no MX record found (RFC 2821 SS 5).
-        if (!$result) {
+        if (! $result) {
             $result = gethostbynamel($this->hostname);
             if (is_array($result)) {
                 $this->mxRecord = array_flip($result);
             }
         }
 
-        if (!$result) {
+        if (! $result) {
             $this->error(self::INVALID_MX_RECORD);
             return $result;
         }
 
-        if (!$this->options['useDeepMxCheck']) {
+        if (! $this->options['useDeepMxCheck']) {
             return $result;
         }
 
@@ -409,11 +409,11 @@ class EmailAddress extends AbstractValidator
         $reserved     = true;
         foreach ($this->mxRecord as $hostname => $weight) {
             $res = $this->isReserved($hostname);
-            if (!$res) {
+            if (! $res) {
                 $reserved = false;
             }
 
-            if (!$res
+            if (! $res
                 && (checkdnsrr($hostname, "A")
                 || checkdnsrr($hostname, "AAAA")
                 || checkdnsrr($hostname, "A6"))
@@ -423,7 +423,7 @@ class EmailAddress extends AbstractValidator
             }
         }
 
-        if (!$validAddress) {
+        if (! $validAddress) {
             $result = false;
             $error  = ($reserved) ? self::INVALID_SEGMENT : self::INVALID_MX_RECORD;
             $this->error($error);
@@ -441,7 +441,7 @@ class EmailAddress extends AbstractValidator
     {
         $hostname = $this->getHostnameValidator()->setTranslator($this->getTranslator())
                          ->isValid($this->hostname);
-        if (!$hostname) {
+        if (! $hostname) {
             $this->error(self::INVALID_HOSTNAME);
             // Get messages and errors from hostnameValidator
             foreach ($this->getHostnameValidator()->getMessages() as $code => $message) {
@@ -491,7 +491,7 @@ class EmailAddress extends AbstractValidator
      */
     public function isValid($value)
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             $this->error(self::INVALID);
             return false;
         }
@@ -500,7 +500,7 @@ class EmailAddress extends AbstractValidator
         $this->setValue($this->idnToUtf8($value));
 
         // Split email address up and disallow '..'
-        if (!$this->splitEmailParts($this->getValue())) {
+        if (! $this->splitEmailParts($this->getValue())) {
             $this->error(self::INVALID_FORMAT);
             return false;
         }
@@ -519,7 +519,7 @@ class EmailAddress extends AbstractValidator
 
         // If both parts valid, return true
         if ($local && $length) {
-            if (($this->options['useDomainCheck'] && $hostname) || !$this->options['useDomainCheck']) {
+            if (($this->options['useDomainCheck'] && $hostname) || ! $this->options['useDomainCheck']) {
                 return true;
             }
         }

@@ -110,7 +110,10 @@ class StringLengthTest extends \PHPUnit_Framework_TestCase
         $max = 1;
         $min = 2;
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'The minimum must be less than or equal to the maximum length, but');
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'The minimum must be less than or equal to the maximum length, but'
+        );
         $this->validator->setMax($max)->setMin($min);
     }
 
@@ -124,7 +127,10 @@ class StringLengthTest extends \PHPUnit_Framework_TestCase
         $max = 1;
         $min = 2;
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'The maximum must be greater than or equal to the minimum length, but ');
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'The maximum must be greater than or equal to the minimum length, but '
+        );
         $this->validator->setMin($min)->setMax($max);
     }
 
@@ -158,14 +164,20 @@ class StringLengthTest extends \PHPUnit_Framework_TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = $this->validator;
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
     }
 
     public function testEqualsMessageVariables()
     {
         $validator = $this->validator;
-        $this->assertAttributeEquals($validator->getOption('messageVariables'),
-                                     'messageVariables', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageVariables'),
+            'messageVariables',
+            $validator
+        );
     }
 }

@@ -52,10 +52,19 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getExpectedData
      */
-    public function testExpectedBehavior($value, $delimiter, $breakOnFirst, $numIsValidCalls, $isValidReturn, $messages, $expects)
-    {
+    public function testExpectedBehavior(
+        $value,
+        $delimiter,
+        $breakOnFirst,
+        $numIsValidCalls,
+        $isValidReturn,
+        $messages,
+        $expects
+    ) {
         $mockValidator = $this->getMock('Zend\Validator\ValidatorInterface');
-        $mockValidator->expects($this->exactly($numIsValidCalls))->method('isValid')->will($this->returnValue($isValidReturn));
+        $mockValidator->expects(
+            $this->exactly($numIsValidCalls)
+        )->method('isValid')->will($this->returnValue($isValidReturn));
         $mockValidator->expects($this->any())->method('getMessages')->will($this->returnValue('X'));
 
         $validator = new Explode([
@@ -64,7 +73,7 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
             'breakOnFirstFailure' => $breakOnFirst,
         ]);
 
-        $this->assertEquals($expects,  $validator->isValid($value));
+        $this->assertEquals($expects, $validator->isValid($value));
         $this->assertEquals($messages, $validator->getMessages());
     }
 
@@ -77,15 +86,21 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = new Explode([]);
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
     }
 
     public function testEqualsMessageVariables()
     {
         $validator = new Explode([]);
-        $this->assertAttributeEquals($validator->getOption('messageVariables'),
-                                     'messageVariables', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageVariables'),
+            'messageVariables',
+            $validator
+        );
     }
 
     public function testSetValidatorAsArray()
@@ -106,7 +121,8 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
         $inArrayValidator = $validator->getValidator();
         $this->assertInstanceOf('Zend\Validator\InArray', $inArrayValidator);
         $this->assertSame(
-            ['a', 'b', 'c'], $inArrayValidator->getHaystack()
+            ['a', 'b', 'c'],
+            $inArrayValidator->getHaystack()
         );
     }
 
@@ -147,7 +163,8 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
 
         $messages = [
             0 => [
-                'regexNotMatch' => "The input does not match against pattern '/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/'",
+                'regexNotMatch' => "The input does not match against pattern "
+                    . "'/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/'",
             ],
         ];
 

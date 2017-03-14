@@ -278,7 +278,10 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
         );
         $select = $validator->getSelect();
         $this->assertInstanceOf('Zend\Db\Sql\Select', $select);
-        $this->assertEquals('SELECT "my"."users"."field1" AS "field1" FROM "my"."users" WHERE "field1" = \'\' AND "foo" != \'bar\'', $select->getSqlString(new TrustingSql92Platform()));
+        $this->assertEquals(
+            'SELECT "my"."users"."field1" AS "field1" FROM "my"."users" WHERE "field1" = \'\' AND "foo" != \'bar\'',
+            $select->getSqlString(new TrustingSql92Platform())
+        );
 
         $sql = new Sql($this->getMockHasResult());
         $statement = $sql->prepareStatementForSqlObject($select);
@@ -307,7 +310,10 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
         );
         $select = $validator->getSelect();
         $this->assertInstanceOf('Zend\Db\Sql\Select', $select);
-        $this->assertEquals('SELECT "my"."users"."field1" AS "field1" FROM "my"."users" WHERE "field1" = \'\' AND "foo" != \'bar\'', $select->getSqlString(new TrustingSql92Platform()));
+        $this->assertEquals(
+            'SELECT "my"."users"."field1" AS "field1" FROM "my"."users" WHERE "field1" = \'\' AND "foo" != \'bar\'',
+            $select->getSqlString(new TrustingSql92Platform())
+        );
 
         // same validator instance with changing properties
         $validator->setTable('othertable');
@@ -319,6 +325,10 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
         ]);
         $select = $validator->getSelect();
         $this->assertInstanceOf('Zend\Db\Sql\Select', $select);
-        $this->assertEquals('SELECT "otherschema"."othertable"."fieldother" AS "fieldother" FROM "otherschema"."othertable" WHERE "fieldother" = \'\' AND "fieldexclude" != \'fieldvalueexclude\'', $select->getSqlString(new TrustingSql92Platform()));
+        $this->assertEquals(
+            'SELECT "otherschema"."othertable"."fieldother" AS "fieldother" FROM "otherschema"."othertable" '
+            . 'WHERE "fieldother" = \'\' AND "fieldexclude" != \'fieldvalueexclude\'',
+            $select->getSqlString(new TrustingSql92Platform())
+        );
     }
 }

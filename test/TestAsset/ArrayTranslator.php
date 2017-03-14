@@ -17,7 +17,7 @@ class ArrayTranslator implements I18nTranslator\Loader\FileLoaderInterface
 
     public function load($filename, $locale)
     {
-        $textDomain =  new I18nTranslator\TextDomain($this->translations);
+        $textDomain = new I18nTranslator\TextDomain($this->translations);
         return $textDomain;
     }
 }

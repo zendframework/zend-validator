@@ -286,7 +286,9 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
      */
     public function testOptionalConstructorParameterByConfigObject()
     {
-        $config = new Config\Config(['type' => 'Visa', 'service' => ['ZendTest\Validator\CreditCardTest', 'staticCallback']]);
+        $config = new Config\Config(
+            ['type' => 'Visa', 'service' => ['ZendTest\Validator\CreditCardTest', 'staticCallback']]
+        );
 
         $validator = new CreditCard($config);
         $this->assertEquals(['Visa'], $validator->getType());
@@ -319,8 +321,11 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = new CreditCard();
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
     }
 
     public static function staticCallback($value)
