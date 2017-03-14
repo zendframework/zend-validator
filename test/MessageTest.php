@@ -60,7 +60,8 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     public function testSetMessageDefaultKey()
     {
         $this->validator->setMessage(
-            'Your value is too short', StringLength::TOO_SHORT
+            'Your value is too short',
+            StringLength::TOO_SHORT
         );
 
         $this->assertFalse($this->validator->isValid('abc'));
@@ -140,7 +141,10 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $keyInvalid = 'invalidKey';
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'No message template exists for key');
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'No message template exists for key'
+        );
         $this->validator->setMessage(
             'Your value is too long',
             $keyInvalid
@@ -215,7 +219,10 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $messages = $this->validator->getMessages();
         $this->assertEquals('Your value is too long', current($messages));
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'No property exists by the name ');
+        $this->setExpectedException(
+            'Zend\Validator\Exception\InvalidArgumentException',
+            'No property exists by the name '
+        );
         $this->validator->unknownProperty;
     }
 
@@ -244,14 +251,20 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = $this->validator;
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
     }
 
     public function testEqualsMessageVariables()
     {
         $validator = $this->validator;
-        $this->assertAttributeEquals($validator->getOption('messageVariables'),
-                                     'messageVariables', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageVariables'),
+            'messageVariables',
+            $validator
+        );
     }
 }

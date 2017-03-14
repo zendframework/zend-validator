@@ -122,7 +122,10 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function testUseManualFormat()
     {
-        $this->assertTrue($this->validator->setFormat('d.m.Y')->isValid('10.01.2008'), var_export(date_get_last_errors(), 1));
+        $this->assertTrue(
+            $this->validator->setFormat('d.m.Y')->isValid('10.01.2008'),
+            var_export(date_get_last_errors(), 1)
+        );
         $this->assertEquals('d.m.Y', $this->validator->getFormat());
 
         $this->assertTrue($this->validator->setFormat('m Y')->isValid('01 2010'));
@@ -138,15 +141,21 @@ class DateTest extends \PHPUnit_Framework_TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = $this->validator;
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'),
-                                     'messageTemplates', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $validator
+        );
     }
 
     public function testEqualsMessageVariables()
     {
         $validator = $this->validator;
-        $this->assertAttributeEquals($validator->getOption('messageVariables'),
-                                     'messageVariables', $validator);
+        $this->assertAttributeEquals(
+            $validator->getOption('messageVariables'),
+            'messageVariables',
+            $validator
+        );
     }
 
     public function testConstructorWithFormatParameter()

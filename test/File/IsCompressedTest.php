@@ -74,7 +74,7 @@ class IsCompressedTest extends \PHPUnit_Framework_TestCase
      */
     protected function skipIfNoFileInfoExtension()
     {
-        if (!extension_loaded('fileinfo')) {
+        if (! extension_loaded('fileinfo')) {
             $this->markTestSkipped(
                 'This PHP Version has no finfo extension'
             );
@@ -86,11 +86,11 @@ class IsCompressedTest extends \PHPUnit_Framework_TestCase
      */
     protected function skipIfBuggyMimeContentType($options)
     {
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             $options = (array) $options;
         }
 
-        if (!in_array('application/zip', $options)) {
+        if (! in_array('application/zip', $options)) {
             // finfo does not play a role; no need to skip
             return;
         }
@@ -98,7 +98,7 @@ class IsCompressedTest extends \PHPUnit_Framework_TestCase
         // Sometimes finfo gives application/zip and sometimes
         // application/x-zip ...
         $expectedMimeType = finfo_file(finfo_open(FILEINFO_MIME_TYPE), __DIR__ . '/_files/test.zip');
-        if (!in_array($expectedMimeType, ['application/zip', 'application/x-zip'])) {
+        if (! in_array($expectedMimeType, ['application/zip', 'application/x-zip'])) {
             $this->markTestSkipped('finfo exhibits buggy behavior on this system!');
         }
     }
@@ -126,7 +126,7 @@ class IsCompressedTest extends \PHPUnit_Framework_TestCase
      */
     public function testLegacy($options, $isValidParam, $expected)
     {
-        if (!is_array($isValidParam)) {
+        if (! is_array($isValidParam)) {
             // nothing to test
             return;
         }
@@ -224,7 +224,7 @@ class IsCompressedTest extends \PHPUnit_Framework_TestCase
 
     public function testOptionsAtConstructor()
     {
-        if (!extension_loaded('fileinfo')) {
+        if (! extension_loaded('fileinfo')) {
             $this->markTestSkipped('This PHP Version has no finfo installed');
         }
 

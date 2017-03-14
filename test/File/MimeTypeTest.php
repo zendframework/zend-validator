@@ -138,13 +138,13 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testSetAndGetMagicFile()
     {
-        if (!extension_loaded('fileinfo')) {
+        if (! extension_loaded('fileinfo')) {
             $this->markTestSkipped('This PHP Version has no finfo installed');
         }
 
         $validator = new File\MimeType('image/gif');
         $magic     = getenv('magic');
-        if (!empty($magic)) {
+        if (! empty($magic)) {
             $mimetype  = $validator->getMagicFile();
             $this->assertEquals($magic, $mimetype);
         }
@@ -155,7 +155,7 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testSetMagicFileWithinConstructor()
     {
-        if (!extension_loaded('fileinfo')) {
+        if (! extension_loaded('fileinfo')) {
             $this->markTestSkipped('This PHP Version has no finfo installed');
         }
 
@@ -195,7 +195,7 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
     {
         $validator = new File\MimeType('image/gif');
         $magic     = getenv('magic');
-        if (!empty($magic)) {
+        if (! empty($magic)) {
             $mimetype  = $validator->getMagicFile();
             $this->assertEquals($magic, $mimetype);
         }
@@ -203,7 +203,7 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
         $validator->disableMagicFile(true);
         $this->assertTrue($validator->isMagicFileDisabled());
 
-        if (!empty($magic)) {
+        if (! empty($magic)) {
             $mimetype  = $validator->getMagicFile();
             $this->assertEquals($magic, $mimetype);
         }

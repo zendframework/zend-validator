@@ -175,7 +175,7 @@ class IsImageTest extends \PHPUnit_Framework_TestCase
 
     public function testOptionsAtConstructor()
     {
-        if (!extension_loaded('fileinfo')) {
+        if (! extension_loaded('fileinfo')) {
             $this->markTestSkipped('This PHP Version has no finfo installed');
         }
 

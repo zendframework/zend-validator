@@ -361,7 +361,10 @@ class InArrayTest extends \PHPUnit_Framework_TestCase
 
     public function testEqualsMessageTemplates()
     {
-        $this->assertAttributeEquals($this->validator->getOption('messageTemplates'),
-                                     'messageTemplates', $this->validator);
+        $this->assertAttributeEquals(
+            $this->validator->getOption('messageTemplates'),
+            'messageTemplates',
+            $this->validator
+        );
     }
 }

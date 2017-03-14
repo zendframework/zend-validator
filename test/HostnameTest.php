@@ -67,7 +67,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
         foreach ($valuesExpected as $element) {
             $validator = new Hostname($element[0]);
             foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[1],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
     }
@@ -83,7 +87,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
         foreach ($valuesExpected as $element) {
             $validator = new Hostname($element[0]);
             foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[1],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
     }
@@ -101,7 +109,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
         foreach ($valuesExpected as $element) {
             $validator = new Hostname($element[0]);
             foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[1],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
     }
@@ -132,7 +144,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
             ];
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[0],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
 
@@ -143,7 +159,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
             ];
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[0],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
 
@@ -155,7 +175,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
             ];
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[0],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
     }
@@ -176,7 +200,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
             ];
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[0],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
 
@@ -187,7 +215,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
             ];
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[0],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
 
@@ -199,7 +231,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
             ];
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[0],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
     }
@@ -219,7 +255,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
             ];
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[0],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
 
@@ -230,7 +270,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
             ];
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[0],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
 
@@ -242,7 +286,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
             ];
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[0],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
     }
@@ -265,7 +313,7 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidatorMessagesShouldBeTranslated()
     {
-        if (!extension_loaded('intl')) {
+        if (! extension_loaded('intl')) {
             $this->markTestSkipped('ext/intl not enabled');
         }
 
@@ -307,7 +355,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
             ];
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[0],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
     }
@@ -326,7 +378,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
             ];
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[0],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
     }
@@ -369,7 +425,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
             ];
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[0],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
     }
@@ -389,12 +449,18 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
     {
         $valuesExpected = [
             [Hostname::ALLOW_URI, true, ['localhost', 'example.com', '~ex%20ample']],
+            // @codingStandardsIgnoreStart
             [Hostname::ALLOW_URI, false, ['§bad', 'don?t.know', 'thisisaverylonghostnamewhichextendstwohundredfiftysixcharactersandthereforshouldnotbeallowedbythisvalidatorbecauserfc3986limitstheallowedcharacterstoalimitoftwohunderedfiftysixcharactersinsumbutifthistestwouldfailthenitshouldreturntruewhichthrowsanexceptionbytheunittest']],
+            // @codingStandardsIgnoreEnd
         ];
         foreach ($valuesExpected as $element) {
             $validator = new Hostname($element[0]);
             foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[1],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
     }
@@ -417,7 +483,11 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
         foreach ($valuesExpected as $element) {
             $validator = new Hostname($element[0]);
             foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+                $this->assertEquals(
+                    $element[1],
+                    $validator->isValid($input),
+                    implode("\n", $validator->getMessages()) . $input
+                );
             }
         }
     }
