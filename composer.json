@@ -28,7 +28,7 @@
         "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
         "zendframework/zend-session": "^2.6.2",
         "zendframework/zend-uri": "^2.5",
-        "phpunit/PHPUnit": "^4.0",
+        "phpunit/PHPUnit": "^6.0.8 || ^5.7.15",
         "zendframework/zend-coding-standard": "~1.0.0"
     },
     "suggest": {
