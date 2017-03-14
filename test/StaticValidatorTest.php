@@ -9,6 +9,7 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\AbstractValidator;
 use Zend\I18n\Validator\Alpha;
 use Zend\Validator\Between;
@@ -18,7 +19,7 @@ use Zend\Validator\ValidatorPluginManager;
 /**
  * @group      Zend_Validator
  */
-class StaticValidatorTest extends \PHPUnit_Framework_TestCase
+class StaticValidatorTest extends TestCase
 {
     /** @var Alpha */
     public $validator;
@@ -161,7 +162,8 @@ class StaticValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testExecuteRaisesExceptionForIndexedOptionsArray($value, $validator, $options)
     {
-        $this->setExpectedException('InvalidArgumentException', 'options');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('options');
         StaticValidator::execute($value, $validator, $options);
     }
 }

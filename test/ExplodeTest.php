@@ -9,19 +9,22 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Explode;
 use Zend\Validator\Regex;
 use Zend\Validator\Callback;
+use Zend\Validator\Exception\RuntimeException;
 
 /**
  * @group      Zend_Validator
  */
-class ExplodeTest extends \PHPUnit_Framework_TestCase
+class ExplodeTest extends TestCase
 {
     public function testRaisesExceptionWhenValidatorIsMissing()
     {
         $validator = new Explode();
-        $this->setExpectedException('Zend\Validator\Exception\RuntimeException', 'validator');
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('validator');
         $validator->isValid('foo,bar');
     }
 
@@ -126,12 +129,10 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @expectedException \Zend\Validator\Exception\RuntimeException
-     */
     public function testSetValidatorMissingName()
     {
         $validator = new Explode();
+        $this->expectException(RuntimeException::class);
         $validator->setValidator(
             [
                 'options' => []
@@ -139,12 +140,10 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @expectedException \Zend\Validator\Exception\RuntimeException
-     */
     public function testSetValidatorInvalidParam()
     {
         $validator = new Explode();
+        $this->expectException(RuntimeException::class);
         $validator->setValidator('inarray');
     }
 

@@ -9,13 +9,15 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Config;
 use Zend\Validator\CreditCard;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @group      Zend_Validator
  */
-class CreditCardTest extends \PHPUnit_Framework_TestCase
+class CreditCardTest extends TestCase
 {
     public static function basicValues()
     {
@@ -261,7 +263,8 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
         $validator = new CreditCard();
         $this->assertEquals(null, $validator->getService());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Invalid callback given');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid callback given');
         $validator->setService(['ZendTest\Validator\CreditCardTest', 'nocallback']);
     }
 

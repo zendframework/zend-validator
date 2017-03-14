@@ -9,12 +9,13 @@
 
 namespace ZendTest\Validator\Sitemap;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Sitemap\Changefreq;
 
 /**
  * @group      Zend_Validator
  */
-class ChangefreqTest extends \PHPUnit_Framework_TestCase
+class ChangefreqTest extends TestCase
 {
     /**
      * @var Changefreq

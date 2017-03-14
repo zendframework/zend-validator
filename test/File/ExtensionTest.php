@@ -9,12 +9,14 @@
 
 namespace ZendTest\Validator\File;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\File;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @group      Zend_Validator
  */
-class ExtensionTest extends \PHPUnit_Framework_TestCase
+class ExtensionTest extends TestCase
 {
     /**
      * @return array
@@ -188,10 +190,8 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $validator = new File\Extension('foo');
         $value     = ['foo' => 'bar'];
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Value array must be in $_FILES format'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Value array must be in $_FILES format');
         $validator->isValid($value);
     }
 }

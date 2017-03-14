@@ -9,15 +9,17 @@
 
 namespace ZendTest\Validator\Db;
 
+use PHPUnit\Framework\TestCase;
 use ZendTest\Validator\Db\TestAsset\ConcreteDbValidator;
 use Zend\Db\Adapter\AdapterAwareInterface;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Select;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @group      Zend_Validator
  */
-class AbstractDbTest extends \PHPUnit_Framework_TestCase
+class AbstractDbTest extends TestCase
 {
 
     protected $validator;
@@ -33,10 +35,8 @@ class AbstractDbTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorWithNoTableAndSchemaKey()
     {
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Table or Schema option missing!'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Table or Schema option missing!');
         $this->validator = new ConcreteDbValidator([
             'field' => 'field',
         ]);
@@ -44,10 +44,8 @@ class AbstractDbTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorWithNoFieldKey()
     {
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Field option missing!'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Field option missing!');
         $validator = new ConcreteDbValidator([
             'schema' => 'schema',
             'table' => 'table',

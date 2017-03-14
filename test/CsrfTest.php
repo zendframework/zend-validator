@@ -9,6 +9,7 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Session\Config\StandardConfig;
 use Zend\Session\Container;
 use Zend\Validator\Csrf;
@@ -18,7 +19,7 @@ use Zend\Validator\Csrf;
  *
  * @group      Zend_Validator
  */
-class CsrfTest extends \PHPUnit_Framework_TestCase
+class CsrfTest extends TestCase
 {
     /** @var Csrf */
     public $validator;

@@ -9,12 +9,13 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\GpsPoint;
 
 /**
  * @group      Zend_Validator
  */
-class GPSPointTest extends \PHPUnit_Framework_TestCase
+class GPSPointTest extends TestCase
 {
 
     /**

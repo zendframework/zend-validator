@@ -9,14 +9,15 @@
 
 namespace ZendTest\Validator\File;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\File;
-use Zend\Validator;
 use ReflectionClass;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @group      Zend_Validator
  */
-class CountTest extends \PHPUnit_Framework_TestCase
+class CountTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
@@ -71,7 +72,8 @@ class CountTest extends \PHPUnit_Framework_TestCase
 
     public function testGetMinGreaterThanOrEqualThrowsException()
     {
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'greater than or equal');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('greater than or equal');
         $validator = new File\Count(['min' => 5, 'max' => 1]);
     }
 
@@ -86,7 +88,8 @@ class CountTest extends \PHPUnit_Framework_TestCase
         $validator->setMin(100);
         $this->assertEquals(100, $validator->getMin());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'less than or equal');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('less than or equal');
         $validator->setMin(20000);
     }
 
@@ -100,7 +103,8 @@ class CountTest extends \PHPUnit_Framework_TestCase
         $validator = new File\Count(['min' => 1, 'max' => 100]);
         $this->assertEquals(100, $validator->getMax());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'greater than or equal');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('greater than or equal');
         $validator = new File\Count(['min' => 5, 'max' => 1]);
     }
 
@@ -147,10 +151,8 @@ class CountTest extends \PHPUnit_Framework_TestCase
     public function testSettingMaxWithInvalidArgumentRaisesException($max)
     {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Invalid options to validator provided'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid options to validator provided');
 
         $validator->setMax($max);
     }
@@ -171,10 +173,8 @@ class CountTest extends \PHPUnit_Framework_TestCase
     public function testSettingMinWithInvalidArgumentRaisesException($min)
     {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Invalid options to validator provided'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid options to validator provided');
         $validator->setMin($min);
     }
 

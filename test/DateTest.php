@@ -11,13 +11,14 @@ namespace ZendTest\Validator;
 
 use DateTime;
 use DateTimeImmutable;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 use Zend\Validator;
 
 /**
  * @group      Zend_Validator
  */
-class DateTest extends \PHPUnit_Framework_TestCase
+class DateTest extends TestCase
 {
     /**
      * @var Validator\Date

@@ -8,7 +8,7 @@
 namespace ZendTest\Validator;
 
 use Interop\Container\ContainerInterface;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\ValidatorInterface;
 use Zend\Validator\ValidatorPluginManager;
 use Zend\Validator\ValidatorPluginManagerFactory;

@@ -10,16 +10,18 @@
 namespace ZendTest\Validator\Db;
 
 use ArrayObject;
+use PHPUnit\Framework\TestCase;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Adapter\ParameterContainer;
 use Zend\Db\Sql\Sql;
 use Zend\Validator\Db\RecordExists;
 use ZendTest\Validator\Db\TestAsset\TrustingSql92Platform;
+use Zend\Validator\Exception\RuntimeException;
 
 /**
  * @group      Zend_Validator
  */
-class RecordExistsTest extends \PHPUnit_Framework_TestCase
+class RecordExistsTest extends TestCase
 {
     /**
      * Return a Mock object for a Db result with rows
@@ -199,10 +201,8 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testThrowsExceptionWithNoAdapter()
     {
         $validator = new RecordExists('users', 'field1', 'id != 1');
-        $this->setExpectedException(
-            'Zend\Validator\Exception\RuntimeException',
-            'No database adapter present'
-        );
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('No database adapter present');
         $validator->isValid('nosuchvalue');
     }
 

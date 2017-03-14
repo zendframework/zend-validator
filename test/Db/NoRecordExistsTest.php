@@ -9,14 +9,16 @@
 
 namespace ZendTest\Validator\Db;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Db\NoRecordExists;
 use Zend\Db\Adapter\ParameterContainer;
 use ArrayObject;
+use Zend\Validator\Exception\RuntimeException;
 
 /**
  * @group      Zend_Validator
  */
-class NoRecordExistsTest extends \PHPUnit_Framework_TestCase
+class NoRecordExistsTest extends TestCase
 {
     /**
      * Return a Mock object for a Db result with rows
@@ -180,10 +182,8 @@ class NoRecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testThrowsExceptionWithNoAdapter()
     {
         $validator = new NoRecordExists('users', 'field1', 'id != 1');
-        $this->setExpectedException(
-            'Zend\Validator\Exception\RuntimeException',
-            'No database adapter present'
-        );
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('No database adapter present');
         $validator->isValid('nosuchvalue');
     }
 

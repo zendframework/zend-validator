@@ -9,12 +9,13 @@
 
 namespace ZendTest\Validator\Sitemap;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Sitemap\Priority;
 
 /**
  * @group      Zend_Validator
  */
-class PriorityTest extends \PHPUnit_Framework_TestCase
+class PriorityTest extends TestCase
 {
     /**
      * @var Priority

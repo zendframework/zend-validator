@@ -9,16 +9,18 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\AbstractValidator;
 use Zend\Validator\Between;
 use Zend\Validator\NotEmpty;
 use Zend\Validator\StaticValidator;
 use Zend\Validator\ValidatorChain;
+use Zend\ServiceManager\Exception\ServiceNotFoundException;
 
 /**
  * @group      Zend_Validator
  */
-class ValidatorChainTest extends \PHPUnit_Framework_TestCase
+class ValidatorChainTest extends TestCase
 {
     /**
      * @var ValidatorChain
@@ -107,7 +109,7 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
      */
     public function testStaticFactoryClassNotFound()
     {
-        $this->setExpectedException('Zend\ServiceManager\Exception\ServiceNotFoundException');
+        $this->expectException(ServiceNotFoundException::class);
         StaticValidator::execute('1234', 'UnknownValidator');
     }
 

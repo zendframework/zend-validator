@@ -9,12 +9,14 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Validator\Exception\InvalidArgumentException;
 use Zend\Validator\Isbn;
 
 /**
  * @group      Zend_Validator
  */
-class IsbnTest extends \PHPUnit_Framework_TestCase
+class IsbnTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
@@ -64,7 +66,8 @@ class IsbnTest extends \PHPUnit_Framework_TestCase
         $validator->setType(Isbn::ISBN13);
         $this->assertEquals(Isbn::ISBN13, $validator->getType());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Invalid ISBN type');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid ISBN type');
         $validator->setType('X');
     }
 
@@ -86,7 +89,8 @@ class IsbnTest extends \PHPUnit_Framework_TestCase
         $validator->setSeparator('');
         $this->assertEquals('', $validator->getSeparator());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Invalid ISBN separator');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid ISBN separator');
         $validator->setSeparator('X');
     }
 

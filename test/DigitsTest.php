@@ -9,12 +9,13 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Digits;
 
 /**
  * @group      Zend_Validator
  */
-class DigitsTest extends \PHPUnit_Framework_TestCase
+class DigitsTest extends TestCase
 {
     /**
      * @var Digits
