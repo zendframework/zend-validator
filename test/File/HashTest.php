@@ -9,15 +9,17 @@
 
 namespace ZendTest\Validator\File;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\File;
 use ReflectionProperty;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * Hash testbed
  *
  * @group      Zend_Validator
  */
-class HashTest extends \PHPUnit_Framework_TestCase
+class HashTest extends TestCase
 {
     /**
      * @return array
@@ -203,7 +205,8 @@ class HashTest extends \PHPUnit_Framework_TestCase
     public function testAddHashRaisesExceptionForInvalidType($value)
     {
         $validator = new File\Hash('12345');
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'False parameter given');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('False parameter given');
         $validator->addHash($value);
     }
 
@@ -212,10 +215,8 @@ class HashTest extends \PHPUnit_Framework_TestCase
         $validator = new File\Hash('12345');
         $algorithm = 'foobar123';
         $options   = ['algorithm' => $algorithm];
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            sprintf("Unknown algorithm '%s'", $algorithm)
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf("Unknown algorithm '%s'", $algorithm));
         $validator->addHash($options);
     }
 
@@ -223,10 +224,8 @@ class HashTest extends \PHPUnit_Framework_TestCase
     {
         $validator = new File\Hash('12345');
         $value     = ['foo' => 'bar'];
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Value array must be in $_FILES format'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Value array must be in $_FILES format');
         $validator->isValid($value);
     }
 

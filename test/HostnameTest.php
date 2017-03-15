@@ -9,12 +9,13 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Hostname;
 
 /**
  * @group      Zend_Validator
  */
-class HostnameTest extends \PHPUnit_Framework_TestCase
+class HostnameTest extends TestCase
 {
     /**
      * Default instance created for all test methods

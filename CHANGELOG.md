@@ -14,7 +14,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#151](https://github.com/zendframework/zend-validator/pull/151) dropped
+  php 5.5 support
 
 ### Fixed
 

@@ -9,10 +9,11 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator;
 use ReflectionMethod;
 
-class StepTest extends \PHPUnit_Framework_TestCase
+class StepTest extends TestCase
 {
     /**
      * Step object

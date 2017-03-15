@@ -9,9 +9,10 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Bitwise;
 
-class BitwiseTest extends \PHPUnit_Framework_TestCase
+class BitwiseTest extends TestCase
 {
     /**
      * @var \Zend\Validator\Bitwise

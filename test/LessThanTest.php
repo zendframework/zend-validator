@@ -9,12 +9,13 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\LessThan;
 
 /**
  * @group      Zend_Validator
  */
-class LessThanTest extends \PHPUnit_Framework_TestCase
+class LessThanTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior

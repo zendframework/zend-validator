@@ -9,16 +9,18 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Session\Config\StandardConfig;
 use Zend\Session\Container;
 use Zend\Validator\Csrf;
+use Zend\Session\Storage\ArrayStorage;
 
 /**
  * Zend\Csrf
  *
  * @group      Zend_Validator
  */
-class CsrfTest extends \PHPUnit_Framework_TestCase
+class CsrfTest extends TestCase
 {
     /** @var Csrf */
     public $validator;
@@ -31,7 +33,7 @@ class CsrfTest extends \PHPUnit_Framework_TestCase
         // Setup session handling
         $_SESSION = [];
         $sessionConfig = new StandardConfig([
-            'storage' => 'Zend\Session\Storage\ArrayStorage',
+            'storage' => ArrayStorage::class,
         ]);
         $sessionManager       = new TestAsset\SessionManager($sessionConfig);
         $this->sessionManager = $sessionManager;
@@ -64,7 +66,7 @@ class CsrfTest extends \PHPUnit_Framework_TestCase
     public function testSessionContainerIsLazyLoadedIfNotSet()
     {
         $container = $this->validator->getSession();
-        $this->assertInstanceOf('Zend\Session\Container', $container);
+        $this->assertInstanceOf(Container::class, $container);
     }
 
     public function testSessionContainerIsMutable()

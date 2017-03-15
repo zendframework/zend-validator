@@ -10,16 +10,24 @@
 namespace ZendTest\Validator\Db;
 
 use ArrayObject;
+use PHPUnit\Framework\TestCase;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Adapter\ParameterContainer;
 use Zend\Db\Sql\Sql;
 use Zend\Validator\Db\RecordExists;
 use ZendTest\Validator\Db\TestAsset\TrustingSql92Platform;
+use Zend\Validator\Exception\RuntimeException;
+use Zend\Db\Adapter\Driver\ConnectionInterface;
+use Zend\Db\Adapter\Driver\ResultInterface;
+use Zend\Db\Adapter\Driver\StatementInterface;
+use Zend\Db\Adapter\Driver\DriverInterface;
+use Zend\Db\Sql\Select;
+use Zend\Db\Sql\TableIdentifier;
 
 /**
  * @group      Zend_Validator
  */
-class RecordExistsTest extends \PHPUnit_Framework_TestCase
+class RecordExistsTest extends TestCase
 {
     /**
      * Return a Mock object for a Db result with rows
@@ -29,18 +37,18 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     protected function getMockHasResult()
     {
         // mock the adapter, driver, and parts
-        $mockConnection = $this->getMock('Zend\Db\Adapter\Driver\ConnectionInterface');
+        $mockConnection = $this->createMock(ConnectionInterface::class);
 
         // Mock has result
         $mockHasResultRow      = new ArrayObject();
         $mockHasResultRow->one = 'one';
 
-        $mockHasResult = $this->getMock('Zend\Db\Adapter\Driver\ResultInterface');
+        $mockHasResult = $this->createMock(ResultInterface::class);
         $mockHasResult->expects($this->any())
             ->method('current')
             ->will($this->returnValue($mockHasResultRow));
 
-        $mockHasResultStatement = $this->getMock('Zend\Db\Adapter\Driver\StatementInterface');
+        $mockHasResultStatement = $this->createMock(StatementInterface::class);
         $mockHasResultStatement->expects($this->any())
             ->method('execute')
             ->will($this->returnValue($mockHasResult));
@@ -49,7 +57,7 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
             ->method('getParameterContainer')
             ->will($this->returnValue(new ParameterContainer()));
 
-        $mockHasResultDriver = $this->getMock('Zend\Db\Adapter\Driver\DriverInterface');
+        $mockHasResultDriver = $this->createMock(DriverInterface::class);
         $mockHasResultDriver->expects($this->any())
             ->method('createStatement')
             ->will($this->returnValue($mockHasResultStatement));
@@ -57,7 +65,10 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
             ->method('getConnection')
             ->will($this->returnValue($mockConnection));
 
-        return $this->getMock('Zend\Db\Adapter\Adapter', null, [$mockHasResultDriver]);
+        return $this->getMockBuilder(Adapter::class)
+            ->setMethods(null)
+            ->setConstructorArgs([$mockHasResultDriver])
+            ->getMock();
     }
 
     /**
@@ -68,14 +79,14 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     protected function getMockNoResult()
     {
         // mock the adapter, driver, and parts
-        $mockConnection = $this->getMock('Zend\Db\Adapter\Driver\ConnectionInterface');
+        $mockConnection = $this->createMock(ConnectionInterface::class);
 
-        $mockNoResult = $this->getMock('Zend\Db\Adapter\Driver\ResultInterface');
+        $mockNoResult = $this->createMock(ResultInterface::class);
         $mockNoResult->expects($this->any())
             ->method('current')
             ->will($this->returnValue(null));
 
-        $mockNoResultStatement = $this->getMock('Zend\Db\Adapter\Driver\StatementInterface');
+        $mockNoResultStatement = $this->createMock(StatementInterface::class);
         $mockNoResultStatement->expects($this->any())
             ->method('execute')
             ->will($this->returnValue($mockNoResult));
@@ -84,7 +95,7 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
             ->method('getParameterContainer')
             ->will($this->returnValue(new ParameterContainer()));
 
-        $mockNoResultDriver = $this->getMock('Zend\Db\Adapter\Driver\DriverInterface');
+        $mockNoResultDriver = $this->createMock(DriverInterface::class);
         $mockNoResultDriver->expects($this->any())
             ->method('createStatement')
             ->will($this->returnValue($mockNoResultStatement));
@@ -92,7 +103,10 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
             ->method('getConnection')
             ->will($this->returnValue($mockConnection));
 
-        return $this->getMock('Zend\Db\Adapter\Adapter', null, [$mockNoResultDriver]);
+        return $this->getMockBuilder(Adapter::class)
+            ->setMethods(null)
+            ->setConstructorArgs([$mockNoResultDriver])
+            ->getMock();
     }
 
     /**
@@ -199,10 +213,8 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testThrowsExceptionWithNoAdapter()
     {
         $validator = new RecordExists('users', 'field1', 'id != 1');
-        $this->setExpectedException(
-            'Zend\Validator\Exception\RuntimeException',
-            'No database adapter present'
-        );
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('No database adapter present');
         $validator->isValid('nosuchvalue');
     }
 
@@ -245,7 +257,7 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
             'schema' => 'my'
         ], 'field1', null, $this->getMockHasResult());
         $table = $validator->getSelect()->getRawState('table');
-        $this->assertInstanceOf('Zend\Db\Sql\TableIdentifier', $table);
+        $this->assertInstanceOf(TableIdentifier::class, $table);
         $this->assertEquals(['users', 'my'], $table->getTableAndSchema());
     }
 
@@ -277,7 +289,7 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
             $this->getMockHasResult()
         );
         $select = $validator->getSelect();
-        $this->assertInstanceOf('Zend\Db\Sql\Select', $select);
+        $this->assertInstanceOf(Select::class, $select);
         $this->assertEquals(
             'SELECT "my"."users"."field1" AS "field1" FROM "my"."users" WHERE "field1" = \'\' AND "foo" != \'bar\'',
             $select->getSqlString(new TrustingSql92Platform())
@@ -309,7 +321,7 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
             $this->getMockHasResult()
         );
         $select = $validator->getSelect();
-        $this->assertInstanceOf('Zend\Db\Sql\Select', $select);
+        $this->assertInstanceOf(Select::class, $select);
         $this->assertEquals(
             'SELECT "my"."users"."field1" AS "field1" FROM "my"."users" WHERE "field1" = \'\' AND "foo" != \'bar\'',
             $select->getSqlString(new TrustingSql92Platform())
@@ -324,7 +336,7 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
             'value' => 'fieldvalueexclude',
         ]);
         $select = $validator->getSelect();
-        $this->assertInstanceOf('Zend\Db\Sql\Select', $select);
+        $this->assertInstanceOf(Select::class, $select);
         $this->assertEquals(
             'SELECT "otherschema"."othertable"."fieldother" AS "fieldother" FROM "otherschema"."othertable" '
             . 'WHERE "fieldother" = \'\' AND "fieldexclude" != \'fieldvalueexclude\'',

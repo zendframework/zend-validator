@@ -10,6 +10,7 @@
 namespace ZendTest\Validator;
 
 use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Exception\RuntimeException;
 use Zend\Validator\ValidatorInterface;
 use Zend\Validator\ValidatorPluginManager;
@@ -19,7 +20,7 @@ use Zend\ServiceManager\ServiceManager;
 /**
  * @group      Zend_Validator
  */
-class ValidatorPluginManagerTest extends \PHPUnit_Framework_TestCase
+class ValidatorPluginManagerTest extends TestCase
 {
     public function setUp()
     {

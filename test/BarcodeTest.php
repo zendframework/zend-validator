@@ -9,14 +9,18 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Barcode;
+use Zend\Validator\Exception\InvalidArgumentException;
+use Zend\Validator\Barcode\AdapterInterface;
+use Zend\Validator\Barcode\Ean13;
 
 /**
  * \Zend\Barcode
  *
  * @group      Zend_Validator
  */
-class BarcodeTest extends \PHPUnit_Framework_TestCase
+class BarcodeTest extends TestCase
 {
     public function provideBarcodeConstructor()
     {
@@ -36,7 +40,8 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
 
     public function testNoneExisting()
     {
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'not found');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('not found');
         $barcode = new Barcode('\Zend\Validate\BarcodeTest\NonExistentClassName');
     }
 
@@ -52,10 +57,10 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
     public function testSetCustomAdapter()
     {
         $barcode = new Barcode([
-            'adapter' => $this->getMock('Zend\Validator\Barcode\AdapterInterface')
+            'adapter' => $this->createMock(AdapterInterface::class)
         ]);
 
-        $this->assertInstanceOf('Zend\Validator\Barcode\AdapterInterface', $barcode->getAdapter());
+        $this->assertInstanceOf(AdapterInterface::class, $barcode->getAdapter());
     }
 
     /**
@@ -136,7 +141,8 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
     {
         $barcode = new Barcode('Ean13');
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'does not implement');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('does not implement');
         require_once __DIR__ . "/_files/MyBarcode5.php";
         $barcode->setAdapter('MyBarcode5');
     }
@@ -144,7 +150,7 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
     public function testArrayConstructAdapter()
     {
         $barcode = new Barcode(['adapter' => 'Ean13', 'options' => 'unknown', 'useChecksum' => false]);
-        $this->assertInstanceOf('Zend\Validator\Barcode\Ean13', $barcode->getAdapter());
+        $this->assertInstanceOf(Ean13::class, $barcode->getAdapter());
         $this->assertFalse($barcode->useChecksum());
     }
 

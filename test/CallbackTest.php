@@ -9,13 +9,15 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Callback;
 use ReflectionProperty;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @group      Zend_Validator
  */
-class CallbackTest extends \PHPUnit_Framework_TestCase
+class CallbackTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
@@ -31,7 +33,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
     public function testStaticCallback()
     {
         $valid = new Callback(
-            ['\ZendTest\Validator\CallbackTest', 'staticCallback']
+            [CallbackTest::class, 'staticCallback']
         );
         $this->assertTrue($valid->isValid('test'));
     }
@@ -61,7 +63,8 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
     {
         $valid = new Callback([$this, 'objectCallback']);
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Invalid callback given');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid callback given');
         $valid->setCallback('invalidcallback');
     }
 
@@ -133,10 +136,8 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
 
         $r->setValue($validator, $options);
 
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'No callback given'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('No callback given');
         $validator->isValid('test');
     }
 }

@@ -9,14 +9,21 @@
 
 namespace ZendTest\Validator\Db;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Db\NoRecordExists;
 use Zend\Db\Adapter\ParameterContainer;
 use ArrayObject;
+use Zend\Validator\Exception\RuntimeException;
+use Zend\Db\Adapter\Driver\ConnectionInterface;
+use Zend\Db\Adapter\Driver\ResultInterface;
+use Zend\Db\Adapter\Driver\StatementInterface;
+use Zend\Db\Adapter\Driver\DriverInterface;
+use Zend\Db\Adapter\Adapter;
 
 /**
  * @group      Zend_Validator
  */
-class NoRecordExistsTest extends \PHPUnit_Framework_TestCase
+class NoRecordExistsTest extends TestCase
 {
     /**
      * Return a Mock object for a Db result with rows
@@ -26,18 +33,18 @@ class NoRecordExistsTest extends \PHPUnit_Framework_TestCase
     protected function getMockHasResult()
     {
         // mock the adapter, driver, and parts
-        $mockConnection = $this->getMock('Zend\Db\Adapter\Driver\ConnectionInterface');
+        $mockConnection = $this->createMock(ConnectionInterface::class);
 
         // Mock has result
         $mockHasResultRow      = new ArrayObject();
         $mockHasResultRow->one = 'one';
 
-        $mockHasResult = $this->getMock('Zend\Db\Adapter\Driver\ResultInterface');
+        $mockHasResult = $this->createMock(ResultInterface::class);
         $mockHasResult->expects($this->any())
             ->method('current')
             ->will($this->returnValue($mockHasResultRow));
 
-        $mockHasResultStatement = $this->getMock('Zend\Db\Adapter\Driver\StatementInterface');
+        $mockHasResultStatement = $this->createMock(StatementInterface::class);
         $mockHasResultStatement->expects($this->any())
             ->method('execute')
             ->will($this->returnValue($mockHasResult));
@@ -46,7 +53,7 @@ class NoRecordExistsTest extends \PHPUnit_Framework_TestCase
             ->method('getParameterContainer')
             ->will($this->returnValue(new ParameterContainer()));
 
-        $mockHasResultDriver = $this->getMock('Zend\Db\Adapter\Driver\DriverInterface');
+        $mockHasResultDriver = $this->createMock(DriverInterface::class);
         $mockHasResultDriver->expects($this->any())
             ->method('createStatement')
             ->will($this->returnValue($mockHasResultStatement));
@@ -54,7 +61,10 @@ class NoRecordExistsTest extends \PHPUnit_Framework_TestCase
             ->method('getConnection')
             ->will($this->returnValue($mockConnection));
 
-        return $this->getMock('Zend\Db\Adapter\Adapter', null, [$mockHasResultDriver]);
+        return $this->getMockBuilder(Adapter::class)
+            ->setMethods(null)
+            ->setConstructorArgs([$mockHasResultDriver])
+            ->getMock();
     }
 
     /**
@@ -65,14 +75,14 @@ class NoRecordExistsTest extends \PHPUnit_Framework_TestCase
     protected function getMockNoResult()
     {
         // mock the adapter, driver, and parts
-        $mockConnection = $this->getMock('Zend\Db\Adapter\Driver\ConnectionInterface');
+        $mockConnection = $this->createMock(ConnectionInterface::class);
 
-        $mockNoResult = $this->getMock('Zend\Db\Adapter\Driver\ResultInterface');
+        $mockNoResult = $this->createMock(ResultInterface::class);
         $mockNoResult->expects($this->any())
             ->method('current')
             ->will($this->returnValue(null));
 
-        $mockNoResultStatement = $this->getMock('Zend\Db\Adapter\Driver\StatementInterface');
+        $mockNoResultStatement = $this->createMock(StatementInterface::class);
         $mockNoResultStatement->expects($this->any())
             ->method('execute')
             ->will($this->returnValue($mockNoResult));
@@ -81,7 +91,7 @@ class NoRecordExistsTest extends \PHPUnit_Framework_TestCase
             ->method('getParameterContainer')
             ->will($this->returnValue(new ParameterContainer()));
 
-        $mockNoResultDriver = $this->getMock('Zend\Db\Adapter\Driver\DriverInterface');
+        $mockNoResultDriver = $this->createMock(DriverInterface::class);
         $mockNoResultDriver->expects($this->any())
             ->method('createStatement')
             ->will($this->returnValue($mockNoResultStatement));
@@ -89,7 +99,10 @@ class NoRecordExistsTest extends \PHPUnit_Framework_TestCase
             ->method('getConnection')
             ->will($this->returnValue($mockConnection));
 
-        return $this->getMock('Zend\Db\Adapter\Adapter', null, [$mockNoResultDriver]);
+        return $this->getMockBuilder(Adapter::class)
+            ->setMethods(null)
+            ->setConstructorArgs([$mockNoResultDriver])
+            ->getMock();
     }
 
     /**
@@ -180,10 +193,8 @@ class NoRecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testThrowsExceptionWithNoAdapter()
     {
         $validator = new NoRecordExists('users', 'field1', 'id != 1');
-        $this->setExpectedException(
-            'Zend\Validator\Exception\RuntimeException',
-            'No database adapter present'
-        );
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('No database adapter present');
         $validator->isValid('nosuchvalue');
     }
 

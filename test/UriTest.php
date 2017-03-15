@@ -9,13 +9,16 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator;
 use Zend\Uri\Exception\InvalidArgumentException;
+use Zend\Uri\Uri;
+use Zend\Uri\Http;
 
 /**
  * @group      Zend_Validator
  */
-class UriTest extends \PHPUnit_Framework_TestCase
+class UriTest extends TestCase
 {
     /**
      * @var \Zend\Validator\Uri
@@ -36,14 +39,14 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $validator = $this->validator;
         $uriHandler = $validator->getUriHandler();
-        $this->assertInstanceOf('Zend\Uri\Uri', $uriHandler);
+        $this->assertInstanceOf(Uri::class, $uriHandler);
         $this->assertTrue($validator->getAllowRelative());
         $this->assertTrue($validator->getAllowAbsolute());
     }
 
     public function testConstructorWithArraySetsOptions()
     {
-        $uriMock = $this->getMock('Zend\Uri\Uri');
+        $uriMock = $this->createMock(Uri::class);
         $validator = new Validator\Uri([
             'uriHandler' => $uriMock,
             'allowRelative' => false,
@@ -56,7 +59,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorWithArgsSetsOptions()
     {
-        $uriMock = $this->getMock('Zend\Uri\Uri');
+        $uriMock = $this->createMock(Uri::class);
         $validator = new Validator\Uri($uriMock, false, false);
         $this->assertEquals($uriMock, $validator->getUriHandler());
         $this->assertFalse($validator->getAllowRelative());
@@ -90,10 +93,9 @@ class UriTest extends \PHPUnit_Framework_TestCase
         $isValid,
         $expects
     ) {
-        $uriMock = $this->getMock(
-            'Zend\Uri\Uri',
-            ['parse', 'isValid', 'isAbsolute', 'isValidRelative']
-        );
+        $uriMock = $this->getMockBuilder(Uri::class)
+            ->setConstructorArgs(['parse', 'isValid', 'isAbsolute', 'isValidRelative'])
+            ->getMock();
         $uriMock->expects($this->once())
             ->method('isValid')->will($this->returnValue($isValid));
         $uriMock->expects($this->any())
@@ -110,7 +112,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
 
     public function testUriHandlerThrowsExceptionInParseMethodNotValid()
     {
-        $uriMock = $this->getMock('Zend\Uri\Uri');
+        $uriMock = $this->createMock(Uri::class);
         $uriMock->expects($this->once())
             ->method('parse')
             ->will($this->throwException(new InvalidArgumentException()));
@@ -138,23 +140,19 @@ class UriTest extends \PHPUnit_Framework_TestCase
 
     public function testUriHandlerCanBeSpecifiedAsString()
     {
-        $this->validator->setUriHandler('Zend\Uri\Http');
-        $this->assertInstanceOf('Zend\Uri\Http', $this->validator->getUriHandler());
+        $this->validator->setUriHandler(Http::class);
+        $this->assertInstanceOf(Http::class, $this->validator->getUriHandler());
     }
 
-    /**
-     * @expectedException Zend\Validator\Exception\InvalidArgumentException
-     */
     public function testUriHandlerStringInvalidClassThrowsException()
     {
-        $this->validator->setUriHandler('stdClass');
+        $this->expectException(Validator\Exception\InvalidArgumentException::class);
+        $this->validator->setUriHandler(\stdClass::class);
     }
 
-    /**
-     * @expectedException Zend\Validator\Exception\InvalidArgumentException
-     */
     public function testUriHandlerInvalidTypeThrowsException()
     {
+        $this->expectException(Validator\Exception\InvalidArgumentException::class);
         $this->validator->setUriHandler(new \stdClass());
     }
 

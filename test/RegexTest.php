@@ -9,13 +9,15 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Regex;
 use ReflectionProperty;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @group      Zend_Validator
  */
-class RegexTest extends \PHPUnit_Framework_TestCase
+class RegexTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
@@ -71,7 +73,8 @@ class RegexTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadPattern()
     {
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Internal error parsing');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Internal error parsing');
         $validator = new Regex('/');
     }
 
@@ -154,14 +157,14 @@ class RegexTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructorRaisesExceptionWhenProvidedInvalidArguments($options)
     {
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $validator = new Regex($options);
     }
 
     public function testConstructorRaisesExceptionWhenProvidedWithInvalidOptionsArray()
     {
         $options = ['foo' => 'bar'];
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $validator = new Regex($options);
     }
 

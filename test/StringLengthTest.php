@@ -9,12 +9,14 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\StringLength;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @group      Zend_Validator
  */
-class StringLengthTest extends \PHPUnit_Framework_TestCase
+class StringLengthTest extends TestCase
 {
     /**
      * @var StringLength
@@ -110,10 +112,8 @@ class StringLengthTest extends \PHPUnit_Framework_TestCase
         $max = 1;
         $min = 2;
 
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'The minimum must be less than or equal to the maximum length, but'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The minimum must be less than or equal to the maximum length, but');
         $this->validator->setMax($max)->setMin($min);
     }
 
@@ -127,10 +127,8 @@ class StringLengthTest extends \PHPUnit_Framework_TestCase
         $max = 1;
         $min = 2;
 
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'The maximum must be greater than or equal to the minimum length, but '
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The maximum must be greater than or equal to the minimum length, but ');
         $this->validator->setMin($min)->setMax($max);
     }
 

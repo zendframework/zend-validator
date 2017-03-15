@@ -9,12 +9,14 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Validator\Exception\InvalidArgumentException;
 use Zend\Validator\Ip;
 
 /**
  * @group      Zend_Validator
  */
-class IpTest extends \PHPUnit_Framework_TestCase
+class IpTest extends TestCase
 {
     /**
      * @var Ip
@@ -132,7 +134,8 @@ class IpTest extends \PHPUnit_Framework_TestCase
 
     public function testNoValidation()
     {
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Nothing to validate');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Nothing to validate');
         $this->validator->setOptions($this->options);
     }
 

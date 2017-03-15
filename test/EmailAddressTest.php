@@ -9,13 +9,14 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\EmailAddress;
 use Zend\Validator\Hostname;
 
 /**
  * @group      Zend_Validator
  */
-class EmailAddressTest extends \PHPUnit_Framework_TestCase
+class EmailAddressTest extends TestCase
 {
     /**
      * @var EmailAddress
@@ -673,7 +674,7 @@ class EmailAddressTest extends \PHPUnit_Framework_TestCase
     public function testNotSetHostnameValidator()
     {
         $hostname = $this->validator->getHostnameValidator();
-        $this->assertInstanceOf('Zend\Validator\Hostname', $hostname);
+        $this->assertInstanceOf(Hostname::class, $hostname);
     }
 
     /**

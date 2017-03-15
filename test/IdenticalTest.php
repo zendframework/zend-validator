@@ -9,13 +9,15 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Stdlib\Parameters;
 use Zend\Validator\Identical;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @group      Zend_Validator
  */
-class IdenticalTest extends \PHPUnit_Framework_TestCase
+class IdenticalTest extends TestCase
 {
     /** @var Identical */
     public $validator;
@@ -264,7 +266,7 @@ class IdenticalTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsValidThrowsExceptionOnInvalidContext($context)
     {
-        $this->setExpectedException('Zend\\Validator\\Exception\\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
 
         $this->validator->isValid('john@doe.com', $context);
     }

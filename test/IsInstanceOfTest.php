@@ -9,8 +9,10 @@
 namespace ZendTest\Validator;
 
 use DateTime;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Zend\Validator;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @covers     Zend\Validator\IsInstanceOf
@@ -18,7 +20,7 @@ use Zend\Validator;
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Validator
  */
-class IsInstanceOfTest extends \PHPUnit_Framework_TestCase
+class IsInstanceOfTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
@@ -27,17 +29,17 @@ class IsInstanceOfTest extends \PHPUnit_Framework_TestCase
      */
     public function testBasic()
     {
-        $validator = new Validator\IsInstanceOf('DateTime');
+        $validator = new Validator\IsInstanceOf(DateTime::class);
         $this->assertTrue($validator->isValid(new DateTime())); // True
         $this->assertFalse($validator->isValid(null)); // False
         $this->assertFalse($validator->isValid($this)); // False
 
-        $validator = new Validator\IsInstanceOf('Exception');
+        $validator = new Validator\IsInstanceOf(\Exception::class);
         $this->assertTrue($validator->isValid(new \Exception())); // True
         $this->assertFalse($validator->isValid(null)); // False
         $this->assertFalse($validator->isValid($this)); // False
 
-        $validator = new Validator\IsInstanceOf('PHPUnit_Framework_TestCase');
+        $validator = new Validator\IsInstanceOf(TestCase::class);
         $this->assertTrue($validator->isValid($this)); // True
     }
 
@@ -48,7 +50,7 @@ class IsInstanceOfTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMessages()
     {
-        $validator = new Validator\IsInstanceOf('DateTime');
+        $validator = new Validator\IsInstanceOf(DateTime::class);
         $this->assertEquals([], $validator->getMessages());
     }
 
@@ -59,13 +61,13 @@ class IsInstanceOfTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetClassName()
     {
-        $validator = new Validator\IsInstanceOf('DateTime');
-        $this->assertEquals('DateTime', $validator->getClassName());
+        $validator = new Validator\IsInstanceOf(DateTime::class);
+        $this->assertEquals(DateTime::class, $validator->getClassName());
     }
 
     public function testEqualsMessageTemplates()
     {
-        $validator  = new Validator\IsInstanceOf('DateTime');
+        $validator  = new Validator\IsInstanceOf(DateTime::class);
         $reflection = new ReflectionClass($validator);
 
         $property = $reflection->getProperty('messageTemplates');
@@ -79,7 +81,7 @@ class IsInstanceOfTest extends \PHPUnit_Framework_TestCase
 
     public function testEqualsMessageVariables()
     {
-        $validator  = new Validator\IsInstanceOf('\DateTime');
+        $validator  = new Validator\IsInstanceOf(DateTime::class);
         $reflection = new ReflectionClass($validator);
 
         $property = $reflection->getProperty('messageVariables');
@@ -93,8 +95,8 @@ class IsInstanceOfTest extends \PHPUnit_Framework_TestCase
 
     public function testPassTraversableToConstructor()
     {
-        $validator = new Validator\IsInstanceOf(new \ArrayIterator(['className' => 'DateTime']));
-        $this->assertEquals('DateTime', $validator->getClassName());
+        $validator = new Validator\IsInstanceOf(new \ArrayIterator(['className' => DateTime::class]));
+        $this->assertEquals(DateTime::class, $validator->getClassName());
         $this->assertTrue($validator->isValid(new DateTime()));
         $this->assertFalse($validator->isValid(null));
         $this->assertFalse($validator->isValid($this));
@@ -102,9 +104,10 @@ class IsInstanceOfTest extends \PHPUnit_Framework_TestCase
 
     public function testPassOptionsWithoutClassNameKey()
     {
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Missing option "className"');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Missing option "className"');
 
-        $options   = ['NotClassNameKey' => 'DateTime'];
+        $options   = ['NotClassNameKey' => DateTime::class];
         $validator = new Validator\IsInstanceOf($options);
     }
 }

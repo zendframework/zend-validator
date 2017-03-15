@@ -9,12 +9,14 @@
 
 namespace ZendTest\Validator\File;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\File;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @group      Zend_Validator
  */
-class Crc32Test extends \PHPUnit_Framework_TestCase
+class Crc32Test extends TestCase
 {
     /**
      * @return array
@@ -215,7 +217,7 @@ class Crc32Test extends \PHPUnit_Framework_TestCase
     {
         $validator    = new File\Crc32();
         $invalidArray = ['foo' => 'bar'];
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $validator->isValid($invalidArray);
     }
 }

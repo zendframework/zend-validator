@@ -9,12 +9,14 @@
 
 namespace ZendTest\Validator\File;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Validator\Exception\InvalidArgumentException;
 use Zend\Validator\File;
 
 /**
  * @group      Zend_Validator
  */
-class UploadTest extends \PHPUnit_Framework_TestCase
+class UploadTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
@@ -171,7 +173,8 @@ class UploadTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($files, $validator->getFiles('test1'));
         $this->assertEquals($files1, $validator->getFiles('test3'));
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'was not found');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('was not found');
         $this->assertEquals([], $validator->getFiles('test5'));
     }
 

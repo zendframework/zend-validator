@@ -9,12 +9,14 @@
 
 namespace ZendTest\Validator\File;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Validator\Exception\InvalidArgumentException;
 use Zend\Validator\File;
 
 /**
  * @group      Zend_Validator
  */
-class UploadFileTest extends \PHPUnit_Framework_TestCase
+class UploadFileTest extends TestCase
 {
     public function uploadErrorsTestDataProvider()
     {
@@ -69,7 +71,8 @@ class UploadFileTest extends \PHPUnit_Framework_TestCase
     public function testRaisesExceptionWhenValueArrayIsBad()
     {
         $validator = new File\UploadFile();
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', '$_FILES format');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('$_FILES format');
         $validator->isValid(['foo', 'bar']);
     }
 

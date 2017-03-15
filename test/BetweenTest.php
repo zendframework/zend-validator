@@ -9,12 +9,14 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Between;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @group      Zend_Validator
  */
-class BetweenTest extends \PHPUnit_Framework_TestCase
+class BetweenTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
@@ -114,10 +116,8 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
      */
     public function testMissingMinOrMax(array $args)
     {
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            "Missing option. 'min' and 'max' have to be given"
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Missing option. 'min' and 'max' have to be given");
 
         new Between($args);
     }

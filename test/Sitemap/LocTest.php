@@ -9,12 +9,13 @@
 
 namespace ZendTest\Validator\Sitemap;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Sitemap\Loc;
 
 /**
  * @group      Zend_Validator
  */
-class LocTest extends \PHPUnit_Framework_TestCase
+class LocTest extends TestCase
 {
     /**
      * @var Loc

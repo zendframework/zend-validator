@@ -9,6 +9,7 @@
 
 namespace ZendTest\Validator\File;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\File;
 
 /**
@@ -16,7 +17,7 @@ use Zend\Validator\File;
  *
  * @group      Zend_Validator
  */
-class IsCompressedTest extends \PHPUnit_Framework_TestCase
+class IsCompressedTest extends TestCase
 {
     protected function getMagicMime()
     {

@@ -9,12 +9,13 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Hex;
 
 /**
  * @group      Zend_Validator
  */
-class HexTest extends \PHPUnit_Framework_TestCase
+class HexTest extends TestCase
 {
     /**
      * @var Hex
