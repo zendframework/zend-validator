@@ -83,8 +83,6 @@ class NotEmpty extends AbstractValidator
      */
     public function __construct($options = null)
     {
-        $this->setType($this->defaultType);
-
         if ($options instanceof Traversable) {
             $options = ArrayUtils::iteratorToArray($options);
         }
@@ -99,20 +97,11 @@ class NotEmpty extends AbstractValidator
             $options = $temp;
         }
 
-        if (is_array($options)) {
-            if (! array_key_exists('type', $options)) {
-                $detected = 0;
-                $found    = false;
-                foreach ($options as $option) {
-                    if (in_array($option, $this->constants, true)) {
-                        $found = true;
-                        $detected += array_search($option, $this->constants);
-                    }
-                }
-
-                if ($found) {
-                    $options['type'] = $detected;
-                }
+        if (!isset($options['type'])) {
+            if (($type = $this->calculateTypeValue($options)) != 0) {
+                $options['type'] = $type;
+            } else {
+                $options['type'] = $this->defaultType;
             }
         }
 
@@ -148,14 +137,14 @@ class NotEmpty extends AbstractValidator
             foreach ($type as $value) {
                 if (is_int($value)) {
                     $detected |= $value;
-                } elseif (in_array($value, $this->constants)) {
-                    $detected |= array_search($value, $this->constants);
+                } elseif (in_array($value, $this->constants, true)) {
+                    $detected |= array_search($value, $this->constants, true);
                 }
             }
 
             $type = $detected;
-        } elseif (is_string($type) && in_array($type, $this->constants)) {
-            $type = array_search($type, $this->constants);
+        } elseif (is_string($type) && in_array($type, $this->constants, true)) {
+            $type = array_search($type, $this->constants, true);
         }
 
         return $type;

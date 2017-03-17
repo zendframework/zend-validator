@@ -30,6 +30,31 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
+     * @param array $types Array of type strings or constants
+     * @param integer $expected Expected value of calculated type
+     *
+     * @return void
+     * @dataProvider constructorWithTypeArrayProvider
+     */
+    public function testConstructorWithTypeArray($types, $expected)
+    {
+        $validator = new NotEmpty($types);
+        $this->assertEquals($expected, $validator->getType());
+    }
+
+    public function constructorWithTypeArrayProvider()
+    {
+        return [
+            [['php', 'boolean'], NotEmpty::PHP],
+            [['boolean', 'boolean'], NotEmpty::BOOLEAN],
+            [[NotEmpty::PHP, NotEmpty::BOOLEAN], NotEmpty::PHP],
+            [[NotEmpty::BOOLEAN, NotEmpty::BOOLEAN], NotEmpty::BOOLEAN],
+        ];
+    }
+
+    /**
+     * Ensures that the validator follows expected behavior
+     *
      * ZF-6708 introduces a change for validating integer 0; it is a valid
      * integer value. '0' is also valid.
      *
@@ -729,11 +754,27 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider singleStringNotationProvider
      */
-    public function testSingleStringNotation($value, $valid)
+    public function testSingleStringConstructorNotation($value, $valid)
     {
         $this->validator = new NotEmpty(
             'boolean'
         );
+        $this->checkValidationValue($value, $valid);
+    }
+
+    /**
+     * Ensures that the validator follows expected behavior
+     *
+     * @param mixed $value Value to test
+     * @param boolean $valid Expected validity of value
+     *
+     * @return void
+     *
+     * @dataProvider singleStringNotationProvider
+     */
+    public function testSingleStringSetTypeNotation($value, $valid)
+    {
+        $this->validator->setType('boolean');
         $this->checkValidationValue($value, $valid);
     }
 
