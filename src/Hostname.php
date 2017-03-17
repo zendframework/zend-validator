@@ -69,7 +69,7 @@ class Hostname extends AbstractValidator
 
     /**
      * Array of valid top-level-domains
-     * IanaVersion 2017012900
+     * IanaVersion 2017031600
      *
      * @see ftp://data.iana.org/TLD/tlds-alpha-by-domain.txt  List of all TLDs by domain
      * @see http://www.iana.org/domains/root/db/ Official list of supported TLDs
@@ -105,6 +105,7 @@ class Hostname extends AbstractValidator
         'af',
         'afamilycompany',
         'afl',
+        'africa',
         'ag',
         'agakhan',
         'agency',
@@ -1526,6 +1527,7 @@ class Hostname extends AbstractValidator
         'العليان',
         'امارات',
         'بازار',
+        'پاکستان',
         'الاردن',
         'موبايلي',
         'بھارت',
