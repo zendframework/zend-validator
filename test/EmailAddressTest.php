@@ -221,7 +221,7 @@ class EmailAddressTest extends TestCase
     public function validEmailAddresses()
     {
         // @codingStandardsIgnoreStart
-        return [
+        $return = [
             'bob@domain.com'                                                          => ['bob@domain.com'],
             'bob.jones@domain.co.uk'                                                  => ['bob.jones@domain.co.uk'],
             'bob.jones.smythe@domain.co.uk'                                           => ['bob.jones.smythe@domain.co.uk'],
@@ -233,6 +233,13 @@ class EmailAddressTest extends TestCase
             'bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com' => ['bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com'],
             "B.O'Callaghan@domain.com"                                                => ["B.O'Callaghan@domain.com"],
         ];
+
+        if (extension_loaded('intl')) {
+            $return['bob@тест.рф']             = ['bob@тест.рф'];
+            $return['bob@xn--e1aybc.xn--p1ai'] = ['bob@xn--e1aybc.xn--p1ai'];
+        }
+
+        return $return;
         // @codingStandardsIgnoreEnd
     }
 
@@ -270,6 +277,7 @@ class EmailAddressTest extends TestCase
             'bob @ domain.com'                                                         => ['bob @ domain.com'],
             'Abc..123@example.com'                                                     => ['Abc..123@example.com'],
             '"bob%jones@domain.com'                                                    => ['"bob%jones@domain.com'],
+            'иван@письмо.рф'                                                           => ['иван@письмо.рф'],
             'multiline'                                                                => ['bob
 
             @domain.com'],
@@ -742,8 +750,8 @@ class EmailAddressTest extends TestCase
         ];
 
         if (extension_loaded('intl')) {
-            $emailAddresses[] = 'иван@письмо.рф';
-            $emailAddresses[] = 'xn--@-7sbfxdyelgv5j.xn--p1ai';
+            $emailAddresses[] = 'test@письмо.рф';
+            $emailAddresses[] = 'test@xn--h1aigbl0e.xn--p1ai';
         }
 
         foreach ($emailAddresses as $input) {
