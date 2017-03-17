@@ -45,6 +45,8 @@ All notable changes to this project will be documented in this file, in reverse 
   required, and may lead to runtime failures.
 - [#66](https://github.com/zendframework/zend-validator/pull/66) fixed
   EmailAddress validator applying IDNA conversion to local part 
+- [#88](https://github.com/zendframework/zend-validator/pull/88) fixed NotEmpty
+  validator incorrectly applying types bitmaps
 
 
 ## 2.8.2 - 2017-01-29
