@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#78](https://github.com/zendframework/zend-validator/pull/78) added
+  `%length%` as an optional message variable in StringLength validator
 
 ### Deprecated
 
