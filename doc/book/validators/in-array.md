@@ -35,7 +35,7 @@ Basic usage is to provide an array during instantiation:
 
 ```php
 $validator = new Zend\Validator\InArray([
-    'haystack' => ['value1', 'value2',...'valueN']
+    'haystack' => ['value1', 'value2',...'valueN'],
 ]);
 
 if ($validator->isValid('value')) {
@@ -83,7 +83,7 @@ It's possible to set the strict mode at initialisation and afterwards with the
 ```php
 // defaults to InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY
 $validator = new Zend\Validator\InArray([
-    'haystack' => array('value1', 'value2', /* ... */ 'valueN'),
+    'haystack' => ['value1', 'value2', /* ... */ 'valueN'],
 ]);
 
 // set strict mode
@@ -118,7 +118,7 @@ To validate multidimensional arrays you have to set the `recursive` option.
 
 ```php
 $validator = new Zend\Validator\InArray([
-    'haystack' => array(
+    'haystack' => [
         'firstDimension' => ['value1', 'value2', / ... */ 'valueN'],
         'secondDimension' => ['foo1', 'foo2', /* ... */ 'fooN'],
     ],
