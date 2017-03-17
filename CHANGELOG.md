@@ -41,6 +41,8 @@ All notable changes to this project will be documented in this file, in reverse 
   [#148](https://github.com/zendframework/zend-validator/pull/110) adds further
   `"suggest"` clauses in `composer.json`, since some dependencies are not always
   required, and may lead to runtime failures.
+- [#66](https://github.com/zendframework/zend-validator/pull/66) fixed
+  EmailAddress validator applying IDNA conversion to local part 
 
 
 ## 2.8.2 - 2017-01-29
