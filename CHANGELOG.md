@@ -2,11 +2,12 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.9.0 - TBD
+## 2.9.0 - 2017-03-17
 
 ### Added
 
-- Nothing.
+- [#78](https://github.com/zendframework/zend-validator/pull/78) added
+  `%length%` as an optional message variable in StringLength validator
 
 ### Deprecated
 
@@ -14,31 +15,13 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
-
-### Fixed
-
-- Nothing.
-
-
-## 2.8.3 - TBD
-
-### Added
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
+- [#151](https://github.com/zendframework/zend-validator/pull/151) dropped
+  php 5.5 support
 
 ### Fixed
 
 - [#147](https://github.com/zendframework/zend-validator/issues/147)
-  [#148](https://github.com/zendframework/zend-validator/pull/110) adds further
+  [#148](https://github.com/zendframework/zend-validator/pull/148) adds further
   `"suggest"` clauses in `composer.json`, since some dependencies are not always
   required, and may lead to runtime failures.
 - [#66](https://github.com/zendframework/zend-validator/pull/66) fixed
@@ -46,8 +29,7 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#88](https://github.com/zendframework/zend-validator/pull/88) fixed NotEmpty
   validator incorrectly applying types bitmaps
 - [#150](https://github.com/zendframework/zend-validator/pull/150) fixed Hostname
-  validator not allowiing some characters in .dk IDN
-
+  validator not allowing some characters in .dk IDN
 
 ## 2.8.2 - 2017-01-29
 

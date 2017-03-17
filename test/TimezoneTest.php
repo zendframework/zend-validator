@@ -9,14 +9,16 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Timezone;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * Tests for {@see \Zend\Validator\Timezone}
  *
  * @covers \Zend\Validator\Timezone
  */
-class TimezoneTest extends \PHPUnit_Framework_TestCase
+class TimezoneTest extends TestCase
 {
     /**
      * @var Timezone
@@ -272,7 +274,7 @@ class TimezoneTest extends \PHPUnit_Framework_TestCase
      */
     public function testRejectsInvalidIntType($invalidType)
     {
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
 
         new Timezone(['type' => $invalidType]);
     }
@@ -305,7 +307,7 @@ class TimezoneTest extends \PHPUnit_Framework_TestCase
      */
     protected function checkExpectedException($value)
     {
-        $this->setExpectedException('\Zend\Validator\Exception\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->validator->setType($value);
     }
 

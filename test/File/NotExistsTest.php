@@ -9,14 +9,16 @@
 
 namespace ZendTest\Validator\File;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\File;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * NotExists testbed
  *
  * @group      Zend_Validator
  */
-class NotExistsTest extends \PHPUnit_Framework_TestCase
+class NotExistsTest extends TestCase
 {
     /**
      * @return array
@@ -144,10 +146,8 @@ class NotExistsTest extends \PHPUnit_Framework_TestCase
     {
         $validator = new File\NotExists();
         $value     = ['foo' => 'bar'];
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Value array must be in $_FILES format'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Value array must be in $_FILES format');
         $validator->isValid($value);
     }
 
@@ -171,7 +171,7 @@ class NotExistsTest extends \PHPUnit_Framework_TestCase
     public function testAddingDirectoryUsingInvalidTypeRaisesException($value)
     {
         $validator = new File\NotExists();
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $validator->addDirectory($value);
     }
 }

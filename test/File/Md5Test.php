@@ -9,14 +9,16 @@
 
 namespace ZendTest\Validator\File;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\File;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * Md5 testbed
  *
  * @group      Zend_Validator
  */
-class Md5Test extends \PHPUnit_Framework_TestCase
+class Md5Test extends TestCase
 {
     /**
      * @return array
@@ -229,7 +231,7 @@ class Md5Test extends \PHPUnit_Framework_TestCase
     {
         $validator = new File\Md5();
         $value     = ['foo' => 'bar'];
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $validator->isValid($value);
     }
 }

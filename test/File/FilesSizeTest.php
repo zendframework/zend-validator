@@ -9,13 +9,14 @@
 
 namespace ZendTest\Validator\File;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\File;
-use Zend\Validator;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @group      Zend_Validator
  */
-class FilesSizeTest extends \PHPUnit_Framework_TestCase
+class FilesSizeTest extends TestCase
 {
     /** @var bool */
     public $multipleOptionsDetected;
@@ -86,7 +87,8 @@ class FilesSizeTest extends \PHPUnit_Framework_TestCase
         $validator = new File\FilesSize(['min' => 1, 'max' => 100]);
         $this->assertEquals('1B', $validator->getMin());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'greater than or equal');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('greater than or equal');
         $validator = new File\FilesSize(['min' => 100, 'max' => 1]);
     }
 
@@ -101,7 +103,8 @@ class FilesSizeTest extends \PHPUnit_Framework_TestCase
         $validator->setMin(100);
         $this->assertEquals('100B', $validator->getMin());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'less than or equal');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('less than or equal');
         $validator->setMin(20000);
     }
 
@@ -123,7 +126,8 @@ class FilesSizeTest extends \PHPUnit_Framework_TestCase
         $test = $validator->getMax();
         $this->assertEquals('2000', $test);
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'greater than or equal');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('greater than or equal');
         $validator = new File\FilesSize(['min' => 100, 'max' => 1]);
     }
 
@@ -226,13 +230,10 @@ class FilesSizeTest extends \PHPUnit_Framework_TestCase
         ]));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testIllegalFilesFormat()
     {
         $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
-
+        $this->expectException(InvalidArgumentException::class);
         $validator->isValid([
             [
                 'error' => 0
@@ -268,10 +269,8 @@ class FilesSizeTest extends \PHPUnit_Framework_TestCase
     {
         $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
         $value     = [['foo' => 'bar']];
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Value array must be in $_FILES format'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Value array must be in $_FILES format');
         $validator->isValid($value);
     }
 }

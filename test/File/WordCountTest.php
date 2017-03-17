@@ -9,13 +9,14 @@
 
 namespace ZendTest\Validator\File;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\File;
-use Zend\Validator;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @group      Zend_Validator
  */
-class WordCountTest extends \PHPUnit_Framework_TestCase
+class WordCountTest extends TestCase
 {
     /**
      * @return array
@@ -78,7 +79,8 @@ class WordCountTest extends \PHPUnit_Framework_TestCase
         $validator = new File\WordCount(['min' => 1, 'max' => 5]);
         $this->assertEquals(1, $validator->getMin());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'greater than or equal');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('greater than or equal');
         $validator = new File\WordCount(['min' => 5, 'max' => 1]);
     }
 
@@ -93,7 +95,8 @@ class WordCountTest extends \PHPUnit_Framework_TestCase
         $validator->setMin(100);
         $this->assertEquals(100, $validator->getMin());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'less than or equal');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('less than or equal');
         $validator->setMin(20000);
     }
 
@@ -107,7 +110,8 @@ class WordCountTest extends \PHPUnit_Framework_TestCase
         $validator = new File\WordCount(['min' => 1, 'max' => 100]);
         $this->assertEquals(100, $validator->getMax());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'greater than or equal');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('greater than or equal');
         $validator = new File\WordCount(['min' => 5, 'max' => 1]);
     }
 
@@ -184,10 +188,8 @@ class WordCountTest extends \PHPUnit_Framework_TestCase
     public function testSettingMinValueRaisesExceptionForInvalidType($value)
     {
         $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Invalid options to validator provided'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid options to validator provided');
         $validator->setMin($value);
     }
 
@@ -207,10 +209,8 @@ class WordCountTest extends \PHPUnit_Framework_TestCase
     public function testSettingMaxValueRaisesExceptionForInvalidType($value)
     {
         $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Invalid options to validator provided'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid options to validator provided');
         $validator->setMax($value);
     }
 
@@ -218,10 +218,8 @@ class WordCountTest extends \PHPUnit_Framework_TestCase
     {
         $validator = new File\WordCount(['min' => 1, 'max' => 10000]);
         $value     = ['foo' => 'bar'];
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Value array must be in $_FILES format'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Value array must be in $_FILES format');
         $validator->isValid($value);
     }
 

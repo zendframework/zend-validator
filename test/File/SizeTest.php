@@ -9,13 +9,14 @@
 
 namespace ZendTest\Validator\File;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\File;
-use Zend\Validator;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @group      Zend_Validator
  */
-class SizeTest extends \PHPUnit_Framework_TestCase
+class SizeTest extends TestCase
 {
     /**
      * @return array
@@ -86,7 +87,8 @@ class SizeTest extends \PHPUnit_Framework_TestCase
         $validator = new File\Size(['min' => 1, 'max' => 100, 'useByteString' => false]);
         $this->assertEquals(1, $validator->getMin());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'greater than or equal');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('greater than or equal');
         $validator = new File\Size(['min' => 100, 'max' => 1]);
     }
 
@@ -105,7 +107,8 @@ class SizeTest extends \PHPUnit_Framework_TestCase
         $validator->setMin(100);
         $this->assertEquals(100, $validator->getMin());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'less than or equal');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('less than or equal');
         $validator->setMin(20000);
     }
 
@@ -125,7 +128,8 @@ class SizeTest extends \PHPUnit_Framework_TestCase
         $validator = new File\Size(2000);
         $this->assertEquals('1.95kB', $validator->getMax());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'greater than or equal');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('greater than or equal');
         $validator = new File\Size(['min' => 100, 'max' => 1]);
     }
 
@@ -240,10 +244,8 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     public function testSetMinWithInvalidArgument($value)
     {
         $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Invalid options to validator provided'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid options to validator provided');
         $validator->setMin($value);
     }
 
@@ -253,10 +255,8 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     public function testSetMaxWithInvalidArgument($value)
     {
         $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Invalid options to validator provided'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid options to validator provided');
         $validator->setMax($value);
     }
 }

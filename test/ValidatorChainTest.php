@@ -9,16 +9,20 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\AbstractValidator;
 use Zend\Validator\Between;
 use Zend\Validator\NotEmpty;
 use Zend\Validator\StaticValidator;
 use Zend\Validator\ValidatorChain;
+use Zend\ServiceManager\Exception\ServiceNotFoundException;
+use Zend\Validator\ValidatorInterface;
+use Zend\Validator\GreaterThan;
 
 /**
  * @group      Zend_Validator
  */
-class ValidatorChainTest extends \PHPUnit_Framework_TestCase
+class ValidatorChainTest extends TestCase
 {
     /**
      * @var ValidatorChain
@@ -107,7 +111,7 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
      */
     public function testStaticFactoryClassNotFound()
     {
-        $this->setExpectedException('Zend\ServiceManager\Exception\ServiceNotFoundException');
+        $this->expectException(ServiceNotFoundException::class);
         StaticValidator::execute('1234', 'UnknownValidator');
     }
 
@@ -235,7 +239,7 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
      */
     public function getValidatorTrue()
     {
-        $validator = $this->getMock('Zend\Validator\ValidatorInterface');
+        $validator = $this->createMock(ValidatorInterface::class);
         $validator->expects($this->any())
             ->method('isValid')
             ->will($this->returnValue(true));
@@ -247,7 +251,7 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
      */
     public function getValidatorFalse()
     {
-        $validator = $this->getMock('Zend\Validator\ValidatorInterface');
+        $validator = $this->createMock(ValidatorInterface::class);
         $validator->expects($this->any())
             ->method('isValid')
             ->will($this->returnValue(false));
@@ -311,7 +315,7 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
         $serialized = serialize($this->validator);
 
         $unserialized = unserialize($serialized);
-        $this->assertInstanceOf('Zend\Validator\ValidatorChain', $unserialized);
+        $this->assertInstanceOf(ValidatorChain::class, $unserialized);
         $this->assertEquals(2, count($unserialized));
         $this->assertFalse($unserialized->isValid(''));
     }
@@ -341,7 +345,7 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $spec);
         $this->assertArrayHasKey('instance', $spec);
         $validator = $spec['instance'];
-        $this->assertInstanceOf('Zend\Validator\GreaterThan', $validator);
+        $this->assertInstanceOf(GreaterThan::class, $validator);
         $this->assertArrayHasKey('breakChainOnFailure', $spec);
         $this->assertTrue($spec['breakChainOnFailure']);
     }

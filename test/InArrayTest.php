@@ -9,12 +9,14 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\InArray;
+use Zend\Validator\Exception\RuntimeException;
 
 /**
  * @group      Zend_Validator
  */
-class InArrayTest extends \PHPUnit_Framework_TestCase
+class InArrayTest extends TestCase
 {
     /** @var InArray */
     protected $validator;
@@ -51,10 +53,8 @@ class InArrayTest extends \PHPUnit_Framework_TestCase
     public function testUnsetHaystackRaisesException()
     {
         $validator = new InArray();
-        $this->setExpectedException(
-            'Zend\Validator\Exception\RuntimeException',
-            'haystack option is mandatory'
-        );
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('haystack option is mandatory');
         $validator->getHaystack();
     }
 

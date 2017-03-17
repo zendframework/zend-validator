@@ -9,12 +9,14 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\StringLength;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * @group      Zend_Validator
  */
-class MessageTest extends \PHPUnit_Framework_TestCase
+class MessageTest extends TestCase
 {
     /**
      * @var StringLength
@@ -91,6 +93,24 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Ensures that we can include the %length% parameter in the message,
+     * and that it is substituted with the length of the value we are validating.
+     *
+     * @return void
+     */
+    public function testSetMessageWithLengthParam()
+    {
+        $this->validator->setMessage(
+            "The length of your value is '%length%'",
+            StringLength::TOO_LONG
+        );
+        $inputInvalid = 'abcdefghij';
+        $this->assertFalse($this->validator->isValid($inputInvalid));
+        $messages = $this->validator->getMessages();
+        $this->assertEquals("The length of your value is '10'", current($messages));
+    }
+
+    /**
      * Ensures that we can include another parameter, defined on a
      * class-by-class basis, in the message string.
      * In the case of Zend_Validate_StringLength, one such parameter
@@ -141,10 +161,8 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $keyInvalid = 'invalidKey';
 
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'No message template exists for key'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('No message template exists for key');
         $this->validator->setMessage(
             'Your value is too long',
             $keyInvalid
@@ -219,10 +237,8 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $messages = $this->validator->getMessages();
         $this->assertEquals('Your value is too long', current($messages));
 
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'No property exists by the name '
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('No property exists by the name ');
         $this->validator->unknownProperty;
     }
 
@@ -236,7 +252,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $vars = $this->validator->getMessageVariables();
 
         $this->assertInternalType('array', $vars);
-        $this->assertEquals(['min', 'max'], $vars);
+        $this->assertEquals(['min', 'max', 'length'], $vars);
         $message = 'variables: %notvar% ';
         foreach ($vars as $var) {
             $message .= "%$var% ";
@@ -245,7 +261,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->validator->isValid('abc'));
         $messages = $this->validator->getMessages();
-        $this->assertEquals('variables: %notvar% 4 8 ', current($messages));
+        $this->assertEquals('variables: %notvar% 4 8 3 ', current($messages));
     }
 
     public function testEqualsMessageTemplates()

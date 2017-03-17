@@ -9,15 +9,17 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 use Zend\Validator\AbstractValidator;
 use Zend\Validator\EmailAddress;
+use Zend\Validator\Exception\InvalidArgumentException;
 use Zend\Validator\Hostname;
 
 /**
  * @group      Zend_Validator
  */
-class AbstractTest extends \PHPUnit_Framework_TestCase
+class AbstractTest extends TestCase
 {
     /** @var AbstractValidator */
     public $validator;
@@ -187,7 +189,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testTranslatorMethods()
     {
-        $translatorMock = $this->getMock('ZendTest\Validator\TestAsset\Translator');
+        $translatorMock = $this->createMock(TestAsset\Translator::class);
         $this->validator->setTranslator($translatorMock, 'foo');
 
         $this->assertEquals($translatorMock, $this->validator->getTranslator());
@@ -207,7 +209,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->validator->hasTranslator());
 
-        $translatorMock = $this->getMock('ZendTest\Validator\TestAsset\Translator');
+        $translatorMock = $this->createMock(TestAsset\Translator::class);
         AbstractValidator::setDefaultTranslator($translatorMock, 'foo');
 
         $this->assertEquals($translatorMock, AbstractValidator::getDefaultTranslator());
@@ -292,10 +294,9 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     public function testRetrievingUnknownOptionRaisesException()
     {
         $option = 'foo';
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            sprintf("Invalid option '%s'", $option)
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf("Invalid option '%s'", $option));
+
         $this->validator->getOption($option);
     }
 
@@ -319,10 +320,8 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     public function testSettingOptionsWithNonTraversableRaisesException($options)
     {
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'setOptions expects an array or Traversable'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('setOptions expects an array or Traversable');
         $this->validator->setOptions($options);
     }
 }

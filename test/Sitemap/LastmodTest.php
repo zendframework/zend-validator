@@ -9,12 +9,13 @@
 
 namespace ZendTest\Validator\Sitemap;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Sitemap\Lastmod;
 
 /**
  * @group      Zend_Validator
  */
-class LastmodTest extends \PHPUnit_Framework_TestCase
+class LastmodTest extends TestCase
 {
     /**
      * @var Lastmod

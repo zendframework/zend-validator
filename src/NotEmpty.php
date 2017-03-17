@@ -97,7 +97,7 @@ class NotEmpty extends AbstractValidator
             $options = $temp;
         }
 
-        if (!isset($options['type'])) {
+        if (! isset($options['type'])) {
             if (($type = $this->calculateTypeValue($options)) != 0) {
                 $options['type'] = $type;
             } else {

@@ -9,16 +9,18 @@
 
 namespace ZendTest\Validator\File;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\File;
-use Zend\Validator;
 use ReflectionProperty;
+use Zend\Validator\Exception\InvalidMagicMimeFileException;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * MimeType testbed
  *
  * @group      Zend_Validator
  */
-class MimeTypeTest extends \PHPUnit_Framework_TestCase
+class MimeTypeTest extends TestCase
 {
     /**
      * @return array
@@ -149,7 +151,8 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($magic, $mimetype);
         }
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'could not be');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('could not be');
         $validator->setMagicFile('/unknown/magic/file');
     }
 
@@ -159,10 +162,8 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('This PHP Version has no finfo installed');
         }
 
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidMagicMimeFileException',
-            'could not be used by ext/finfo'
-        );
+        $this->expectException(InvalidMagicMimeFileException::class);
+        $this->expectExceptionMessage('could not be used by ext/finfo');
         $validator = new File\MimeType(['image/gif', 'magicFile' => __FILE__]);
     }
 
@@ -287,10 +288,8 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
     public function testAddingMimeTypeWithInvalidTypeRaisesException($type)
     {
         $validator = new File\MimeType();
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Invalid options to validator provided'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid options to validator provided');
         $validator->addMimeType($type);
     }
 
@@ -313,10 +312,8 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
     {
         $validator = new File\MimeType('image\gif');
         $value     = ['foo' => 'bar'];
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Value array must be in $_FILES format'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Value array must be in $_FILES format');
         $validator->isValid($value);
     }
 }

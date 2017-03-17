@@ -9,6 +9,7 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator;
 use DateTime;
 use DateInterval;
@@ -18,7 +19,7 @@ use ReflectionMethod;
 /**
  * @group      Zend_Validator
  */
-class DateStepTest extends \PHPUnit_Framework_TestCase
+class DateStepTest extends TestCase
 {
     public function stepTestsDataProvider()
     {

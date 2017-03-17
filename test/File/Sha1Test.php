@@ -9,14 +9,16 @@
 
 namespace ZendTest\Validator\File;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\File;
+use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
  * Sha1 testbed
  *
  * @group      Zend_Validator
  */
-class Sha1Test extends \PHPUnit_Framework_TestCase
+class Sha1Test extends TestCase
 {
     /**
      * @return array
@@ -216,10 +218,8 @@ class Sha1Test extends \PHPUnit_Framework_TestCase
     {
         $validator = new File\Sha1();
         $value     = ['foo' => 'bar'];
-        $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
-            'Value array must be in $_FILES format'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Value array must be in $_FILES format');
         $validator->isValid($value);
     }
 }

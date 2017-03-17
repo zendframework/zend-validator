@@ -9,19 +9,24 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Explode;
 use Zend\Validator\Regex;
 use Zend\Validator\Callback;
+use Zend\Validator\Exception\RuntimeException;
+use Zend\Validator\ValidatorInterface;
+use Zend\Validator\InArray;
 
 /**
  * @group      Zend_Validator
  */
-class ExplodeTest extends \PHPUnit_Framework_TestCase
+class ExplodeTest extends TestCase
 {
     public function testRaisesExceptionWhenValidatorIsMissing()
     {
         $validator = new Explode();
-        $this->setExpectedException('Zend\Validator\Exception\RuntimeException', 'validator');
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('validator');
         $validator->isValid('foo,bar');
     }
 
@@ -61,7 +66,7 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
         $messages,
         $expects
     ) {
-        $mockValidator = $this->getMock('Zend\Validator\ValidatorInterface');
+        $mockValidator = $this->createMock(ValidatorInterface::class);
         $mockValidator->expects(
             $this->exactly($numIsValidCalls)
         )->method('isValid')->will($this->returnValue($isValidReturn));
@@ -119,19 +124,17 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
 
         /** @var $inArrayValidator \Zend\Validator\InArray */
         $inArrayValidator = $validator->getValidator();
-        $this->assertInstanceOf('Zend\Validator\InArray', $inArrayValidator);
+        $this->assertInstanceOf(InArray::class, $inArrayValidator);
         $this->assertSame(
             ['a', 'b', 'c'],
             $inArrayValidator->getHaystack()
         );
     }
 
-    /**
-     * @expectedException \Zend\Validator\Exception\RuntimeException
-     */
     public function testSetValidatorMissingName()
     {
         $validator = new Explode();
+        $this->expectException(RuntimeException::class);
         $validator->setValidator(
             [
                 'options' => []
@@ -139,12 +142,10 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @expectedException \Zend\Validator\Exception\RuntimeException
-     */
     public function testSetValidatorInvalidParam()
     {
         $validator = new Explode();
+        $this->expectException(RuntimeException::class);
         $validator->setValidator('inarray');
     }
 

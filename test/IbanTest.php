@@ -9,12 +9,14 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
+use Zend\Validator\Exception\InvalidArgumentException;
 use Zend\Validator\Iban as IbanValidator;
 
 /**
  * @group      Zend_Validator
  */
-class IbanTest extends \PHPUnit_Framework_TestCase
+class IbanTest extends TestCase
 {
     public function ibanDataProvider()
     {
@@ -114,7 +116,8 @@ class IbanTest extends \PHPUnit_Framework_TestCase
         $validator->setCountryCode('DE');
         $this->assertEquals('DE', $validator->getCountryCode());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'ISO 3166-1');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('ISO 3166-1');
         $validator->setCountryCode('foo');
     }
 
@@ -123,7 +126,8 @@ class IbanTest extends \PHPUnit_Framework_TestCase
         $validator = new IbanValidator(['country_code' => 'AT']);
         $this->assertEquals('AT', $validator->getCountryCode());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'ISO 3166-1');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('ISO 3166-1');
         $validator = new IbanValidator(['country_code' => 'BAR']);
     }
 

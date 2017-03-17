@@ -9,13 +9,15 @@
 
 namespace ZendTest\Validator;
 
+use PHPUnit\Framework\TestCase;
 use stdClass;
+use Zend\Validator\Exception\InvalidArgumentException;
 use Zend\Validator\NotEmpty;
 
 /**
  * @group      Zend_Validator
  */
-class NotEmptyTest extends \PHPUnit_Framework_TestCase
+class NotEmptyTest extends TestCase
 {
     /**
      * @var NotEmpty
@@ -855,7 +857,8 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
      */
     public function testSettingFalseType()
     {
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Unknown');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown');
         $this->validator->setType(true);
     }
 
@@ -932,7 +935,7 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
     {
         $valid = new NotEmpty(NotEmpty::STRING);
 
-        $object = $this->getMockBuilder('\stdClass')
+        $object = $this->getMockBuilder(stdClass::class)
             ->setMethods(['__toString'])
             ->getMock();
 
@@ -945,7 +948,7 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
         $valid = new NotEmpty(NotEmpty::OBJECT_STRING);
         $this->assertTrue($valid->isValid($object));
 
-        $object = $this->getMockBuilder('\stdClass')
+        $object = $this->getMockBuilder(stdClass::class)
             ->setMethods(['__toString'])
             ->getMock();
         $object->expects($this->atLeastOnce())
