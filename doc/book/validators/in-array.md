@@ -7,8 +7,8 @@ within an array. It is also able to validate multidimensional arrays.
 
 The following options are supported for `Zend\Validator\InArray`:
 
-- `haystack`: Sets the haystack for the validation.  `recursive`: Defines if the
-- validation should be done recursively. This option
+- `haystack`: Sets the haystack for the validation. 
+- `recursive`: Defines if the validation should be done recursively. This option
   defaults to `false`.
 - `strict`: Three modes of comparison are offered owing to an often overlooked,
   and potentially dangerous security issue when validating string input from
