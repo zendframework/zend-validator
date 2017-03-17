@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.9.0 - TBD
+## 2.9.0 - 2017-03-17
 
 ### Added
 
@@ -20,27 +20,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
-
-
-## 2.8.3 - TBD
-
-### Added
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
 - [#147](https://github.com/zendframework/zend-validator/issues/147)
-  [#148](https://github.com/zendframework/zend-validator/pull/110) adds further
+  [#148](https://github.com/zendframework/zend-validator/pull/148) adds further
   `"suggest"` clauses in `composer.json`, since some dependencies are not always
   required, and may lead to runtime failures.
 - [#66](https://github.com/zendframework/zend-validator/pull/66) fixed
@@ -48,8 +29,7 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#88](https://github.com/zendframework/zend-validator/pull/88) fixed NotEmpty
   validator incorrectly applying types bitmaps
 - [#150](https://github.com/zendframework/zend-validator/pull/150) fixed Hostname
-  validator not allowiing some characters in .dk IDN
-
+  validator not allowing some characters in .dk IDN
 
 ## 2.8.2 - 2017-01-29
 
