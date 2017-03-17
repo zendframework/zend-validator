@@ -45,6 +45,8 @@ All notable changes to this project will be documented in this file, in reverse 
   EmailAddress validator applying IDNA conversion to local part 
 - [#88](https://github.com/zendframework/zend-validator/pull/88) fixed NotEmpty
   validator incorrectly applying types bitmaps
+- [#150](https://github.com/zendframework/zend-validator/pull/150) fixed Hostname
+  validator not allowiing some characters in .dk IDN
 
 
 ## 2.8.2 - 2017-01-29
