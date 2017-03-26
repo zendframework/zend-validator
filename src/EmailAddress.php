@@ -511,6 +511,7 @@ class EmailAddress extends AbstractValidator
         }
 
         // Match hostname part
+        $hostname = false;
         if ($this->options['useDomainCheck']) {
             $hostname = $this->validateHostnamePart();
         }
@@ -518,13 +519,7 @@ class EmailAddress extends AbstractValidator
         $local = $this->validateLocalPart();
 
         // If both parts valid, return true
-        if ($local && $length) {
-            if (($this->options['useDomainCheck'] && $hostname) || ! $this->options['useDomainCheck']) {
-                return true;
-            }
-        }
-
-        return false;
+        return ($local && $length) && (! $this->options['useDomainCheck'] || $hostname);
     }
 
     /**
