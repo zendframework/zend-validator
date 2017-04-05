@@ -235,6 +235,9 @@ class EmailAddressTest extends TestCase
         ];
 
         if (extension_loaded('intl')) {
+            $return['иван@письмо.рф']          = ['иван@письмо.рф'];
+            $return['öäü@ä-umlaut.de']         = ['öäü@ä-umlaut.de'];
+            $return['frédéric@domain.com']     = ['frédéric@domain.com'];
             $return['bob@тест.рф']             = ['bob@тест.рф'];
             $return['bob@xn--e1aybc.xn--p1ai'] = ['bob@xn--e1aybc.xn--p1ai'];
         }
@@ -277,7 +280,6 @@ class EmailAddressTest extends TestCase
             'bob @ domain.com'                                                         => ['bob @ domain.com'],
             'Abc..123@example.com'                                                     => ['Abc..123@example.com'],
             '"bob%jones@domain.com'                                                    => ['"bob%jones@domain.com'],
-            'иван@письмо.рф'                                                           => ['иван@письмо.рф'],
             'multiline'                                                                => ['bob
 
             @domain.com'],

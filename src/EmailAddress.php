@@ -9,6 +9,8 @@
 
 namespace Zend\Validator;
 
+use UConverter;
+
 class EmailAddress extends AbstractValidator
 {
     const INVALID            = 'emailAddressInvalid';
@@ -342,6 +344,8 @@ class EmailAddress extends AbstractValidator
         $atext = 'a-zA-Z0-9\x21\x23\x24\x25\x26\x27\x2a\x2b\x2d\x2f\x3d\x3f\x5e\x5f\x60\x7b\x7c\x7d\x7e';
         if (preg_match('/^[' . $atext . ']+(\x2e+[' . $atext . ']+)*$/', $this->localPart)) {
             $result = true;
+        } elseif ($this->validateInternationalizedLocalPart()) {
+            $result = true;
         } else {
             // Try quoted string format (RFC 5321 Chapter 4.1.2)
 
@@ -358,6 +362,21 @@ class EmailAddress extends AbstractValidator
         }
 
         return $result;
+    }
+
+    protected function validateInternationalizedLocalPart()
+    {
+        if (extension_loaded('intl')
+            && false === UConverter::transcode($this->localPart, 'UTF-8', 'UTF-8')
+        ) {
+            // invalid utf?
+            return false;
+        }
+        $atext = 'a-zA-Z0-9\x21\x23\x24\x25\x26\x27\x2a\x2b\x2d\x2f\x3d\x3f\x5e\x5f\x60\x7b\x7c\x7d\x7e';
+        // RFC 6532 extends atext to include non-ascii utf
+        // @see https://tools.ietf.org/html/rfc6532#section-3.1
+        $uatext = $atext . '\x{80}-\x{FFFF}';
+        return (bool) preg_match('/^[' . $uatext . ']+(\x2e+[' . $uatext . ']+)*$/u', $this->localPart);
     }
 
     /**
