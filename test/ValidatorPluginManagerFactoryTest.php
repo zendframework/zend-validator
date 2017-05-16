@@ -97,7 +97,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
         $container->has('MvcTranslator')->willReturn(false); // necessary due to default initializers
 
         $factory = new ValidatorPluginManagerFactory();
-        $validators = $factory($container->reveal(), 'FormElementManager');
+        $validators = $factory($container->reveal(), 'ValidatorManager');
 
         $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
         $this->assertTrue($validators->has('test'));
@@ -131,7 +131,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
         $container->has('MvcTranslator')->willReturn(false); // necessary due to default initializers
 
         $factory = new ValidatorPluginManagerFactory();
-        $validators = $factory($container->reveal(), 'FormElementManager');
+        $validators = $factory($container->reveal(), 'ValidatorManager');
 
         $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
         $this->assertFalse($validators->has('test'));
@@ -150,7 +150,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
         $container->has('MvcTranslator')->willReturn(false); // necessary due to default initializers
 
         $factory = new ValidatorPluginManagerFactory();
-        $validators = $factory($container->reveal(), 'FormElementManager');
+        $validators = $factory($container->reveal(), 'ValidatorManager');
 
         $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
     }
@@ -167,7 +167,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
         $container->has('MvcTranslator')->willReturn(false); // necessary due to default initializers
 
         $factory = new ValidatorPluginManagerFactory();
-        $validators = $factory($container->reveal(), 'FormElementManager');
+        $validators = $factory($container->reveal(), 'ValidatorManager');
 
         $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
         $this->assertFalse($validators->has('foo'));
