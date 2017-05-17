@@ -36,7 +36,11 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#168](https://github.com/zendframework/zend-validator/pull/168) fixes how the
+  `ValidatorPluginManagerFactory` factory initializes the plugin manager instance,
+  ensuring it is injecting the relevant configuration from the `config` service
+  and thus seeding it with configured validator services. This means
+  that the `validators` configuration will now be honored in non-zend-mvc contexts.
 
 ## 2.9.0 - 2017-03-17
 
