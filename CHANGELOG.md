@@ -34,6 +34,8 @@ All notable changes to this project will be documented in this file, in reverse 
   https://en.wikipedia.org/wiki/Payment_card_number).
 - [#162](https://github.com/zendframework/zend-validator/pull/162) updates the
   `Hostname` validator to support `.hr` (Croatia) IDN domains.
+- [#163](https://github.com/zendframework/zend-validator/pull/163) updates the
+  `Iban` validator to support Belarus.
 
 ### Deprecated
 
