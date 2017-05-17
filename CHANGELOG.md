@@ -26,6 +26,13 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
+### Changes
+
+- [#154](https://github.com/zendframework/zend-validator/pull/154) updates the
+  `CreditCard` validator to allow 19 digit Discover card values, and 13 and 19
+  digit Visa card values, which are now allowed (see
+  https://en.wikipedia.org/wiki/Payment_card_number).
+
 ### Deprecated
 
 - Nothing.
