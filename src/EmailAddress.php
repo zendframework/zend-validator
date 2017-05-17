@@ -547,6 +547,10 @@ class EmailAddress extends AbstractValidator
      */
     protected function idnToUtf8($email)
     {
+        if (strlen($email) == 0) {
+            return $email;
+        }
+            
         if (extension_loaded('intl')) {
             // The documentation does not clarify what kind of failure
             // can happen in idn_to_utf8. One can assume if the source
