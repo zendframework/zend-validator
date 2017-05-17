@@ -180,7 +180,10 @@ class Code128 extends AbstractAdapter
                     break;
             }
 
-            $value = $strWrapper->substr($value, 1, null);
+            if (!empty($value) && strlen($value) > 1) {
+                $value = $strWrapper->substr($value, 1, null);
+            }
+            
             $read  = $set;
         }
 
