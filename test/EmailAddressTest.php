@@ -685,6 +685,11 @@ class EmailAddressTest extends TestCase
         $this->assertInstanceOf(Hostname::class, $hostname);
     }
 
+    public function testIsMxSupported()
+    {
+        $validator = new EmailAddress(['useMxCheck' => true, 'allow' => Hostname::ALLOW_ALL]);
+        $this->assertInternalType('bool', $validator->isMxSupported());
+    }
     /**
      * Test getMXRecord
      */
@@ -692,7 +697,6 @@ class EmailAddressTest extends TestCase
     {
         $this->skipIfOnlineTestsDisabled();
 
-        $validator = new EmailAddress(['useMxCheck' => true, 'allow' => Hostname::ALLOW_ALL]);
         $validator = new EmailAddress(['useMxCheck' => true, 'allow' => Hostname::ALLOW_ALL]);
 
         if (! $validator->isMxSupported()) {
