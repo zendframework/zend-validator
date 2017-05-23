@@ -124,8 +124,8 @@ class ImageSize extends AbstractValidator
      * Sets the minimum allowed width
      *
      * @param  int $minWidth
-     * @return ImageSize Provides a fluid interface
      * @throws Exception\InvalidArgumentException When minwidth is greater than maxwidth
+     * @return ImageSize Provides a fluid interface
      */
     public function setMinWidth($minWidth)
     {
@@ -154,8 +154,8 @@ class ImageSize extends AbstractValidator
      * Sets the maximum allowed width
      *
      * @param  int $maxWidth
-     * @return ImageSize Provides a fluid interface
      * @throws Exception\InvalidArgumentException When maxwidth is less than minwidth
+     * @return ImageSize Provides a fluid interface
      */
     public function setMaxWidth($maxWidth)
     {
@@ -184,8 +184,8 @@ class ImageSize extends AbstractValidator
      * Sets the minimum allowed height
      *
      * @param  int $minHeight
-     * @return ImageSize Provides a fluid interface
      * @throws Exception\InvalidArgumentException When minheight is greater than maxheight
+     * @return ImageSize Provides a fluid interface
      */
     public function setMinHeight($minHeight)
     {
@@ -214,8 +214,8 @@ class ImageSize extends AbstractValidator
      * Sets the maximum allowed height
      *
      * @param  int $maxHeight
-     * @return ImageSize Provides a fluid interface
      * @throws Exception\InvalidArgumentException When maxheight is less than minheight
+     * @return ImageSize Provides a fluid interface
      */
     public function setMaxHeight($maxHeight)
     {
@@ -351,7 +351,7 @@ class ImageSize extends AbstractValidator
         $this->setValue($filename);
 
         // Is file readable ?
-        if (empty($file) || false === stream_resolve_include_path($file)) {
+        if (empty($file) || false === is_readable($file)) {
             $this->error(self::NOT_READABLE);
             return false;
         }

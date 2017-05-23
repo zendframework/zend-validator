@@ -176,10 +176,10 @@ class MimeType extends AbstractValidator
      * if false, the default MAGIC file from PHP will be used
      *
      * @param  string $file
-     * @return MimeType Provides fluid interface
      * @throws Exception\RuntimeException When finfo can not read the magicfile
      * @throws Exception\InvalidArgumentException
      * @throws Exception\InvalidMagicMimeFileException
+     * @return MimeType Provides fluid interface
      */
     public function setMagicFile($file)
     {
@@ -291,8 +291,8 @@ class MimeType extends AbstractValidator
      * Adds the mimetypes
      *
      * @param  string|array $mimetype The mimetypes to add for validation
-     * @return MimeType Provides a fluent interface
      * @throws Exception\InvalidArgumentException
+     * @return MimeType Provides a fluent interface
      */
     public function addMimeType($mimetype)
     {
@@ -363,7 +363,7 @@ class MimeType extends AbstractValidator
         $this->setValue($filename);
 
         // Is file readable ?
-        if (empty($file) || false === stream_resolve_include_path($file)) {
+        if (empty($file) || false === is_readable($file)) {
             $this->error(static::NOT_READABLE);
             return false;
         }
