@@ -9,6 +9,7 @@
 
 namespace Zend\Validator\File;
 
+use Countable;
 use Zend\Validator\AbstractValidator;
 use Zend\Validator\Exception;
 
@@ -109,7 +110,7 @@ class Upload extends AbstractValidator
      */
     public function setFiles($files = [])
     {
-        if (count($files) === 0) {
+        if ((is_array($files) || $files instanceof Countable) && count($files) === 0) {
             $this->options['files'] = $_FILES;
         } else {
             $this->options['files'] = $files;
