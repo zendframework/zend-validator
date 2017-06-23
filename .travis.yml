@@ -9,7 +9,7 @@ branches:
 
 cache:
   directories:
-    - $HOME/.composer/cache
+    - $HOME/.composer/
     - $HOME/.local
     - zf-mkdoc-theme
 
@@ -91,7 +91,7 @@ install:
   - travis_retry composer install $COMPOSER_ARGS --ignore-platform-reqs
   - if [[ $TRAVIS_PHP_VERSION =~ ^5.6 ]]; then travis_retry composer update $COMPOSER_ARGS --with-dependencies $LEGACY_DEPS ; fi
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
-  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
+  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update $COMPOSER_ARGS --prefer-lowest --prefer-stable ; fi
   - if [[ $SERVICE_MANAGER_VERSION != '' ]]; then travis_retry composer require --dev --no-update $COMPOSER_ARGS "zendframework/zend-servicemanager:$SERVICE_MANAGER_VERSION" ; fi
   - if [[ $SERVICE_MANAGER_VERSION == '' ]]; then travis_retry composer require --dev --no-update $COMPOSER_ARGS "zendframework/zend-servicemanager:^3.0.3" ; fi
   - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require --dev $COMPOSER_ARGS $COVERAGE_DEPS ; fi
@@ -104,11 +104,11 @@ script:
   - if [[ $EXECUTE_HOSTNAME_CHECK == "true" && $TRAVIS_PULL_REQUEST == "false" ]]; then php bin/update_hostname_validator.php --check-only; fi
   - if [[ $DEPLOY_DOCS == "true" && "$TRAVIS_TEST_RESULT" == "0" ]]; then wget -O theme-installer.sh "https://raw.githubusercontent.com/zendframework/zf-mkdoc-theme/master/theme-installer.sh" ; chmod 755 theme-installer.sh ; ./theme-installer.sh ; fi
 
-after_script:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then composer upload-coverage ; fi
-
 after_success:
   - if [[ $DEPLOY_DOCS == "true" ]]; then echo "Preparing to build and deploy documentation" ; ./zf-mkdoc-theme/deploy.sh ; echo "Completed deploying documentation" ; fi
+
+after_script:
+  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer upload-coverage ; fi
 
 notifications:
   email: false
