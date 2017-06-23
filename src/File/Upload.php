@@ -110,7 +110,7 @@ class Upload extends AbstractValidator
      */
     public function setFiles($files = [])
     {
-        if ((is_array($files) || $files instanceof Countable) && count($files) === 0) {
+        if (null === $files || ((is_array($files) || $files instanceof Countable) && count($files) === 0)) {
             $this->options['files'] = $_FILES;
         } else {
             $this->options['files'] = $files;
