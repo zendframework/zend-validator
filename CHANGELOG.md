@@ -36,7 +36,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#180](https://github.com/zendframework/zend-validator/pull/180) fixes how
+  `Zend\Validator\File\MimeType` "closes" the open FileInfo handle for the file
+  being validated, using `unset()` instead of `finfo_close()`; this resolves a
+  segfault that occurs on older PHP versions.
 
 ## 2.9.1 - 2017-05-17
 
