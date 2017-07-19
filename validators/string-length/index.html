@@ -16,6 +16,7 @@
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic,700&subset=latin,latin-ext" rel="stylesheet" type="text/css">
     <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/zf-web.css" rel="stylesheet">
     <link href="../../css/zf.css" rel="stylesheet">
     <link href="../../css/prism-zf.css" rel="stylesheet">
 
@@ -56,7 +57,7 @@
 
             <!-- Main title -->
             <span class="navbar-brand">
-              <a class="logo-link" href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Zend Framework"><img src="../../img/zf-logo-mark.png" height="28" alt="Zend Framework" /></a>
+              <a class="logo-link" href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Zend Framework"><img src="../../img/zf-logo-mark.svg" height="28" alt="Zend Framework" /></a>
               <a href="../..">zend-validator</a>
             </span>
         </div>
@@ -224,12 +225,6 @@
             
 <li >
     <a href="../not-empty/">NotEmpty</a>
-</li>
-
-        
-            
-<li >
-    <a href="../post-code/">PostCode</a>
 </li>
 
         
@@ -443,7 +438,7 @@
 </div>
 
     <!-- content:begin -->
-    <div class="container">
+    <div id="page-top" class="container docs">
         
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
@@ -462,6 +457,8 @@
         
             <li><a href="#encoding-of-values">Encoding of values</a></li>
         
+            <li><a href="#validation-messages">Validation Messages</a></li>
+        
     
     </ul>
 
@@ -479,7 +476,7 @@
         <div class="col-md-9" role="main">
 
 <ol class="breadcrumb" role="navigation" aria-label="breadcrumbs navigation">
-  <li><a href="../..">Docs</a> &raquo;</li>
+  <li><a href="../..">zend-validator</a> &raquo;</li>
   
     
       
@@ -508,10 +505,11 @@ Integers, floats, dates or objects can not be validated with this validator.</p>
 <li><code>encoding</code>: Sets the <code>ICONV</code> encoding to use with the string.</li>
 <li><code>min</code>: Sets the minimum allowed length for a string.</li>
 <li><code>max</code>: Sets the maximum allowed length for a string.</li>
+<li><code>length</code>: Holds the actual length of the string.</li>
 </ul>
 <h2 id="default-behaviour">Default behaviour</h2>
 <p>By default, this validator checks if a value is between <code>min</code> and <code>max</code> using a
-default<code>min</code> value of <code>0</code> and default <code>max</code> value of <code>NULL</code> (meaning unlimited).</p>
+default <code>min</code> value of <code>0</code> and default <code>max</code> value of <code>NULL</code> (meaning unlimited).</p>
 <p>As such, without any options, the validator only checks that the input is a
 string.</p>
 <h2 id="limiting-the-maximum-string-length">Limiting the maximum string length</h2>
@@ -522,7 +520,6 @@ property. It accepts an integer value as input.</p>
 $validator-&gt;isValid(&quot;Test&quot;); // returns true
 $validator-&gt;isValid(&quot;Testing&quot;); // returns false</code></pre>
 
-
 <p>You can set the maximum allowed length after instantiation by using the
 <code>setMax()</code> method; <code>getMax()</code> retrieves the value.</p>
 <pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\StringLength();
@@ -530,7 +527,6 @@ $validator-&gt;setMax(6);
 
 $validator-&gt;isValid(&quot;Test&quot;); // returns true
 $validator-&gt;isValid(&quot;Testing&quot;); // returns false</code></pre>
-
 
 <h2 id="limiting-the-minimum-string-length">Limiting the minimum string length</h2>
 <p>To limit the minimal required string length, set the <code>min</code>
@@ -540,7 +536,6 @@ property using an integer value:</p>
 $validator-&gt;isValid(&quot;Test&quot;); // returns false
 $validator-&gt;isValid(&quot;Testing&quot;); // returns true</code></pre>
 
-
 <p>You can set the value after instantiation using the <code>setMin()</code>
 method; <code>getMin()</code> retrieves the value.</p>
 <pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\StringLength();
@@ -548,7 +543,6 @@ $validator-&gt;setMin(5);
 
 $validator-&gt;isValid(&quot;Test&quot;); // returns false
 $validator-&gt;isValid(&quot;Testing&quot;); // returns true</code></pre>
-
 
 <h2 id="limiting-both-minimum-and-maximum-string-length">Limiting both minimum and maximum string length</h2>
 <p>Sometimes you will need to set both a minimum and a maximum string length;
@@ -559,7 +553,6 @@ of 30 characters, but require at least three charcters:</p>
 $validator-&gt;isValid(&quot;.&quot;); // returns false
 $validator-&gt;isValid(&quot;Test&quot;); // returns true
 $validator-&gt;isValid(&quot;Testing&quot;); // returns true</code></pre>
-
 
 <blockquote>
 <h3 id="setting-a-maximum-lower-than-the-minimum">Setting a maximum lower  than the minimum</h3>
@@ -586,9 +579,12 @@ $validator2 = new Zend\Validator\StringLength([
 ]);
 $validator2-&gt;isValid(&quot;Ärger&quot;); // returns true</code></pre>
 
-
 <p>When your installation and your application are using different encodings, then
 you should always set an encoding manually.</p>
+<h2 id="validation-messages">Validation Messages</h2>
+<p>Using the setMessage() method you can set another message to be returned in case of the specified failure.</p>
+<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\StringLength(['min' =&gt; 3, 'max' =&gt; 30]);
+$validator-&gt;setMessage('Youre string is too long. You typed '%length%' chars.', Zend\Validator\StringLength::TOO_LONG);</code></pre>
 
 <hr />
 
@@ -608,13 +604,49 @@ you should always set an encoding manually.</p>
     </div>
     <!-- content:end -->
 
-    <footer class="col-md-12 text-center">
-        <hr>
-        <p>
-        <small>Copyright (c) 2016 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a><br></small>
-        </p>
-        <p><small><a href="http://framework.zend.com">Learn more about Zend Framework</a></small></p>
-    </footer>
+    <div id="footerwrap">
+    <div class="container">
+        <div class="row site-map">
+            <div class="col-lg-3">
+              <p>
+                <strong>Zend Framework</strong><br />
+                <a href="http://framework.zend.com/">framework.zend.com</a><br />
+                <a href="https://docs.zendframework.com">docs.zendframework.com</a><br />
+                <a href="https://packages.zendframework.com">packages.zendframework.com</a><br />
+                <a href="https://apigility.org">apigility.org</a><br />
+              </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 centered">
+                <a class="back-to-top" href="#page-top"><i class="fa fa-chevron-circle-up fa-4" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="spacing"></div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h4>Copyright</h4>
+                <div class="hline-w"></div>
+
+                <p>&copy; 2006-2016 by <a href="http://www.zend.com">Zend</a>, a <a href="http://www.roguewave.com/">Rogue Wave Company</a>.</p>
+            </div>
+
+            <div class="col-lg-4">
+                <h4>Contacts</h4>
+                <div class="hline-w"></div>
+                <p>
+                    <a href="irc://irc.freenode.net/zftalk" class="btn-social btn-outline" alt="IRC" title="IRC"><i class="fa fa-comment"></i></a>
+                    <a href="https://github.com/zendframework" class="btn-social btn-outline" alt="Github" title="Github"><i class="fa fa-github"></i></a>
+                    <a href="https://twitter.com/zfdevteam" class="btn-social btn-outline" alt="Twitter" title="Twitter"><i class="fa fa-twitter"></i></a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <script src="../../js/jquery-1.10.2.min.js"></script>
     <script src="../../js/bootstrap-3.0.3.min.js"></script>
@@ -654,7 +686,7 @@ you should always set an encoding manually.</p>
     <div class="zf-components">
   <div class="zf-components-grid">
     <div class="zf-logo">
-      <a href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="http://framework.zend.com/images/logos/zf-logo-mark.png" alt="Zend Framework" width="250" /></a>
+      <a href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="../../img/zf-logo-mark.svg" alt="Zend Framework" width="250" /></a>
     </div>
 
     <div class="component-list"></div>
@@ -759,7 +791,7 @@ you should always set an encoding manually.</p>
     // Fetch the component list and display it.
     function loadComponentList () {
       $.ajax({
-        url: "//zendframework.github.io/zf-mkdoc-theme/scripts/zf-component-list.json",
+        url: "//docs.zendframework.com/zf-mkdoc-theme/scripts/zf-component-list.json",
         dataType: "text json",
         success: parseComponentList,
         error: function (e) {

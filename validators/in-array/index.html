@@ -16,6 +16,7 @@
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic,700&subset=latin,latin-ext" rel="stylesheet" type="text/css">
     <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/zf-web.css" rel="stylesheet">
     <link href="../../css/zf.css" rel="stylesheet">
     <link href="../../css/prism-zf.css" rel="stylesheet">
 
@@ -56,7 +57,7 @@
 
             <!-- Main title -->
             <span class="navbar-brand">
-              <a class="logo-link" href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Zend Framework"><img src="../../img/zf-logo-mark.png" height="28" alt="Zend Framework" /></a>
+              <a class="logo-link" href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Zend Framework"><img src="../../img/zf-logo-mark.svg" height="28" alt="Zend Framework" /></a>
               <a href="../..">zend-validator</a>
             </span>
         </div>
@@ -224,12 +225,6 @@
             
 <li >
     <a href="../not-empty/">NotEmpty</a>
-</li>
-
-        
-            
-<li >
-    <a href="../post-code/">PostCode</a>
 </li>
 
         
@@ -443,7 +438,7 @@
 </div>
 
     <!-- content:begin -->
-    <div class="container">
+    <div id="page-top" class="container docs">
         
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
@@ -475,7 +470,7 @@
         <div class="col-md-9" role="main">
 
 <ol class="breadcrumb" role="navigation" aria-label="breadcrumbs navigation">
-  <li><a href="../..">Docs</a> &raquo;</li>
+  <li><a href="../..">zend-validator</a> &raquo;</li>
   
     
       
@@ -496,8 +491,8 @@ within an array. It is also able to validate multidimensional arrays.</p>
 <h2 id="supported-options">Supported options</h2>
 <p>The following options are supported for <code>Zend\Validator\InArray</code>:</p>
 <ul>
-<li><code>haystack</code>: Sets the haystack for the validation.  <code>recursive</code>: Defines if the</li>
-<li>validation should be done recursively. This option
+<li><code>haystack</code>: Sets the haystack for the validation. </li>
+<li><code>recursive</code>: Defines if the validation should be done recursively. This option
   defaults to <code>false</code>.</li>
 <li><code>strict</code>: Three modes of comparison are offered owing to an often overlooked,
   and potentially dangerous security issue when validating string input from
@@ -523,7 +518,7 @@ of converting strings to int in such cases. Therefore, <code>'foo'</code> would 
 <h2 id="array-validation">Array validation</h2>
 <p>Basic usage is to provide an array during instantiation:</p>
 <pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\InArray([
-    'haystack' =&gt; ['value1', 'value2',...'valueN']
+    'haystack' =&gt; ['value1', 'value2',...'valueN'],
 ]);
 
 if ($validator-&gt;isValid('value')) {
@@ -531,7 +526,6 @@ if ($validator-&gt;isValid('value')) {
 } else {
     // no value found
 }</code></pre>
-
 
 <p>This will behave exactly like PHP's <code>in_array()</code> method when passed only a
 needle and haystack.</p>
@@ -552,7 +546,6 @@ if ($validator-&gt;isValid('value')) {
     // no value found
 }</code></pre>
 
-
 <h2 id="array-validation-modes">Array validation modes</h2>
 <p>As previously mentioned, there are possible security issues when using the
 default non-strict comparison mode, so rather than restricting the developer,
@@ -564,7 +557,7 @@ middle-ground.</p>
 <code>false</code>.</p>
 <pre class="codehilite"><code class="language-php">// defaults to InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY
 $validator = new Zend\Validator\InArray([
-    'haystack' =&gt; array('value1', 'value2', /* ... */ 'valueN'),
+    'haystack' =&gt; ['value1', 'value2', /* ... */ 'valueN'],
 ]);
 
 // set strict mode
@@ -585,7 +578,6 @@ $validator-&gt;setStrict(InArray::COMPARE_STRICT);
 $validator-&gt;setStrict(InArray::COMPARE_NOT_STRICT);
 $validator-&gt;setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY);</code></pre>
 
-
 <blockquote>
 <h3 id="non-strict-safe-mode-by-default">Non-strict safe-mode by default</h3>
 <p>Note that the <code>strict</code> setting is per default <code>false</code>.</p>
@@ -595,7 +587,7 @@ $validator-&gt;setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULN
 validate multidimensional arrays.</p>
 <p>To validate multidimensional arrays you have to set the <code>recursive</code> option.</p>
 <pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\InArray([
-    'haystack' =&gt; array(
+    'haystack' =&gt; [
         'firstDimension' =&gt; ['value1', 'value2', / ... */ 'valueN'],
         'secondDimension' =&gt; ['foo1', 'foo2', /* ... */ 'fooN'],
     ],
@@ -607,7 +599,6 @@ if ($validator-&gt;isValid('value')) {
 } else {
     // no value found
 }</code></pre>
-
 
 <p>Your array will then be validated recursively to see if the given value is
 contained. Additionally you could use <code>setRecursive()</code> to set this option
@@ -624,7 +615,6 @@ if ($validator-&gt;isValid('value')) {
 } else {
     // no value found
 }</code></pre>
-
 
 <blockquote>
 <h3 id="default-setting-for-recursion">Default setting for recursion</h3>
@@ -652,13 +642,49 @@ your haystack, then you must wrap the <code>haystack</code> key.</p>
     </div>
     <!-- content:end -->
 
-    <footer class="col-md-12 text-center">
-        <hr>
-        <p>
-        <small>Copyright (c) 2016 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a><br></small>
-        </p>
-        <p><small><a href="http://framework.zend.com">Learn more about Zend Framework</a></small></p>
-    </footer>
+    <div id="footerwrap">
+    <div class="container">
+        <div class="row site-map">
+            <div class="col-lg-3">
+              <p>
+                <strong>Zend Framework</strong><br />
+                <a href="http://framework.zend.com/">framework.zend.com</a><br />
+                <a href="https://docs.zendframework.com">docs.zendframework.com</a><br />
+                <a href="https://packages.zendframework.com">packages.zendframework.com</a><br />
+                <a href="https://apigility.org">apigility.org</a><br />
+              </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 centered">
+                <a class="back-to-top" href="#page-top"><i class="fa fa-chevron-circle-up fa-4" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="spacing"></div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h4>Copyright</h4>
+                <div class="hline-w"></div>
+
+                <p>&copy; 2006-2016 by <a href="http://www.zend.com">Zend</a>, a <a href="http://www.roguewave.com/">Rogue Wave Company</a>.</p>
+            </div>
+
+            <div class="col-lg-4">
+                <h4>Contacts</h4>
+                <div class="hline-w"></div>
+                <p>
+                    <a href="irc://irc.freenode.net/zftalk" class="btn-social btn-outline" alt="IRC" title="IRC"><i class="fa fa-comment"></i></a>
+                    <a href="https://github.com/zendframework" class="btn-social btn-outline" alt="Github" title="Github"><i class="fa fa-github"></i></a>
+                    <a href="https://twitter.com/zfdevteam" class="btn-social btn-outline" alt="Twitter" title="Twitter"><i class="fa fa-twitter"></i></a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <script src="../../js/jquery-1.10.2.min.js"></script>
     <script src="../../js/bootstrap-3.0.3.min.js"></script>
@@ -698,7 +724,7 @@ your haystack, then you must wrap the <code>haystack</code> key.</p>
     <div class="zf-components">
   <div class="zf-components-grid">
     <div class="zf-logo">
-      <a href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="http://framework.zend.com/images/logos/zf-logo-mark.png" alt="Zend Framework" width="250" /></a>
+      <a href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="../../img/zf-logo-mark.svg" alt="Zend Framework" width="250" /></a>
     </div>
 
     <div class="component-list"></div>
@@ -803,7 +829,7 @@ your haystack, then you must wrap the <code>haystack</code> key.</p>
     // Fetch the component list and display it.
     function loadComponentList () {
       $.ajax({
-        url: "//zendframework.github.io/zf-mkdoc-theme/scripts/zf-component-list.json",
+        url: "//docs.zendframework.com/zf-mkdoc-theme/scripts/zf-component-list.json",
         dataType: "text json",
         success: parseComponentList,
         error: function (e) {

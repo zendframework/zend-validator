@@ -16,6 +16,7 @@
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic,700&subset=latin,latin-ext" rel="stylesheet" type="text/css">
     <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/zf-web.css" rel="stylesheet">
     <link href="../../css/zf.css" rel="stylesheet">
     <link href="../../css/prism-zf.css" rel="stylesheet">
 
@@ -56,7 +57,7 @@
 
             <!-- Main title -->
             <span class="navbar-brand">
-              <a class="logo-link" href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Zend Framework"><img src="../../img/zf-logo-mark.png" height="28" alt="Zend Framework" /></a>
+              <a class="logo-link" href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Zend Framework"><img src="../../img/zf-logo-mark.svg" height="28" alt="Zend Framework" /></a>
               <a href="../..">zend-validator</a>
             </span>
         </div>
@@ -224,12 +225,6 @@
             
 <li >
     <a href="../not-empty/">NotEmpty</a>
-</li>
-
-        
-            
-<li >
-    <a href="../post-code/">PostCode</a>
 </li>
 
         
@@ -443,7 +438,7 @@
 </div>
 
     <!-- content:begin -->
-    <div class="container">
+    <div id="page-top" class="container docs">
         
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
@@ -477,7 +472,7 @@
         <div class="col-md-9" role="main">
 
 <ol class="breadcrumb" role="navigation" aria-label="breadcrumbs navigation">
-  <li><a href="../..">Docs</a> &raquo;</li>
+  <li><a href="../..">zend-validator</a> &raquo;</li>
   
     
       
@@ -550,7 +545,6 @@ if ($valid-&gt;isValid($input)) {
     // input is invalid
 }</code></pre>
 
-
 <p>The above example would validate against all known credit card institutes.</p>
 <h2 id="accepting-only-specific-credit-cards">Accepting only specific credit cards</h2>
 <p>Sometimes it is necessary to accept only specific credit card institutes instead
@@ -564,7 +558,6 @@ afterwards by using <code>setType()</code>. Each can take several arguments.</p>
 
 $valid = new CreditCard(CreditCard::AMERICAN_EXPRESS);</code></pre>
 
-
 <p>When you want to allow multiple institutes, then you can provide them as array:</p>
 <pre class="codehilite"><code class="language-php">use Zend\Validator\CreditCard;
 
@@ -572,7 +565,6 @@ $valid = new CreditCard([
     CreditCard::AMERICAN_EXPRESS,
     CreditCard::VISA
 ]);</code></pre>
-
 
 <p>And, as with all validators, you can also pass an associative array of options
 or an instance of <code>Traversable</code>. In this case you have to provide the institutes
@@ -583,7 +575,6 @@ $valid = new CreditCard([
     'type' =&gt; [CreditCard::AMERICAN_EXPRESS]
 ]);</code></pre>
 
-
 <p>You can also manipulate institutes after instantiation by using the methods
 <code>setType()</code>, <code>addType()</code>, and <code>getType()</code>.</p>
 <pre class="codehilite"><code class="language-php">use Zend\Validator\CreditCard;
@@ -593,7 +584,6 @@ $valid-&gt;setType([
     CreditCard::AMERICAN_EXPRESS,
     CreditCard::VISA
 ]);</code></pre>
-
 
 <blockquote>
 <h3 id="default-institute">Default institute</h3>
@@ -633,7 +623,6 @@ $service = new CcService();
 $valid   = new CreditCard(CreditCard::VISA);
 $valid-&gt;setService([$service, 'checkOnline']);</code></pre>
 
-
 <p>The callback method will be called with the credit card number as the first
 parameter, and the accepted types as the second parameter.</p>
 
@@ -655,13 +644,49 @@ parameter, and the accepted types as the second parameter.</p>
     </div>
     <!-- content:end -->
 
-    <footer class="col-md-12 text-center">
-        <hr>
-        <p>
-        <small>Copyright (c) 2016 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a><br></small>
-        </p>
-        <p><small><a href="http://framework.zend.com">Learn more about Zend Framework</a></small></p>
-    </footer>
+    <div id="footerwrap">
+    <div class="container">
+        <div class="row site-map">
+            <div class="col-lg-3">
+              <p>
+                <strong>Zend Framework</strong><br />
+                <a href="http://framework.zend.com/">framework.zend.com</a><br />
+                <a href="https://docs.zendframework.com">docs.zendframework.com</a><br />
+                <a href="https://packages.zendframework.com">packages.zendframework.com</a><br />
+                <a href="https://apigility.org">apigility.org</a><br />
+              </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 centered">
+                <a class="back-to-top" href="#page-top"><i class="fa fa-chevron-circle-up fa-4" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="spacing"></div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h4>Copyright</h4>
+                <div class="hline-w"></div>
+
+                <p>&copy; 2006-2016 by <a href="http://www.zend.com">Zend</a>, a <a href="http://www.roguewave.com/">Rogue Wave Company</a>.</p>
+            </div>
+
+            <div class="col-lg-4">
+                <h4>Contacts</h4>
+                <div class="hline-w"></div>
+                <p>
+                    <a href="irc://irc.freenode.net/zftalk" class="btn-social btn-outline" alt="IRC" title="IRC"><i class="fa fa-comment"></i></a>
+                    <a href="https://github.com/zendframework" class="btn-social btn-outline" alt="Github" title="Github"><i class="fa fa-github"></i></a>
+                    <a href="https://twitter.com/zfdevteam" class="btn-social btn-outline" alt="Twitter" title="Twitter"><i class="fa fa-twitter"></i></a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <script src="../../js/jquery-1.10.2.min.js"></script>
     <script src="../../js/bootstrap-3.0.3.min.js"></script>
@@ -701,7 +726,7 @@ parameter, and the accepted types as the second parameter.</p>
     <div class="zf-components">
   <div class="zf-components-grid">
     <div class="zf-logo">
-      <a href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="http://framework.zend.com/images/logos/zf-logo-mark.png" alt="Zend Framework" width="250" /></a>
+      <a href="http://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="../../img/zf-logo-mark.svg" alt="Zend Framework" width="250" /></a>
     </div>
 
     <div class="component-list"></div>
@@ -806,7 +831,7 @@ parameter, and the accepted types as the second parameter.</p>
     // Fetch the component list and display it.
     function loadComponentList () {
       $.ajax({
-        url: "//zendframework.github.io/zf-mkdoc-theme/scripts/zf-component-list.json",
+        url: "//docs.zendframework.com/zf-mkdoc-theme/scripts/zf-component-list.json",
         dataType: "text json",
         success: parseComponentList,
         error: function (e) {
