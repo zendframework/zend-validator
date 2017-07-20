@@ -21,54 +21,152 @@ class BetweenTest extends TestCase
     public function providerBasic()
     {
         return [
-            [
+            'inclusive-int-valid-floor' => [
                 'min' => 1,
                 'max' => 100,
                 'inclusive' => true,
                 'expected' => true,
-                'values' => [1, 10, 100],
+                'value' => 1,
             ],
-            [
+            'inclusive-int-valid-between' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => true,
+                'expected' => true,
+                'value' => 10,
+            ],
+            'inclusive-int-valid-ceiling' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => true,
+                'expected' => true,
+                'value' => 100,
+            ],
+            'inclusive-int-invaild-below' => [
                 'min' => 1,
                 'max' => 100,
                 'inclusive' => true,
                 'expected' => false,
-                'values' => [0, 0.99, 100.01, 101],
+                'value' => 0,
             ],
-            [
+            'inclusive-int-invalid-below-fractional' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => true,
+                'expected' => false,
+                'value' => 0.99,
+            ],
+            'inclusive-int-invalid-above-fractional' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => true,
+                'expected' => false,
+                'value' => 100.01,
+            ],
+            'inclusive-int-invalid-above' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => true,
+                'expected' => false,
+                'value' => 101,
+            ],
+            'exclusive-int-invalid-below' => [
                 'min' => 1,
                 'max' => 100,
                 'inclusive' => false,
                 'expected' => false,
-                'values' => [0, 1, 100, 101],
+                'value' => 0,
             ],
-            [
+            'exclusive-int-invalid-floor' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => false,
+                'expected' => false,
+                'value' => 1,
+            ],
+            'exclusive-int-invalid-ceiling' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => false,
+                'expected' => false,
+                'value' => 100,
+            ],
+            'exclusive-int-invalid-above' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => false,
+                'expected' => false,
+                'value' => 101,
+            ],
+            'inclusive-string-valid-floor' => [
                 'min' => 'a',
                 'max' => 'z',
                 'inclusive' => true,
                 'expected' => true,
-                'values' => ['a', 'b', 'y', 'z'],
+                'value' => 'a',
             ],
-            [
+            'inclusive-string-valid-between' => [
+                'min' => 'a',
+                'max' => 'z',
+                'inclusive' => true,
+                'expected' => true,
+                'value' => 'm',
+            ],
+            'inclusive-string-valid-ceiling' => [
+                'min' => 'a',
+                'max' => 'z',
+                'inclusive' => true,
+                'expected' => true,
+                'value' => 'z',
+            ],
+            'exclusive-string-invalid-out-of-range' => [
                 'min' => 'a',
                 'max' => 'z',
                 'inclusive' => false,
                 'expected' => false,
-                'values' => ['!', 'a', 'z'],
+                'value' => '!',
             ],
-            [
+            'exclusive-string-invalid-floor' => [
+                'min' => 'a',
+                'max' => 'z',
+                'inclusive' => false,
+                'expected' => false,
+                'value' => 'a',
+            ],
+            'exclusive-string-invalid-ceiling' => [
+                'min' => 'a',
+                'max' => 'z',
+                'inclusive' => false,
+                'expected' => false,
+                'value' => 'z',
+            ],
+            'inclusive-int-invalid-string' => [
                 'min' => 0,
                 'max' => 99999999,
                 'inclusive' => true,
                 'expected' => false,
-                'values' => ['asdasd', 'q'],
+                'value' => 'asdasd',
             ],
-            [
+            'inclusive-int-invalid-char' => [
+                'min' => 0,
+                'max' => 99999999,
+                'inclusive' => true,
+                'expected' => false,
+                'value' => 'q',
+            ],
+            'inclusive-string-invalid-zero' => [
                 'min' => 'a',
                 'max' => 'zzzzz',
                 'inclusive' => true,
                 'expected' => false,
-                'values' => [0, 10, 548],
+                'value' => 0,
+            ],
+            'inclusive-string-invalid-non-zero' => [
+                'min' => 'a',
+                'max' => 'zzzzz',
+                'inclusive' => true,
+                'expected' => false,
+                'value' => 10,
             ],
         ];
     }
@@ -76,19 +174,22 @@ class BetweenTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider providerBasic
+     * @param int|float|string $min
+     * @param int|float|string $max
+     * @param bool $inclusive
+     * @param bool $expected
+     * @param mixed $value
      * @return void
      */
-    public function testBasic($min, $max, $inclusive, $expected, $values)
+    public function testBasic($min, $max, $inclusive, $expected, $value)
     {
         $validator = new Between(['min' => $min, 'max' => $max, 'inclusive' => $inclusive]);
 
-        foreach ($values as $input) {
-            $this->assertEquals(
-                $expected,
-                $validator->isValid($input),
-                'Failed values: ' . $input . ":" . implode("\n", $validator->getMessages())
-            );
-        }
+        $this->assertSame(
+            $expected,
+            $validator->isValid($value),
+            'Failed value: ' . $value . ':' . implode("\n", $validator->getMessages())
+        );
     }
 
     /**
