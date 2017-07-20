@@ -22,6 +22,11 @@ All notable changes to this project will be documented in this file, in reverse 
   `Zend\Validator\File\MimeType` "closes" the open FileInfo handle for the file
   being validated, using `unset()` instead of `finfo_close()`; this resolves a
   segfault that occurs on older PHP versions.
+- [#174](https://github.com/zendframework/zend-validator/pull/174) fixes how
+  `Zend\Validator\Between` handles two situations: (1) when a non-numeric value
+  is validated against numeric min/max values, and (2) when a numeric value is
+  validated against non-numeric min/max values. Previously, these incorrectly
+  validated as true; now they are marked invalid.
 
 ## 2.9.1 - 2017-05-17
 
