@@ -257,7 +257,7 @@ class BetweenTest extends TestCase
     public function testMissingMinOrMax(array $args)
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Missing option : 'min' and 'max' have to be given");
+        $this->expectExceptionMessage("Missing option: 'min' and 'max' have to be given");
 
         new Between($args);
     }
@@ -280,12 +280,34 @@ class BetweenTest extends TestCase
         $this->assertFalse($validator->getInclusive());
     }
 
-    public function testConstructWithTravesableOptions()
+    public function testConstructWithTraversableOptions()
     {
         $options = new \ArrayObject(['min' => 1, 'max' => 10, 'inclusive' => false]);
         $validator = new Between($options);
 
         $this->assertTrue($validator->isValid(5));
         $this->assertFalse($validator->isValid(10));
+    }
+
+    public function testStringValidatedAgainstNumericMinAndMaxIsInvalidAndReturnsAFailureMessage()
+    {
+        $validator = new Between(['min' => 1, 'max' => 10]);
+        $this->assertFalse($validator->isValid('a'));
+        $messages = $validator->getMessages();
+        $this->assertContains(
+            'The min (\'1\') and max (\'10\') values are numeric, but the input is not',
+            $messages
+        );
+    }
+
+    public function testNumericValidatedAgainstStringMinAndMaxIsInvalidAndReturnsAFailureMessage()
+    {
+        $validator = new Between(['min' => 'a', 'max' => 'z']);
+        $this->assertFalse($validator->isValid(10));
+        $messages = $validator->getMessages();
+        $this->assertContains(
+            'The min (\'a\') and max (\'z\') values are non-numeric strings, but the input is not a string',
+            $messages
+        );
     }
 }
