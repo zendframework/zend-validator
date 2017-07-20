@@ -18,37 +18,76 @@ use Zend\Validator\Exception\InvalidArgumentException;
  */
 class BetweenTest extends TestCase
 {
+    public function providerBasic()
+    {
+        return [
+            [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => true,
+                'expected' => true,
+                'values' => [1, 10, 100],
+            ],
+            [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => true,
+                'expected' => false,
+                'values' => [0, 0.99, 100.01, 101],
+            ],
+            [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => false,
+                'expected' => false,
+                'values' => [0, 1, 100, 101],
+            ],
+            [
+                'min' => 'a',
+                'max' => 'z',
+                'inclusive' => true,
+                'expected' => true,
+                'values' => ['a', 'b', 'y', 'z'],
+            ],
+            [
+                'min' => 'a',
+                'max' => 'z',
+                'inclusive' => false,
+                'expected' => false,
+                'values' => ['!', 'a', 'z'],
+            ],
+            [
+                'min' => 0,
+                'max' => 99999999,
+                'inclusive' => true,
+                'expected' => false,
+                'values' => ['asdasd', 'q'],
+            ],
+            [
+                'min' => 'a',
+                'max' => 'zzzzz',
+                'inclusive' => true,
+                'expected' => false,
+                'values' => [0, 10, 548],
+            ],
+        ];
+    }
     /**
      * Ensures that the validator follows expected behavior
      *
+     * @dataProvider providerBasic
      * @return void
      */
-    public function testBasic()
+    public function testBasic($min, $max, $inclusive, $expected, $values)
     {
-        /**
-         * The elements of each array are, in order:
-         *      - minimum
-         *      - maximum
-         *      - inclusive
-         *      - expected validation result
-         *      - array of test input values
-         */
-        $valuesExpected = [
-            [1, 100, true, true, [1, 10, 100]],
-            [1, 100, true, false, [0, 0.99, 100.01, 101]],
-            [1, 100, false, false, [0, 1, 100, 101]],
-            ['a', 'z', true, true, ['a', 'b', 'y', 'z']],
-            ['a', 'z', false, false, ['!', 'a', 'z']]
-            ];
-        foreach ($valuesExpected as $element) {
-            $validator = new Between(['min' => $element[0], 'max' => $element[1], 'inclusive' => $element[2]]);
-            foreach ($element[4] as $input) {
-                $this->assertEquals(
-                    $element[3],
-                    $validator->isValid($input),
-                    'Failed values: ' . $input . ":" . implode("\n", $validator->getMessages())
-                );
-            }
+        $validator = new Between(['min' => $min, 'max' => $max, 'inclusive' => $inclusive]);
+
+        foreach ($values as $input) {
+            $this->assertEquals(
+                $expected,
+                $validator->isValid($input),
+                'Failed values: ' . $input . ":" . implode("\n", $validator->getMessages())
+            );
         }
     }
 
@@ -117,7 +156,7 @@ class BetweenTest extends TestCase
     public function testMissingMinOrMax(array $args)
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Missing option. 'min' and 'max' have to be given");
+        $this->expectExceptionMessage("Missing option : 'min' and 'max' have to be given");
 
         new Between($args);
     }

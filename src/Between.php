@@ -18,6 +18,13 @@ class Between extends AbstractValidator
     const NOT_BETWEEN_STRICT = 'notBetweenStrict';
 
     /**
+     * Retain if min and max are numeric values. Allow to not compare string and numeric types
+     *
+     * @var boolean
+     */
+    private $numeric;
+
+    /**
      * Validation failure message template definitions
      *
      * @var array
@@ -81,7 +88,17 @@ class Between extends AbstractValidator
         if (count($options) !== 2
             && (! array_key_exists('min', $options) || ! array_key_exists('max', $options))
         ) {
-            throw new Exception\InvalidArgumentException("Missing option. 'min' and 'max' have to be given");
+            throw new Exception\InvalidArgumentException("Missing option : 'min' and 'max' have to be given");
+        }
+
+        if (is_numeric($options['min']) && is_numeric($options['max'])) {
+            $this->numeric = true;
+        } elseif (is_string($options['min']) && is_string($options['max'])) {
+            $this->numeric = false;
+        } else {
+            throw new Exception\InvalidArgumentException(
+                "Invalid options : 'min' and 'max' should be of the same scalar type"
+            );
         }
 
         parent::__construct($options);
@@ -162,6 +179,13 @@ class Between extends AbstractValidator
      */
     public function isValid($value)
     {
+        if ($this->numeric && ! is_numeric($value)) {
+            return false;
+        }
+        if (! $this->numeric && ! is_string($value)) {
+            return false;
+        }
+
         $this->setValue($value);
 
         if ($this->getInclusive()) {
