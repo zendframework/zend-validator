@@ -18,38 +18,178 @@ use Zend\Validator\Exception\InvalidArgumentException;
  */
 class BetweenTest extends TestCase
 {
+    public function providerBasic()
+    {
+        return [
+            'inclusive-int-valid-floor' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => true,
+                'expected' => true,
+                'value' => 1,
+            ],
+            'inclusive-int-valid-between' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => true,
+                'expected' => true,
+                'value' => 10,
+            ],
+            'inclusive-int-valid-ceiling' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => true,
+                'expected' => true,
+                'value' => 100,
+            ],
+            'inclusive-int-invaild-below' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => true,
+                'expected' => false,
+                'value' => 0,
+            ],
+            'inclusive-int-invalid-below-fractional' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => true,
+                'expected' => false,
+                'value' => 0.99,
+            ],
+            'inclusive-int-invalid-above-fractional' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => true,
+                'expected' => false,
+                'value' => 100.01,
+            ],
+            'inclusive-int-invalid-above' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => true,
+                'expected' => false,
+                'value' => 101,
+            ],
+            'exclusive-int-invalid-below' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => false,
+                'expected' => false,
+                'value' => 0,
+            ],
+            'exclusive-int-invalid-floor' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => false,
+                'expected' => false,
+                'value' => 1,
+            ],
+            'exclusive-int-invalid-ceiling' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => false,
+                'expected' => false,
+                'value' => 100,
+            ],
+            'exclusive-int-invalid-above' => [
+                'min' => 1,
+                'max' => 100,
+                'inclusive' => false,
+                'expected' => false,
+                'value' => 101,
+            ],
+            'inclusive-string-valid-floor' => [
+                'min' => 'a',
+                'max' => 'z',
+                'inclusive' => true,
+                'expected' => true,
+                'value' => 'a',
+            ],
+            'inclusive-string-valid-between' => [
+                'min' => 'a',
+                'max' => 'z',
+                'inclusive' => true,
+                'expected' => true,
+                'value' => 'm',
+            ],
+            'inclusive-string-valid-ceiling' => [
+                'min' => 'a',
+                'max' => 'z',
+                'inclusive' => true,
+                'expected' => true,
+                'value' => 'z',
+            ],
+            'exclusive-string-invalid-out-of-range' => [
+                'min' => 'a',
+                'max' => 'z',
+                'inclusive' => false,
+                'expected' => false,
+                'value' => '!',
+            ],
+            'exclusive-string-invalid-floor' => [
+                'min' => 'a',
+                'max' => 'z',
+                'inclusive' => false,
+                'expected' => false,
+                'value' => 'a',
+            ],
+            'exclusive-string-invalid-ceiling' => [
+                'min' => 'a',
+                'max' => 'z',
+                'inclusive' => false,
+                'expected' => false,
+                'value' => 'z',
+            ],
+            'inclusive-int-invalid-string' => [
+                'min' => 0,
+                'max' => 99999999,
+                'inclusive' => true,
+                'expected' => false,
+                'value' => 'asdasd',
+            ],
+            'inclusive-int-invalid-char' => [
+                'min' => 0,
+                'max' => 99999999,
+                'inclusive' => true,
+                'expected' => false,
+                'value' => 'q',
+            ],
+            'inclusive-string-invalid-zero' => [
+                'min' => 'a',
+                'max' => 'zzzzz',
+                'inclusive' => true,
+                'expected' => false,
+                'value' => 0,
+            ],
+            'inclusive-string-invalid-non-zero' => [
+                'min' => 'a',
+                'max' => 'zzzzz',
+                'inclusive' => true,
+                'expected' => false,
+                'value' => 10,
+            ],
+        ];
+    }
     /**
      * Ensures that the validator follows expected behavior
      *
+     * @dataProvider providerBasic
+     * @param int|float|string $min
+     * @param int|float|string $max
+     * @param bool $inclusive
+     * @param bool $expected
+     * @param mixed $value
      * @return void
      */
-    public function testBasic()
+    public function testBasic($min, $max, $inclusive, $expected, $value)
     {
-        /**
-         * The elements of each array are, in order:
-         *      - minimum
-         *      - maximum
-         *      - inclusive
-         *      - expected validation result
-         *      - array of test input values
-         */
-        $valuesExpected = [
-            [1, 100, true, true, [1, 10, 100]],
-            [1, 100, true, false, [0, 0.99, 100.01, 101]],
-            [1, 100, false, false, [0, 1, 100, 101]],
-            ['a', 'z', true, true, ['a', 'b', 'y', 'z']],
-            ['a', 'z', false, false, ['!', 'a', 'z']]
-            ];
-        foreach ($valuesExpected as $element) {
-            $validator = new Between(['min' => $element[0], 'max' => $element[1], 'inclusive' => $element[2]]);
-            foreach ($element[4] as $input) {
-                $this->assertEquals(
-                    $element[3],
-                    $validator->isValid($input),
-                    'Failed values: ' . $input . ":" . implode("\n", $validator->getMessages())
-                );
-            }
-        }
+        $validator = new Between(['min' => $min, 'max' => $max, 'inclusive' => $inclusive]);
+
+        $this->assertSame(
+            $expected,
+            $validator->isValid($value),
+            'Failed value: ' . $value . ':' . implode("\n", $validator->getMessages())
+        );
     }
 
     /**
@@ -117,7 +257,7 @@ class BetweenTest extends TestCase
     public function testMissingMinOrMax(array $args)
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Missing option. 'min' and 'max' have to be given");
+        $this->expectExceptionMessage("Missing option: 'min' and 'max' have to be given");
 
         new Between($args);
     }
@@ -140,12 +280,34 @@ class BetweenTest extends TestCase
         $this->assertFalse($validator->getInclusive());
     }
 
-    public function testConstructWithTravesableOptions()
+    public function testConstructWithTraversableOptions()
     {
         $options = new \ArrayObject(['min' => 1, 'max' => 10, 'inclusive' => false]);
         $validator = new Between($options);
 
         $this->assertTrue($validator->isValid(5));
         $this->assertFalse($validator->isValid(10));
+    }
+
+    public function testStringValidatedAgainstNumericMinAndMaxIsInvalidAndReturnsAFailureMessage()
+    {
+        $validator = new Between(['min' => 1, 'max' => 10]);
+        $this->assertFalse($validator->isValid('a'));
+        $messages = $validator->getMessages();
+        $this->assertContains(
+            'The min (\'1\') and max (\'10\') values are numeric, but the input is not',
+            $messages
+        );
+    }
+
+    public function testNumericValidatedAgainstStringMinAndMaxIsInvalidAndReturnsAFailureMessage()
+    {
+        $validator = new Between(['min' => 'a', 'max' => 'z']);
+        $this->assertFalse($validator->isValid(10));
+        $messages = $validator->getMessages();
+        $this->assertContains(
+            'The min (\'a\') and max (\'z\') values are non-numeric strings, but the input is not a string',
+            $messages
+        );
     }
 }
