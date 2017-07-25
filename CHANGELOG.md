@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#175](https://github.com/zendframework/zend-validator/pull/175) adds support
+  for PHP 7.2 (conditionally, as PHP 7.2 is currently in beta1).
 
 ### Changed
 
@@ -22,7 +23,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#175](https://github.com/zendframework/zend-validator/pull/175) removes
+  support for HHVM.
 
 ### Fixed
 
