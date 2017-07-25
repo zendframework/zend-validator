@@ -137,7 +137,7 @@ class Size extends AbstractValidator
      *
      * @param  int|string $min The minimum file size
      * @throws Exception\InvalidArgumentException When min is greater than max
-     * @return Size Provides a fluent interface
+     * @return self Provides a fluent interface
      */
     public function setMin($min)
     {
@@ -182,7 +182,7 @@ class Size extends AbstractValidator
      *
      * @param  int|string $max The maximum file size
      * @throws Exception\InvalidArgumentException When max is smaller than min
-     * @return Size Provides a fluent interface
+     * @return self Provides a fluent interface
      */
     public function setMax($max)
     {
@@ -216,7 +216,7 @@ class Size extends AbstractValidator
      * Set current size
      *
      * @param  int $size
-     * @return Size
+     * @return self
      */
     protected function setSize($size)
     {

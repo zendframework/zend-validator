@@ -125,7 +125,7 @@ class ImageSize extends AbstractValidator
      *
      * @param  int $minWidth
      * @throws Exception\InvalidArgumentException When minwidth is greater than maxwidth
-     * @return ImageSize Provides a fluid interface
+     * @return self Provides a fluid interface
      */
     public function setMinWidth($minWidth)
     {
@@ -155,7 +155,7 @@ class ImageSize extends AbstractValidator
      *
      * @param  int $maxWidth
      * @throws Exception\InvalidArgumentException When maxwidth is less than minwidth
-     * @return ImageSize Provides a fluid interface
+     * @return self Provides a fluid interface
      */
     public function setMaxWidth($maxWidth)
     {
@@ -185,7 +185,7 @@ class ImageSize extends AbstractValidator
      *
      * @param  int $minHeight
      * @throws Exception\InvalidArgumentException When minheight is greater than maxheight
-     * @return ImageSize Provides a fluid interface
+     * @return self Provides a fluid interface
      */
     public function setMinHeight($minHeight)
     {
@@ -215,7 +215,7 @@ class ImageSize extends AbstractValidator
      *
      * @param  int $maxHeight
      * @throws Exception\InvalidArgumentException When maxheight is less than minheight
-     * @return ImageSize Provides a fluid interface
+     * @return self Provides a fluid interface
      */
     public function setMaxHeight($maxHeight)
     {
@@ -274,7 +274,7 @@ class ImageSize extends AbstractValidator
      * Sets the minimum image size
      *
      * @param  array $options                 The minimum image dimensions
-     * @return ImageSize Provides a fluent interface
+     * @return self Provides a fluent interface
      */
     public function setImageMin($options)
     {
@@ -286,7 +286,7 @@ class ImageSize extends AbstractValidator
      * Sets the maximum image size
      *
      * @param  array|\Traversable $options The maximum image dimensions
-     * @return ImageSize Provides a fluent interface
+     * @return self Provides a fluent interface
      */
     public function setImageMax($options)
     {
@@ -298,7 +298,7 @@ class ImageSize extends AbstractValidator
      * Sets the minimum and maximum image width
      *
      * @param  array $options               The image width dimensions
-     * @return ImageSize Provides a fluent interface
+     * @return self Provides a fluent interface
      */
     public function setImageWidth($options)
     {
@@ -312,7 +312,7 @@ class ImageSize extends AbstractValidator
      * Sets the minimum and maximum image height
      *
      * @param  array $options               The image height dimensions
-     * @return ImageSize Provides a fluent interface
+     * @return self Provides a fluent interface
      */
     public function setImageHeight($options)
     {

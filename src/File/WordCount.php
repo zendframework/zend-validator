@@ -104,7 +104,7 @@ class WordCount extends AbstractValidator
      *
      * @param  int|array $min The minimum word count
      * @throws Exception\InvalidArgumentException When min is greater than max
-     * @return WordCount Provides a fluent interface
+     * @return self Provides a fluent interface
      */
     public function setMin($min)
     {
@@ -142,7 +142,7 @@ class WordCount extends AbstractValidator
      *
      * @param  int|array $max The maximum word count
      * @throws Exception\InvalidArgumentException When max is smaller than min
-     * @return WordCount Provides a fluent interface
+     * @return self Provides a fluent interface
      */
     public function setMax($max)
     {
