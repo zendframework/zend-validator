@@ -8,6 +8,14 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
+### Changed
+
+- [#169](https://github.com/zendframework/zend-validator/pull/169) modifies how
+  the various `File` validators check for readable files. Previously, they used
+  `stream_resolve_include_path`, which led to false negative checks when the
+  files did not exist within an `include_path` (which is often the case within a
+  web application). These now use `is_readable()` instead.
+
 ### Deprecated
 
 - Nothing.
