@@ -196,7 +196,7 @@ class Extension extends AbstractValidator
         $this->setValue($filename);
 
         // Is file readable ?
-        if (empty($file) || false === stream_resolve_include_path($file)) {
+        if (empty($file) || false === is_readable($file)) {
             $this->error(self::NOT_FOUND);
             return false;
         }
