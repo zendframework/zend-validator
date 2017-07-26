@@ -7,6 +7,8 @@
 
 namespace Zend\Validator;
 
+use Countable;
+
 class IsCountable extends AbstractValidator
 {
     const NOT_COUNTABLE = 'notCountable';
@@ -65,7 +67,7 @@ class IsCountable extends AbstractValidator
      */
     public function isValid($value)
     {
-        if (! (is_array($value) || $value instanceof \Countable)) {
+        if (! (is_array($value) || $value instanceof Countable)) {
             $this->error(self::NOT_COUNTABLE);
             return false;
         }
