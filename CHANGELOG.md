@@ -9,6 +9,14 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#175](https://github.com/zendframework/zend-validator/pull/175) adds support
   for PHP 7.2 (conditionally, as PHP 7.2 is currently in beta1).
 
+- [#157](https://github.com/zendframework/zend-validator/pull/157) adds a new
+  validator, `IsCountable`, which allows validating:
+  - if a value is countable
+  - if a countable value exactly matches a configured count
+  - if a countable value is greater than a configured minimum count
+  - if a countable value is less than a configured maximum count
+  - if a countable value is between configured minimum and maximum counts
+
 ### Changed
 
 - [#169](https://github.com/zendframework/zend-validator/pull/169) modifies how
