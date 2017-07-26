@@ -9,6 +9,21 @@ namespace Zend\Validator;
 
 use Countable;
 
+/**
+ * Validate that a value is countable and the count meets expectations.
+ *
+ * The validator has five specific behaviors:
+ *
+ * - You can determine if a value is countable only
+ * - You can test if the value is an exact count
+ * - You can test if the value is greater than a minimum count value
+ * - You can test if the value is greater than a maximum count value
+ * - You can test if the value is between the minimum and maximum count values
+ *
+ * When creating the instance or calling `setOptions()`, if you specify a
+ * "count" option, specifying either "min" or "max" leads to an inconsistent
+ * state and, as such will raise an Exception\InvalidArgumentException.
+ */
 class IsCountable extends AbstractValidator
 {
     const NOT_COUNTABLE = 'notCountable';
@@ -52,8 +67,14 @@ class IsCountable extends AbstractValidator
 
     public function setOptions($options = [])
     {
-        if (is_array($options) && isset($options['count'])) {
-            unset($options['min'], $options['max']);
+        foreach (['count', 'min', 'max'] as $option) {
+            if (! is_array($options) || ! isset($options[$option])) {
+                continue;
+            }
+
+            $method = sprintf('set%s', ucfirst($option));
+            $this->$method($options[$option]);
+            unset($options[$option]);
         }
 
         return parent::setOptions($options);
@@ -124,5 +145,53 @@ class IsCountable extends AbstractValidator
     public function getMax()
     {
         return $this->options['max'];
+    }
+
+    /**
+     * @param mixed $value
+     * @return void
+     * @throws Exception\InvalidArgumentException if either a min or max option
+     *     was previously set.
+     */
+    private function setCount($value)
+    {
+        if (isset($this->options['min']) || isset($this->options['max'])) {
+            throw new Exception\InvalidArgumentException(
+                'Cannot set count; conflicts with either a min or max option previously set'
+            );
+        }
+        $this->options['count'] = $value;
+    }
+
+    /**
+     * @param mixed $value
+     * @return void
+     * @throws Exception\InvalidArgumentException if either a count or max option
+     *     was previously set.
+     */
+    private function setMin($value)
+    {
+        if (isset($this->options['count'])) {
+            throw new Exception\InvalidArgumentException(
+                'Cannot set count; conflicts with either a count option previously set'
+            );
+        }
+        $this->options['min'] = $value;
+    }
+
+    /**
+     * @param mixed $value
+     * @return void
+     * @throws Exception\InvalidArgumentException if either a count or min option
+     *     was previously set.
+     */
+    private function setMax($value)
+    {
+        if (isset($this->options['count'])) {
+            throw new Exception\InvalidArgumentException(
+                'Cannot set count; conflicts with either a count option previously set'
+            );
+        }
+        $this->options['max'] = $value;
     }
 }

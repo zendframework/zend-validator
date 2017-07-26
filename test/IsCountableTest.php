@@ -9,9 +9,49 @@ namespace ZendTest\Validator;
 
 use PHPUnit\Framework\TestCase;
 use Zend\Validator\IsCountable;
+use Zend\Validator\Exception;
 
 class IsCountableTest extends TestCase
 {
+    public function conflictingOptionsProvider()
+    {
+        return [
+            'count-min' => [['count' => 10, 'min' => 1]],
+            'count-max' => [['count' => 10, 'max' => 10]],
+        ];
+    }
+
+    /**
+     * @dataProvider conflictingOptionsProvider
+     */
+    public function testConstructorRaisesExceptionWhenProvidedConflictingOptions(array $options)
+    {
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('conflicts');
+        new IsCountable($options);
+    }
+
+    public function conflictingSecondaryOptionsProvider()
+    {
+        return [
+            'count-min' => [['count' => 10], ['min' => 1]],
+            'count-max' => [['count' => 10], ['max' => 10]],
+        ];
+    }
+
+    /**
+     * @dataProvider conflictingSecondaryOptionsProvider
+     */
+    public function testSetOptionsRaisesExceptionWhenProvidedOptionConflictingWithCurrentSettings(
+        array $originalOptions,
+        array $secondaryOptions
+    ) {
+        $validator = new IsCountable($originalOptions);
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('conflicts');
+        $validator->setOptions($secondaryOptions);
+    }
+
     public function testArrayIsValid()
     {
         $sut = new IsCountable([
@@ -97,28 +137,5 @@ class IsCountableTest extends TestCase
 
         $this->assertFalse($sut->isValid(['Foo']));
         $this->assertCount(1, $sut->getMessages());
-    }
-
-    public function testExactCountOverridesMinAndMax()
-    {
-        $sut = new IsCountable([
-            'count' => 1,
-            'min' => 2,
-            'max' => 3,
-        ]);
-
-        $this->assertSame(1, $sut->getCount());
-        $this->assertNull($sut->getMin());
-        $this->assertNull($sut->getMax());
-
-        $sut->setOptions([
-            'count' => 4,
-            'min' => 5,
-            'max' => 6,
-        ]);
-
-        $this->assertSame(4, $sut->getCount());
-        $this->assertNull($sut->getMin());
-        $this->assertNull($sut->getMax());
     }
 }
