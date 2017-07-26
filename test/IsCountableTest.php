@@ -7,82 +7,113 @@ use Zend\Validator\IsCountable;
 
 class IsCountableTest extends TestCase
 {
-    /** @var IsCountable */
-    private $sut;
-
-    protected function setUp()
-    {
-        $this->sut = new IsCountable();
-    }
-
     public function testArrayIsValid()
     {
-        $this->sut->setMin(1);
-        $this->sut->setMax(10);
+        $sut = new IsCountable([
+            'min' => 1,
+            'max' => 10,
+        ]);
 
-        self::assertTrue($this->sut->isValid(['Foo']), json_encode($this->sut->getMessages()));
-        self::assertCount(0, $this->sut->getMessages());
+        $this->assertTrue($sut->isValid(['Foo']), json_encode($sut->getMessages()));
+        $this->assertCount(0, $sut->getMessages());
     }
 
     public function testIteratorIsValid()
     {
-        self::assertTrue($this->sut->isValid(new \SplQueue()), json_encode($this->sut->getMessages()));
-        self::assertCount(0, $this->sut->getMessages());
+        $sut = new IsCountable();
+
+        $this->assertTrue($sut->isValid(new \SplQueue()), json_encode($sut->getMessages()));
+        $this->assertCount(0, $sut->getMessages());
     }
 
     public function testValidEquals()
     {
-        $this->sut->setCount(1);
+        $sut = new IsCountable([
+            'count' => 1,
+        ]);
 
-        self::assertTrue($this->sut->isValid(['Foo']));
-        self::assertCount(0, $this->sut->getMessages());
+        $this->assertTrue($sut->isValid(['Foo']));
+        $this->assertCount(0, $sut->getMessages());
     }
 
     public function testValidMax()
     {
-        $this->sut->setMax(1);
+        $sut = new IsCountable([
+            'max' => 1,
+        ]);
 
-        self::assertTrue($this->sut->isValid(['Foo']));
-        self::assertCount(0, $this->sut->getMessages());
+        $this->assertTrue($sut->isValid(['Foo']));
+        $this->assertCount(0, $sut->getMessages());
     }
 
     public function testValidMin()
     {
-        $this->sut->setMin(1);
+        $sut = new IsCountable([
+            'min' => 1,
+        ]);
 
-        self::assertTrue($this->sut->isValid(['Foo']));
-        self::assertCount(0, $this->sut->getMessages());
+        $this->assertTrue($sut->isValid(['Foo']));
+        $this->assertCount(0, $sut->getMessages());
     }
 
     public function testInvalidNotEquals()
     {
-        $this->sut->setCount(2);
+        $sut = new IsCountable([
+            'count' => 2,
+        ]);
 
-        self::assertFalse($this->sut->isValid(['Foo']));
-        self::assertCount(1, $this->sut->getMessages());
+        $this->assertFalse($sut->isValid(['Foo']));
+        $this->assertCount(1, $sut->getMessages());
     }
 
-    /**
-     * @expectedException \Zend\Validator\Exception\RuntimeException
-     */
     public function testInvalidType()
     {
-        $this->sut->isValid(new \stdClass());
+        $sut = new IsCountable();
+
+        $this->assertFalse($sut->isValid(new \stdClass()));
+        $this->assertCount(1, $sut->getMessages());
     }
 
     public function testInvalidExceedsMax()
     {
-        $this->sut->setMax(1);
+        $sut = new IsCountable([
+            'max' => 1,
+        ]);
 
-        self::assertFalse($this->sut->isValid(['Foo', 'Bar']));
-        self::assertCount(1, $this->sut->getMessages());
+        $this->assertFalse($sut->isValid(['Foo', 'Bar']));
+        $this->assertCount(1, $sut->getMessages());
     }
 
     public function testInvalidExceedsMin()
     {
-        $this->sut->setMin(2);
+        $sut = new IsCountable([
+            'min' => 2,
+        ]);
 
-        self::assertFalse($this->sut->isValid(['Foo']));
-        self::assertCount(1, $this->sut->getMessages());
+        $this->assertFalse($sut->isValid(['Foo']));
+        $this->assertCount(1, $sut->getMessages());
+    }
+
+    public function testExactCountOverridesMinAndMax()
+    {
+        $sut = new IsCountable([
+            'count' => 1,
+            'min' => 2,
+            'max' => 3,
+        ]);
+
+        $this->assertSame(1, $sut->getCount());
+        $this->assertNull($sut->getMin());
+        $this->assertNull($sut->getMax());
+
+        $sut->setOptions([
+            'count' => 4,
+            'min' => 5,
+            'max' => 6,
+        ]);
+
+        $this->assertSame(4, $sut->getCount());
+        $this->assertNull($sut->getMin());
+        $this->assertNull($sut->getMax());
     }
 }

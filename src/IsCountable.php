@@ -2,8 +2,6 @@
 
 namespace Zend\Validator;
 
-use Zend\Validator\Exception\RuntimeException;
-
 class IsCountable extends AbstractValidator
 {
     const NOT_COUNTABLE = 'notCountable';
@@ -45,23 +43,32 @@ class IsCountable extends AbstractValidator
         'max'   => null,
     ];
 
+    public function setOptions($options = [])
+    {
+        if (is_array($options) && isset($options['count'])) {
+            unset($options['min'], $options['max']);
+        }
+
+        return parent::setOptions($options);
+    }
+
     /**
      * Returns true if and only if $value is countable (and the count validates against optional values).
      *
-     * @param  string $value
+     * @param  iterable $value
      * @return bool
-     * @throws Exception\RuntimeException
      */
     public function isValid($value)
     {
         if (! (is_array($value) || $value instanceof \Countable)) {
-            throw new RuntimeException($this->messageTemplates[self::NOT_COUNTABLE]);
+            $this->error(self::NOT_COUNTABLE);
+            return false;
         }
 
         $count = count($value);
 
-        if (is_numeric($this->options['count'])) {
-            if ($count != $this->options['count']) {
+        if (is_numeric($this->getCount())) {
+            if ($count != $this->getCount()) {
                 $this->error(self::NOT_EQUALS);
                 return false;
             }
@@ -69,12 +76,12 @@ class IsCountable extends AbstractValidator
             return true;
         }
 
-        if (is_numeric($this->options['max']) && $count > $this->options['max']) {
+        if (is_numeric($this->getMax()) && $count > $this->getMax()) {
             $this->error(self::GREATER_THAN);
             return false;
         }
 
-        if (is_numeric($this->options['min']) && $count < $this->options['min']) {
+        if (is_numeric($this->getMin()) && $count < $this->getMin()) {
             $this->error(self::LESS_THAN);
             return false;
         }
@@ -93,18 +100,6 @@ class IsCountable extends AbstractValidator
     }
 
     /**
-     * Sets the count option
-     *
-     * @param  int $count
-     * @return self Provides a fluent interface
-     */
-    public function setCount($count)
-    {
-        $this->options['count'] = $count;
-        return $this;
-    }
-
-    /**
      * Returns the min option
      *
      * @return mixed
@@ -115,18 +110,6 @@ class IsCountable extends AbstractValidator
     }
 
     /**
-     * Sets the min option
-     *
-     * @param  int $min
-     * @return self Provides a fluent interface
-     */
-    public function setMin($min)
-    {
-        $this->options['min'] = $min;
-        return $this;
-    }
-
-    /**
      * Returns the max option
      *
      * @return mixed
@@ -134,17 +117,5 @@ class IsCountable extends AbstractValidator
     public function getMax()
     {
         return $this->options['max'];
-    }
-
-    /**
-     * Sets the max option
-     *
-     * @param  int $max
-     * @return self Provides a fluent interface
-     */
-    public function setMax($max)
-    {
-        $this->options['max'] = $max;
-        return $this;
     }
 }
