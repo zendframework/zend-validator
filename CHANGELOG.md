@@ -40,7 +40,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#160](https://github.com/zendframework/zend-validator/pull/160) fixes how the
+  `EmailAddress` validator handles the local part of an address, allowing it to
+  support unicode.
 
 ## 2.9.2 - 2017-07-20
 
