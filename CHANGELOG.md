@@ -17,6 +17,10 @@ All notable changes to this project will be documented in this file, in reverse 
   files did not exist within an `include_path` (which is often the case within a
   web application). These now use `is_readable()` instead.
 
+- [#185](https://github.com/zendframework/zend-validator/pull/185) updates the
+  zend-session requirement (during development, and in the suggestions) to 2.8+,
+  to ensure compatibility with the upcoming PHP 7.2 release.
+
 ### Deprecated
 
 - Nothing.
