@@ -271,6 +271,15 @@ class BetweenTest extends TestCase
             [
                 ['max' => 5],
             ],
+            [
+                ['min' => 0, 'inclusive' => true],
+            ],
+            [
+                ['min' => 0, 'foo' => 'bar'],
+            ],
+            [
+                ['bar' => 'foo', 'foo' => 'bar'],
+            ],
         ];
     }
 
