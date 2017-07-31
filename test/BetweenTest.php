@@ -265,21 +265,13 @@ class BetweenTest extends TestCase
     public function constructBetweenValidatorInvalidDataProvider()
     {
         return [
-            [
-                ['min' => 1],
-            ],
-            [
-                ['max' => 5],
-            ],
-            [
-                ['min' => 0, 'inclusive' => true],
-            ],
-            [
-                ['min' => 0, 'foo' => 'bar'],
-            ],
-            [
-                ['bar' => 'foo', 'foo' => 'bar'],
-            ],
+            'only-min'      => [['min' => 1]],
+            'only-max'      => [['max' => 5]],
+            'min-inclusive' => [['min' => 0, 'inclusive' => true]],
+            'max-inclusive' => [['max' => 5, 'inclusive' => true]],
+            'min-undefined' => [['min' => 0, 'foo' => 'bar']],
+            'max-undefined' => [['max' => 5, 'foo' => 'bar']],
+            'no-min-or-max' => [['bar' => 'foo', 'foo' => 'bar']],
         ];
     }
 
