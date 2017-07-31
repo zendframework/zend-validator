@@ -635,13 +635,13 @@ class HostnameTest extends TestCase
         $validator = new Hostname();
         $this->assertTrue($validator->isValid('cafecafe.de'));
     }
-    
+
     public function testValidCnHostname()
     {
         $validator = new Hostname();
         $this->assertTrue($validator->isValid('google.cn'));
     }
-    
+
     public function testValidBizHostname()
     {
         $validator = new Hostname();
