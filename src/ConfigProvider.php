@@ -9,9 +9,9 @@ namespace Zend\Validator;
 
 class ConfigProvider
 {
-
     /**
      * Return configuration for this component.
+     *
      * @return array
      */
     public function __invoke()
@@ -23,6 +23,7 @@ class ConfigProvider
 
     /**
      * Return dependency mappings for this component.
+     *
      * @return array
      */
     public function getDependencyConfig()
