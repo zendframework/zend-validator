@@ -90,15 +90,17 @@ class Between extends AbstractValidator
             $options = $temp;
         }
 
-        if (count($options) !== 2
-            && (! array_key_exists('min', $options) || ! array_key_exists('max', $options))
-        ) {
+        if (! array_key_exists('min', $options) || ! array_key_exists('max', $options)) {
             throw new Exception\InvalidArgumentException("Missing option: 'min' and 'max' have to be given");
         }
 
-        if (is_numeric($options['min']) && is_numeric($options['max'])) {
+        if ((isset($options['min']) && is_numeric($options['min']))
+            && (isset($options['max']) && is_numeric($options['max']))
+        ) {
             $this->numeric = true;
-        } elseif (is_string($options['min']) && is_string($options['max'])) {
+        } elseif ((isset($options['min']) && is_string($options['min']))
+            && (isset($options['max']) && is_string($options['max']))
+        ) {
             $this->numeric = false;
         } else {
             throw new Exception\InvalidArgumentException(
