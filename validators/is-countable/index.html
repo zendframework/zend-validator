@@ -8,7 +8,7 @@
     <meta name="description" content="zend-validator">  
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
-    <title>Timezone - zend-validator</title>
+    <title>IsCountable - zend-validator</title>
 
     <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw=" crossorigin="anonymous">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.6.3/css/font-awesome.min.css" integrity="sha256-AIodEDkC8V/bHBkfyxzolUMw57jeQ9CauwhVW6YJ9CA=" crossorigin="anonymous">
@@ -190,8 +190,8 @@
 
         
             
-<li >
-    <a href="../is-countable/">IsCountable</a>
+<li class="active">
+    <a href="./">IsCountable</a>
 </li>
 
         
@@ -238,8 +238,8 @@
 
         
             
-<li class="active">
-    <a href="./">Timezone</a>
+<li >
+    <a href="../timezone/">Timezone</a>
 </li>
 
         
@@ -428,11 +428,19 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#timezone-validator">Timezone Validator</a></li>
+        <li class="main active"><a href="#iscountable-validator">IsCountable Validator</a></li>
         
-            <li><a href="#supported-validation-types">Supported validation types</a></li>
+            <li><a href="#supported-options">Supported options</a></li>
         
-            <li><a href="#basic-usage">Basic Usage</a></li>
+            <li><a href="#default-behaviour">Default behaviour</a></li>
+        
+            <li><a href="#specifying-an-exact-count">Specifying an exact count</a></li>
+        
+            <li><a href="#specifying-a-minimum-count">Specifying a minimum count</a></li>
+        
+            <li><a href="#specifying-a-maximum-count">Specifying a maximum count</a></li>
+        
+            <li><a href="#specifying-both-minimum-and-maximum">Specifying both minimum and maximum</a></li>
         
     
     </ul>
@@ -440,10 +448,10 @@
     
     <ul class="pager hidden-print">
       <li class="previous">
-        <a rel="prev" href="../string-length/"><i class="fa fa-arrow-left"></i> Previous</a>
+        <a rel="prev" href="../isbn/"><i class="fa fa-arrow-left"></i> Previous</a>
       </li>
       <li class="next">
-        <a rel="next" href="../uri/">Next <i class="fa fa-arrow-right"></i></a>
+        <a rel="next" href="../isinstanceof/">Next <i class="fa fa-arrow-right"></i></a>
       </li>
     </ul>
     
@@ -463,35 +471,94 @@
       
     
   
-  <li class="active">Timezone</li>
+  <li class="active">IsCountable</li>
 </ol>
 
-<h1 id="timezone-validator">Timezone Validator</h1>
-<p><code>Zend\Validator\Timezone</code> allows validating if an input string represents a
-timezone.</p>
-<h2 id="supported-validation-types">Supported validation types</h2>
-<p>The <code>Zend\Validator\Timezone</code> validator is capable of validating the
-abbreviation (e.g. <code>ewt</code>) as well as the location string (e.g.
-<code>America/Los_Angeles</code>). These options are stored in the validator as
-<code>LOCATION</code>, <code>ABBREVIATION</code>, and <code>ALL</code> class constants.</p>
-<h2 id="basic-usage">Basic Usage</h2>
-<p>The default validation type will check against abbreviations as well as the
-location string.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Timezone();
+<h1 id="iscountable-validator">IsCountable Validator</h1>
+<ul>
+<li><strong>Since 2.10.0</strong></li>
+</ul>
+<p><code>Zend\Validator\IsCountable</code> allows you to validate that a value can be counted
+(i.e., it's an array or implements <code>Countable</code>), and, optionally:</p>
+<ul>
+<li>the exact count of the value</li>
+<li>the minimum count of the value</li>
+<li>the maximum count of the value</li>
+</ul>
+<p>Specifying either of the latter two is inconsistent with the first, and, as
+such, the validator does not allow setting both a count and a minimum or maximum
+value. You may, however specify both minimum and maximum values, in which case
+the validator operates similar to the <a href="../between/">Between validator</a>.</p>
+<h2 id="supported-options">Supported options</h2>
+<p>The following options are supported for <code>Zend\Validator\IsCountable</code>:</p>
+<ul>
+<li><code>count</code>: Defines if the validation should look for a specific, exact count for
+  the value provided.</li>
+<li><code>max</code>: Sets the maximum value for the validation; if the count of the value is
+  greater than the maximum, validation fails..</li>
+<li><code>min</code>: Sets the minimum value for the validation; if the count of the value is
+  lower than the minimum, validation fails.</li>
+</ul>
+<h2 id="default-behaviour">Default behaviour</h2>
+<p>Given no options, the validator simply tests to see that the value may be
+counted (i.e., it's an array or <code>Countable</code> instance):</p>
+<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\IsCountable();
 
-$validator-&gt;isValid('America/Los_Angeles'); // returns true
-$validator-&gt;isValid('ewt'); // returns true
-$validator-&gt;isValid('Foobar');  // returns false</code></pre>
+$validator-&gt;isValid(10);                    // false; not an array or Countable
+$validator-&gt;isValid([10]);                  // true; value is an array
+$validator-&gt;isValid(new ArrayObject([10])); // true; value is Countable
+$validator-&gt;isValid(new stdClass);          // false; value is not Countable</code></pre>
 
-<p>To validate against only the location string you can set the type:</p>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\Timezone;
+<h2 id="specifying-an-exact-count">Specifying an exact count</h2>
+<p>You can also specify an exact count; if the value is countable, and its count
+matches, the the value is valid.</p>
+<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\IsCountable(['count' =&gt; 3]);
 
-$validator = new Timezone();
-$validator-&gt;setType(Timezone::LOCATION);
+$validator-&gt;isValid([1, 2, 3]);                  // true; countable, and count is 3
+$validator-&gt;isValid(new ArrayObject([1, 2, 3])); // true; countable, and count is 3
+$validator-&gt;isValid([1]);                        // false; countable, but count is 1
+$validator-&gt;isValid(new ArrayObject([1]));       // false; countable, but count is 1</code></pre>
 
-$validator-&gt;isValid('America/Los_Angeles'); // returns true
-$validator-&gt;isValid('ewt'); // returns false
-$validator-&gt;isValid('Foobar');  // returns false</code></pre>
+<h2 id="specifying-a-minimum-count">Specifying a minimum count</h2>
+<p>You may specify a minimum count. When you do, the value must be countable, and
+greater than or equal to the minimum count you specify in order to be valid.</p>
+<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\IsCountable(['min' =&gt; 2]);
+
+$validator-&gt;isValid([1, 2, 3]);                  // true; countable, and count is 3
+$validator-&gt;isValid(new ArrayObject([1, 2, 3])); // true; countable, and count is 3
+$validator-&gt;isValid([1, 2]);                     // true; countable, and count is 2
+$validator-&gt;isValid(new ArrayObject([1, 2]));    // true; countable, and count is 2
+$validator-&gt;isValid([1]);                        // false; countable, but count is 1
+$validator-&gt;isValid(new ArrayObject([1]));       // false; countable, but count is 1</code></pre>
+
+<h2 id="specifying-a-maximum-count">Specifying a maximum count</h2>
+<p>You may specify a maximum count. When you do, the value must be countable, and
+less than or equal to the maximum count you specify in order to be valid.</p>
+<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\IsCountable(['max' =&gt; 2]);
+
+$validator-&gt;isValid([1, 2, 3]);                  // false; countable, but count is 3
+$validator-&gt;isValid(new ArrayObject([1, 2, 3])); // false; countable, but count is 3
+$validator-&gt;isValid([1, 2]);                     // true; countable, and count is 2
+$validator-&gt;isValid(new ArrayObject([1, 2]));    // true; countable, and count is 2
+$validator-&gt;isValid([1]);                        // true; countable, and count is 1
+$validator-&gt;isValid(new ArrayObject([1]));       // true; countable, and count is 1</code></pre>
+
+<h2 id="specifying-both-minimum-and-maximum">Specifying both minimum and maximum</h2>
+<p>If you specify both a minimum and maximum, the count must be <em>between</em> the two,
+inclusively (i.e., it may be the minimum or maximum, and any value between).</p>
+<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\IsCountable([
+    'min' =&gt; 3,
+    'max' =&gt; 5,
+]);
+
+$validator-&gt;isValid([1, 2, 3]);                    // true; countable, and count is 3
+$validator-&gt;isValid(new ArrayObject([1, 2, 3]));   // true; countable, and count is 3
+$validator-&gt;isValid(range(1, 5));                  // true; countable, and count is 5
+$validator-&gt;isValid(new ArrayObject(range(1, 5))); // true; countable, and count is 5
+$validator-&gt;isValid([1, 2]);                       // false; countable, and count is 2
+$validator-&gt;isValid(new ArrayObject([1, 2]));      // false; countable, and count is 2
+$validator-&gt;isValid(range(1, 6));                  // false; countable, and count is 6
+$validator-&gt;isValid(new ArrayObject(range(1, 6))); // false; countable, and count is 6</code></pre>
 
 <hr />
 
@@ -499,10 +566,10 @@ $validator-&gt;isValid('Foobar');  // returns false</code></pre>
 <nav>
   <ul class="pager hidden-print">
     <li class="previous">
-      <a rel="prev" href="../string-length/"><i class="fa fa-arrow-left"></i> Previous</a>
+      <a rel="prev" href="../isbn/"><i class="fa fa-arrow-left"></i> Previous</a>
     </li>
     <li class="next">
-      <a rel="next" href="../uri/">Next <i class="fa fa-arrow-right"></i></a>
+      <a rel="next" href="../isinstanceof/">Next <i class="fa fa-arrow-right"></i></a>
     </li>
   </ul>
 </nav>
