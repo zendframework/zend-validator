@@ -29,6 +29,13 @@ All notable changes to this project will be documented in this file, in reverse 
   zend-session requirement (during development, and in the suggestions) to 2.8+,
   to ensure compatibility with the upcoming PHP 7.2 release.
 
+- [#187](https://github.com/zendframework/zend-validator/pull/187) updates the
+  `Between` validator to **require** that both a `min` and a `max` value are
+  provided to the constructor, and that both are of the same type (both
+  integer/float values and/or both string values). This fixes issues that could
+  previously occur when one or the other was not set, but means an exception
+  will now be raised during instantiation (versus runtime during `isValid()`).
+
 ### Deprecated
 
 - Nothing.
