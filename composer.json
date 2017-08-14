@@ -45,8 +45,8 @@
     "prefer-stable": true,
     "extra": {
         "branch-alias": {
-            "dev-master": "2.9-dev",
-            "dev-develop": "2.10-dev"
+            "dev-master": "2.10-dev",
+            "dev-develop": "2.11-dev"
         },
         "zf": {
             "component": "Zend\\Validator",
