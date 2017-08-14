@@ -2,6 +2,61 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 2.10.0 - TBD
+
+### Added
+
+- [#175](https://github.com/zendframework/zend-validator/pull/175) adds support
+  for PHP 7.2 (conditionally, as PHP 7.2 is currently in beta1).
+
+- [#157](https://github.com/zendframework/zend-validator/pull/157) adds a new
+  validator, `IsCountable`, which allows validating:
+  - if a value is countable
+  - if a countable value exactly matches a configured count
+  - if a countable value is greater than a configured minimum count
+  - if a countable value is less than a configured maximum count
+  - if a countable value is between configured minimum and maximum counts
+
+### Changed
+
+- [#169](https://github.com/zendframework/zend-validator/pull/169) modifies how
+  the various `File` validators check for readable files. Previously, they used
+  `stream_resolve_include_path`, which led to false negative checks when the
+  files did not exist within an `include_path` (which is often the case within a
+  web application). These now use `is_readable()` instead.
+
+- [#185](https://github.com/zendframework/zend-validator/pull/185) updates the
+  zend-session requirement (during development, and in the suggestions) to 2.8+,
+  to ensure compatibility with the upcoming PHP 7.2 release.
+
+- [#187](https://github.com/zendframework/zend-validator/pull/187) updates the
+  `Between` validator to **require** that both a `min` and a `max` value are
+  provided to the constructor, and that both are of the same type (both
+  integer/float values and/or both string values). This fixes issues that could
+  previously occur when one or the other was not set, but means an exception
+  will now be raised during instantiation (versus runtime during `isValid()`).
+
+- [#188](https://github.com/zendframework/zend-validator/pull/188) updates the
+  `ConfigProvider` to alias the service name `ValidatorManager` to the class
+  `Zend\Validator\ValidatorPluginManager`, and now maps the the latter class to
+  the `ValidatorPluginManagerFactory`. Previously, we mapped the service name
+  directly to the factory. Usage should not change for anybody at this point.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- [#175](https://github.com/zendframework/zend-validator/pull/175) removes
+  support for HHVM.
+
+### Fixed
+
+- [#160](https://github.com/zendframework/zend-validator/pull/160) fixes how the
+  `EmailAddress` validator handles the local part of an address, allowing it to
+  support unicode.
+
 ## 2.9.2 - 2017-07-20
 
 ### Added
