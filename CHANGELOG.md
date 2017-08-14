@@ -36,6 +36,12 @@ All notable changes to this project will be documented in this file, in reverse 
   previously occur when one or the other was not set, but means an exception
   will now be raised during instantiation (versus runtime during `isValid()`).
 
+- [#188](https://github.com/zendframework/zend-validator/pull/188) updates the
+  `ConfigProvider` to alias the service name `ValidatorManager` to the class
+  `Zend\Validator\ValidatorPluginManager`, and now maps the the latter class to
+  the `ValidatorPluginManagerFactory`. Previously, we mapped the service name
+  directly to the factory. Usage should not change for anybody at this point.
+
 ### Deprecated
 
 - Nothing.
