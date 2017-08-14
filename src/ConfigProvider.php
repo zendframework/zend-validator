@@ -30,7 +30,10 @@ class ConfigProvider
     {
         return [
             'factories' => [
-                'ValidatorManager' => ValidatorPluginManagerFactory::class,
+                ValidatorPluginManager::class => ValidatorPluginManagerFactory::class,
+            ],
+            'aliases' => [
+                'ValidatorManager' => ValidatorPluginManager::class,
             ],
         ];
     }
