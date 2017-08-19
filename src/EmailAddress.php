@@ -554,7 +554,10 @@ class EmailAddress extends AbstractValidator
     protected function idnToAscii($email)
     {
         if (extension_loaded('intl')) {
-            return (idn_to_ascii($email, 0, INTL_IDNA_VARIANT_UTS46) ?: $email);
+            if (defined('INTL_IDNA_VARIANT_UTS46')) {
+                return (idn_to_ascii($email, 0, INTL_IDNA_VARIANT_UTS46) ?: $email);
+            }
+            return (idn_to_ascii($email) ?: $email);
         }
         return $email;
     }
@@ -577,7 +580,10 @@ class EmailAddress extends AbstractValidator
             // the source string in those cases.
             // But not when the source string is long enough.
             // Thus we default to source string ourselves.
-            return idn_to_utf8($email, 0, INTL_IDNA_VARIANT_UTS46) ?: $email;
+            if (defined('INTL_IDNA_VARIANT_UTS46')) {
+                return idn_to_utf8($email, 0, INTL_IDNA_VARIANT_UTS46) ?: $email;
+            }
+            return idn_to_utf8($email) ?: $email;
         }
         return $email;
     }
