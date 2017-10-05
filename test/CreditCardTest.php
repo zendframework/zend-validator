@@ -60,7 +60,7 @@ class CreditCardTest extends TestCase
     public function testGetSetType()
     {
         $validator = new CreditCard();
-        $this->assertEquals(11, count($validator->getType()));
+        $this->assertEquals(12, count($validator->getType()));
 
         $validator->setType(CreditCard::MAESTRO);
         $this->assertEquals([CreditCard::MAESTRO], $validator->getType());
@@ -249,6 +249,45 @@ class CreditCardTest extends TestCase
     public function testMastercardCard($input, $expected)
     {
         $validator = new CreditCard(['type' => CreditCard::MASTERCARD]);
+
+        $this->assertEquals($expected, $validator->isValid($input));
+    }
+
+    /**
+     * Data provider
+     *
+     * @return string[][]|bool[][]
+     */
+    public function mirValues()
+    {
+        return [
+            ['3011111111111000', false],
+            ['2031343323344731', false],
+            ['2200312032822721', true],
+            ['2209993834549400', false],
+            ['2204001882200999', true],
+            ['2202000312124573', true],
+            ['2203921957923012', true],
+            ['2204150479254495', true],
+            ['2201123406612104', true],
+            ['2900008996056', false],
+            ['2201969950494', true],
+            ['2201342387927', true],
+            ['2205969950494', false],
+        ];
+    }
+
+    /**
+     * Test mir card number validity
+     *
+     * @dataProvider mirValues
+     *
+     * @param string $input
+     * @param bool   $expected
+     */
+    public function testMirCard($input, $expected)
+    {
+        $validator = new CreditCard(['type' => CreditCard::MIR]);
 
         $this->assertEquals($expected, $validator->isValid($input));
     }
