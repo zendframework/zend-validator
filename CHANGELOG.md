@@ -39,6 +39,10 @@ All notable changes to this project will be documented in this file, in reverse 
   missing `GpsPoint` validator entries to the `ValidatorPluginManager`, ensuring
   they may be retrieved from it correctly.
 
+- [#212](https://github.com/zendframework/zend-validator/pull/212) updates the
+  `CSRF` validator to automatically mark any non-string values as invalid,
+  preventing errors such as array to string conversion.
+
 ## 2.10.1 - 2017-08-22
 
 ### Added
