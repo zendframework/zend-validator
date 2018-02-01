@@ -331,6 +331,16 @@ class CreditCardTest extends TestCase
         );
     }
 
+    /**
+     * @see https://github.com/zendframework/zend-validator/pull/202
+     */
+    public function testValidatorAllowsExtensionsToDefineAdditionalTypesViaConstants()
+    {
+        $validator = new TestAsset\CreditCardValidatorExtension();
+        $this->assertSame($validator, $validator->addType('test_type'));
+        $this->assertContains(TestAsset\CreditCardValidatorExtension::TEST_TYPE, $validator->getType());
+    }
+
     public static function staticCallback($value)
     {
         return false;

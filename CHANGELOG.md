@@ -28,7 +28,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#202](https://github.com/zendframework/zend-validator/pull/202) adds the
+  ability to use custom constant types in extensions of
+  `Zend\Validator\CreditCard`, fixing an issue where users were unable to add
+  new brands as they are created.
 
 ### Changed
 
