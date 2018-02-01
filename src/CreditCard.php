@@ -31,6 +31,7 @@ class CreditCard extends AbstractValidator
     const MASTERCARD       = 'Mastercard';
     const SOLO             = 'Solo';
     const VISA             = 'Visa';
+    const MIR              = 'Mir';
 
     const CHECKSUM       = 'creditcardChecksum';
     const CONTENT        = 'creditcardContent';
@@ -72,6 +73,7 @@ class CreditCard extends AbstractValidator
         8  => self::SOLO,
         9  => self::UNIONPAY,
         10 => self::VISA,
+        11 => self::MIR,
     ];
 
     /**
@@ -91,6 +93,7 @@ class CreditCard extends AbstractValidator
         self::SOLO             => [16, 18, 19],
         self::UNIONPAY         => [16, 17, 18, 19],
         self::VISA             => [13, 16, 19],
+        self::MIR              => [13, 16],
     ];
 
     /**
@@ -122,6 +125,7 @@ class CreditCard extends AbstractValidator
                                         '6224', '6225', '6226', '6227', '6228', '62290', '62291',
                                         '622920', '622921', '622922', '622923', '622924', '622925'],
         self::VISA             => ['4'],
+        self::MIR              => ['2200', '2201', '2202', '2203', '2204'],
     ];
 
     /**
