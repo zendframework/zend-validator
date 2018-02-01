@@ -117,10 +117,7 @@ class TimezoneTest extends TestCase
     public function abbreviationProvider()
     {
         return [
-            ['bnt', true],                 // Brunei Darussalam Time
             ['cest', true],                // Central European Summer Time
-            ['easst', true],               // Easter Island Summer Time
-            ['egst', true],                // Eastern Greenland Summer Time
             ['hkt', true],                 // Hong Kong Time
             ['nzdt', true],                // New Zealand Daylight Time
             ['sast', true],                // South Africa Standard Time
