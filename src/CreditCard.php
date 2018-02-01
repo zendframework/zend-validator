@@ -203,13 +203,20 @@ class CreditCard extends AbstractValidator
         }
 
         foreach ($type as $typ) {
-            if (defined('self::' . strtoupper($typ)) && ! in_array($typ, $this->options['type'])) {
-                $this->options['type'][] = $typ;
-            }
-
             if (($typ == self::ALL)) {
                 $this->options['type'] = array_keys($this->cardLength);
+                continue;
             }
+
+            if (in_array($typ, $this->options['type'])) {
+                continue;
+            }
+
+            $constant = 'static::' . strtoupper($typ);
+            if (! defined($constant) || in_array(constant($constant), $this->options['type'])) {
+                continue;
+            }
+            $this->options['type'][] = constant($constant);
         }
 
         return $this;
