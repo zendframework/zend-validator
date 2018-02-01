@@ -11,6 +11,9 @@ All notable changes to this project will be documented in this file, in reverse 
   `Zend\Validator\CreditCard`, fixing an issue where users were unable to add
   new brands as they are created.
 
+- [#203](https://github.com/zendframework/zend-validator/pull/203) adds support
+  for the new Russian bank card "Mir".
+
 ### Changed
 
 - Nothing.
