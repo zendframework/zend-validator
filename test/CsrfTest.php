@@ -267,6 +267,11 @@ class CsrfTest extends TestCase
         $this->assertTrue($this->validator->isValid($bareToken));
     }
 
+    public function testCanRejectArrayValues()
+    {
+        $this->assertFalse($this->validator->isValid([]));
+    }
+
     public function fakeValuesDataProvider()
     {
         return [
@@ -277,7 +282,7 @@ class CsrfTest extends TestCase
             ['fakeTokenId'],
             [md5(uniqid()) . '-'],
             [md5(uniqid()) . '-' . md5(uniqid())],
-            ['-' . md5(uniqid())]
+            ['-' . md5(uniqid())],
         ];
     }
 
