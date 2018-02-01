@@ -18,6 +18,9 @@ All notable changes to this project will be documented in this file, in reverse 
   to the IBAN validator for performing SEPA validation against Croatia and San
   Marino.
 
+- [#209](https://github.com/zendframework/zend-validator/pull/209) adds
+  documentation for the `Explode` validator.
+
 ### Changed
 
 - Nothing.
