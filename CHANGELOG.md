@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 2.10.2 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- [#195](https://github.com/zendframework/zend-validator/pull/195) adds
+  missing `GpsPoint` validator entries to the `ValidatorPluginManager`, ensuring
+  they may be retrieved from it correctly.
+
 ## 2.10.1 - 2017-08-22
 
 ### Added
