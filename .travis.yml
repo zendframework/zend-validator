@@ -14,7 +14,7 @@ cache:
 env:
   global:
     - COMPOSER_ARGS="--no-interaction"
-    - COVERAGE_DEPS="satooshi/php-coveralls"
+    - COVERAGE_DEPS="php-coveralls/php-coveralls"
     - LEGACY_DEPS="phpunit/phpunit"
     - TESTS_ZEND_VALIDATOR_ONLINE_ENABLED=true
 
@@ -81,7 +81,7 @@ script:
   - if [[ $EXECUTE_HOSTNAME_CHECK == "true" && $TRAVIS_PULL_REQUEST == "false" ]]; then php bin/update_hostname_validator.php --check-only; fi
 
 after_script:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer upload-coverage ; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry php vendor/bin/php-coveralls -v ; fi
 
 notifications:
   email: false
