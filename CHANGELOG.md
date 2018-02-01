@@ -14,6 +14,10 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#203](https://github.com/zendframework/zend-validator/pull/203) adds support
   for the new Russian bank card "Mir".
 
+- [#204](https://github.com/zendframework/zend-validator/pull/204) adds support
+  to the IBAN validator for performing SEPA validation against Croatia and San
+  Marino.
+
 ### Changed
 
 - Nothing.
