@@ -292,7 +292,7 @@ class Size extends AbstractValidator
             }
         }
 
-        if (count($this->getMessages()) > 0) {
+        if ($this->getMessages()) {
             return false;
         }
 

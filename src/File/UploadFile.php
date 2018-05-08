@@ -114,7 +114,7 @@ class UploadFile extends AbstractValidator
                 break;
         }
 
-        if (count($this->getMessages()) > 0) {
+        if ($this->getMessages()) {
             return false;
         }
 

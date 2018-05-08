@@ -383,7 +383,7 @@ class ImageSize extends AbstractValidator
             $this->error(self::HEIGHT_TOO_BIG);
         }
 
-        if (count($this->getMessages()) > 0) {
+        if ($this->getMessages()) {
             return false;
         }
 
