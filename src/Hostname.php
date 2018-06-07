@@ -2090,6 +2090,7 @@ class Hostname extends AbstractValidator
 
                     // Check each hostname part
                     $check = 0;
+                    $lastDomainPart = end($domainParts);
                     foreach ($domainParts as $domainPart) {
                         // Decode Punycode domain names to IDN
                         if (strpos($domainPart, 'xn--') === 0) {
@@ -2118,7 +2119,9 @@ class Hostname extends AbstractValidator
 
                         // Check each domain part
                         $checked = false;
-                        foreach ($regexChars as $regexKey => $regexChar) {
+                        $isSubDomain = $domainPart != $lastDomainPart;
+                        $partRegexChars = $isSubDomain ? ['/^[a-z0-9_\x2d]{1,63}$/i'] + $regexChars : $regexChars;
+                        foreach ($partRegexChars as $regexKey => $regexChar) {
                             $status = preg_match($regexChar, $domainPart);
                             if ($status > 0) {
                                 $length = 63;
