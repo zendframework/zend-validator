@@ -36,16 +36,17 @@ class UploadFile extends AbstractValidator
      * @var array Error message templates
      */
     protected $messageTemplates = [
-        self::INI_SIZE       => "File exceeds the defined ini size",
-        self::FORM_SIZE      => "File exceeds the defined form size",
-        self::PARTIAL        => "File was only partially uploaded",
-        self::NO_FILE        => "File was not uploaded",
-        self::NO_TMP_DIR     => "No temporary directory was found for file",
-        self::CANT_WRITE     => "File can't be written",
-        self::EXTENSION      => "A PHP extension returned an error while uploading the file",
-        self::ATTACK         => "File was illegally uploaded. This could be a possible attack",
-        self::FILE_NOT_FOUND => "File was not found",
-        self::UNKNOWN        => "Unknown error while uploading file",
+        self::INI_SIZE       => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
+        self::FORM_SIZE      => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was '
+            . 'specified in the HTML form',
+        self::PARTIAL        => 'The uploaded file was only partially uploaded',
+        self::NO_FILE        => 'No file was uploaded',
+        self::NO_TMP_DIR     => 'Missing a temporary folder',
+        self::CANT_WRITE     => 'Failed to write file to disk',
+        self::EXTENSION      => 'A PHP extension stopped the file upload',
+        self::ATTACK         => 'File was illegally uploaded. This could be a possible attack',
+        self::FILE_NOT_FOUND => 'File was not found',
+        self::UNKNOWN        => 'Unknown error while uploading file',
     ];
 
     /**

@@ -290,7 +290,8 @@ class UploadTest extends TestCase
         $this->assertEquals([], $validator->getFiles('test5'));
     }
 
-    public function testPsrGetFiles() {
+    public function testPsrGetFiles()
+    {
         $files = [
             'test'  => new UploadedFile(
                 'tmp_test1',
@@ -358,7 +359,8 @@ class UploadTest extends TestCase
         $this->assertEquals($files, $validator->getFiles());
     }
 
-    public function testPsrSetFiles() {
+    public function testPsrSetFiles()
+    {
         $psrFiles = [
             'test4' => new UploadedFile(
                 'tmp_test4',
@@ -433,7 +435,7 @@ class UploadTest extends TestCase
 
         $this->assertEquals(
             [
-                'fileUploadErrorCantWrite' => "File 'bar' can't be written",
+                'fileUploadErrorCantWrite' => "Failed to write file 'bar' to disk",
             ],
             $validator->getMessages()
         );
@@ -442,7 +444,8 @@ class UploadTest extends TestCase
     /**
      * @group ZF-12128
      */
-    public function testPsrErrorMessage() {
+    public function testPsrErrorMessage()
+    {
         $files = [
             'foo' => new UploadedFile(
                 'tmp_bar',
@@ -459,7 +462,7 @@ class UploadTest extends TestCase
 
         $this->assertEquals(
             [
-                'fileUploadErrorCantWrite' => "File 'bar' can't be written",
+                'fileUploadErrorCantWrite' => "Failed to write file 'bar' to disk",
             ],
             $validator->getMessages()
         );

@@ -38,13 +38,14 @@ class Upload extends AbstractValidator
      * @var array Error message templates
      */
     protected $messageTemplates = [
-        self::INI_SIZE       => "File '%value%' exceeds the defined ini size",
-        self::FORM_SIZE      => "File '%value%' exceeds the defined form size",
+        self::INI_SIZE       => "File '%value%' exceeds upload_max_filesize directive in php.ini",
+        self::FORM_SIZE      => "File '%value%' exceeds the MAX_FILE_SIZE directive that was "
+            . 'specified in the HTML form',
         self::PARTIAL        => "File '%value%' was only partially uploaded",
         self::NO_FILE        => "File '%value%' was not uploaded",
-        self::NO_TMP_DIR     => "No temporary directory was found for file '%value%'",
-        self::CANT_WRITE     => "File '%value%' can't be written",
-        self::EXTENSION      => "A PHP extension returned an error while uploading the file '%value%'",
+        self::NO_TMP_DIR     => "Missing a temporary folder to store '%value%'",
+        self::CANT_WRITE     => "Failed to write file '%value%' to disk",
+        self::EXTENSION      => "A PHP extension stopped uploading the file '%value%'",
         self::ATTACK         => "File '%value%' was illegally uploaded. This could be a possible attack",
         self::FILE_NOT_FOUND => "File '%value%' was not found",
         self::UNKNOWN        => "Unknown error while uploading file '%value%'"
@@ -89,10 +90,10 @@ class Upload extends AbstractValidator
                 }
 
                 if ($content instanceof UploadedFileInterface) {
-                    if($content->getClientFilename() === $file) {
+                    if ($content->getClientFilename() === $file) {
                         $return[$name] = $this->options['files'][$name];
                     }
-                } else if ($content['name'] === $file) {
+                } elseif ($content['name'] === $file) {
                     $return[$name] = $this->options['files'][$name];
                 }
             }
@@ -129,7 +130,7 @@ class Upload extends AbstractValidator
         }
 
         foreach ($this->options['files'] as $file => $content) {
-            if (!($content instanceof UploadedFileInterface) && ! isset($content['error'])) {
+            if (! ($content instanceof UploadedFileInterface) && ! isset($content['error'])) {
                 unset($this->options['files'][$file]);
             }
         }
