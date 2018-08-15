@@ -10,6 +10,7 @@
 namespace ZendTest\Validator\File;
 
 use PHPUnit\Framework\TestCase;
+use Zend\Diactoros\UploadedFile;
 use Zend\Validator\Exception\InvalidArgumentException;
 use Zend\Validator\File;
 
@@ -132,6 +133,117 @@ class UploadTest extends TestCase
     }
 
     /**
+     * Ensures that the validator follows expected behavior
+     *
+     * @return void
+     */
+    public function testPsrBasic()
+    {
+        $files = [
+            'test'  => new UploadedFile(
+                __DIR__ . '/_files/testsize.mo', // has to be real file
+                200,
+                0,
+                'test1',
+                'text'
+            ),
+            'test2' => new UploadedFile(
+                'tmp_test2',
+                202,
+                1,
+                'test2',
+                'text2'
+            ),
+            'test3' => new UploadedFile(
+                'tmp_test3',
+                203,
+                2,
+                'test3',
+                'text3'
+            ),
+            'test4' => new UploadedFile(
+                'tmp_test4',
+                204,
+                3,
+                'test4',
+                'text4'
+            ),
+            'test5' => new UploadedFile(
+                'tmp_test5',
+                205,
+                4,
+                'test5',
+                'text5'
+            ),
+            'test6' => new UploadedFile(
+                'tmp_test6',
+                206,
+                5,
+                'test6',
+                'text6'
+            ),
+            'test7' => new UploadedFile(
+                'tmp_test7',
+                207,
+                6,
+                'test7',
+                'text7'
+            ),
+            'test8' => new UploadedFile(
+                'tmp_test8',
+                208,
+                7,
+                'test8',
+                'text8'
+            ),
+            'test9' => new UploadedFile(
+                'tmp_test9',
+                209,
+                8,
+                'test9',
+                'text9'
+            )
+        ];
+
+        $validator = new File\Upload();
+        $validator->setFiles($files);
+        $this->assertFalse($validator->isValid('test'));
+        $this->assertArrayHasKey('fileUploadErrorAttack', $validator->getMessages());
+
+        $this->assertFalse($validator->isValid('test2'));
+        $this->assertArrayHasKey('fileUploadErrorIniSize', $validator->getMessages());
+
+        $this->assertFalse($validator->isValid('test3'));
+        $this->assertArrayHasKey('fileUploadErrorFormSize', $validator->getMessages());
+
+        $this->assertFalse($validator->isValid('test4'));
+        $this->assertArrayHasKey('fileUploadErrorPartial', $validator->getMessages());
+
+        $this->assertFalse($validator->isValid('test5'));
+        $this->assertArrayHasKey('fileUploadErrorNoFile', $validator->getMessages());
+
+        $this->assertFalse($validator->isValid('test6'));
+        $this->assertArrayHasKey('fileUploadErrorUnknown', $validator->getMessages());
+
+        $this->assertFalse($validator->isValid('test7'));
+        $this->assertArrayHasKey('fileUploadErrorNoTmpDir', $validator->getMessages());
+
+        $this->assertFalse($validator->isValid('test8'));
+        $this->assertArrayHasKey('fileUploadErrorCantWrite', $validator->getMessages());
+
+        $this->assertFalse($validator->isValid('test9'));
+        $this->assertArrayHasKey('fileUploadErrorExtension', $validator->getMessages());
+
+        $this->assertFalse($validator->isValid('test1'));
+        $this->assertArrayHasKey('fileUploadErrorAttack', $validator->getMessages());
+
+        // not testing lookup by temp file name since PSR does not expose it
+
+        $this->assertFalse($validator->isValid('test000'));
+        $this->assertArrayHasKey('fileUploadErrorFileNotFound', $validator->getMessages());
+    }
+
+    /**
      * Ensures that getFiles() returns expected value
      *
      * @return void
@@ -178,6 +290,35 @@ class UploadTest extends TestCase
         $this->assertEquals([], $validator->getFiles('test5'));
     }
 
+    public function testPsrGetFiles() {
+        $files = [
+            'test'  => new UploadedFile(
+                'tmp_test1',
+                200,
+                0,
+                'test1',
+                'text'
+            ),
+            'test2' => new UploadedFile(
+                'tmp_test2',
+                202,
+                1,
+                'test3',
+                'text2'
+            )
+        ];
+
+        $validator = new File\Upload();
+        $validator->setFiles($files);
+        $this->assertEquals(['test' => $files['test']], $validator->getFiles('test'));
+        $this->assertEquals(['test' => $files['test']], $validator->getFiles('test1'));
+        $this->assertEquals(['test2' => $files['test2']], $validator->getFiles('test3'));
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('was not found');
+        $this->assertEquals([], $validator->getFiles('test5'));
+    }
+
     /**
      * Ensures that setFiles() returns expected value
      *
@@ -215,6 +356,29 @@ class UploadTest extends TestCase
         $this->assertEquals($_FILES, $validator->getFiles());
         $validator->setFiles($files);
         $this->assertEquals($files, $validator->getFiles());
+    }
+
+    public function testPsrSetFiles() {
+        $psrFiles = [
+            'test4' => new UploadedFile(
+                'tmp_test4',
+                204,
+                3,
+                'test4',
+                'text5'
+            ),
+            'test5' => new UploadedFile(
+                'tmp_test5',
+                205,
+                4,
+                'test5',
+                'text5'
+            )
+        ];
+
+        $validator = new File\Upload();
+        $validator->setFiles($psrFiles);
+        $this->assertEquals($psrFiles, $validator->getFiles());
     }
 
     /**
@@ -273,5 +437,32 @@ class UploadTest extends TestCase
             ],
             $validator->getMessages()
         );
+    }
+
+    /**
+     * @group ZF-12128
+     */
+    public function testPsrErrorMessage() {
+        $files = [
+            'foo' => new UploadedFile(
+                'tmp_bar',
+                100,
+                7,
+                'bar',
+                'text'
+            )
+        ];
+
+        $validator = new File\Upload;
+        $validator->setFiles($files);
+        $validator->isValid('foo');
+
+        $this->assertEquals(
+            [
+                'fileUploadErrorCantWrite' => "File 'bar' can't be written",
+            ],
+            $validator->getMessages()
+        );
+        $validator->setFiles($files);
     }
 }

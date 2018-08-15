@@ -10,6 +10,7 @@
 namespace ZendTest\Validator\File;
 
 use PHPUnit\Framework\TestCase;
+use Zend\Diactoros\UploadedFile;
 use Zend\Validator\Exception\InvalidArgumentException;
 use Zend\Validator\File;
 
@@ -46,6 +47,22 @@ class UploadFileTest extends TestCase
                     'error'    => $errorCode,
                 ],
                 // messageKey
+                $errorType,
+            ];
+        }
+
+        // Diactoros does not have UNKNOWN error type.
+        unset($errorTypes[9]);
+        foreach ($errorTypes as $errorCode => $errorType) {
+            $data[] = [
+                new UploadedFile(
+                    // need a real file for Stream to not throw exceptions
+                    $testSizeFile,
+                    200 + $errorCode,
+                    $errorCode,
+                    'test' . $errorCode,
+                    'text'
+                ),
                 $errorType,
             ];
         }

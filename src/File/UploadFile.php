@@ -9,6 +9,7 @@
 
 namespace Zend\Validator\File;
 
+use Psr\Http\Message\UploadedFileInterface;
 use Zend\Validator\AbstractValidator;
 use Zend\Validator\Exception;
 
@@ -50,7 +51,7 @@ class UploadFile extends AbstractValidator
     /**
      * Returns true if and only if the file was uploaded without errors
      *
-     * @param  string $value File to check for upload errors
+     * @param  string|array|UploadedFileInterface $value File to check for upload errors
      * @return bool
      * @throws Exception\InvalidArgumentException
      */
@@ -65,6 +66,13 @@ class UploadFile extends AbstractValidator
             $file     = $value['tmp_name'];
             $filename = $value['name'];
             $error    = $value['error'];
+        } elseif ($value instanceof UploadedFileInterface) {
+            /** @var UploadedFileInterface $value */
+            $filename = $value->getClientFilename();
+            $error = $value->getError();
+            if (UPLOAD_ERR_OK === $error) {
+                $file = $value->getStream()->getMetadata('uri');
+            }
         } else {
             $file     = $value;
             $filename = basename($file);

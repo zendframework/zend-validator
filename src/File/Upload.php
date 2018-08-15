@@ -10,6 +10,7 @@
 namespace Zend\Validator\File;
 
 use Countable;
+use Psr\Http\Message\UploadedFileInterface;
 use Zend\Validator\AbstractValidator;
 use Zend\Validator\Exception;
 
@@ -87,7 +88,11 @@ class Upload extends AbstractValidator
                     $return[$file] = $this->options['files'][$name];
                 }
 
-                if ($content['name'] === $file) {
+                if ($content instanceof UploadedFileInterface) {
+                    if($content->getClientFilename() === $file) {
+                        $return[$name] = $this->options['files'][$name];
+                    }
+                } else if ($content['name'] === $file) {
                     $return[$name] = $this->options['files'][$name];
                 }
             }
@@ -124,7 +129,7 @@ class Upload extends AbstractValidator
         }
 
         foreach ($this->options['files'] as $file => $content) {
-            if (! isset($content['error'])) {
+            if (!($content instanceof UploadedFileInterface) && ! isset($content['error'])) {
                 unset($this->options['files'][$file]);
             }
         }
@@ -148,6 +153,18 @@ class Upload extends AbstractValidator
             $files = array_merge($files, $this->getFiles($value));
         } else {
             foreach ($this->getFiles() as $file => $content) {
+                if ($content instanceof UploadedFileInterface) {
+                    if ($content->getClientFilename() === $value) {
+                        $files = array_merge($files, $this->getFiles($file));
+                    }
+
+                    // PSR cannot search by tmp_name because it does not have
+                    // a public interface to get it, only user defined name
+                    // from form field.
+                    continue;
+                }
+
+
                 if (isset($content['name']) && ($content['name'] === $value)) {
                     $files = array_merge($files, $this->getFiles($file));
                 }
@@ -164,9 +181,15 @@ class Upload extends AbstractValidator
 
         foreach ($files as $file => $content) {
             $this->value = $file;
-            switch ($content['error']) {
+            $error = ($content instanceof UploadedFileInterface) ?
+                $content->getError() : $content['error'];
+            switch ($error) {
                 case 0:
-                    if (! is_uploaded_file($content['tmp_name'])) {
+                    $tmpFile = ($content instanceof UploadedFileInterface) ?
+                        $content->getStream()->getMetadata('uri') :
+                        $content['tmp_name'];
+
+                    if (! is_uploaded_file($tmpFile)) {
                         $this->throwError($content, self::ATTACK);
                     }
                     break;
@@ -215,7 +238,7 @@ class Upload extends AbstractValidator
     /**
      * Throws an error of the given type
      *
-     * @param  string $file
+     * @param  array|string|UploadedFileInterface $file
      * @param  string $errorType
      * @return false
      */
@@ -228,6 +251,8 @@ class Upload extends AbstractValidator
                 }
             } elseif (is_string($file)) {
                 $this->value = $file;
+            } elseif ($file instanceof UploadedFileInterface) {
+                $this->value = $file->getClientFilename();
             }
         }
 
