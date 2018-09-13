@@ -43,7 +43,7 @@ written as follows, then the alphanumeric validation would not occur if the
 string length validation fails:
 
 ```php
-$chain->attach(new StringLength(['min' => 6, 'max' => 12], true));
+$chain->attach(new StringLength(['min' => 6, 'max' => 12]), true);
 $chain->attach(new Alnum());
 ```
 
