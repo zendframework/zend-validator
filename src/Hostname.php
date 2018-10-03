@@ -2098,8 +2098,8 @@ class Hostname extends AbstractValidator
                                 return false;
                             }
                         }
-                        
-                        // Stop with following checks if domain part is empty, as it definitely is not a valid hostname then
+
+                        // Skip following checks if domain part is empty, as it definitely is not a valid hostname then
                         if ($domainPart === '') {
                             $this->error(self::INVALID_HOSTNAME);
                             $status = false;
