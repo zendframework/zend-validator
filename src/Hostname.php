@@ -2098,6 +2098,13 @@ class Hostname extends AbstractValidator
                                 return false;
                             }
                         }
+                        
+                        // Stop with following checks if domain part is empty, as it definitely is not a valid hostname then
+                        if ($domainPart === '') {
+                            $this->error(self::INVALID_HOSTNAME);
+                            $status = false;
+                            break 2;
+                        }
 
                         // Check dash (-) does not start, end or appear in 3rd and 4th positions
                         if ($utf8StrWrapper->strpos($domainPart, '-') === 0
