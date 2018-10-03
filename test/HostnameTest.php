@@ -647,4 +647,11 @@ class HostnameTest extends TestCase
         $validator = new Hostname();
         $this->assertTrue($validator->isValid('google.biz'));
     }
+    
+    
+    public function testHostnameWithEmptyDomainPart()
+    {
+        $validator = new Hostname();
+        $this->assertFalse($validator->isValid('.com'));
+    }
 }
