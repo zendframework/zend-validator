@@ -3,7 +3,7 @@
 This validator allows you to validate if a given string is between a defined
 length.
 
-> Supports only string validation
+> ### Supports only string validation
 >
 > `Zend\Validator\StringLength` supports only the validation of strings.
 > Integers, floats, dates or objects can not be validated with this validator.
@@ -97,7 +97,7 @@ $validator->isValid('Test'); // returns true
 $validator->isValid('Testi'); // returns false
 ```
 
-> ### Setting a maximum lower  than the minimum
+> ### Setting a maximum lower than the minimum
 >
 > When you try to set a lower maximum value than the specified minimum value, or
 > a higher minimum value as the actual maximum value, the validator will raise
