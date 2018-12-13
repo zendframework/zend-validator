@@ -92,7 +92,7 @@ class Upload extends AbstractValidator
                 }
             }
 
-            if (count($return) === 0) {
+            if (! $return) {
                 throw new Exception\InvalidArgumentException("The file '$file' was not found");
             }
 
@@ -205,7 +205,7 @@ class Upload extends AbstractValidator
             }
         }
 
-        if (count($this->getMessages()) > 0) {
+        if ($this->getMessages()) {
             return false;
         }
 
