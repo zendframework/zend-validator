@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
-## 2.10.3 - TBD
+## 2.10.3 - 2018-12-13
 
 ### Added
 
@@ -43,6 +43,9 @@ All notable changes to this project will be documented in this file, in reverse 
 - Nothing.
 
 ### Fixed
+
+- [#241](https://github.com/zendframework/zend-validator/pull/241) has the `Hostname` validator return an invalid result early when an empty
+  domain segment is detected.
 
 - [#232](https://github.com/zendframework/zend-validator/pull/232) updates the `Hostname` validator to allow underscores in subdomains.
 
