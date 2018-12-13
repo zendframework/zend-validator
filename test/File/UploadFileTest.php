@@ -10,6 +10,7 @@
 namespace ZendTest\Validator\File;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\UploadedFileInterface;
 use Zend\Validator\Exception\InvalidArgumentException;
 use Zend\Validator\File;
 
@@ -36,7 +37,8 @@ class UploadFileTest extends TestCase
         $testSizeFile = __DIR__ . '/_files/testsize.mo';
 
         foreach ($errorTypes as $errorCode => $errorType) {
-            $data[] = [
+            $name = sprintf('SAPI - %s', $errorType);
+            $data[$name] = [
                 // fileInfo
                 [
                     'name'     => 'test' . $errorCode,
@@ -49,6 +51,23 @@ class UploadFileTest extends TestCase
                 $errorType,
             ];
         }
+
+        // Diactoros does not have UNKNOWN error type.
+        unset($errorTypes[9]);
+        foreach ($errorTypes as $errorCode => $errorType) {
+            if ($errorCode === UPLOAD_ERR_OK) {
+                // Unable to get to this vector
+                continue;
+            }
+
+            $name = sprintf('PSR-7 - %s', $errorType);
+            $upload = $this->prophesize(UploadedFileInterface::class);
+            $upload->getClientFilename()->willReturn('test' . $errorCode);
+            $upload->getError()->willReturn($errorCode);
+
+            $data[$name] = [$upload->reveal(), $errorType];
+        }
+
         return $data;
     }
 

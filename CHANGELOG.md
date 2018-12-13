@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 2.11.0 - 2018-12-13
+
+### Added
+
+- [#237](https://github.com/zendframework/zend-validator/pull/237) adds support for the [PSR-7 UploadedFileInterface](https://www.php-fig.org/psr/psr-7/#uploadedfileinterface)
+  to each of the `Upload` and `UploadFile` validators.
+
+- [#220](https://github.com/zendframework/zend-validator/pull/220) adds image/webp to the list of known image types for the `IsImage` validator.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 2.10.3 - 2018-12-13
 
 ### Added
