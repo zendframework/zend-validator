@@ -84,6 +84,19 @@ $validator->isValid("Test"); // returns true
 $validator->isValid("Testing"); // returns true
 ```
 
+## Limiting to a strict length
+
+If you need a strict length, then set the `min` and `max` properties to the same
+value:
+
+```php
+$validator = new Zend\Validator\StringLength(['min' => 4, 'max' => 4]);
+
+$validator->isValid('Tes'); // returns false
+$validator->isValid('Test'); // returns true
+$validator->isValid('Testi'); // returns false
+```
+
 > ### Setting a maximum lower  than the minimum
 >
 > When you try to set a lower maximum value than the specified minimum value, or
