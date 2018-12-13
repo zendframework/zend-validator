@@ -15,7 +15,6 @@ use Zend\Validator\Between;
 use Zend\Validator\NotEmpty;
 use Zend\Validator\StaticValidator;
 use Zend\Validator\ValidatorChain;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\Validator\ValidatorInterface;
 use Zend\Validator\GreaterThan;
 
@@ -98,39 +97,6 @@ class ValidatorChainTest extends TestCase
             ->attach($this->getValidatorFalse());
         $this->assertFalse($this->validator->isValid(null));
         $this->assertEquals(['error' => 'validation failed'], $this->validator->getMessages());
-    }
-
-    /**
-     * Ensures that if we specify a validator class basename that doesn't
-     * exist in the namespace, is() throws an exception.
-     *
-     * Refactored to conform with ZF-2724.
-     *
-     * @group  ZF-2724
-     * @return void
-     */
-    public function testStaticFactoryClassNotFound()
-    {
-        $this->expectException(ServiceNotFoundException::class);
-        StaticValidator::execute('1234', 'UnknownValidator');
-    }
-
-    public function testSetGetMessageLengthLimitation()
-    {
-        AbstractValidator::setMessageLength(5);
-        $this->assertEquals(5, AbstractValidator::getMessageLength());
-
-        $valid = new Between(1, 10);
-        $this->assertFalse($valid->isValid(24));
-        $message = current($valid->getMessages());
-        $this->assertLessThanOrEqual(5, strlen($message));
-    }
-
-    public function testSetGetDefaultTranslator()
-    {
-        $translator = new TestAsset\Translator();
-        AbstractValidator::setDefaultTranslator($translator);
-        $this->assertSame($translator, AbstractValidator::getDefaultTranslator());
     }
 
     public function testAllowsPrependingValidators()

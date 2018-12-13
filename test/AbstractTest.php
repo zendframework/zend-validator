@@ -65,11 +65,6 @@ class AbstractTest extends TestCase
         $this->assertNull($this->validator->getTranslator());
     }
 
-    public function testGlobalDefaultTranslatorNullByDefault()
-    {
-        $this->assertNull(AbstractValidator::getDefaultTranslator());
-    }
-
     public function testErrorMessagesAreTranslatedWhenTranslatorPresent()
     {
         if (! extension_loaded('intl')) {
