@@ -120,6 +120,60 @@ class HostnameTest extends TestCase
     }
 
     /**
+     * @return iterable
+     */
+    public function domainsWithUnderscores()
+    {
+        yield 'subdomain with leading underscore' => [
+            '_subdomain.domain.com',
+            'assertTrue',
+        ];
+
+        yield 'subdomain with trailing underscore' => [
+            'subdomain_.domain.com',
+            'assertTrue',
+        ];
+
+        yield 'subdomain with single underscore' => [
+            'sub_domain.domain.com',
+            'assertTrue',
+        ];
+
+        yield 'subdomain with double underscore' => [
+            'sub__domain.domain.com',
+            'assertTrue',
+        ];
+
+        yield 'root domain with leading underscore' => [
+            '_domain.com',
+            'assertFalse',
+        ];
+
+        yield 'root domain with trailing underscore' => [
+            'domain_.com',
+            'assertFalse',
+        ];
+
+        yield 'root domain with underscore' => [
+            'do_main.com',
+            'assertFalse',
+        ];
+    }
+
+    /**
+     * Ensure the underscore character tests work as expected
+     *
+     * @dataProvider domainsWithUnderscores
+     * @param string $input
+     * @param string $assertion
+     */
+    public function testValidatorHandlesUnderscoresInDomainsCorrectly($input, $assertion)
+    {
+        $validator = new Hostname(Hostname::ALLOW_DNS);
+        $this->$assertion($validator->isValid($input), implode("\n", $validator->getMessages()));
+    }
+
+    /**
      * Ensures that getMessages() returns expected default value
      *
      * @return void
