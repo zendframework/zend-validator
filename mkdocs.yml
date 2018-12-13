@@ -61,4 +61,3 @@ pages:
 site_name: zend-validator
 site_description: zend-validator
 repo_url: 'https://github.com/zendframework/zend-validator'
-copyright: 'Copyright (c) 2016 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a>'
