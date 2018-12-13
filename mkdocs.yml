@@ -1,7 +1,7 @@
 docs_dir: doc/book
 site_dir: doc/html
 pages:
-    - index.md
+    - Home: index.md
     - Intro: intro.md
     - Reference:
         - "Validator Chains": validator-chains.md
