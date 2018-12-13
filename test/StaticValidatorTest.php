@@ -10,12 +10,13 @@
 namespace ZendTest\Validator;
 
 use PHPUnit\Framework\TestCase;
-use Zend\Validator\AbstractValidator;
 use Zend\I18n\Validator\Alpha;
-use Zend\Validator\Between;
-use Zend\Validator\StaticValidator;
-use Zend\Validator\ValidatorPluginManager;
+use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\ServiceManager;
+use Zend\Validator\AbstractValidator;
+use Zend\Validator\Between;
+use Zend\Validator\ValidatorPluginManager;
+use Zend\Validator\StaticValidator;
 
 /**
  * @group      Zend_Validator
@@ -166,5 +167,20 @@ class StaticValidatorTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('options');
         StaticValidator::execute($value, $validator, $options);
+    }
+
+    /**
+     * Ensures that if we specify a validator class basename that doesn't
+     * exist in the namespace, is() throws an exception.
+     *
+     * Refactored to conform with ZF-2724.
+     *
+     * @group  ZF-2724
+     * @return void
+     */
+    public function testStaticFactoryClassNotFound()
+    {
+        $this->expectException(ServiceNotFoundException::class);
+        StaticValidator::execute('1234', 'UnknownValidator');
     }
 }
