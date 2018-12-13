@@ -2,7 +2,7 @@ docs_dir: doc/book
 site_dir: doc/html
 pages:
     - Home: index.md
-    - Intro: intro.md
+    - Introduction: intro.md
     - Reference:
         - "Validator Chains": validator-chains.md
         - "Writing Validators": writing-validators.md
@@ -38,7 +38,7 @@ pages:
             - Uri: validators/uri.md
             - Uuid: validators/uuid.md
         - "File Validators":
-            - Intro: validators/file/intro.md
+            - Introduction: validators/file/intro.md
             - Count: validators/file/count.md
             - Crc32: validators/file/crc32.md
             - ExcludeExtension: validators/file/exclude-extension.md
