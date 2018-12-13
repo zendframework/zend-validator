@@ -166,6 +166,10 @@ class Step extends AbstractValidator
         return round($x - $y, $precision);
     }
 
+    /**
+     * @param  float $float
+     * @return int
+     */
     private function getPrecision($float)
     {
         $segment = substr($float, strpos($float, '.') + 1);
