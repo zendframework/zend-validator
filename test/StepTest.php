@@ -124,6 +124,29 @@ class StepTest extends TestCase
         $this->assertSame($expected, $validator->isValid($value));
     }
 
+
+    public function decimalStepSubstractionBugValues()
+    {
+        return [
+            'base-value-20' => [20, 20.06, true],
+            'base-value-40' => [40, 40.09, true],
+            'base-value-50' => [50, 50.09, true],
+        ];
+    }
+
+    /**
+     * @dataProvider decimalStepSubstractionBugValues
+     */
+    public function testDecimalStepSubstractionBug($baseValue, $value, $expected)
+    {
+        $validator = new Validator\Step([
+            'baseValue' => $baseValue,
+            'step'      => 0.01
+        ]);
+
+        $this->assertSame($expected, $validator->isValid($value));
+    }
+
     public function decimalHundredthStepValues()
     {
         return [
@@ -151,7 +174,7 @@ class StepTest extends TestCase
     /**
      * @dataProvider decimalHundredthStepValues
      */
-    public function testDecimalStep2($value, $expected)
+    public function testdecimalHundredthStep($value, $expected)
     {
         $validator = new Validator\Step([
             'baseValue' => 0,
