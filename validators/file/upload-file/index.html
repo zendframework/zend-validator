@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="zend-validator">  
+    <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria.">  
     <link rel="shortcut icon" href="../../../img/favicon.ico">
 
     <title>UploadFile - zend-validator</title>
@@ -75,7 +75,7 @@
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href="../../../intro/" class="subnavigation__link">Intro</a>
+                        <a href="../../../intro/" class="subnavigation__link">Introduction</a>
                     </li>
                 
             
@@ -292,7 +292,7 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../intro/" class="subnavigation__link">Intro</a>
+        <a href="../intro/" class="subnavigation__link">Introduction</a>
     </li>
 
             
@@ -506,14 +506,17 @@
 
     
     
-
-    
-
-    
-    
         <div class="toc">
             <h6 class="toc__headline">In This Article</h6>
             <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#basic-usage" class="toc__link">Basic Usage</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#psr-7-support" class="toc__link">PSR-7 Support</a>
+                    </li>
                 
                     <li class="toc__entry">
                         <a href="#usage-with-zend-inputfilter" class="toc__link">Usage with zend-inputfilter</a>
@@ -527,7 +530,7 @@
     <h1 id="uploadfile">UploadFile</h1>
 <p><code>Zend\Validator\File\UploadFile</code> checks whether a single file has been uploaded
 via a form <code>POST</code> and will return descriptive messages for any upload errors.</p>
-<h1 id="basic-usage">Basic Usage</h1>
+<h2 id="basic-usage">Basic Usage</h2>
 <pre class="codehilite"><code class="language-php">use Zend\Http\PhpEnvironment\Request;
 use Zend\Validator\File\UploadFile;
 
@@ -540,8 +543,23 @@ if ($validator-&gt;isValid($files['my-upload'])) {
     // file is valid
 }</code></pre>
 
+<h2 id="psr-7-support">PSR-7 Support</h2>
+<ul>
+<li>Since 2.11.0</li>
+</ul>
+<p>Starting in 2.11.0, you can also pass <a href="https://www.php-fig.org/psr/psr-7/#uploadedfileinterface">PSR-7 UploadedFileInterface</a>
+instances as values to the validator. When valid, <code>getValue()</code> will return the
+instance validated verbatim:</p>
+<pre class="codehilite"><code class="language-php">$validator = new UploadFile();
+
+// @var Psr\Http\Message\UploadedFileInterface $uploadedFile
+if ($validator-&gt;isValid($uploadedFile)) {
+    // file is valid
+    $validInstance = $validator-&gt;getValue(); // === $uploadedFile
+}</code></pre>
+
 <h2 id="usage-with-zend-inputfilter">Usage with zend-inputfilter</h2>
-<p>When using zend-inputfilter's <a href="https://zendframework.github.io/zend-inputfilter/file-input/">FileInput</a>,
+<p>When using zend-inputfilter's <a href="https://docs.zendframework.com/zend-inputfilter/file-input/">FileInput</a>,
 this validator will be automatically prepended to the validator chain.</p>
 
 
@@ -605,7 +623,7 @@ this validator will be automatically prepended to the validator chain.</p>
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href="../../../intro/" class="subnavigation__link">Intro</a>
+                        <a href="../../../intro/" class="subnavigation__link">Introduction</a>
                     </li>
                 
             
@@ -822,7 +840,7 @@ this validator will be automatically prepended to the validator chain.</p>
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../intro/" class="subnavigation__link">Intro</a>
+        <a href="../intro/" class="subnavigation__link">Introduction</a>
     </li>
 
             

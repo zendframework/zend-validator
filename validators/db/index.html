@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="zend-validator">  
+    <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria.">  
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
     <title>Db\RecordExists and Db\NoRecordExists - zend-validator</title>
@@ -75,7 +75,7 @@
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href="../../intro/" class="subnavigation__link">Intro</a>
+                        <a href="../../intro/" class="subnavigation__link">Introduction</a>
                     </li>
                 
             
@@ -292,7 +292,7 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../file/intro/" class="subnavigation__link">Intro</a>
+        <a href="../file/intro/" class="subnavigation__link">Introduction</a>
     </li>
 
             
@@ -511,6 +511,10 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
+                        <a href="#installation-requirements" class="toc__link">Installation requirements</a>
+                    </li>
+                
+                    <li class="toc__entry">
                         <a href="#supported-options" class="toc__link">Supported options</a>
                     </li>
                 
@@ -539,6 +543,14 @@
 <p><code>Zend\Validator\Db\RecordExists</code> and <code>Zend\Validator\Db\NoRecordExists</code> provide
 a means to test whether a record exists in a given table of a database, with a
 given value.</p>
+<blockquote>
+<h3 id="installation-requirements">Installation requirements</h3>
+<p><code>Zend\Validator\Db\NoRecordExists</code> and <code>Zend\Validator\Db\RecordExists</code> 
+depends on the zend-db component, so be sure to have it installed before
+getting started:</p>
+<pre class="codehilite"><code class="language-bash">$ composer require zendframework/zend-db`</code></pre>
+
+</blockquote>
 <h2 id="supported-options">Supported options</h2>
 <p>The following options are supported for <code>Zend\Validator\Db\NoRecordExists</code> and
 <code>Zend\Validator\Db\RecordExists</code>:</p>
@@ -748,7 +760,7 @@ both the username <code>$username</code> and with the email <code>$email</code> 
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href="../../intro/" class="subnavigation__link">Intro</a>
+                        <a href="../../intro/" class="subnavigation__link">Introduction</a>
                     </li>
                 
             
@@ -965,7 +977,7 @@ both the username <code>$username</code> and with the email <code>$email</code> 
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../file/intro/" class="subnavigation__link">Intro</a>
+        <a href="../file/intro/" class="subnavigation__link">Introduction</a>
     </li>
 
             

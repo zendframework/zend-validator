@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="zend-validator">  
+    <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria.">  
     <link rel="shortcut icon" href="../../../img/favicon.ico">
 
     <title>Upload - zend-validator</title>
@@ -75,7 +75,7 @@
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href="../../../intro/" class="subnavigation__link">Intro</a>
+                        <a href="../../../intro/" class="subnavigation__link">Introduction</a>
                     </li>
                 
             
@@ -292,7 +292,7 @@
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../intro/" class="subnavigation__link">Intro</a>
+        <a href="../intro/" class="subnavigation__link">Introduction</a>
     </li>
 
             
@@ -518,6 +518,10 @@
                         <a href="#basic-usage" class="toc__link">Basic Usage</a>
                     </li>
                 
+                    <li class="toc__entry">
+                        <a href="#psr-7-support" class="toc__link">PSR-7 Support</a>
+                    </li>
+                
             </ul>
         </div>
     
@@ -542,6 +546,29 @@ $validator = new Upload($request-&gt;getFiles());
 
 // Or using options notation:
 $validator = new Upload(['files' =&gt; $request-&gt;getFiles()]);
+
+// Validate:
+if ($validator-&gt;isValid('foo')) {
+    // &quot;foo&quot; file upload was successful
+}</code></pre>
+
+<h2 id="psr-7-support">PSR-7 Support</h2>
+<ul>
+<li>Since 2.11.0</li>
+</ul>
+<p>Starting in 2.11.0, you can also pass an array of <a href="https://www.php-fig.org/psr/psr-7/#uploadedfileinterface">PSR-7 UploadedFileInterface</a>
+instances to the constructor, the <code>setFiles()</code> method, or the <code>isValid()</code>
+method (in the latter case, you are validating that <em>all</em> uploaded files were
+valid).</p>
+<pre class="codehilite"><code class="language-php">use Zend\Validator\File\Upload;
+
+// @var Psr\Http\Message\ServerRequestInterface $request
+$validator = new Upload($request-&gt;getUploadedFiles());
+
+// Or using options notation:
+$validator = new Upload([
+    'files' =&gt; $request-&gt;getUploadedFiles(),
+]);
 
 // Validate:
 if ($validator-&gt;isValid('foo')) {
@@ -609,7 +636,7 @@ if ($validator-&gt;isValid('foo')) {
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href="../../../intro/" class="subnavigation__link">Intro</a>
+                        <a href="../../../intro/" class="subnavigation__link">Introduction</a>
                     </li>
                 
             
@@ -826,7 +853,7 @@ if ($validator-&gt;isValid('foo')) {
             
                 
     <li class="subnavigation__list-item ">
-        <a href="../intro/" class="subnavigation__link">Intro</a>
+        <a href="../intro/" class="subnavigation__link">Introduction</a>
     </li>
 
             
