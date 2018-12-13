@@ -44,7 +44,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#218](https://github.com/zendframework/zend-validator/pull/218) fixes a precision issue with the `Step` validator.
 
 ## 2.10.2 - 2018-02-01
 
