@@ -15,7 +15,6 @@ The following options are supported for `Zend\Validator\StringLength`:
 - `encoding`: Sets the `ICONV` encoding to use with the string.
 - `min`: Sets the minimum allowed length for a string.
 - `max`: Sets the maximum allowed length for a string.
-- `length`: Holds the actual length of the string.
 
 ## Default behaviour
 
