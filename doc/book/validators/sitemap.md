@@ -47,6 +47,15 @@ $validator->isValid('yesterday'); // false
 [Zend\\Uri\\Uri::isValid()](https://zendframework.github.io/zend-uri/usage/#validating-the-uri)
 internally.
 
+> ### Installation requirements
+>
+> `Zend\Validator\Sitemap\Loc` depends on the zend-uri component, so be sure to
+> have it installed before getting started:
+>
+> ```bash
+> $ composer require zendframework/zend-uri`
+> ```
+
 ## Priority
 
 `Zend\Validator\Sitemap\Priority` validates whether a value is valid for using
