@@ -130,7 +130,9 @@ class Upload extends AbstractValidator
         }
 
         foreach ($this->options['files'] as $file => $content) {
-            if (! ($content instanceof UploadedFileInterface) && ! isset($content['error'])) {
+            if (! $content instanceof UploadedFileInterface
+                && ! isset($content['error'])
+            ) {
                 unset($this->options['files'][$file]);
             }
         }
@@ -182,15 +184,20 @@ class Upload extends AbstractValidator
 
         foreach ($files as $file => $content) {
             $this->value = $file;
-            $error = ($content instanceof UploadedFileInterface) ?
-                $content->getError() : $content['error'];
+            $error = $content instanceof UploadedFileInterface
+                ? $content->getError()
+                : $content['error'];
+
             switch ($error) {
                 case 0:
-                    $tmpFile = ($content instanceof UploadedFileInterface) ?
-                        $content->getStream()->getMetadata('uri') :
-                        $content['tmp_name'];
+                    if ($content instanceof UploadedFileInterface) {
+                        // done!
+                        break;
+                    }
 
-                    if (! is_uploaded_file($tmpFile)) {
+                    // For standard SAPI environments, check that the upload
+                    // was valid
+                    if (! is_uploaded_file($content['tmp_name'])) {
                         $this->throwError($content, self::ATTACK);
                     }
                     break;

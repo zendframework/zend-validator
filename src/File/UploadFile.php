@@ -64,69 +64,106 @@ class UploadFile extends AbstractValidator
                     'Value array must be in $_FILES format'
                 );
             }
-            $file     = $value['tmp_name'];
-            $filename = $value['name'];
-            $error    = $value['error'];
-        } elseif ($value instanceof UploadedFileInterface) {
-            /** @var UploadedFileInterface $value */
-            $filename = $value->getClientFilename();
-            $error = $value->getError();
-            if (UPLOAD_ERR_OK === $error) {
-                $file = $value->getStream()->getMetadata('uri');
-            }
-        } else {
-            $file     = $value;
-            $filename = basename($file);
-            $error    = 0;
-        }
-        $this->setValue($filename);
 
+            return $this->validateUploadedFile(
+                $value['error'],
+                $value['name'],
+                $value['tmp_name']
+            );
+        }
+
+        if ($value instanceof UploadedFileInterface) {
+            return $this->validatePsr7UploadedFile($value);
+        }
+
+        if (is_string($value)) {
+            return $this->validateUploadedFile(0, basename($value), $value);
+        }
+
+        $this->error(self::UNKNOWN);
+        return false;
+    }
+
+    /**
+     * @param int $error UPLOAD_ERR_* constant value
+     * @return bool
+     */
+    private function validateFileFromErrorCode($error)
+    {
         switch ($error) {
             case UPLOAD_ERR_OK:
-                if (empty($file) || false === is_file($file)) {
-                    $this->error(self::FILE_NOT_FOUND);
-                } elseif (! is_uploaded_file($file)) {
-                    $this->error(self::ATTACK);
-                }
-                break;
+                return true;
 
             case UPLOAD_ERR_INI_SIZE:
                 $this->error(self::INI_SIZE);
-                break;
+                return false;
 
             case UPLOAD_ERR_FORM_SIZE:
                 $this->error(self::FORM_SIZE);
-                break;
+                return false;
 
             case UPLOAD_ERR_PARTIAL:
                 $this->error(self::PARTIAL);
-                break;
+                return false;
 
             case UPLOAD_ERR_NO_FILE:
                 $this->error(self::NO_FILE);
-                break;
+                return false;
 
             case UPLOAD_ERR_NO_TMP_DIR:
                 $this->error(self::NO_TMP_DIR);
-                break;
+                return false;
 
             case UPLOAD_ERR_CANT_WRITE:
                 $this->error(self::CANT_WRITE);
-                break;
+                return false;
 
             case UPLOAD_ERR_EXTENSION:
                 $this->error(self::EXTENSION);
-                break;
+                return false;
 
             default:
                 $this->error(self::UNKNOWN);
-                break;
+                return false;
+        }
+    }
+
+    /**
+     * @param  int $error UPLOAD_ERR_* constant
+     * @param  string $filename
+     * @param  string $uploadedFile Name of uploaded file (gen tmp_name)
+     * @return bool
+     */
+    private function validateUploadedFile($error, $filename, $uploadedFile)
+    {
+        $this->setValue($filename);
+
+        // Normal errors can be validated normally
+        if ($error !== UPLOAD_ERR_OK) {
+            return $this->validateFileFromErrorCode($error);
         }
 
-        if ($this->getMessages()) {
+        // Did we get no name? Is the file missing?
+        if (empty($uploadedFile) || false === is_file($uploadedFile)) {
+            $this->error(self::FILE_NOT_FOUND);
+            return false;
+        }
+
+        // Do we have an invalid upload?
+        if (! is_uploaded_file($uploadedFile)) {
+            $this->error(self::ATTACK);
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * @return bool
+     */
+    private function validatePsr7UploadedFile(UploadedFileInterface $uploadedFile)
+    {
+        $this->setValue($uploadedFile);
+        return $this->validateFileFromErrorCode($uploadedFile->getError());
     }
 }
