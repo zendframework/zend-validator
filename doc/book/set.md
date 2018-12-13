@@ -34,7 +34,7 @@ The following validators come with the zend-validator distribution.
 
 Several other components offer validators as well:
 
-- [zend-i18n](http://zendframework.github.io/zend-i18n/validators/)
+- [zend-i18n](https://docs.zendframework.com/zend-i18n/validators/)
 
 ## Deprecated Validators
 

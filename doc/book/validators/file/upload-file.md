@@ -21,5 +21,5 @@ if ($validator->isValid($files['my-upload'])) {
 
 ## Usage with zend-inputfilter
 
-When using zend-inputfilter's [FileInput](https://zendframework.github.io/zend-inputfilter/file-input/),
+When using zend-inputfilter's [FileInput](https://docs.zendframework.com/zend-inputfilter/file-input/),
 this validator will be automatically prepended to the validator chain.
