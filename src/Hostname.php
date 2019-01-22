@@ -1640,7 +1640,7 @@ class Hostname extends AbstractValidator
      * (.INFO) International http://www.nic.info/info/idn
      * (.IO) British Indian Ocean Territory http://www.nic.io/IO-IDN-Policy.pdf
      * (.IR) Iran http://www.nic.ir/Allowable_Characters_dot-iran
-     * (.IS) Iceland http://www.isnic.is/domain/rules.php
+     * (.IS) Iceland https://www.isnic.is/en/domain/rules#2
      * (.KR) Korea http://www.iana.org/domains/idn-tables/tables/kr_ko-kr_1.0.html
      * (.LI) Liechtenstein https://nic.switch.ch/reg/ocView.action?res=EF6GW2JBPVTG67DLNIQXU234MN6SC33JNQQGI7L6#anhang1
      * (.LT) Lithuania http://www.domreg.lt/static/doc/public/idn_symbols-en.pdf
