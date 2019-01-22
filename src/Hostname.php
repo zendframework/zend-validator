@@ -1628,7 +1628,7 @@ class Hostname extends AbstractValidator
      * (.CH) Switzerland https://nic.switch.ch/reg/ocView.action?res=EF6GW2JBPVTG67DLNIQXU234MN6SC33JNQQGI7L6#anhang1
      * (.CL) Chile http://www.iana.org/domains/idn-tables/tables/cl_latn_1.0.html
      * (.COM) International http://www.verisign.com/information-services/naming-services/internationalized-domain-names/index.html
-     * (.DE) Germany http://www.denic.de/en/domains/idns/liste.html
+     * (.DE) Germany https://www.denic.de/en/know-how/idn-domains/idn-character-list/
      * (.DK) Danmark http://www.dk-hostmaster.dk/index.php?id=151
      * (.EE) Estonia https://www.iana.org/domains/idn-tables/tables/pl_et-pl_1.0.html
      * (.ES) Spain https://www.nic.es/media/2008-05/1210147705287.pdf
@@ -1681,7 +1681,7 @@ class Hostname extends AbstractValidator
         'CL'  => [1 => '/^[\x{002d}0-9a-záéíñóúü]{1,63}$/iu'],
         'CN'  => 'Hostname/Cn.php',
         'COM' => 'Hostname/Com.php',
-        'DE'  => [1 => '/^[\x{002d}0-9a-zà-öø-ÿăąāćĉčċďđĕěėęēğĝġģĥħĭĩįīıĵķĺľļłńňņŋŏőōœĸŕřŗśŝšşťţŧŭůűũųūŵŷźžż]{1,63}$/iu'],
+        'DE'  => [1 => '/^[\x{002d}0-9a-záàăâåäãąāæćĉčċçďđéèĕêěëėęēğĝġģĥħíìĭîïĩįīıĵķĺľļłńňñņŋóòŏôöőõøōœĸŕřŗśŝšşßťţŧúùŭûůüűũųūŵýŷÿźžżðþ]{1,63}$/iu'],
         'DK'  => [1 => '/^[\x{002d}0-9a-zäåæéöøü]{1,63}$/iu'],
         'EE'  => [1 => '/^[\x{002d}0-9a-zäõöüšž]{1,63}$/iu'],
         'ES'  => [1 => '/^[\x{002d}0-9a-zàáçèéíïñòóúü·]{1,63}$/iu'],
