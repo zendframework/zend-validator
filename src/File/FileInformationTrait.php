@@ -24,8 +24,8 @@ trait FileInformationTrait
     protected function getFileInfo(
         $value,
         $file = null,
-        bool $hasType = false,
-        bool $hasBasename = false
+        $hasType = false,
+        $hasBasename = false
     ) {
         if (is_string($value) && is_array($file)) {
             return $this->getLegacyFileInfo($file, $hasType, $hasBasename);
@@ -52,8 +52,8 @@ trait FileInformationTrait
      */
     private function getLegacyFileInfo(
         $file,
-        bool $hasType = false,
-        bool $hasBasename = false
+        $hasType = false,
+        $hasBasename = false
     ) {
         $fileInfo = [];
 
@@ -80,9 +80,9 @@ trait FileInformationTrait
      * @return array
      */
     private function getSapiFileInfo(
-        array $file,
-        bool $hasType = false,
-        bool $hasBasename = false
+        $file,
+        $hasType = false,
+        $hasBasename = false
     ) {
         if (! isset($file['tmp_name']) || ! isset($file['name'])) {
             throw new Exception\InvalidArgumentException(
@@ -115,9 +115,9 @@ trait FileInformationTrait
      * @return array
      */
     private function getPsr7FileInfo(
-        UploadedFileInterface $file,
-        bool $hasType = false,
-        bool $hasBasename = false
+        $file,
+        $hasType = false,
+        $hasBasename = false
     ) {
         $fileInfo = [];
 
@@ -144,9 +144,9 @@ trait FileInformationTrait
      * @return array
      */
     private function getFileBasedFileInfo(
-        string $file,
-        bool $hasType = false,
-        bool $hasBasename = false
+        $file,
+        $hasType = false,
+        $hasBasename = false
     ) {
         $fileInfo = [];
 
