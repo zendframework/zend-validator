@@ -2085,7 +2085,7 @@ class Hostname extends AbstractValidator
                     // Check each hostname part
                     $check = 0;
                     $lastDomainPart = end($domainParts);
-                    if(!$removedTld){
+                    if (! $removedTld) {
                         $lastDomainPart = prev($domainParts);
                     }
                     foreach ($domainParts as $domainPart) {
