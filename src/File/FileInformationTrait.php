@@ -64,7 +64,7 @@ trait FileInformationTrait
             $fileInfo['basename'] = basename($fileInfo['file']);
         }
 
-        if (! $hasType) {
+        if ($hasType) {
             $fileInfo['filetype'] = $file['type'];
         }
 
@@ -99,7 +99,7 @@ trait FileInformationTrait
             $fileInfo['basename'] = basename($fileInfo['file']);
         }
 
-        if (! $hasType) {
+        if ($hasType) {
             $fileInfo['filetype'] = $file['type'];
         }
 
@@ -128,7 +128,7 @@ trait FileInformationTrait
             $fileInfo['basename'] = basename($fileInfo['file']);
         }
 
-        if (! $hasType) {
+        if ($hasType) {
             $fileInfo['filetype'] = $file->getClientMediaType();
         }
 
@@ -157,7 +157,7 @@ trait FileInformationTrait
             $fileInfo['basename'] = basename($fileInfo['file']);
         }
 
-        if (! $hasType) {
+        if ($hasType) {
             $fileInfo['filetype'] = null;
         }
 
