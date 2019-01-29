@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#249](https://github.com/zendframework/zend-validator/pull/249) adds support in the hostname validator for the `.rs` TLD.
 
 ### Changed
 
