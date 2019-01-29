@@ -2053,6 +2053,7 @@ class Hostname extends AbstractValidator
                     }
 
                     // Match TLD against known list
+                    $removedTld = false;
                     if ($this->getTldCheck()) {
                         if (! in_array(strtolower($this->tld), $this->validTlds)
                             && ! in_array($this->tld, $this->validTlds)) {
@@ -2063,6 +2064,7 @@ class Hostname extends AbstractValidator
                         // We have already validated that the TLD is fine. We don't want it to go through the below
                         // checks as new UTF-8 TLDs will incorrectly fail if there is no IDN regex for it.
                         array_pop($domainParts);
+                        $removedTld = true;
                     }
 
                     /**
@@ -2083,6 +2085,9 @@ class Hostname extends AbstractValidator
                     // Check each hostname part
                     $check = 0;
                     $lastDomainPart = end($domainParts);
+                    if (! $removedTld) {
+                        $lastDomainPart = prev($domainParts);
+                    }
                     foreach ($domainParts as $domainPart) {
                         // Decode Punycode domain names to IDN
                         if (strpos($domainPart, 'xn--') === 0) {
