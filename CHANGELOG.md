@@ -22,7 +22,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#256](https://github.com/zendframework/zend-validator/pull/256) fixes hostname validation when omitting the TLD from verification,
+  ensuring validation of the domain segment considers all URI criteria.
 
 ## 2.11.0 - 2018-12-13
 
