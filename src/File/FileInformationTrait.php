@@ -16,14 +16,14 @@ trait FileInformationTrait
      * Returns array if the procedure is identified
      *
      * @param  string|array|object $value    Filename to check
-     * @param  array               $file     File data from \Zend\File\Transfer\Transfer (optional)
+     * @param  null|array          $file     File data (when using legacy Zend_File_Transfer API)
      * @param  bool                $hasType  Return with filetype (optional)
      * @param  bool                $basename Return with basename - is calculated from location path (optional)
      * @return array
      */
     protected function getFileInfo(
         $value,
-        $file = null,
+        array $file = null,
         $hasType = false,
         $hasBasename = false
     ) {
@@ -43,15 +43,15 @@ trait FileInformationTrait
     }
 
     /**
-     * Generate file information array with Legacy Zend\Transfer API
+     * Generate file information array with legacy Zend_File_Transfer API
      *
-     * @param object $file        File data from \Zend\File\Transfer\Transfer
+     * @param array  $file        File data
      * @param bool   $hasType     Return with filetype
      * @param bool   $hasBasename Basename is calculated from location path
      * @return array
      */
     private function getLegacyFileInfo(
-        $file,
+        array $file,
         $hasType = false,
         $hasBasename = false
     ) {
@@ -72,15 +72,15 @@ trait FileInformationTrait
     }
 
     /**
-     * Generate file information array with Sapi
+     * Generate file information array with SAPI
      *
-     * @param array $file        File data from Sapi
+     * @param array $file        File data from SAPI
      * @param bool  $hasType     Return with filetype
      * @param bool  $hasBasename Filename is calculated from location path
      * @return array
      */
     private function getSapiFileInfo(
-        $file,
+        array $file,
         $hasType = false,
         $hasBasename = false
     ) {
@@ -109,13 +109,13 @@ trait FileInformationTrait
     /**
      * Generate file information array with PSR-7 UploadedFileInterface
      *
-     * @param object $file        File data from Psr\Http\Message\UploadedFileInterface
-     * @param bool   $hasType     Return with filetype
-     * @param bool   $hasBasename Filename is calculated from location path
+     * @param UploadedFileInterface $file
+     * @param bool                  $hasType     Return with filetype
+     * @param bool                  $hasBasename Filename is calculated from location path
      * @return array
      */
     private function getPsr7FileInfo(
-        $file,
+        UploadedFileInterface $file,
         $hasType = false,
         $hasBasename = false
     ) {
