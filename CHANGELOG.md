@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- Nothing.
+- [#253](https://github.com/zendframework/zend-validator/pull/253) updates the list of allowed characters for a `DE` domain name to match those published by IDN.
 
 ### Deprecated
 
