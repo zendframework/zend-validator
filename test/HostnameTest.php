@@ -174,6 +174,22 @@ class HostnameTest extends TestCase
     }
 
     /**
+     * Ensure the underscore character tests work as expected when not using tld check
+     *
+     * @dataProvider domainsWithUnderscores
+     * @param string $input
+     * @param string $assertion
+     */
+    public function testValidatorHandlesUnderscoresInDomainsWithoutTldCheckCorrectly($input, $assertion)
+    {
+        $validator = new Hostname([
+            'useTldCheck' => false,
+            'allow' => Hostname::ALLOW_DNS,
+        ]);
+        $this->$assertion($validator->isValid($input), implode("\n", $validator->getMessages()));
+    }
+
+    /**
      * Ensures that getMessages() returns expected default value
      *
      * @return void
