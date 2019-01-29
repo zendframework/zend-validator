@@ -20,14 +20,14 @@ class FileInformation
      * Returns array if the procedure is identified
      *
      * @param  string|array|object $value    Filename to check
-     * @param  array               $file     File data from \Zend\File\Transfer\Transfer (optional)
+     * @param  null|array          $file     File data (when using legacy Zend_File_Transfer API)
      * @param  bool                $hasType  Return with filetype (optional)
      * @param  bool                $basename Return with basename - is calculated from location path (optional)
      * @return array
      */
     public function checkFileInformation(
         $value,
-        $file = null,
+        array $file = null,
         $hasType = false,
         $hasBasename = false
     ) {

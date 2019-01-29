@@ -14,12 +14,9 @@ use Psr\Http\Message\UploadedFileInterface;
 use ZendTest\Validator\File\TestAsset\FileInformation;
 use Zend\Validator\Exception\InvalidArgumentException;
 
-/**
- * @group      Zend_Validator
- */
 class FileInformationTraitTest extends TestCase
 {
-    /** @var ObjectProphecy */
+    /** @var ObjectProphecy|StreamInterface */
     public $stream;
 
     /** @var ObjectProphecy */
