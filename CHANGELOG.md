@@ -10,7 +10,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- Nothing.
+- [#251](https://github.com/zendframework/zend-validator/pull/251) updates the logic of each of the various `Zend\Validator\File` validators
+  to allow validating against PSR-7 `UploadedFileInterface` instances, expanding
+  the support originally provided in version 2.11.0.
 
 ### Deprecated
 
@@ -19,7 +21,6 @@ All notable changes to this project will be documented in this file, in reverse 
 ### Removed
 
 - [#250](https://github.com/zendframework/zend-validator/pull/250) removes support for zend-stdlib v2 releases.
-
 
 ### Fixed
 
