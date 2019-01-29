@@ -44,7 +44,7 @@ $validator->isValid('yesterday'); // false
 
 `Zend\Validator\Sitemap\Loc` validates whether a string is valid for using as a
 'loc' element in a Sitemap XML document. This uses
-[Zend\\Uri\\Uri::isValid()](https://zendframework.github.io/zend-uri/usage/#validating-the-uri)
+[Zend\\Uri\\Uri::isValid()](https://docs.zendframework.com/zend-uri/usage/#validating-the-uri)
 internally.
 
 > ### Installation requirements

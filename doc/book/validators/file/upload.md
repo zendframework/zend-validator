@@ -9,7 +9,7 @@ successful.
 
 - `files`: array of file uploads. This is generally the `$_FILES` array, but
   should be normalized per the details in [PSR-7](http://www.php-fig.org/psr/psr-7/#1-6-uploaded-files)
-  (which is also how [the zend-http Request](https://zendframework.github.io/zend-http)
+  (which is also how [the zend-http Request](https://docs.zendframework.com/zend-http)
   normalizes the array).
 
 ## Basic Usage
