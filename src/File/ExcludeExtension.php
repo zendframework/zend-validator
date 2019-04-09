@@ -47,12 +47,6 @@ class ExcludeExtension extends Extension
 
         $this->setValue($fileInfo['filename']);
 
-        // Is file readable ?
-        if (empty($fileInfo['file']) || false === is_readable($fileInfo['file'])) {
-            $this->error(self::NOT_FOUND);
-            return false;
-        }
-
         $extension  = substr($fileInfo['filename'], strrpos($fileInfo['filename'], '.') + 1);
         $extensions = $this->getExtension();
 
