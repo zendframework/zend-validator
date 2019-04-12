@@ -20,7 +20,7 @@ This validator is inversely related to the
 The following set of options are supported:
 
 - `mimeType`: Comma-delimited string of MIME types, or array of MIME types,
-  against which to test. Types can be specific (e.g., `image/jpg`), or refer
+  against which to test. Types can be specific (e.g., `image/jpeg`), or refer
   only to the group (e.g., `image`).
 - `magicFile`: Location of the magicfile to use for MIME type comparisons;
   defaults to the value of the `MAGIC` constant.
@@ -34,23 +34,23 @@ The following set of options are supported:
 use Zend\Validator\File\MimeType;
 
 // Only allow 'gif' or 'jpg' files
-$validator = new MimeType('image/gif,image/jpg');
+$validator = new MimeType('image/gif,image/jpeg');
 
 // ... or with array notation:
-$validator = new MimeType(['image/gif', 'image/jpg']);
+$validator = new MimeType(['image/gif', 'image/jpeg']);
 
 // ... or restrict to  entire group of types:
 $validator = new MimeType(['image', 'audio']);
 
 // Specify a different magicFile:
 $validator = new MimeType([
-    'mimeType' => ['image/gif', 'image/jpg'],
+    'mimeType' => ['image/gif', 'image/jpeg'],
     'magicFile' => '/path/to/magicfile.mgx',
 ]);
 
 // Enable HTTP header scanning (do not do this!):
 $validator = new MimeType([
-    'mimeType' => ['image/gif', 'image/jpg'],
+    'mimeType' => ['image/gif', 'image/jpeg'],
     'enableHeaderCheck' => true,
 ]);
 
