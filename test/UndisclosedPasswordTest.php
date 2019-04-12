@@ -3,7 +3,6 @@
 
 namespace ZendTest\Validator;
 
-
 use PHPUnit\Framework\MockObject\Generator;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;

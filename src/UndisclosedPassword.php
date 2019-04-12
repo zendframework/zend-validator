@@ -3,7 +3,6 @@
 
 namespace Zend\Validator;
 
-
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
