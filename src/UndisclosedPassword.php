@@ -16,7 +16,6 @@ final class UndisclosedPassword extends AbstractValidator
     const HIBP_CLIENT_ACCEPT_HEADER = 'application/vnd.haveibeenpwned.v2+json';
     const HIBP_K_ANONYMITY_HASH_RANGE_LENGTH = 5;
     const HIBP_K_ANONYMITY_HASH_RANGE_BASE = 0;
-    const HIBP_FOUND_PASSWORD_COUNT_BASE = 0;
     const SHA1_STRING_LENGTH = 40;
 
     const PASSWORD_BREACHED = 'passwordBreached';
@@ -42,11 +41,6 @@ final class UndisclosedPassword extends AbstractValidator
      * @var ResponseFactoryInterface
      */
     private $makeHttpResponse;
-
-    /**
-     * @var int
-     */
-    private $count = 0;
 
     /**
      * PasswordBreach constructor.
@@ -143,11 +137,9 @@ final class UndisclosedPassword extends AbstractValidator
     private function hashInResponse($sha1Hash, $resultStream)
     {
         $data = explode("\r\n", $resultStream);
-        $totalCount = self::HIBP_FOUND_PASSWORD_COUNT_BASE;
-        $hashes = array_filter($data, function ($value) use ($sha1Hash, &$totalCount) {
+        $hashes = array_filter($data, function ($value) use ($sha1Hash) {
             list($hash, $count) = explode(':', $value);
             if (0 === strcmp($hash, substr($sha1Hash, self::HIBP_K_ANONYMITY_HASH_RANGE_LENGTH))) {
-                $totalCount = (int) $count;
                 return true;
             }
             return false;
@@ -155,7 +147,6 @@ final class UndisclosedPassword extends AbstractValidator
         if ([] === $hashes) {
             return false;
         }
-        $this->count = $totalCount;
         return true;
     }
 }
