@@ -5,8 +5,8 @@ namespace Zend\Validator;
 
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 
 final class UndisclosedPassword extends AbstractValidator
 {
@@ -37,12 +37,12 @@ final class UndisclosedPassword extends AbstractValidator
     private $httpClient;
 
     /**
-     * @var RequestInterface
+     * @var RequestFactoryInterface
      */
     private $httpRequest;
 
     /**
-     * @var ResponseInterface
+     * @var ResponseFactoryInterface
      */
     private $httpResponse;
 
@@ -55,13 +55,13 @@ final class UndisclosedPassword extends AbstractValidator
      * PasswordBreach constructor.
      *
      * @param ClientInterface $httpClient
-     * @param RequestInterface $httpRequest
-     * @param ResponseInterface $httpResponse
+     * @param RequestFactoryInterface $httpRequest
+     * @param ResponseFactoryInterface $httpResponse
      */
     public function __construct(
         ClientInterface $httpClient,
-        RequestInterface $httpRequest,
-        ResponseInterface $httpResponse
+        RequestFactoryInterface $httpRequest,
+        ResponseFactoryInterface $httpResponse
     ) {
         $this->httpClient = $httpClient;
         $this->httpRequest = $httpRequest;
@@ -139,8 +139,7 @@ final class UndisclosedPassword extends AbstractValidator
      */
     private function retrieveHashList($passwordRange)
     {
-        $requestClass = get_class($this->httpRequest);
-        $request = new $requestClass('GET', '/range/' . $passwordRange);
+        $request = $this->httpRequest->createRequest('GET', '/range/' . $passwordRange);
 
         try {
             $response = $this->httpClient->sendRequest($request);

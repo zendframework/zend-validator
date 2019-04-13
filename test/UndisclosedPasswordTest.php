@@ -4,9 +4,10 @@
 namespace ZendTest\Validator;
 
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Validator\UndisclosedPassword;
 use ZendTest\Validator\TestAsset\HttpClientException;
@@ -29,11 +30,6 @@ class UndisclosedPasswordTest extends TestCase
     private $httpResponse;
 
     /**
-     * @var ClientExceptionInterface
-     */
-    private $httpClientException;
-
-    /**
      * @var UndisclosedPassword
      */
     private $validator;
@@ -45,15 +41,17 @@ class UndisclosedPasswordTest extends TestCase
     {
         $this->httpClient = $this->getMockBuilder(ClientInterface::class)
             ->getMockForAbstractClass();
-        $this->httpRequest = $this->getMockBuilder(RequestInterface::class)
+        $this->httpRequest = $this->getMockBuilder(RequestFactoryInterface::class)
             ->getMockForAbstractClass();
         $this->httpResponse = $this->getMockBuilder(ResponseInterface::class)
+            ->getMockForAbstractClass();
+        $responseFactoryInterface = $this->getMockBuilder(ResponseFactoryInterface::class)
             ->getMockForAbstractClass();
 
         $this->validator = new UndisclosedPassword(
             $this->httpClient,
             $this->httpRequest,
-            $this->httpResponse
+            $responseFactoryInterface
         );
     }
 

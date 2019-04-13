@@ -34,7 +34,8 @@
         "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
         "zendframework/zend-session": "^2.8",
         "zendframework/zend-uri": "^2.5",
-        "psr/http-client": "^1.0"
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0"
     },
     "suggest": {
         "psr/http-message": "psr/http-message, required when validating PSR-7 UploadedFileInterface instances via the Upload and UploadFile validators",
