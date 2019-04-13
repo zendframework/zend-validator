@@ -79,9 +79,6 @@ final class UndisclosedPassword extends AbstractValidator
         }
         try {
             $isPwnd = $this->isPwnedPassword($value);
-        } catch (Exception\InvalidArgumentException $invalidArgumentException) {
-            $this->error(self::WRONG_INPUT);
-            return false;
         } catch (Exception\RuntimeException $runtimeException) {
             $this->error(self::CONNECTION_FAILURE);
             return false;
@@ -110,14 +107,10 @@ final class UndisclosedPassword extends AbstractValidator
      *
      * @param string $password
      * @return string
-     * @throws Exception\InvalidArgumentException
      */
     private function hashPassword($password)
     {
         $hashedPassword = \sha1($password);
-        if (self::SHA1_LENGTH !== strlen($hashedPassword)) {
-            throw new Exception\InvalidArgumentException($this->messageTemplates[self::WRONG_INPUT]);
-        }
         return strtoupper($hashedPassword);
     }
 
