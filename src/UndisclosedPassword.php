@@ -11,24 +11,21 @@ use Psr\Http\Message\ResponseFactoryInterface;
 final class UndisclosedPassword extends AbstractValidator
 {
     const HIBP_API_URI = 'https://api.pwnedpasswords.com';
-    const HIBP_API_TIMEOUT = 300;
-    const HIBP_CLIENT_UA = 'zend-validator';
-    const HIBP_CLIENT_ACCEPT = 'application/vnd.haveibeenpwned.v2+json';
-    const HIBP_RANGE_LENGTH = 5;
-    const HIBP_RANGE_BASE = 0;
-    const HIBP_COUNT_BASE = 0;
-    const SHA1_LENGTH = 40;
+    const HIBP_API_REQUEST_TIMEOUT = 300;
+    const HIBP_CLIENT_USER_AGENT_STRING = 'zend-validator';
+    const HIBP_CLIENT_ACCEPT_HEADER = 'application/vnd.haveibeenpwned.v2+json';
+    const HIBP_K_ANONYMITY_HASH_RANGE_LENGTH = 5;
+    const HIBP_K_ANONYMITY_HASH_RANGE_BASE = 0;
+    const HIBP_FOUND_PASSWORD_COUNT_BASE = 0;
+    const SHA1_STRING_LENGTH = 40;
 
     const PASSWORD_BREACHED = 'passwordBreached';
-    const WRONG_INPUT = 'wrongInput';
-    const CONNECTION_FAILURE = 'connFail';
-    const UNKNOWN_ERROR = 'unknownError';
+    const NOT_A_STRING = 'wrongInput';
 
     protected $messageTemplates = [
-        self::PASSWORD_BREACHED => 'The provided password was used by others',
-        self::WRONG_INPUT => 'The provided password failed to be correctly hashed, please verify your input',
-        self::CONNECTION_FAILURE => 'Unable to reach HIBP service, please try again later',
-        self::UNKNOWN_ERROR => 'Something happened beyond our control, error reporting should give more details',
+        self::PASSWORD_BREACHED =>
+            'The provided password was found in previous breaches, please create another password',
+        self::NOT_A_STRING => 'The provided password is not a string, please provide a correct password',
     ];
 
     /**
@@ -39,12 +36,12 @@ final class UndisclosedPassword extends AbstractValidator
     /**
      * @var RequestFactoryInterface
      */
-    private $httpRequest;
+    private $makeHttpRequest;
 
     /**
      * @var ResponseFactoryInterface
      */
-    private $httpResponse;
+    private $makeHttpResponse;
 
     /**
      * @var int
@@ -55,17 +52,17 @@ final class UndisclosedPassword extends AbstractValidator
      * PasswordBreach constructor.
      *
      * @param ClientInterface $httpClient
-     * @param RequestFactoryInterface $httpRequest
-     * @param ResponseFactoryInterface $httpResponse
+     * @param RequestFactoryInterface $makeHttpRequest
+     * @param ResponseFactoryInterface $makeHttpResponse
      */
     public function __construct(
         ClientInterface $httpClient,
-        RequestFactoryInterface $httpRequest,
-        ResponseFactoryInterface $httpResponse
+        RequestFactoryInterface $makeHttpRequest,
+        ResponseFactoryInterface $makeHttpResponse
     ) {
         $this->httpClient = $httpClient;
-        $this->httpRequest = $httpRequest;
-        $this->httpResponse = $httpResponse;
+        $this->makeHttpRequest = $makeHttpRequest;
+        $this->makeHttpResponse = $makeHttpResponse;
     }
 
     /**
@@ -74,18 +71,10 @@ final class UndisclosedPassword extends AbstractValidator
     public function isValid($value)
     {
         if (! is_string($value)) {
-            $this->error(self::WRONG_INPUT);
+            $this->error(self::NOT_A_STRING);
             return false;
         }
-        try {
-            $isPwnd = $this->isPwnedPassword($value);
-        } catch (Exception\RuntimeException $runtimeException) {
-            $this->error(self::CONNECTION_FAILURE);
-            return false;
-        } catch (\Exception $exception) {
-            $this->error(self::UNKNOWN_ERROR);
-            return false;
-        }
+        $isPwnd = $this->isPwnedPassword($value);
         if ($isPwnd) {
             $this->error(self::PASSWORD_BREACHED);
             return false;
@@ -124,8 +113,7 @@ final class UndisclosedPassword extends AbstractValidator
      */
     private function getRangeHash($passwordHash)
     {
-        $range = substr($passwordHash, self::HIBP_RANGE_BASE, self::HIBP_RANGE_LENGTH);
-        return $range;
+        return substr($passwordHash, self::HIBP_K_ANONYMITY_HASH_RANGE_BASE, self::HIBP_K_ANONYMITY_HASH_RANGE_LENGTH);
     }
 
     /**
@@ -135,17 +123,13 @@ final class UndisclosedPassword extends AbstractValidator
      *
      * @param string $passwordRange
      * @return string
-     * @throws Exception\RuntimeException
+     * @throws ClientExceptionInterface
      */
     private function retrieveHashList($passwordRange)
     {
-        $request = $this->httpRequest->createRequest('GET', '/range/' . $passwordRange);
+        $request = $this->makeHttpRequest->createRequest('GET', '/range/' . $passwordRange);
 
-        try {
-            $response = $this->httpClient->sendRequest($request);
-        } catch (ClientExceptionInterface $connectException) {
-            throw new Exception\RuntimeException($this->messageTemplates[self::CONNECTION_FAILURE]);
-        }
+        $response = $this->httpClient->sendRequest($request);
         return (string) $response->getBody();
     }
 
@@ -159,10 +143,10 @@ final class UndisclosedPassword extends AbstractValidator
     private function hashInResponse($sha1Hash, $resultStream)
     {
         $data = explode("\r\n", $resultStream);
-        $totalCount = self::HIBP_COUNT_BASE;
+        $totalCount = self::HIBP_FOUND_PASSWORD_COUNT_BASE;
         $hashes = array_filter($data, function ($value) use ($sha1Hash, &$totalCount) {
             list($hash, $count) = explode(':', $value);
-            if (0 === strcmp($hash, substr($sha1Hash, self::HIBP_RANGE_LENGTH))) {
+            if (0 === strcmp($hash, substr($sha1Hash, self::HIBP_K_ANONYMITY_HASH_RANGE_LENGTH))) {
                 $totalCount = (int) $count;
                 return true;
             }

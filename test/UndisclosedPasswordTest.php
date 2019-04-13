@@ -4,6 +4,7 @@
 namespace ZendTest\Validator;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -97,10 +98,8 @@ class UndisclosedPasswordTest extends TestCase
     /**
      * Testing that we reject invalid password types
      *
-     * @covers \Zend\Validator\UndisclosedPassword::__construct
-     * @covers \Zend\Validator\UndisclosedPassword::isValid
-     * @covers \Zend\Validator\AbstractValidator::createMessage
-     * @covers \Zend\Validator\AbstractValidator::error
+     * @covers \Zend\Validator\UndisclosedPassword
+     * @covers \Zend\Validator\AbstractValidator
      * @todo Can be replaced by a \TypeError being thrown in PHP 7.0 or up
      */
     public function testValidationFailsForInvalidInput()
@@ -116,13 +115,7 @@ class UndisclosedPasswordTest extends TestCase
      *
      * @param string $password
      *
-     * @covers \Zend\Validator\UndisclosedPassword::__construct
-     * @covers \Zend\Validator\UndisclosedPassword::isValid
-     * @covers \Zend\Validator\UndisclosedPassword::isPwnedPassword
-     * @covers \Zend\Validator\UndisclosedPassword::getRangeHash
-     * @covers \Zend\Validator\UndisclosedPassword::hashInResponse
-     * @covers \Zend\Validator\UndisclosedPassword::hashPassword
-     * @covers \Zend\Validator\UndisclosedPassword::retrieveHashList
+     * @covers \Zend\Validator\UndisclosedPassword
      * @dataProvider goodPasswordProvider
      */
     public function testStrongUnseenPasswordsPassValidation($password)
@@ -132,7 +125,7 @@ class UndisclosedPasswordTest extends TestCase
                 $hash = \sha1('zend-validator');
                 return sprintf(
                     '%s:%d',
-                    strtoupper(substr($hash, UndisclosedPassword::HIBP_RANGE_LENGTH)),
+                    strtoupper(substr($hash, UndisclosedPassword::HIBP_K_ANONYMITY_HASH_RANGE_LENGTH)),
                     rand(0, 100000)
                 );
             }));
@@ -148,15 +141,8 @@ class UndisclosedPasswordTest extends TestCase
      *
      * @param string $password
      * @dataProvider seenPasswordProvider
-     * @covers \Zend\Validator\UndisclosedPassword::__construct
-     * @covers \Zend\Validator\UndisclosedPassword::isValid
-     * @covers \Zend\Validator\UndisclosedPassword::isPwnedPassword
-     * @covers \Zend\Validator\UndisclosedPassword::getRangeHash
-     * @covers \Zend\Validator\UndisclosedPassword::hashInResponse
-     * @covers \Zend\Validator\UndisclosedPassword::hashPassword
-     * @covers \Zend\Validator\UndisclosedPassword::retrieveHashList
-     * @covers \Zend\Validator\AbstractValidator::createMessage
-     * @covers \Zend\Validator\AbstractValidator::error
+     * @covers \Zend\Validator\UndisclosedPassword
+     * @covers \Zend\Validator\AbstractValidator
      */
     public function testBreachedPasswordsDoNotPassValidation($password)
     {
@@ -165,7 +151,7 @@ class UndisclosedPasswordTest extends TestCase
                 $hash = \sha1($password);
                 return sprintf(
                     '%s:%d',
-                    strtoupper(substr($hash, UndisclosedPassword::HIBP_RANGE_LENGTH)),
+                    strtoupper(substr($hash, UndisclosedPassword::HIBP_K_ANONYMITY_HASH_RANGE_LENGTH)),
                     rand(0, 100000)
                 );
             }));
@@ -182,24 +168,16 @@ class UndisclosedPasswordTest extends TestCase
      * @param string $password
      * @depends testBreachedPasswordsDoNotPassValidation
      * @dataProvider seenPasswordProvider
-     * @covers \Zend\Validator\UndisclosedPassword::__construct
-     * @covers \Zend\Validator\UndisclosedPassword::isValid
-     * @covers \Zend\Validator\UndisclosedPassword::isPwnedPassword
-     * @covers \Zend\Validator\UndisclosedPassword::getRangeHash
-     * @covers \Zend\Validator\UndisclosedPassword::hashInResponse
-     * @covers \Zend\Validator\UndisclosedPassword::hashPassword
-     * @covers \Zend\Validator\UndisclosedPassword::retrieveHashList
-     * @covers \Zend\Validator\AbstractValidator::createMessage
-     * @covers \Zend\Validator\AbstractValidator::error
-     * @covers \Zend\Validator\AbstractValidator::getMessages
+     * @covers \Zend\Validator\UndisclosedPassword
      */
     public function testBreachedPasswordReturnErrorMessages($password)
     {
         $this->httpClient->method('sendRequest')
             ->will($this->throwException(new \Exception('foo')));
 
+        $this->expectException(\Exception::class);
         $this->validator->isValid($password);
-        $this->assertCount(1, $this->validator->getMessages());
+        $this->fail('Excpected exception was not thrown');
     }
 
     /**
@@ -209,16 +187,7 @@ class UndisclosedPasswordTest extends TestCase
      * @param string $password
      * @depends testBreachedPasswordsDoNotPassValidation
      * @dataProvider seenPasswordProvider
-     * @covers \Zend\Validator\UndisclosedPassword::__construct
-     * @covers \Zend\Validator\UndisclosedPassword::isValid
-     * @covers \Zend\Validator\UndisclosedPassword::isPwnedPassword
-     * @covers \Zend\Validator\UndisclosedPassword::getRangeHash
-     * @covers \Zend\Validator\UndisclosedPassword::hashInResponse
-     * @covers \Zend\Validator\UndisclosedPassword::hashPassword
-     * @covers \Zend\Validator\UndisclosedPassword::retrieveHashList
-     * @covers \Zend\Validator\AbstractValidator::createMessage
-     * @covers \Zend\Validator\AbstractValidator::error
-     * @covers \Zend\Validator\AbstractValidator::getMessages
+     * @covers \Zend\Validator\UndisclosedPassword
      */
     public function testValidationDegradesGracefullyWhenNoConnectionCanBeMade($password)
     {
@@ -227,7 +196,9 @@ class UndisclosedPasswordTest extends TestCase
         $this->httpClient->method('sendRequest')
             ->will($this->throwException($clientException));
 
+        $this->expectException(ClientExceptionInterface::class);
+
         $this->validator->isValid($password);
-        $this->assertCount(1, $this->validator->getMessages());
+        $this->fail('Expected ClientException was not thrown');
     }
 }
