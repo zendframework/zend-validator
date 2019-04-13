@@ -3,13 +3,13 @@
 
 namespace ZendTest\Validator;
 
-use PHPUnit\Framework\MockObject\Generator;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Validator\UndisclosedPassword;
+use ZendTest\Validator\TestAsset\HttpClientException;
 
 class UndisclosedPasswordTest extends TestCase
 {
@@ -97,12 +97,34 @@ class UndisclosedPasswordTest extends TestCase
     }
 
     /**
+     * Testing that we reject invalid password types
+     *
+     * @covers \Zend\Validator\UndisclosedPassword::__construct
+     * @covers \Zend\Validator\UndisclosedPassword::isValid
+     * @covers \Zend\Validator\AbstractValidator::createMessage
+     * @covers \Zend\Validator\AbstractValidator::error
+     * @todo Can be replaced by a \TypeError being thrown in PHP 7.0 or up
+     */
+    public function testValidationFailsForInvalidInput()
+    {
+        $this->assertFalse($this->validator->isValid(true));
+        $this->assertFalse($this->validator->isValid((new \stdClass())));
+        $this->assertFalse($this->validator->isValid(['foo']));
+    }
+
+    /**
      * Test that a given password was not found in the HIBP
      * API service.
      *
      * @param string $password
      *
+     * @covers \Zend\Validator\UndisclosedPassword::__construct
      * @covers \Zend\Validator\UndisclosedPassword::isValid
+     * @covers \Zend\Validator\UndisclosedPassword::isPwnedPassword
+     * @covers \Zend\Validator\UndisclosedPassword::getRangeHash
+     * @covers \Zend\Validator\UndisclosedPassword::hashInResponse
+     * @covers \Zend\Validator\UndisclosedPassword::hashPassword
+     * @covers \Zend\Validator\UndisclosedPassword::retrieveHashList
      * @dataProvider goodPasswordProvider
      */
     public function testStrongUnseenPasswordsPassValidation($password)
@@ -127,8 +149,16 @@ class UndisclosedPasswordTest extends TestCase
      * AP service.
      *
      * @param string $password
-     * @covers \Zend\Validator\UndisclosedPassword::isValid
      * @dataProvider seenPasswordProvider
+     * @covers \Zend\Validator\UndisclosedPassword::__construct
+     * @covers \Zend\Validator\UndisclosedPassword::isValid
+     * @covers \Zend\Validator\UndisclosedPassword::isPwnedPassword
+     * @covers \Zend\Validator\UndisclosedPassword::getRangeHash
+     * @covers \Zend\Validator\UndisclosedPassword::hashInResponse
+     * @covers \Zend\Validator\UndisclosedPassword::hashPassword
+     * @covers \Zend\Validator\UndisclosedPassword::retrieveHashList
+     * @covers \Zend\Validator\AbstractValidator::createMessage
+     * @covers \Zend\Validator\AbstractValidator::error
      */
     public function testBreachedPasswordsDoNotPassValidation($password)
     {
@@ -154,11 +184,50 @@ class UndisclosedPasswordTest extends TestCase
      * @param string $password
      * @depends testBreachedPasswordsDoNotPassValidation
      * @dataProvider seenPasswordProvider
+     * @covers \Zend\Validator\UndisclosedPassword::__construct
+     * @covers \Zend\Validator\UndisclosedPassword::isValid
+     * @covers \Zend\Validator\UndisclosedPassword::isPwnedPassword
+     * @covers \Zend\Validator\UndisclosedPassword::getRangeHash
+     * @covers \Zend\Validator\UndisclosedPassword::hashInResponse
+     * @covers \Zend\Validator\UndisclosedPassword::hashPassword
+     * @covers \Zend\Validator\UndisclosedPassword::retrieveHashList
+     * @covers \Zend\Validator\AbstractValidator::createMessage
+     * @covers \Zend\Validator\AbstractValidator::error
+     * @covers \Zend\Validator\AbstractValidator::getMessages
      */
     public function testBreachedPasswordReturnErrorMessages($password)
     {
         $this->httpClient->method('sendRequest')
-            ->will($this->throwException(new \Exception()));
+            ->will($this->throwException(new \Exception('foo')));
+
+        $this->validator->isValid($password);
+        $this->assertCount(1, $this->validator->getMessages());
+    }
+
+    /**
+     * Testing that we capture any failures when trying to connect with
+     * the HIBP web service.
+     *
+     * @param string $password
+     * @depends testBreachedPasswordsDoNotPassValidation
+     * @dataProvider seenPasswordProvider
+     * @covers \Zend\Validator\UndisclosedPassword::__construct
+     * @covers \Zend\Validator\UndisclosedPassword::isValid
+     * @covers \Zend\Validator\UndisclosedPassword::isPwnedPassword
+     * @covers \Zend\Validator\UndisclosedPassword::getRangeHash
+     * @covers \Zend\Validator\UndisclosedPassword::hashInResponse
+     * @covers \Zend\Validator\UndisclosedPassword::hashPassword
+     * @covers \Zend\Validator\UndisclosedPassword::retrieveHashList
+     * @covers \Zend\Validator\AbstractValidator::createMessage
+     * @covers \Zend\Validator\AbstractValidator::error
+     * @covers \Zend\Validator\AbstractValidator::getMessages
+     */
+    public function testValidationDegradesGracefullyWhenNoConnectionCanBeMade($password)
+    {
+        $clientException = $this->getMockBuilder(HttpClientException::class)
+            ->getMock();
+        $this->httpClient->method('sendRequest')
+            ->will($this->throwException($clientException));
 
         $this->validator->isValid($password);
         $this->assertCount(1, $this->validator->getMessages());
