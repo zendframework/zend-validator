@@ -2,7 +2,7 @@
 
 `Zend\Validator\UndisclosedPassword` allows you to validate if a given password was found in data breaches using the service [Have I Been Pwned?](https://www.haveibeenpwned.com), in a secure, anonymous way using [K-Anonymity](https://www.troyhunt.com/ive-just-launched-pwned-passwords-version-2) to ensure passwords are not send in full over the wire.
 
-> ## Installation requirements
+> ### Installation requirements
 > 
 > This validator needs to make a request over HTTP, therefor it requires an HTTP client of your choice that implements [PSR-18](https://www.php-fig.org/psr/psr-18/) and [PSR-17](https://www.php-fig.org/psr/psr-17/) request and response factories.
 >
@@ -15,9 +15,9 @@
 
 ## Basic usage
 
-To validate if a password was disclosed in a known data breach, you need to provide a HTTP Client that implements `psr\http\ClientInterface`, a `Psr\Http\Message\RequestFactoryInterface` and a `Psr\Http\Message\ResponseFactoryInterface` to the constructor and validate the password you want to check.
+To validate if a password was disclosed in a known data breach, you need to provide a HTTP Client that implements `Psr\Http\Client\ClientInterface`, a `Psr\Http\Message\RequestFactoryInterface` and a `Psr\Http\Message\ResponseFactoryInterface` to the constructor and validate the password you want to check.
 
-If the password was found via the service, `isValid` will return FALSE. If the password was not found, `isValid` will return TRUE.
+If the password was found via the service, `isValid` will return `false`. If the password was not found, `isValid` will return `true`.
 
 ```php
 $validator = new Zend\Validator\UndisclosedPassword(
