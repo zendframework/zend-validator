@@ -206,7 +206,7 @@ this validator with a `Traversable` object.
 
 There is a case which you should be aware of. If you are using an array as
 token, and it contains a `token` key, you should wrap it within another
-`token` key. See the examples below to undestand this situation.
+`token` key. See the examples below to understand this situation.
 
 ```php
 // This will not validate ['token' => 123], it will actually validate the
