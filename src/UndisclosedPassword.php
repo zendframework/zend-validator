@@ -121,7 +121,10 @@ final class UndisclosedPassword extends AbstractValidator
      */
     private function retrieveHashList($passwordRange)
     {
-        $request = $this->makeHttpRequest->createRequest('GET', '/range/' . $passwordRange);
+        $request = $this->makeHttpRequest->createRequest(
+            'GET',
+            self::HIBP_API_URI . '/range/' . $passwordRange
+        );
 
         $response = $this->httpClient->sendRequest($request);
         return (string) $response->getBody();
