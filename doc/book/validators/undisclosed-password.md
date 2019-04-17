@@ -36,3 +36,53 @@ $result = $validator->isValid('8aDk=XiW2E.77tLfuAcB');
 // $result is TRUE because "8aDk=XiW2E.77tLfuAcB" was not found in a data breach
 ```
 
+## A simple command line example
+
+In this example I'm using `zendframework/zend-diactoros` for HTTP messaging and `php-http/curl-client` as the HTTP client. Let's begin with installation of all required packages:
+
+```bash
+$ composer require \
+    php-http/message \
+    php-http/message-factory \
+    php-http/discovery \
+    php-http/curl-client \
+    zendframework/zend-diactoros \
+    zendframework/zend-validator 
+```
+
+Next thing is I create a file `undisclosed.php` where I will put in my code.
+
+```php
+<?php
+
+namespace Undisclosed;
+
+use Http\Client\Curl\Client;
+use Zend\Diactoros\RequestFactory;
+use Zend\Diactoros\ResponseFactory;
+use Zend\Validator\UndisclosedPassword;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+
+$requestFactory = new RequestFactory();
+$responseFactory = new ResponseFactory();
+$client = new Client($responseFactory, null);
+
+$undisclosedPassword = new UndisclosedPassword($client, $requestFactory, $responseFactory);
+echo 'Password "password" is ' . ($undisclosedPassword->isValid('password') ? 'not disclosed' : 'disclosed') . PHP_EOL;
+echo 'Password "NVt3MpvQ" is ' . ($undisclosedPassword->isValid('NVt3MpvQ') ? 'not disclosed' : 'disclosed') . PHP_EOL;
+```
+
+To run it, I use PHP on the command line:
+
+```bash
+$ php undisclosed.php
+```
+
+And it will give me the following output:
+
+```bash
+Password "password" is disclosed
+Password "NVt3MpvQ" is not disclosed
+```
