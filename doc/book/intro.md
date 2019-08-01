@@ -134,34 +134,14 @@ if (! $validator->isValid('word')) {
 
 ## Translating messages
 
-> ### Translation compatibility
+> ### Installation requirements
 >
-> In versions 2.0 - 2.1, `Zend\Validator\AbstractValidator` implemented
-> `Zend\I18n\Translator\TranslatorAwareInterface` and accepted instances of
-> `Zend\I18n\Translator\Translator`. Starting in version 2.2.0, zend-validator
-> now defines a translator interface, > `Zend\Validator\Translator\TranslatorInterface`,
-> as well as it's own -aware variant, > `Zend\Validator\Translator\TranslatorAwareInterface`.
-> This was done to reduce dependencies for the component, and follows the
-> principal of Separated Interfaces.
+> The translation of validator messages depends on the zend-i18n component, so
+> be sure to have it installed before getting started:
 >
-> The upshot is that if you are migrating from a pre-2.2 version, and receiving
-> errors indicating that the translator provided does not implement
-> `Zend\Validator\Translator\TranslatorInterface`, you will need to make a
-> change to your code.
->
-> An implementation of `Zend\Validator\Translator\TranslatorInterface` is
-> provided in `Zend\Mvc\I18n\Translator`, which also extends
-> `Zend\I18n\Translator\Translator`. This version can be instantiated and used
-> just as the original `Zend\I18n` version.
->
-> A new service has also been registered with the MVC, `MvcTranslator`, which
-> will return this specialized, bridge instance.
->
-> Most users should see no issues, as `Zend\Validator\ValidatorPluginManager`
-> has been modified to use the `MvcTranslator` service internally, which is how
-> most developers were getting the translator instance into validators in the
-> first place. You will only need to change code if you were manually injecting
-> the instance previously.
+> ```bash
+> $ composer require zendframework/zend-i18n
+> ```
 
 Validator classes provide a `setTranslator()` method with which you can specify
 an instance of `Zend\Validator\Translator\TranslatorInterface` which will
@@ -211,3 +191,32 @@ if (! $validator->isTranslatorDisabled()) {
 It is also possible to use a translator instead of setting own messages with
 `setMessage()`. But doing so, you should keep in mind, that the translator works
 also on messages you set your own.
+
+> ### Translation compatibility
+>
+> In versions 2.0 - 2.1, `Zend\Validator\AbstractValidator` implemented
+> `Zend\I18n\Translator\TranslatorAwareInterface` and accepted instances of
+> `Zend\I18n\Translator\Translator`. Starting in version 2.2.0, zend-validator
+> now defines a translator interface, > `Zend\Validator\Translator\TranslatorInterface`,
+> as well as it's own -aware variant, > `Zend\Validator\Translator\TranslatorAwareInterface`.
+> This was done to reduce dependencies for the component, and follows the
+> principal of Separated Interfaces.
+>
+> The upshot is that if you are migrating from a pre-2.2 version, and receiving
+> errors indicating that the translator provided does not implement
+> `Zend\Validator\Translator\TranslatorInterface`, you will need to make a
+> change to your code.
+>
+> An implementation of `Zend\Validator\Translator\TranslatorInterface` is
+> provided in `Zend\Mvc\I18n\Translator`, which also extends
+> `Zend\I18n\Translator\Translator`. This version can be instantiated and used
+> just as the original `Zend\I18n` version.
+>
+> A new service has also been registered with the MVC, `MvcTranslator`, which
+> will return this specialized, bridge instance.
+>
+> Most users should see no issues, as `Zend\Validator\ValidatorPluginManager`
+> has been modified to use the `MvcTranslator` service internally, which is how
+> most developers were getting the translator instance into validators in the
+> first place. You will only need to change code if you were manually injecting
+> the instance previously.
