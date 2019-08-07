@@ -18,7 +18,7 @@
         "container-interop/container-interop": "^1.1"
     },
     "require-dev": {
-        "phpunit/PHPUnit": "^6.0.8 || ^5.7.15",
+        "phpunit/phpunit": "^6.0.8 || ^5.7.15",
         "psr/http-message": "^1.0",
         "zendframework/zend-cache": "^2.6.1",
         "zendframework/zend-coding-standard": "~1.0.0",
