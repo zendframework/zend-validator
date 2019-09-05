@@ -8,7 +8,7 @@
 > have it installed before getting started:
 >
 > ```bash
-> $ composer require zendframework/zend-filter`
+> $ composer require zendframework/zend-filter
 > ```
 
 ## Supported options

@@ -1,5 +1,16 @@
 # Validator Chains
 
+## Basic Usage
+
+> ### Installation requirements
+>
+> The validator chain depends on the zend-servicemanager component, so be sure
+> to have it installed before getting started:
+>
+> ```bash
+> $ composer require zendframework/zend-servicemanager
+> ```
+
 Often, multiple validations should be applied to some value in a particular
 order. The following code demonstrates a way to solve the example from the
 [introduction](intro.md), where a username must be between 6 and 12 alphanumeric
