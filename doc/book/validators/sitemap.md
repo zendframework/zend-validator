@@ -53,7 +53,7 @@ internally.
 > have it installed before getting started:
 >
 > ```bash
-> $ composer require zendframework/zend-uri`
+> $ composer require zendframework/zend-uri
 > ```
 
 ## Priority

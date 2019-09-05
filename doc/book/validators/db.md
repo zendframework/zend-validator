@@ -11,7 +11,7 @@ given value.
 > getting started:
 >
 > ```bash
-> $ composer require zendframework/zend-db`
+> $ composer require zendframework/zend-db
 > ```
 
 ## Supported options
