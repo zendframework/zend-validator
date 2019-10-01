@@ -603,12 +603,11 @@ with a set token.</p>
 <p>To validate if two values are identical, you need to set the original value as
 the token, as demonstrated in the following example:
 token.</p>
-<pre class="codehilite"><code class="language-php">$valid = new Zend\Validator\Identical('origin');
+<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\Identical('origin');
 
 if ($valid-&gt;isValid($value)) {
     return true;
-}</code></pre>
-
+}</code></pre></p>
 <p>The validation will only then return <code>true</code> when both values are 100% identical.
 In our example, when <code>$value</code> is <code>'origin'</code>.</p>
 <p>You can set the token after instantiation by using the method <code>setToken()</code>.</p>
@@ -616,16 +615,15 @@ In our example, when <code>$value</code> is <code>'origin'</code>.</p>
 <p><code>Zend\Validator\Identical</code> can validate not only strings, but any other variable
 type, such as booleans, integers, floats, arrays, or even objects. As already
 noted, the token and value must be identical.</p>
-<pre class="codehilite"><code class="language-php">$valid = new Zend\Validator\Identical(123);
+<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\Identical(123);
 
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre>
-
+}</code></pre></p>
 <blockquote>
-<h3 id="type-comparison">Type comparison</h3>
+<h3>Type comparison</h3>
 <p>You should be aware of the variable type used for validation. This means that
 the string <code>'3'</code> is not identical to integer <code>3</code>. When you want non-strict
 validation, you must set the <code>strict</code> option to <code>false</code>.</p>
@@ -633,7 +631,7 @@ validation, you must set the <code>strict</code> option to <code>false</code>.</
 <h2 id="form-elements">Form elements</h2>
 <p><code>Zend\Validator\Identical</code> supports the comparison of form elements. This can be
 done by using the element's name as the <code>token</code>:</p>
-<pre class="codehilite"><code class="language-php">$form-&gt;add([
+<p> <pre class=codehilite><code class=language-php>$form-&gt;add([
     'name' =&gt; 'elementOne',
     'type' =&gt; 'Password',
 ]);
@@ -648,16 +646,15 @@ $form-&gt;add([
             ],
         ],
     ],
-]);</code></pre>
-
+]);</code></pre></p>
 <p>By using the element's name from the first element as the <code>token</code> for the second
 element, the validator validates if the second element is equal with the first
 element. In the case your user does not enter two identical values, you will get
 a validation error.</p>
-<h3 id="validating-a-value-from-a-fieldset">Validating a Value From a Fieldset</h3>
+<h3>Validating a Value From a Fieldset</h3>
 <p>Sometimes you will need to validate an input that lives inside a fieldset, and
 this can be accomplished as follows:</p>
-<pre class="codehilite"><code class="language-php">use Zend\Form\Element;
+<p> <pre class=codehilite><code class=language-php>use Zend\Form\Element;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
 use Zend\InputFilter\Input;
@@ -735,10 +732,9 @@ $inputFilter-&gt;add([
     ],
 ]);
 
-$signUpForm-&gt;setInputFilter($inputFilter);</code></pre>
-
+$signUpForm-&gt;setInputFilter($inputFilter);</code></pre></p>
 <blockquote>
-<h4 id="use-one-token-per-leaf">Use one token per leaf</h4>
+<h4>Use one token per leaf</h4>
 <p>Aways make sure that your token array have just one key per level all the way
 till the leaf, otherwise you can end up with unexpected results.</p>
 </blockquote>
@@ -746,14 +742,13 @@ till the leaf, otherwise you can end up with unexpected results.</p>
 <p>As mentioned before, <code>Zend\Validator\Identical</code> validates tokens using strict
 typing. You can change this behaviour by using the <code>strict</code> option. The default
 value for this property is <code>true</code>.</p>
-<pre class="codehilite"><code class="language-php">$valid = new Zend\Validator\Identical(['token' =&gt; 123, 'strict' =&gt; false]);
+<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\Identical(['token' =&gt; 123, 'strict' =&gt; false]);
 $input = '123';
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre>
-
+}</code></pre></p>
 <p>The difference to the previous example is that the validation returns in this
 case <code>true</code>, even if you compare a integer with string value as long as the
 content is identical but not the type.</p>
@@ -765,27 +760,25 @@ this validator with a <code>Traversable</code> object.</p>
 <p>There is a case which you should be aware of. If you are using an array as
 token, and it contains a <code>token</code> key, you should wrap it within another
 <code>token</code> key. See the examples below to understand this situation.</p>
-<pre class="codehilite"><code class="language-php">// This will not validate ['token' =&gt; 123], it will actually validate the
+<p> <pre class=codehilite><code class=language-php>// This will not validate ['token' =&gt; 123], it will actually validate the
 // integer 123
 $valid = new Zend\Validator\Identical(['token' =&gt; 123]);
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre>
-
+}</code></pre></p>
 <p>The reason for this special case is that you can configure the token which has
 to be used by giving the <code>token</code> key.</p>
 <p>So, when you are using an array as the token, and it contains one element with a
 <code>token</code> key, then you have to wrap it as shown in the example below:</p>
-<pre class="codehilite"><code class="language-php">// Unlike the previous example, this will validate ['token' =&gt; 123]
+<p> <pre class=codehilite><code class=language-php>// Unlike the previous example, this will validate ['token' =&gt; 123]
 $valid = new Zend\Validator\Identical(['token' =&gt; ['token' =&gt; 123]]);
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre>
-
+}</code></pre></p>
 <p>If the array you are willing to validate does not have a <code>token</code> key, you do not
 need to wrap it.</p>
 
@@ -821,7 +814,7 @@ need to wrap it.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/identical.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/identical.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

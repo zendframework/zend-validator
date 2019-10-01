@@ -557,10 +557,6 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#requires-the-hash-extension" class="toc__link">Requires the hash extension</a>
-                    </li>
-                
-                    <li class="toc__entry">
                         <a href="#supported-options" class="toc__link">Supported Options</a>
                     </li>
                 
@@ -584,7 +580,7 @@ contents matches the supplied md5 hash(es). It is subclassed from the
 <a href="../hash/">Hash validator</a> to provide a validator that supports only the MD5
 algorithm.</p>
 <blockquote>
-<h3 id="requires-the-hash-extension">Requires the hash extension</h3>
+<h3>Requires the hash extension</h3>
 <p>This validator requires the PHP <a href="http://php.net/hash">Hash extension</a> PHP with
 the <code>md5</code> algorithm.</p>
 </blockquote>
@@ -594,7 +590,7 @@ the <code>md5</code> algorithm.</p>
 <li><code>hash</code>: String hash or array of hashes against which to validate.</li>
 </ul>
 <h2 id="basic-usage">Basic Usage</h2>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\File\Md5;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\File\Md5;
 
 // Does file have the given hash?
 $validator = new Md5('3b3652f336522365223');
@@ -613,20 +609,16 @@ $validator = new Md5(['hash' =&gt; [
 // Perform validation with file path
 if ($validator-&gt;isValid('./myfile.txt')) {
     // file is valid
-}</code></pre>
-
+}</code></pre></p>
 <h2 id="public-methods">Public Methods</h2>
-<h3 id="getmd5">getMd5</h3>
-<pre class="codehilite"><code class="language-php">getMd5() : array</code></pre>
-
+<h3>getMd5</h3>
+<p> <pre class=codehilite><code class=language-php>getMd5() : array</code></pre></p>
 <p>Returns an array of MD5 hashes against which to validate.</p>
-<h3 id="addmd5">addMd5</h3>
-<pre class="codehilite"><code class="language-php">addMd5(string|array $options) : void</code></pre>
-
+<h3>addMd5</h3>
+<p> <pre class=codehilite><code class=language-php>addMd5(string|array $options) : void</code></pre></p>
 <p>Add one or more hashes to validate against.</p>
-<h3 id="setmd5">setMd5</h3>
-<pre class="codehilite"><code class="language-php">setMd5(string|array $options) : void</code></pre>
-
+<h3>setMd5</h3>
+<p> <pre class=codehilite><code class=language-php>setMd5(string|array $options) : void</code></pre></p>
 <p>Overwrite any previously set hashes with those specified.</p>
 
 
@@ -661,7 +653,7 @@ if ($validator-&gt;isValid('./myfile.txt')) {
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/file/md5.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/file/md5.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

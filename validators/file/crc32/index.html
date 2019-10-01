@@ -557,10 +557,6 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#requires-the-hash-extension" class="toc__link">Requires the hash extension</a>
-                    </li>
-                
-                    <li class="toc__entry">
                         <a href="#supported-options" class="toc__link">Supported Options</a>
                     </li>
                 
@@ -584,7 +580,7 @@ contents matches the supplied crc32 hash(es). It is subclassed from the <a href=
 validator</a> to provide a validator that only supports the <code>crc32</code>
 algorithm.</p>
 <blockquote>
-<h3 id="requires-the-hash-extension">Requires the hash extension</h3>
+<h3>Requires the hash extension</h3>
 <p>This validator requires the PHP <a href="http://php.net/hash">Hash extension</a> with the
 <code>crc32</code> algorithm.</p>
 </blockquote>
@@ -595,7 +591,7 @@ algorithm.</p>
   pairs.</li>
 </ul>
 <h2 id="usage-examples">Usage Examples</h2>
-<pre class="codehilite"><code class="language-php">// Does file have the given hash?
+<p> <pre class=codehilite><code class=language-php>// Does file have the given hash?
 $validator = new \Zend\Validator\File\Crc32('3b3652f');
 
 // Or, check file against multiple hashes
@@ -604,21 +600,17 @@ $validator = new \Zend\Validator\File\Crc32(['3b3652f', 'e612b69']);
 // Perform validation with file path
 if ($validator-&gt;isValid('./myfile.txt')) {
     // file is valid
-}</code></pre>
-
+}</code></pre></p>
 <h2 id="public-methods">Public Methods</h2>
-<h3 id="getcrc32">getCrc32</h3>
-<pre class="codehilite"><code class="language-php">getCrc32() : array</code></pre>
-
+<h3>getCrc32</h3>
+<p> <pre class=codehilite><code class=language-php>getCrc32() : array</code></pre></p>
 <p>Returns an array of all currently registered hashes to test against.</p>
-<h3 id="addcrc32">addCrc32</h3>
-<pre class="codehilite"><code class="language-php">addCrc32(string|array $options) : void</code></pre>
-
+<h3>addCrc32</h3>
+<p> <pre class=codehilite><code class=language-php>addCrc32(string|array $options) : void</code></pre></p>
 <p>Add a single hash to test against, or a set of filename/hash pairs to test
 against.</p>
-<h3 id="setcrc32">setCrc32</h3>
-<pre class="codehilite"><code class="language-php">setCrc32(string|array $options): void</code></pre>
-
+<h3>setCrc32</h3>
+<p> <pre class=codehilite><code class=language-php>setCrc32(string|array $options): void</code></pre></p>
 <p>Overwrite the current list of registered hashes with the one(s) provided.</p>
 
 
@@ -653,7 +645,7 @@ against.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/file/crc32.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/file/crc32.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

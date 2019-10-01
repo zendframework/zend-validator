@@ -557,10 +557,6 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#compatibility" class="toc__link">Compatibility</a>
-                    </li>
-                
-                    <li class="toc__entry">
                         <a href="#supported-options" class="toc__link">Supported Options</a>
                     </li>
                 
@@ -580,7 +576,7 @@
 <p>This validator is inversely related to the
 <a href="../exclude-mime-type/">ExcludeMimeType validator</a></p>
 <blockquote>
-<h3 id="compatibility">Compatibility</h3>
+<h3>Compatibility</h3>
 <p>This component will use the <code>FileInfo</code> extension if it is available. If it's
 not, it will degrade to the <code>mime_content_type()</code> function. And if the
 function call fails, it will use the MIME type which is given by HTTP. You
@@ -592,7 +588,7 @@ and can be easily manipulated.</p>
 <p>The following set of options are supported:</p>
 <ul>
 <li><code>mimeType</code>: Comma-delimited string of MIME types, or array of MIME types,
-  against which to test. Types can be specific (e.g., <code>image/jpg</code>), or refer
+  against which to test. Types can be specific (e.g., <code>image/jpeg</code>), or refer
   only to the group (e.g., <code>image</code>).</li>
 <li><code>magicFile</code>: Location of the magicfile to use for MIME type comparisons;
   defaults to the value of the <code>MAGIC</code> constant.</li>
@@ -601,36 +597,35 @@ and can be easily manipulated.</p>
   <code>mime_magic</code> extensions are available; defaults to <code>false</code>.</li>
 </ul>
 <h2 id="basic-usage">Basic Usage</h2>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\File\MimeType;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\File\MimeType;
 
 // Only allow 'gif' or 'jpg' files
-$validator = new MimeType('image/gif,image/jpg');
+$validator = new MimeType('image/gif,image/jpeg');
 
 // ... or with array notation:
-$validator = new MimeType(['image/gif', 'image/jpg']);
+$validator = new MimeType(['image/gif', 'image/jpeg']);
 
 // ... or restrict to  entire group of types:
 $validator = new MimeType(['image', 'audio']);
 
 // Specify a different magicFile:
 $validator = new MimeType([
-    'mimeType' =&gt; ['image/gif', 'image/jpg'],
+    'mimeType' =&gt; ['image/gif', 'image/jpeg'],
     'magicFile' =&gt; '/path/to/magicfile.mgx',
 ]);
 
 // Enable HTTP header scanning (do not do this!):
 $validator = new MimeType([
-    'mimeType' =&gt; ['image/gif', 'image/jpg'],
+    'mimeType' =&gt; ['image/gif', 'image/jpeg'],
     'enableHeaderCheck' =&gt; true,
 ]);
 
 // Perform validation
 if ($validator-&gt;isValid('./myfile.jpg')) {
     // file is valid
-}</code></pre>
-
+}</code></pre></p>
 <blockquote>
-<h3 id="validating-mime-groups-is-potentially-dangerous">Validating MIME groups is potentially dangerous</h3>
+<h3>Validating MIME groups is potentially dangerous</h3>
 <p>Allowing "groups" of MIME types will accept <strong>all</strong> members of this group, even
 if your application does not support them. For instance, When you allow
 <code>image</code> you also allow <code>image/xpixmap</code> and <code>image/vasa</code>, both of which could
@@ -669,7 +664,7 @@ be problematic.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/file/mime-type.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/file/mime-type.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

@@ -578,7 +578,7 @@
 <p><code>Zend\Validator\File\UploadFile</code> checks whether a single file has been uploaded
 via a form <code>POST</code> and will return descriptive messages for any upload errors.</p>
 <h2 id="basic-usage">Basic Usage</h2>
-<pre class="codehilite"><code class="language-php">use Zend\Http\PhpEnvironment\Request;
+<p> <pre class=codehilite><code class=language-php>use Zend\Http\PhpEnvironment\Request;
 use Zend\Validator\File\UploadFile;
 
 $request = new Request();
@@ -588,8 +588,7 @@ $files   = $request-&gt;getFiles();
 $validator = new UploadFile();
 if ($validator-&gt;isValid($files['my-upload'])) {
     // file is valid
-}</code></pre>
-
+}</code></pre></p>
 <h2 id="psr-7-support">PSR-7 Support</h2>
 <ul>
 <li>Since 2.11.0</li>
@@ -597,14 +596,13 @@ if ($validator-&gt;isValid($files['my-upload'])) {
 <p>Starting in 2.11.0, you can also pass <a href="https://www.php-fig.org/psr/psr-7/#uploadedfileinterface">PSR-7 UploadedFileInterface</a>
 instances as values to the validator. When valid, <code>getValue()</code> will return the
 instance validated verbatim:</p>
-<pre class="codehilite"><code class="language-php">$validator = new UploadFile();
+<p> <pre class=codehilite><code class=language-php>$validator = new UploadFile();
 
 // @var Psr\Http\Message\UploadedFileInterface $uploadedFile
 if ($validator-&gt;isValid($uploadedFile)) {
     // file is valid
     $validInstance = $validator-&gt;getValue(); // === $uploadedFile
-}</code></pre>
-
+}</code></pre></p>
 <h2 id="usage-with-zend-inputfilter">Usage with zend-inputfilter</h2>
 <p>When using zend-inputfilter's <a href="https://docs.zendframework.com/zend-inputfilter/file-input/">FileInput</a>,
 this validator will be automatically prepended to the validator chain.</p>
@@ -641,7 +639,7 @@ this validator will be automatically prepended to the validator chain.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/file/upload-file.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/file/upload-file.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

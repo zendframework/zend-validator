@@ -580,7 +580,7 @@ directories.</p>
 <li><code>directory</code>: Array of directories, or comma-delimited string  of directories.</li>
 </ul>
 <h2 id="usage-examples">Usage Examples</h2>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\File\Exists;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\File\Exists;
 
 // Only allow files that exist in ~both~ directories
 $validator = new Exists('/tmp,/var/tmp');
@@ -591,10 +591,9 @@ $validator = new Exists(['/tmp', '/var/tmp']);
 // Perform validation
 if ($validator-&gt;isValid('/tmp/myfile.txt')) {
     // file is valid
-}</code></pre>
-
+}</code></pre></p>
 <blockquote>
-<h3 id="checks-against-all-directories">Checks against all directories</h3>
+<h3>Checks against all directories</h3>
 <p>This validator checks whether the specified file exists in <strong>all</strong> of the
 given directories; validation will fail if the file does not exist in one
 or more of them.</p>
@@ -632,7 +631,7 @@ or more of them.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/file/exists.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/file/exists.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

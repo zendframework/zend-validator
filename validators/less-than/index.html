@@ -591,22 +591,20 @@ dates can not be validated with this validator.</p>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
 <p>To validate if a given value is less than a defined maximum:</p>
-<pre class="codehilite"><code class="language-php">$valid  = new Zend\Validator\LessThan(['max' =&gt; 10]);
+<p> <pre class=codehilite><code class=language-php>$valid  = new Zend\Validator\LessThan(['max' =&gt; 10]);
 $value  = 12;
 $return = $valid-&gt;isValid($value);
-// returns false</code></pre>
-
+// returns false</code></pre></p>
 <p>The above example returns <code>true</code> for all values lower than 10.</p>
 <h2 id="inclusive-validation">Inclusive validation</h2>
 <p>Sometimes it is useful to validate a value by including the maximum value:</p>
-<pre class="codehilite"><code class="language-php">$valid  = new Zend\Validator\LessThan([
+<p> <pre class=codehilite><code class=language-php>$valid  = new Zend\Validator\LessThan([
     'max' =&gt; 10,
     'inclusive' =&gt; true,
 ]);
 $value  = 10;
 $result = $valid-&gt;isValid($value);
-// returns true</code></pre>
-
+// returns true</code></pre></p>
 <p>The example is identical to our first example, with the exception that we've
 specified that the maximum is inclusive. Now the value '10' is allowed and will
 return <code>true</code>.</p>
@@ -643,7 +641,7 @@ return <code>true</code>.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/less-than.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/less-than.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

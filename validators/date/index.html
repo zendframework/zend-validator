@@ -585,19 +585,18 @@
 <h2 id="default-date-validation">Default date validation</h2>
 <p>The easiest way to validate a date is by using the default date format,
 <code>Y-m-d</code>.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Date();
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Date();
 
 $validator-&gt;isValid('2000-10-10');   // returns true
-$validator-&gt;isValid('10.10.2000'); // returns false</code></pre>
-
+$validator-&gt;isValid('10.10.2000'); // returns false</code></pre></p>
 <h2 id="specifying-a-date-format">Specifying a date format</h2>
 <p><code>Zend\Validator\Date</code> also supports custom date formats. When you want to
 validate such a date, use the <code>format</code> option. This option accepts any format
 allowed by the PHP <a href="http://php.net/manual/en/datetime.createfromformat.php#refsect1-datetime.createfromformat-parameters">DateTime::createFromFormat()</a> method.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Date(['format' =&gt; 'Y']);
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Date(['format' =&gt; 'Y']);
 
 $validator-&gt;isValid('2010'); // returns true
-$validator-&gt;isValid('May');  // returns false</code></pre>
+$validator-&gt;isValid('May');  // returns false</code></pre></p>
 
 
 
@@ -631,7 +630,7 @@ $validator-&gt;isValid('May');  // returns false</code></pre>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/date.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/date.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

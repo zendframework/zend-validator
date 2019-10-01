@@ -557,10 +557,6 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#introduced-in-280" class="toc__link">Introduced in 2.8.0</a>
-                    </li>
-                
-                    <li class="toc__entry">
                         <a href="#supported-options" class="toc__link">Supported options</a>
                     </li>
                 
@@ -592,19 +588,19 @@ exist:</p>
 of any version. It does not validate that the UUID exists in your system,
 however, only that it is well-formed.</p>
 <blockquote>
-<h3 id="introduced-in-280">Introduced in 2.8.0</h3>
+<h3>Introduced in 2.8.0</h3>
 <p><code>Zend\Validator\Uuid</code> was introduced with version 2.8.0.</p>
 </blockquote>
 <h2 id="supported-options">Supported options</h2>
 <p>The <code>Uuid</code> validator has no additional options.</p>
 <h2 id="basic-usage">Basic usage</h2>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Uuid();
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Uuid();
 
 if ($validator-&gt;isValid($uuid)) {
     // UUID was valid
 } else {
     // Invalid/mal-formed UUID; use $validator-&gt;getMessages() for more detail
-}</code></pre>
+}</code></pre></p>
 
 
 
@@ -638,7 +634,7 @@ if ($validator-&gt;isValid($uuid)) {
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/uuid.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/uuid.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

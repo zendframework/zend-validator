@@ -590,7 +590,7 @@ maximum dimensions can be set to validate against.</p>
   indicates no maximum.</li>
 </ul>
 <h2 id="basic-usage">Basic Usage</h2>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\File\ImageSize;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\File\ImageSize;
 
 // Is image size between 320x200 (min) and 640x480 (max)?
 $validator = new ImageSize(320, 200, 640, 480);
@@ -618,17 +618,14 @@ $validator = new ImageSize([
 // Perform validation with file path
 if ($validator-&gt;isValid('./myfile.jpg')) {
     // file is valid
-}</code></pre>
-
+}</code></pre></p>
 <h2 id="public-methods">Public Methods</h2>
-<h3 id="getimagemin">getImageMin</h3>
-<pre class="codehilite"><code class="language-php">getImageMin() : array</code></pre>
-
+<h3>getImageMin</h3>
+<p> <pre class=codehilite><code class=language-php>getImageMin() : array</code></pre></p>
 <p>Returns the minimum valid dimensions as an array with the keys <code>width</code> and
 <code>height</code>.</p>
-<h3 id="getimagemax">getImageMax</h3>
-<pre class="codehilite"><code class="language-php">getImageMax() : array</code></pre>
-
+<h3>getImageMax</h3>
+<p> <pre class=codehilite><code class=language-php>getImageMax() : array</code></pre></p>
 <p>Returns the maximum valid dimensions as an array with the keys <code>width</code> and
 <code>height</code>.</p>
 
@@ -664,7 +661,7 @@ if ($validator-&gt;isValid('./myfile.jpg')) {
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/file/image-size.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/file/image-size.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

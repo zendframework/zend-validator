@@ -580,7 +580,7 @@ an instance of a specific class or interface.</p>
   instance of.</li>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\IsInstanceOf([
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\IsInstanceOf([
     'className' =&gt; 'Zend\Validator\Digits'
 ]);
 $object = new Zend\Validator\Digits();
@@ -589,11 +589,10 @@ if ($validator-&gt;isValid($object)) {
     // $object is an instance of Zend\Validator\Digits
 } else {
     // false. You can use $validator-&gt;getMessages() to retrieve error messages
-}</code></pre>
-
+}</code></pre></p>
 <p>If a string argument is passed to the constructor of
 <code>Zend\Validator\IsInstanceOf</code>, then that value will be used as the class name:</p>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\Digits;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\Digits;
 use Zend\Validator\IsInstanceOf;
 
 $validator = new IsInstanceOf(Digits::class);
@@ -603,7 +602,7 @@ if ($validator-&gt;isValid($object)) {
     // $object is an instance of Zend\Validator\Digits
 } else {
     // false. You can use $validator-&gt;getMessages() to retrieve error messages
-}</code></pre>
+}</code></pre></p>
 
 
 
@@ -637,7 +636,7 @@ if ($validator-&gt;isValid($object)) {
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/isinstanceof.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/isinstanceof.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

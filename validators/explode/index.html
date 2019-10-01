@@ -587,7 +587,7 @@ array.</p>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
 <p>To validate if every item in an array is in a specified haystack:</p>
-<pre class="codehilite"><code class="language-php">$inArrayValidator = new Zend\Validator\InArray([
+<p> <pre class=codehilite><code class=language-php>$inArrayValidator = new Zend\Validator\InArray([
     'haystack' =&gt; [1, 2, 3, 4, 5, 6],
 ]);
 
@@ -596,11 +596,10 @@ $explodeValidator = new Zend\Validator\Explode([
 ]);
 
 $explodeValidator-&gt;isValid([1, 4, 6]);    // returns true
-$explodeValidator-&gt;isValid([1, 4, 6, 8]); // returns false</code></pre>
-
+$explodeValidator-&gt;isValid([1, 4, 6, 8]); // returns false</code></pre></p>
 <h2 id="exploding-strings">Exploding strings</h2>
 <p>To validate if every e-mail in a string is contained in a list of names:</p>
-<pre class="codehilite"><code class="language-php">$inEmailListValidator = new Zend\Validator\InArray([
+<p> <pre class=codehilite><code class=language-php>$inEmailListValidator = new Zend\Validator\InArray([
     'haystack' =&gt; ['joseph@test.com', 'mark@test.com', 'lucia@test.com'],
 ]);
 
@@ -610,7 +609,7 @@ $explodeValidator = new Zend\Validator\Explode([
 ]);
 
 $explodeValidator-&gt;isValid('joseph@test.com,mark@test.com'); // returns true
-$explodeValidator-&gt;isValid('lucia@test.com,maria@test.com');  // returns false</code></pre>
+$explodeValidator-&gt;isValid('lucia@test.com,maria@test.com');  // returns false</code></pre></p>
 
 
 
@@ -644,7 +643,7 @@ $explodeValidator-&gt;isValid('lucia@test.com,maria@test.com');  // returns fals
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/explode.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/explode.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

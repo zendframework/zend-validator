@@ -599,7 +599,7 @@ as a 'lastmod' element in a Sitemap XML document. The lastmod element should
 contain a W3C date string, optionally discarding information about time.</p>
 <p>Returns <code>true</code> if and only if the given value is a string and is valid according
 to the protocol.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Sitemap\Lastmod();
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Sitemap\Lastmod();
 
 $validator-&gt;isValid('1999-11-11T22:23:52-02:00'); // true
 $validator-&gt;isValid('2008-05-12T00:42:52+02:00'); // true
@@ -610,26 +610,25 @@ $validator-&gt;isValid('1999-11-11t22:23:52-02:00'); // false
 $validator-&gt;isValid('2008-05-12T00:42:60+02:00'); // false
 $validator-&gt;isValid('1999-13-11'); // false
 $validator-&gt;isValid('2008-05-32'); // false
-$validator-&gt;isValid('yesterday'); // false</code></pre>
-
+$validator-&gt;isValid('yesterday'); // false</code></pre></p>
 <h2 id="loc">Loc</h2>
 <p><code>Zend\Validator\Sitemap\Loc</code> validates whether a string is valid for using as a
 'loc' element in a Sitemap XML document. This uses
 <a href="https://docs.zendframework.com/zend-uri/usage/#validating-the-uri">Zend\Uri\Uri::isValid()</a>
 internally.</p>
 <blockquote>
-<h3 id="installation-requirements">Installation requirements</h3>
+<h3>Installation requirements</h3>
 <p><code>Zend\Validator\Sitemap\Loc</code> depends on the zend-uri component, so be sure to
 have it installed before getting started:</p>
-<pre class="codehilite"><code class="language-bash">$ composer require zendframework/zend-uri`</code></pre>
-
+<p><code>bash
+$ composer require zendframework/zend-uri</code></p>
 </blockquote>
 <h2 id="priority">Priority</h2>
 <p><code>Zend\Validator\Sitemap\Priority</code> validates whether a value is valid for using
 as a 'priority' element in a Sitemap XML document. The value should be a decimal
 between 0.0 and 1.0. This validator accepts both numeric values and string
 values.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Sitemap\Priority();
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Sitemap\Priority();
 
 $validator-&gt;isValid('0.1'); // true
 $validator-&gt;isValid('0.789'); // true
@@ -640,7 +639,7 @@ $validator-&gt;isValid('1.1'); // false
 $validator-&gt;isValid('-0.4'); // false
 $validator-&gt;isValid(1.00001); // false
 $validator-&gt;isValid(0xFF); // false
-$validator-&gt;isValid('foo'); // false</code></pre>
+$validator-&gt;isValid('foo'); // false</code></pre></p>
 
 
 
@@ -674,7 +673,7 @@ $validator-&gt;isValid('foo'); // false</code></pre>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/sitemap.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/sitemap.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

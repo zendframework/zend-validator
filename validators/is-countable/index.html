@@ -614,51 +614,47 @@ the validator operates similar to the <a href="../between/">Between validator</a
 <h2 id="default-behaviour">Default behaviour</h2>
 <p>Given no options, the validator simply tests to see that the value may be
 counted (i.e., it's an array or <code>Countable</code> instance):</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\IsCountable();
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\IsCountable();
 
 $validator-&gt;isValid(10);                    // false; not an array or Countable
 $validator-&gt;isValid([10]);                  // true; value is an array
 $validator-&gt;isValid(new ArrayObject([10])); // true; value is Countable
-$validator-&gt;isValid(new stdClass);          // false; value is not Countable</code></pre>
-
+$validator-&gt;isValid(new stdClass);          // false; value is not Countable</code></pre></p>
 <h2 id="specifying-an-exact-count">Specifying an exact count</h2>
 <p>You can also specify an exact count; if the value is countable, and its count
 matches, the the value is valid.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\IsCountable(['count' =&gt; 3]);
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\IsCountable(['count' =&gt; 3]);
 
 $validator-&gt;isValid([1, 2, 3]);                  // true; countable, and count is 3
 $validator-&gt;isValid(new ArrayObject([1, 2, 3])); // true; countable, and count is 3
 $validator-&gt;isValid([1]);                        // false; countable, but count is 1
-$validator-&gt;isValid(new ArrayObject([1]));       // false; countable, but count is 1</code></pre>
-
+$validator-&gt;isValid(new ArrayObject([1]));       // false; countable, but count is 1</code></pre></p>
 <h2 id="specifying-a-minimum-count">Specifying a minimum count</h2>
 <p>You may specify a minimum count. When you do, the value must be countable, and
 greater than or equal to the minimum count you specify in order to be valid.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\IsCountable(['min' =&gt; 2]);
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\IsCountable(['min' =&gt; 2]);
 
 $validator-&gt;isValid([1, 2, 3]);                  // true; countable, and count is 3
 $validator-&gt;isValid(new ArrayObject([1, 2, 3])); // true; countable, and count is 3
 $validator-&gt;isValid([1, 2]);                     // true; countable, and count is 2
 $validator-&gt;isValid(new ArrayObject([1, 2]));    // true; countable, and count is 2
 $validator-&gt;isValid([1]);                        // false; countable, but count is 1
-$validator-&gt;isValid(new ArrayObject([1]));       // false; countable, but count is 1</code></pre>
-
+$validator-&gt;isValid(new ArrayObject([1]));       // false; countable, but count is 1</code></pre></p>
 <h2 id="specifying-a-maximum-count">Specifying a maximum count</h2>
 <p>You may specify a maximum count. When you do, the value must be countable, and
 less than or equal to the maximum count you specify in order to be valid.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\IsCountable(['max' =&gt; 2]);
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\IsCountable(['max' =&gt; 2]);
 
 $validator-&gt;isValid([1, 2, 3]);                  // false; countable, but count is 3
 $validator-&gt;isValid(new ArrayObject([1, 2, 3])); // false; countable, but count is 3
 $validator-&gt;isValid([1, 2]);                     // true; countable, and count is 2
 $validator-&gt;isValid(new ArrayObject([1, 2]));    // true; countable, and count is 2
 $validator-&gt;isValid([1]);                        // true; countable, and count is 1
-$validator-&gt;isValid(new ArrayObject([1]));       // true; countable, and count is 1</code></pre>
-
+$validator-&gt;isValid(new ArrayObject([1]));       // true; countable, and count is 1</code></pre></p>
 <h2 id="specifying-both-minimum-and-maximum">Specifying both minimum and maximum</h2>
 <p>If you specify both a minimum and maximum, the count must be <em>between</em> the two,
 inclusively (i.e., it may be the minimum or maximum, and any value between).</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\IsCountable([
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\IsCountable([
     'min' =&gt; 3,
     'max' =&gt; 5,
 ]);
@@ -670,7 +666,7 @@ $validator-&gt;isValid(new ArrayObject(range(1, 5))); // true; countable, and co
 $validator-&gt;isValid([1, 2]);                       // false; countable, and count is 2
 $validator-&gt;isValid(new ArrayObject([1, 2]));      // false; countable, and count is 2
 $validator-&gt;isValid(range(1, 6));                  // false; countable, and count is 6
-$validator-&gt;isValid(new ArrayObject(range(1, 6))); // false; countable, and count is 6</code></pre>
+$validator-&gt;isValid(new ArrayObject(range(1, 6))); // false; countable, and count is 6</code></pre></p>
 
 
 
@@ -704,7 +700,7 @@ $validator-&gt;isValid(new ArrayObject(range(1, 6))); // false; countable, and c
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/is-countable.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/is-countable.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

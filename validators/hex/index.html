@@ -557,10 +557,6 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#invalid-characters" class="toc__link">Invalid characters</a>
-                    </li>
-                
-                    <li class="toc__entry">
                         <a href="#supported-options" class="toc__link">Supported options</a>
                     </li>
                 
@@ -575,15 +571,14 @@
 hexadecimal characters. These are all characters from <strong>0 to 9</strong> and <strong>A to F</strong>,
 case insensitive. There is no length limitation for the input you want to
 validate.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Hex();
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Hex();
 if ($validator-&gt;isValid('123ABC')) {
     // value contains only hex chars
 } else {
     // false
-}</code></pre>
-
+}</code></pre></p>
 <blockquote>
-<h3 id="invalid-characters">Invalid characters</h3>
+<h3>Invalid characters</h3>
 <p>All other characters will return false, including whitespace and decimal
 points. Additionally, unicode zeros and numbers from other scripts than latin
 will not be treated as valid.</p>
@@ -623,7 +618,7 @@ will not be treated as valid.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/hex.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/hex.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

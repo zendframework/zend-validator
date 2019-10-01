@@ -584,33 +584,32 @@ the abbreviation for "International Bank Account Number".</p>
 countries use different formats for their IBAN numbers. This is the reason why
 IBAN numbers always need a country code. By knowing this we already know how
 to use <code>Zend\Validator\Iban</code>.</p>
-<h3 id="ungreedy-iban-validation">Ungreedy IBAN validation</h3>
+<h3>Ungreedy IBAN validation</h3>
 <p>Sometime it is useful just to validate if the given value is a IBAN number or
 not. This means that you don't want to validate it against a defined country.
 This can be done by using <code>false</code> as locale.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Iban(['country_code' =&gt; false]);
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Iban(['country_code' =&gt; false]);
 // Note: you can also provide FALSE as the sole parameter
 
 if ($validator-&gt;isValid('AT611904300234573201')) {
     // IBAN appears to be valid
 } else {
     // IBAN is not valid
-}</code></pre>
-
+}</code></pre></p>
 <p>In this situation, any IBAN number from any country will considered valid. Note
 that this should not be done when you accept only accounts from a single
 country!</p>
-<h3 id="region-aware-iban-validation">Region aware IBAN validation</h3>
+<h3>Region aware IBAN validation</h3>
 <p>To validate against a defined country, you just provide a country code. You can
 do this during instaniation via the option <code>country_code</code>, or afterwards by
 using <code>setCountryCode()</code>.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Iban(['country_code' =&gt; 'AT']);
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Iban(['country_code' =&gt; 'AT']);
 
 if ($validator-&gt;isValid('AT611904300234573201')) {
     // IBAN appears to be valid
 } else {
     // IBAN is not valid
-}</code></pre>
+}</code></pre></p>
 
 
 
@@ -644,7 +643,7 @@ if ($validator-&gt;isValid('AT611904300234573201')) {
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/iban.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/iban.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

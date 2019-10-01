@@ -586,7 +586,7 @@ successful.</p>
   normalizes the array).</li>
 </ul>
 <h2 id="basic-usage">Basic Usage</h2>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\File\Upload;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\File\Upload;
 
 // Using zend-http's request:
 $validator = new Upload($request-&gt;getFiles());
@@ -596,9 +596,8 @@ $validator = new Upload(['files' =&gt; $request-&gt;getFiles()]);
 
 // Validate:
 if ($validator-&gt;isValid('foo')) {
-    // "foo" file upload was successful
-}</code></pre>
-
+    // &quot;foo&quot; file upload was successful
+}</code></pre></p>
 <h2 id="psr-7-support">PSR-7 Support</h2>
 <ul>
 <li>Since 2.11.0</li>
@@ -607,7 +606,7 @@ if ($validator-&gt;isValid('foo')) {
 instances to the constructor, the <code>setFiles()</code> method, or the <code>isValid()</code>
 method (in the latter case, you are validating that <em>all</em> uploaded files were
 valid).</p>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\File\Upload;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\File\Upload;
 
 // @var Psr\Http\Message\ServerRequestInterface $request
 $validator = new Upload($request-&gt;getUploadedFiles());
@@ -619,8 +618,8 @@ $validator = new Upload([
 
 // Validate:
 if ($validator-&gt;isValid('foo')) {
-    // "foo" file upload was successful
-}</code></pre>
+    // &quot;foo&quot; file upload was successful
+}</code></pre></p>
 
 
 
@@ -654,7 +653,7 @@ if ($validator-&gt;isValid('foo')) {
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/file/upload.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/file/upload.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

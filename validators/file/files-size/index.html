@@ -590,7 +590,7 @@ range.</p>
 <p>See the <a href="../size/#supported-options">Size validator</a> for details on supported SI
 units.</p>
 <h2 id="basic-usage">Basic Usage</h2>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\File\FilesSize;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\File\FilesSize;
 
 $validator = new FilesSize([
     'min' =&gt; '1kB`,  // minimum of 1kB
@@ -599,7 +599,7 @@ $validator = new FilesSize([
 
 if ($validator-&gt;isValid($_FILES)) {
     // &gt; 1kB, &lt; 10MB in aggregate
-}</code></pre>
+}</code></pre></p>
 
 
 
@@ -633,7 +633,7 @@ if ($validator-&gt;isValid($_FILES)) {
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/file/files-size.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/file/files-size.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

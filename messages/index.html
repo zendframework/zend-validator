@@ -571,26 +571,23 @@ validator could return to something different.</p>
 <p>Validation messages are defined as constant/template pairs, with the constant
 representing a translation key. Such constants are defined per-class.  Let's
 look into <code>Zend\Validator\GreaterThan</code> for a descriptive example:</p>
-<pre class="codehilite"><code class="language-php">protected $messageTemplates = [
-    self::NOT_GREATER =&gt; "'%value%' is not greater than '%min%'",
-];</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>protected $messageTemplates = [
+    self::NOT_GREATER =&gt; &quot;'%value%' is not greater than '%min%'&quot;,
+];</code></pre></p>
 <p>The constant <code>self::NOT_GREATER</code> refers to the failure and is used as the
 message key, and the message template itself is used as the value within the
 message array.</p>
 <p>You can retrieve all message templates from a validator by using the
 <code>getMessageTemplates()</code> method. It returns the above array containing all
 messages a validator could return in the case of a failed validation.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\GreaterThan();
-$messages  = $validator-&gt;getMessageTemplates();</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\GreaterThan();
+$messages  = $validator-&gt;getMessageTemplates();</code></pre></p>
 <p>Using the <code>setMessage()</code> method you can set another message to be returned in
 case of the specified failure.</p>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\GreaterThan;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\GreaterThan;
 
 $validator = new GreaterThan();
-$validator-&gt;setMessage('Please enter a lower value', GreaterThan::NOT_GREATER);</code></pre>
-
+$validator-&gt;setMessage('Please enter a lower value', GreaterThan::NOT_GREATER);</code></pre></p>
 <p>The second parameter defines the failure which will be overridden. When you omit
 this parameter, then the given message will be set for all possible failures of
 this validator.</p>
@@ -600,11 +597,10 @@ this validator.</p>
 messages. For your convenience, pre-translated messages are provided in the
 <a href="https://docs.zendframework.com/zend-i18n-resources/">zendframework/zend-i18n-resources</a>
 package:</p>
-<pre class="codehilite"><code class="language-bash">$ composer require zendframework/zend-i18n-resources</code></pre>
-
+<p> <pre class=codehilite><code class=language-bash>$ composer require zendframework/zend-i18n-resources</code></pre></p>
 <p>To translate all validation messages to German for example, attach a translator
 to <code>Zend\Validator\AbstractValidator</code> using these resource files.</p>
-<pre class="codehilite"><code class="language-php">use Zend\I18n\Translator\Resources;
+<p> <pre class=codehilite><code class=language-php>use Zend\I18n\Translator\Resources;
 use Zend\Mvc\I18n\Translator;
 use Zend\Validator\AbstractValidator;
 
@@ -615,10 +611,9 @@ $translator-&gt;addTranslationFilePattern(
     Resources::getPatternForValidator()
 );
 
-AbstractValidator::setDefaultTranslator($translator);</code></pre>
-
+AbstractValidator::setDefaultTranslator($translator);</code></pre></p>
 <blockquote>
-<h3 id="supported-languages">Supported languages</h3>
+<h3>Supported languages</h3>
 <p>The supported languages may not be complete. New languages will be added with
 each release. Additionally feel free to use the existing resource files to
 make your own translations.</p>
@@ -638,10 +633,9 @@ behaviour.</p>
 Set it to any integer size you need. When the returned message exceeds the set
 size, then the message will be truncated and the string <code>**...**</code> will be added
 instead of the rest of the message.</p>
-<pre class="codehilite"><code class="language-php">Zend\Validator\AbstractValidator::setMessageLength(100);</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>Zend\Validator\AbstractValidator::setMessageLength(100);</code></pre></p>
 <blockquote>
-<h3 id="where-is-this-parameter-used">Where is this parameter used?</h3>
+<h3>Where is this parameter used?</h3>
 <p>The set message length is used for all validators, even for self defined ones,
 as long as they extend <code>Zend\Validator\AbstractValidator</code>.</p>
 </blockquote>
@@ -678,7 +672,7 @@ as long as they extend <code>Zend\Validator\AbstractValidator</code>.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/messages.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/messages.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

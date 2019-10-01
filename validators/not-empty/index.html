@@ -588,11 +588,10 @@ use it to ensure required elements have values associated with them.</p>
 <p>By default, this validator works differently than you would expect when you've
 worked with PHP's <code>empty()</code> operator. In particular, this validator will
 evaluate both the integer <code>0</code> and string <code>'0'</code> as empty.</p>
-<pre class="codehilite"><code class="language-php">$valid = new Zend\Validator\NotEmpty();
+<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\NotEmpty();
 $value  = '';
 $result = $valid-&gt;isValid($value);
-// returns false</code></pre>
-
+// returns false</code></pre></p>
 <h2 id="specifying-empty-behavior">Specifying empty behavior</h2>
 <p>Some projects have differing opinions of what is considered an "empty" value: a
 string with only whitespace might be considered empty, or <code>0</code> may be
@@ -625,7 +624,7 @@ should be validated as empty and which not.</p>
 <p>There are several ways to select which of the above types are validated. You can
 give one or multiple types and add them, you can provide an array, you can use
 constants, or you can provide a textual string. See the following examples:</p>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\NotEmpty;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\NotEmpty;
 
 // Returns false on 0
 $validator = new NotEmpty(NotEmpty::INTEGER);
@@ -637,8 +636,7 @@ $validator = new NotEmpty( NotEmpty::INTEGER | NotEmpty::ZERO);
 $validator = new NotEmpty([ NotEmpty::INTEGER, NotEmpty::ZERO ]);
 
 // Returns false on 0 or '0'
-$validator = new NotEmpty(['integer', 'zero']);</code></pre>
-
+$validator = new NotEmpty(['integer', 'zero']);</code></pre></p>
 <p>You can also provide an instance of <code>Traversable</code> to set the desired types. To
 set types after instantiation, use the <code>setType()</code> method.</p>
 
@@ -674,7 +672,7 @@ set types after instantiation, use the <code>setType()</code> method.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/not-empty.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/not-empty.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

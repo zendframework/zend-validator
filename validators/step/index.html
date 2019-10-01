@@ -586,17 +586,16 @@ int or float).</p>
 <li><code>step</code>: This is the step value. This option defaults to <code>1</code></li>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Step();
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Step();
 
 if ($validator-&gt;isValid(1)) {
     // value is a valid step value
 } else {
     // false
-}</code></pre>
-
+}</code></pre></p>
 <h2 id="using-floating-point-values">Using floating-point values</h2>
 <p>The <code>Step</code> validator also supports floating-point base and step values:</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Step([
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Step([
     'baseValue' =&gt; 1.1,
     'step'      =&gt; 2.2,
 ]);
@@ -604,7 +603,7 @@ if ($validator-&gt;isValid(1)) {
 echo $validator-&gt;isValid(1.1); // prints true
 echo $validator-&gt;isValid(3.3); // prints true
 echo $validator-&gt;isValid(3.35); // prints false
-echo $validator-&gt;isValid(2.2); // prints false</code></pre>
+echo $validator-&gt;isValid(2.2); // prints false</code></pre></p>
 
 
 
@@ -638,7 +637,7 @@ echo $validator-&gt;isValid(2.2); // prints false</code></pre>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/step.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/step.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

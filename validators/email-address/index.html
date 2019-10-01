@@ -604,17 +604,16 @@ validator first splits the email address on <code>local-part @ hostname</code> a
 to match these against known specifications for email addresses and hostnames.</p>
 <h2 id="basic-usage">Basic usage</h2>
 <p>A basic example of usage is below:</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\EmailAddress();
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\EmailAddress();
 
 if ($validator-&gt;isValid($email)) {
     // email appears to be valid
 } else {
     // email is invalid; print the reasons
     foreach ($validator-&gt;getMessages() as $message) {
-        echo "$message\n";
+        echo &quot;$message\n&quot;;
     }
-}</code></pre>
-
+}</code></pre></p>
 <p>This will match the email address <code>$email</code> and on failure populate
 <code>getMessages()</code> with useful error messages.</p>
 <h2 id="supported-options">Supported Options</h2>
@@ -662,9 +661,8 @@ or a <code>\\</code> character in an email address).</p>
 email address, and want to disable validation of the hostname, you can set the
 <code>domain</code> option to <code>false</code>. This forces <code>Zend\Validator\EmailAddress</code> not to
 validate the hostname part of the email address.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\EmailAddress();
-$validator-&gt;setOptions(['domain' =&gt; FALSE]);</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\EmailAddress();
+$validator-&gt;setOptions(['domain' =&gt; FALSE]);</code></pre></p>
 <h2 id="validating-different-types-of-hostnames">Validating different types of hostnames</h2>
 <p>The hostname part of an email address is validated against the <a href="../hostname/">Hostname validator</a>.
 By default only DNS hostnames of the form <code>domain.com</code> are accepted, though if
@@ -673,7 +671,7 @@ you wish you can accept IP addresses and Local hostnames too.</p>
 parameter to indicate the type of hostnames you want to accept. More details are
 included in <code>Zend\Validator\Hostname</code>, though an example of how to accept both
 DNS and Local hostnames appears below:</p>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\EmailAddress;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\EmailAddress;
 use Zend\Validator\Hostname;
 
 $validator = new EmailAddress( Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL);
@@ -683,10 +681,9 @@ if ($validator-&gt;isValid($email)) {
 } else {
     // email is invalid; print the reasons
     foreach ($validator-&gt;getMessages() as $message) {
-        echo "$message\n";
+        echo &quot;$message\n&quot;;
     }
-}</code></pre>
-
+}</code></pre></p>
 <h2 id="checking-if-the-hostname-actually-accepts-email">Checking if the hostname actually accepts email</h2>
 <p>Just because an email address is in the correct format, it doesn't necessarily
 mean that email address actually exists. To help solve this problem, you can use
@@ -695,11 +692,10 @@ the email's hostname. This tells you that the hostname accepts email, but
 doesn't tell you the exact email address itself is valid.</p>
 <p>MX checking is not enabled by default. To enable MX checking you can pass a
 second parameter to the <code>Zend\Validator\EmailAddress</code> constructor.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\EmailAddress([
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\EmailAddress([
     'allow' =&gt; Zend\Validator\Hostname::ALLOW_DNS,
     'useMxCheck'    =&gt; true,
-]);</code></pre>
-
+]);</code></pre></p>
 <p>Alternatively you can either pass <code>true</code> or <code>false</code> to <code>setValidateMx()</code> to
 enable or disable MX validation.</p>
 <p>By enabling this setting, network functions will be used to check for the
@@ -711,21 +707,20 @@ even if they do not provide a MX record. In this case they can provide <code>A</
 <code>A6</code>, or <code>AAAA</code> records. To allow <code>Zend\Validator\EmailAddress</code> to check also
 for these other records, you need to set deep MX validation. This can be done at
 initiation by setting the <code>deep</code> option or by using <code>setOptions()</code>.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\EmailAddress([
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\EmailAddress([
     'allow' =&gt; Zend\Validator\Hostname::ALLOW_DNS,
     'useMxCheck'    =&gt; true,
     'useDeepMxCheck'  =&gt; true,
-]);</code></pre>
-
+]);</code></pre></p>
 <p>Sometimes it can be useful to get the server's MX information which have been
 used to do further processing. Simply use <code>getMXRecord()</code> after validation. This
 method returns the received MX record including weight and sorted by it.</p>
 <blockquote>
-<h3 id="performance-warning">Performance warning**</h3>
+<h3>Performance warning**</h3>
 <p>You should be aware that enabling MX check will slow down you script because
 of the used network functions. Enabling deep check will slow down your script
 even more as it searches the given server for 3 additional types.</p>
-<h3 id="disallowed-ip-addresses">Disallowed IP addresses</h3>
+<h3>Disallowed IP addresses</h3>
 <p>You should note that MX validation is only accepted for external servers. When
 deep MX validation is enabled, then local IP addresses like <code>192.168.*</code> or
 <code>169.254.*</code> are not accepted.</p>
@@ -736,8 +731,7 @@ exist in some domains. This is known as International Domain Name (IDN) support.
 This is enabled by default, though you can disable this by changing the setting
 via the internal <code>Zend\Validator\Hostname</code> object that exists within
 <code>Zend\Validator\EmailAddress</code>.</p>
-<pre class="codehilite"><code class="language-php">$validator-&gt;getHostnameValidator()-&gt;setValidateIdn(false);</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>$validator-&gt;getHostnameValidator()-&gt;setValidateIdn(false);</code></pre></p>
 <p>More information on the usage of <code>setValidateIdn()</code> appears in the
 <a href="../hostname/">Hostname documentation</a>.</p>
 <p>Please note IDNs are only validated if you allow DNS hostnames to be validated.</p>
@@ -746,8 +740,7 @@ via the internal <code>Zend\Validator\Hostname</code> object that exists within
 enabled by default, though you can disable this by changing the setting via the
 internal <code>Zend\Validator\Hostname</code> object that exists within
 <code>Zend\Validator\EmailAddress</code>.</p>
-<pre class="codehilite"><code class="language-php">$validator-&gt;getHostnameValidator()-&gt;setValidateTld(false);</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>$validator-&gt;getHostnameValidator()-&gt;setValidateTld(false);</code></pre></p>
 <p>More information on the usage of <code>setValidateTld()</code> appears in the
 <a href="../hostname/">Hostname documentation</a>.</p>
 <p>Please note TLDs are only validated if you allow DNS hostnames to be validated.</p>
@@ -755,10 +748,10 @@ internal <code>Zend\Validator\Hostname</code> object that exists within
 <p><code>Zend\Validator\EmailAddress</code> makes also use of <code>Zend\Validator\Hostname</code> to
 check the hostname part of a given email address. You can specify messages for
 <code>Zend\Validator\Hostname</code> from within <code>Zend\Validator\EmailAddress</code>.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\EmailAddress();
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\EmailAddress();
 $validator-&gt;setMessages([
     Zend\Validator\Hostname::UNKNOWN_TLD =&gt; 'I don\'t know the TLD you gave'
-]);</code></pre>
+]);</code></pre></p>
 
 
 
@@ -792,7 +785,7 @@ $validator-&gt;setMessages([
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/email-address.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/email-address.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

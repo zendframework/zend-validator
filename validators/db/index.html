@@ -557,10 +557,6 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#installation-requirements" class="toc__link">Installation requirements</a>
-                    </li>
-                
-                    <li class="toc__entry">
                         <a href="#supported-options" class="toc__link">Supported options</a>
                     </li>
                 
@@ -591,12 +587,12 @@
 a means to test whether a record exists in a given table of a database, with a
 given value.</p>
 <blockquote>
-<h3 id="installation-requirements">Installation requirements</h3>
+<h3>Installation requirements</h3>
 <p><code>Zend\Validator\Db\NoRecordExists</code> and <code>Zend\Validator\Db\RecordExists</code> 
 depends on the zend-db component, so be sure to have it installed before
 getting started:</p>
-<pre class="codehilite"><code class="language-bash">$ composer require zendframework/zend-db`</code></pre>
-
+<p><code>bash
+$ composer require zendframework/zend-db</code></p>
 </blockquote>
 <h2 id="supported-options">Supported options</h2>
 <p>The following options are supported for <code>Zend\Validator\Db\NoRecordExists</code> and
@@ -610,7 +606,7 @@ getting started:</p>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
 <p>An example of basic usage of the validators:</p>
-<pre class="codehilite"><code class="language-php">// Check that the email address exists in the database
+<p> <pre class=codehilite><code class=language-php>// Check that the email address exists in the database
 $validator = new Zend\Validator\Db\RecordExists([
     'table'   =&gt; 'users',
     'field'   =&gt; 'emailaddress',
@@ -622,14 +618,13 @@ if ($validator-&gt;isValid($emailaddress)) {
 } else {
     // email address is invalid; print the reasons
     foreach ($validator-&gt;getMessages() as $message) {
-        echo "$message\n";
+        echo &quot;$message\n&quot;;
     }
-}</code></pre>
-
+}</code></pre></p>
 <p>The above will test that a given email address is in the database table. If no
 record is found containing the value of <code>$emailaddress</code> in the specified column,
 then an error message is displayed.</p>
-<pre class="codehilite"><code class="language-php">// Check that the username is not present in the database
+<p> <pre class=codehilite><code class=language-php>// Check that the username is not present in the database
 $validator = new Zend\Validator\Db\NoRecordExists([
     'table'   =&gt; 'users',
     'field'   =&gt; 'username',
@@ -642,10 +637,9 @@ if ($validator-&gt;isValid($username)) {
     // username is invalid; print the reason
     $messages = $validator-&gt;getMessages();
     foreach ($messages as $message) {
-        echo "$message\n";
+        echo &quot;$message\n&quot;;
     }
-}</code></pre>
-
+}</code></pre></p>
 <p>The above will test that a given username is <em>not</em> in the database table. If a
 record is found containing the value of <code>$username</code> in the specified column,
 then an error message is displayed.</p>
@@ -657,7 +651,7 @@ providing a <code>WHERE</code> clause as a string, or an array with the keys <co
 <p>When providing an array for the exclude clause, the <code>!=</code> operator is used, so
 you can check the rest of a table for a value before altering a record (for
 example on a user profile form)</p>
-<pre class="codehilite"><code class="language-php">// Check no other users have the username
+<p> <pre class=codehilite><code class=language-php>// Check no other users have the username
 $user_id   = $user-&gt;getId();
 $validator = new Zend\Validator\Db\NoRecordExists([
     'table' =&gt; 'users',
@@ -674,15 +668,14 @@ if ($validator-&gt;isValid($username)) {
     // username is invalid; print the reason
     $messages = $validator-&gt;getMessages();
     foreach ($messages as $message) {
-        echo "$message\n";
+        echo &quot;$message\n&quot;;
     }
-}</code></pre>
-
+}</code></pre></p>
 <p>The above example will check the table to ensure no records other than the one
 where <code>id = $user_id</code> contains the value <code>$username</code>.</p>
 <p>You can also provide a string to the exclude clause so you can use an operator
 other than <code>!=</code>. This can be useful for testing against composite keys.</p>
-<pre class="codehilite"><code class="language-php">$email     = 'user@example.com';
+<p> <pre class=codehilite><code class=language-php>$email     = 'user@example.com';
 $clause    = $dbAdapter-&gt;quoteIdentifier('email') . ' = ' . $dbAdapter-&gt;quoteValue($email);
 $validator = new Zend\Validator\Db\RecordExists([
     'table'   =&gt; 'users',
@@ -697,28 +690,26 @@ if ($validator-&gt;isValid($username)) {
     // username is invalid; print the reason
     $messages = $validator-&gt;getMessages();
     foreach ($messages as $message) {
-        echo "$message\n";
+        echo &quot;$message\n&quot;;
     }
-}</code></pre>
-
+}</code></pre></p>
 <p>The above example will check the <code>users</code> table to ensure that only a record with
 both the username <code>$username</code> and with the email <code>$email</code> is valid.</p>
 <h2 id="database-schemas">Database Schemas</h2>
 <p>You can specify a schema within your database for adapters such as PostgreSQL
 and DB/2 by supplying an array with <code>table</code> and <code>schema</code> keys, as demonstrated
 below:</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Db\RecordExists([
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Db\RecordExists([
     'table'  =&gt; 'users',
     'schema' =&gt; 'my',
     'field'  =&gt; 'id',
-]);</code></pre>
-
+]);</code></pre></p>
 <h2 id="using-a-select-object">Using a Select object</h2>
 <p>It is also possible to supply the validators with a <code>Zend\Db\Sql\Select</code> object
 in place of options. The validator then uses this object instead of building its
 own. This allows for greater flexibility with selection of records used for
 validation.</p>
-<pre class="codehilite"><code class="language-php">use Zend\Db\Sql\Select;
+<p> <pre class=codehilite><code class=language-php>use Zend\Db\Sql\Select;
 use Zend\Validator\Db\RecordExists;
 
 $select = new Select();
@@ -739,10 +730,9 @@ if ($validator-&gt;isValid($username)) {
     // username is invalid; print the reason
     $messages = $validator-&gt;getMessages();
     foreach ($messages as $message) {
-        echo "$message\n";
+        echo &quot;$message\n&quot;;
     }
-}</code></pre>
-
+}</code></pre></p>
 <p>The above example will check the <code>users</code> table to ensure that only a record with
 both the username <code>$username</code> and with the email <code>$email</code> is valid.</p>
 
@@ -778,7 +768,7 @@ both the username <code>$username</code> and with the email <code>$email</code> 
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/db.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/db.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

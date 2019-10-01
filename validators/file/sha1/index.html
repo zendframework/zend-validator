@@ -557,10 +557,6 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#requires-the-hash-extension" class="toc__link">Requires the hash extension</a>
-                    </li>
-                
-                    <li class="toc__entry">
                         <a href="#supported-options" class="toc__link">Supported Options</a>
                     </li>
                 
@@ -584,7 +580,7 @@ contents matches the supplied sha1 hash(es). It is subclassed from the
 <a href="../hash/">Hash validator</a> to provide a validator that only supports the <code>sha1</code>
 algorithm.</p>
 <blockquote>
-<h3 id="requires-the-hash-extension">Requires the hash extension</h3>
+<h3>Requires the hash extension</h3>
 <p>This validator requires the PHP <a href="http://php.net/hash">Hash extension</a> with the
 <code>sha1</code> algorithm.</p>
 </blockquote>
@@ -594,7 +590,7 @@ algorithm.</p>
 <li><code>hash</code>: String hash or array of hashes against which to validate.</li>
 </ul>
 <h2 id="basic-usage">Basic Usage</h2>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\File\Sha1;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\File\Sha1;
 
 // Does file have the given hash?
 $validator = new Sha1('3b3652f336522365223');
@@ -614,20 +610,16 @@ $validator = new Sha1(['hash' =&gt; [
 // Perform validation with file path
 if ($validator-&gt;isValid('./myfile.txt')) {
     // file is valid
-}</code></pre>
-
+}</code></pre></p>
 <h2 id="public-methods">Public Methods</h2>
-<h3 id="getsha1">getSha1</h3>
-<pre class="codehilite"><code class="language-php">getSha1() : array</code></pre>
-
+<h3>getSha1</h3>
+<p> <pre class=codehilite><code class=language-php>getSha1() : array</code></pre></p>
 <p>Returns an array of sha1 hashes against which to validate.</p>
-<h3 id="addsha1">addSha1</h3>
-<pre class="codehilite"><code class="language-php">addSha1(string|array $options) : void</code></pre>
-
+<h3>addSha1</h3>
+<p> <pre class=codehilite><code class=language-php>addSha1(string|array $options) : void</code></pre></p>
 <p>Add one or more hashes to validate against.</p>
-<h3 id="setsha1">setSha1</h3>
-<pre class="codehilite"><code class="language-php">setSha1(string|array $options) : void</code></pre>
-
+<h3>setSha1</h3>
+<p> <pre class=codehilite><code class=language-php>setSha1(string|array $options) : void</code></pre></p>
 <p>Overwrite any previously set hashes with those specified.</p>
 
 
@@ -662,7 +654,7 @@ if ($validator-&gt;isValid('./myfile.txt')) {
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/file/sha1.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/file/sha1.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

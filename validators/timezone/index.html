@@ -581,21 +581,20 @@ abbreviation (e.g. <code>ewt</code>) as well as the location string (e.g.
 <h2 id="basic-usage">Basic Usage</h2>
 <p>The default validation type will check against abbreviations as well as the
 location string.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Timezone();
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Timezone();
 
 $validator-&gt;isValid('America/Los_Angeles'); // returns true
 $validator-&gt;isValid('ewt'); // returns true
-$validator-&gt;isValid('Foobar');  // returns false</code></pre>
-
+$validator-&gt;isValid('Foobar');  // returns false</code></pre></p>
 <p>To validate against only the location string you can set the type:</p>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\Timezone;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\Timezone;
 
 $validator = new Timezone();
 $validator-&gt;setType(Timezone::LOCATION);
 
 $validator-&gt;isValid('America/Los_Angeles'); // returns true
 $validator-&gt;isValid('ewt'); // returns false
-$validator-&gt;isValid('Foobar');  // returns false</code></pre>
+$validator-&gt;isValid('Foobar');  // returns false</code></pre></p>
 
 
 
@@ -629,7 +628,7 @@ $validator-&gt;isValid('Foobar');  // returns false</code></pre>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/timezone.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/timezone.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

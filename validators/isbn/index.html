@@ -591,18 +591,17 @@
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
 <p>A basic example of usage is below:</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Isbn();
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Isbn();
 
 if ($validator-&gt;isValid($isbn)) {
     // isbn is valid
 } else {
     // isbn is not valid
-}</code></pre>
-
+}</code></pre></p>
 <p>This will validate any ISBN-10 and ISBN-13 without separator.</p>
 <h2 id="setting-an-explicit-isbn-validation-type">Setting an explicit ISBN validation type</h2>
 <p>An example of an ISBN type restriction follows:</p>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\Isbn;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\Isbn;
 
 $validator = new Isbn();
 $validator-&gt;setType(Isbn::ISBN13);
@@ -614,8 +613,7 @@ if ($validator-&gt;isValid($isbn)) {
     // this is a valid ISBN-13 value
 } else {
     // this is an invalid ISBN-13 value
-}</code></pre>
-
+}</code></pre></p>
 <p>The above will validate only ISBN-13 values.</p>
 <p>Valid types include:</p>
 <ul>
@@ -625,7 +623,7 @@ if ($validator-&gt;isValid($isbn)) {
 </ul>
 <h2 id="specifying-a-separator-restriction">Specifying a separator restriction</h2>
 <p>An example of separator restriction:</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Isbn();
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Isbn();
 $validator-&gt;setSeparator('-');
 
 // OR
@@ -635,10 +633,9 @@ if ($validator-&gt;isValid($isbn)) {
     // this is a valid ISBN with separator
 } else {
     // this is an invalid ISBN with separator
-}</code></pre>
-
+}</code></pre></p>
 <blockquote>
-<h3 id="values-without-separators">Values without separators</h3>
+<h3>Values without separators</h3>
 <p>This will return <code>false</code> if <code>$isbn</code> doesn't contain a separator <strong>or</strong> if it's
 an invalid <em>ISBN</em> value.</p>
 </blockquote>
@@ -681,7 +678,7 @@ an invalid <em>ISBN</em> value.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/isbn.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/isbn.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

@@ -589,154 +589,154 @@ as a barcode.</p>
 <p><code>Zend\Validator\Barcode</code> supports multiple barcode standards and can be extended
 with proprietary barcode implementations. The following barcode standards are
 supported:</p>
-<h3 id="codabar">CODABAR</h3>
+<h3>CODABAR</h3>
 <p>Also known as Code-a-bar.</p>
 <p>This barcode has no length limitation. It supports only digits, and 6 special
 chars. Codabar is a self-checking barcode. This standard is very old. Common use
 cases are within airbills or photo labs where multi-part forms are used with
 dot-matrix printers.</p>
-<h3 id="code128">CODE128</h3>
+<h3>CODE128</h3>
 <p>CODE128 is a high density barcode.</p>
 <p>This barcode has no length limitation. It supports the first 128 ascii
 characters. When used with printing characters it has an checksum which is
 calculated modulo 103. This standard is used worldwide as it supports upper and
 lowercase characters.</p>
-<h3 id="code25">CODE25</h3>
+<h3>CODE25</h3>
 <p>Often called "two of five" or "Code25 Industrial".</p>
 <p>This barcode has no length limitation. It supports only digits, and the last
 digit can be an optional checksum which is calculated with modulo 10. This
 standard is very old and nowadays not often used. Common use cases are within
 the industry.</p>
-<h3 id="code25interleaved">CODE25INTERLEAVED</h3>
+<h3>CODE25INTERLEAVED</h3>
 <p>Often called "Code 2 of 5 Interleaved".</p>
 <p>This standard is a variant of CODE25. It has no length limitation, but it must
 contain an even amount of characters. It supports only digits, and the last
 digit can be an optional checksum which is calculated with modulo 10. It is used
 worldwide and common on the market.</p>
-<h3 id="code39">CODE39</h3>
+<h3>CODE39</h3>
 <p>CODE39 is one of the oldest available codes.</p>
 <p>This barcode has a variable length. It supports digits, upper cased alphabetical
 characters and 7 special characters like whitespace, point and dollar sign. It
 can have an optional checksum which is calculated with modulo 43. This standard
 is used worldwide and common within the industry.</p>
-<h3 id="code39ext">CODE39EXT</h3>
+<h3>CODE39EXT</h3>
 <p>CODE39EXT is an extension of CODE39.</p>
 <p>This barcode has the same properties as CODE39. Additionally it allows the usage
 of all 128 ASCII characters. This standard is used worldwide and common within
 the industry.</p>
-<h3 id="code93">CODE93</h3>
+<h3>CODE93</h3>
 <p>CODE93 is the successor of CODE39.</p>
 <p>This barcode has a variable length. It supports digits, alphabetical characters
 and 7 special characters. It has an optional checksum which is calculated with
 modulo 47 and contains 2 characters. This standard produces a denser code than
 CODE39 and is more secure.</p>
-<h3 id="code93ext">CODE93EXT</h3>
+<h3>CODE93EXT</h3>
 <p>CODE93EXT is an extension of CODE93.</p>
 <p>This barcode has the same properties as CODE93. Additionally it allows the usage
 of all 128 ASCII characters. This standard is used worldwide and common within
 the industry.</p>
-<h3 id="ean2">EAN2</h3>
+<h3>EAN2</h3>
 <p>EAN is the shortcut for "European Article Number".</p>
 <p>These barcode must have 2 characters. It supports only digits and does not have
 a checksum. This standard is mainly used as addition to EAN13 (ISBN) when
 printed on books.</p>
-<h3 id="ean5">EAN5</h3>
+<h3>EAN5</h3>
 <p>EAN is the shortcut for "European Article Number".</p>
 <p>These barcode must have 5 characters. It supports only digits and does not have
 a checksum. This standard is mainly used as addition to EAN13 (ISBN) when
 printed on books.</p>
-<h3 id="ean8">EAN8</h3>
+<h3>EAN8</h3>
 <p>EAN is the shortcut for "European Article Number".</p>
 <p>These barcode can have 7 or 8 characters. It supports only digits. When it has a
 length of 8 characters it includes a checksum. This standard is used worldwide
 but has a very limited range. It can be found on small articles where a longer
 barcode could not be printed.</p>
-<h3 id="ean12">EAN12</h3>
+<h3>EAN12</h3>
 <p>EAN is the shortcut for "European Article Number".</p>
 <p>This barcode must have a length of 12 characters. It supports only digits, and
 the last digit is always a checksum which is calculated with modulo 10. This
 standard is used within the USA and common on the market. It has been superseded
 by EAN13.</p>
-<h3 id="ean13">EAN13</h3>
+<h3>EAN13</h3>
 <p>EAN is the shortcut for "European Article Number".</p>
 <p>This barcode must have a length of 13 characters. It supports only digits, and
 the last digit is always a checksum which is calculated with modulo 10. This
 standard is used worldwide and common on the market.</p>
-<h3 id="ean14">EAN14</h3>
+<h3>EAN14</h3>
 <p>EAN is the shortcut for "European Article Number".</p>
 <p>This barcode must have a length of 14 characters. It supports only digits, and
 the last digit is always a checksum which is calculated with modulo 10. This
 standard is used worldwide and common on the market. It is the successor for
 EAN13.</p>
-<h3 id="ean18">EAN18</h3>
+<h3>EAN18</h3>
 <p>EAN is the shortcut for "European Article Number".</p>
 <p>This barcode must have a length of 18 characters. It support only digits. The
 last digit is always a checksum digit which is calculated with modulo 10. This
 code is often used for the identification of shipping containers.</p>
-<h3 id="gtin12">GTIN12</h3>
+<h3>GTIN12</h3>
 <p>GTIN is the shortcut for "Global Trade Item Number".</p>
 <p>This barcode uses the same standard as EAN12 and is its successor. It's commonly
 used within the USA.</p>
-<h3 id="gtin13">GTIN13</h3>
+<h3>GTIN13</h3>
 <p>GTIN is the shortcut for "Global Trade Item Number".</p>
 <p>This barcode uses the same standard as EAN13 and is its successor. It is used
 worldwide by industry.</p>
-<h3 id="gtin14">GTIN14</h3>
+<h3>GTIN14</h3>
 <p>GTIN is the shortcut for "Global Trade Item Number".</p>
 <p>This barcode uses the same standard as EAN14 and is its successor. It is used
 worldwide and common on the market.</p>
-<h3 id="identcode">IDENTCODE</h3>
+<h3>IDENTCODE</h3>
 <p>Identcode is used by Deutsche Post and DHL. It's an specialized implementation of Code25.</p>
 <p>This barcode must have a length of 12 characters. It supports only digits, and
 the last digit is always a checksum which is calculated with modulo 10. This
 standard is mainly used by the companies DP and DHL.</p>
-<h3 id="intelligentmail">INTELLIGENTMAIL</h3>
+<h3>INTELLIGENTMAIL</h3>
 <p>Intelligent Mail is a postal barcode.</p>
 <p>This barcode can have a length of 20, 25, 29 or 31 characters. It supports only
 digits, and contains no checksum. This standard is the successor of PLANET and
 POSTNET. It is mainly used by the United States Postal Services.</p>
-<h3 id="issn">ISSN</h3>
+<h3>ISSN</h3>
 <p>ISSN is the abbreviation for International Standard Serial Number.</p>
 <p>This barcode can have a length of 8 or 13 characters. It supports only digits,
 and the last digit must be a checksum digit which is calculated with modulo 11.
 It is used worldwide for printed publications.</p>
-<h3 id="itf14">ITF14</h3>
+<h3>ITF14</h3>
 <p>ITF14 is the GS1 implementation of an Interleaved Two of Five bar code.</p>
 <p>This barcode is a special variant of Interleaved 2 of 5. It must have a length
 of 14 characters and is based on GTIN14. It supports only digits, and the last
 digit must be a checksum digit which is calculated with modulo 10. It is used
 worldwide and common within the market.</p>
-<h3 id="leitcode">LEITCODE</h3>
+<h3>LEITCODE</h3>
 <p>Leitcode is used by Deutsche Post and DHL. It's an specialized implementation of Code25.</p>
 <p>This barcode must have a length of 14 characters. It supports only digits, and
 the last digit is always a checksum which is calculated with modulo 10. This
 standard is mainly used by the companies DP and DHL.</p>
-<h3 id="planet">PLANET</h3>
+<h3>PLANET</h3>
 <p>Planet is the abbreviation for Postal Alpha Numeric Encoding Technique.</p>
 <p>This barcode can have a length of 12 or 14 characters. It supports only digits,
 and the last digit is always a checksum. This standard is mainly used by the
 United States Postal Services.</p>
-<h3 id="postnet">POSTNET</h3>
+<h3>POSTNET</h3>
 <p>Postnet is used by the US Postal Service.</p>
 <p>This barcode can have a length of 6, 7, 10 or 12 characters. It supports only
 digits, and the last digit is always a checksum. This standard is mainly used by
 the United States Postal Services.</p>
-<h3 id="royalmail">ROYALMAIL</h3>
+<h3>ROYALMAIL</h3>
 <p>Royalmail is used by Royal Mail.</p>
 <p>This barcode has no defined length. It supports digits, uppercase letters, and
 the last digit is always a checksum. This standard is mainly used by Royal Mail
 for their Cleanmail Service. It is also called RM4SCC.</p>
-<h3 id="sscc">SSCC</h3>
+<h3>SSCC</h3>
 <p>SSCC is the shortcut for "Serial Shipping Container Code".</p>
 <p>This barcode is a variant of EAN barcode. It must have a length of 18 characters
 and supports only digits. The last digit must be a checksum digit which is
 calculated with modulo 10. It is commonly used by the transport industry.</p>
-<h3 id="upca">UPCA</h3>
+<h3>UPCA</h3>
 <p>UPC is the shortcut for "Universal Product Code".</p>
 <p>This barcode preceded EAN13. It must have a length of 12 characters and supports
 only digits. The last digit must be a checksum digit which is calculated with
 modulo 10. It is commonly used within the USA.</p>
-<h3 id="upce">UPCE</h3>
+<h3>UPCE</h3>
 <p>UPCE is the short variant from UPCA.</p>
 <p>This barcode is a smaller variant of UPCA. It can have a length of 6, 7 or 8
 characters and supports only digits. When the barcode is 8 chars long it
@@ -756,20 +756,19 @@ small products where a UPCA barcode would not fit.</p>
 <h2 id="basic-usage">Basic usage</h2>
 <p>To validate if a given string is a barcode you must know its type. See the
 following example for an EAN13 barcode:</p>
-<pre class="codehilite"><code class="language-php">$valid = new Zend\Validator\Barcode('EAN13');
+<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\Barcode('EAN13');
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre>
-
+}</code></pre></p>
 <h2 id="optional-checksum">Optional checksum</h2>
 <p>Some barcodes can be provided with an optional checksum. These barcodes would be
 valid even without checksum. Still, when you provide a checksum, then you should
 also validate it. By default, these barcode types perform no checksum
 validation. By using the <code>checksum</code> option you can define if the checksum will
 be validated or ignored.</p>
-<pre class="codehilite"><code class="language-php">$valid = new Zend\Validator\Barcode([
+<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\Barcode([
     'adapter'  =&gt; 'EAN13',
     'checksum' =&gt; false,
 ]);
@@ -777,10 +776,9 @@ if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre>
-
+}</code></pre></p>
 <blockquote>
-<h3 id="reduced-security-by-disabling-checksum-validation">Reduced security by disabling checksum validation</h3>
+<h3>Reduced security by disabling checksum validation</h3>
 <p>By switching off checksum validation you will also reduce the security of the
 used barcodes. Additionally you should note that you can also turn off the
 checksum validation for those barcode types which must contain a checksum
@@ -814,7 +812,7 @@ or implement <code>Zend\Validator\Barcode\AdapterInterface</code>.</p>
 <p>As an example, let's create a validator that expects an even number of
 characters that include all digits and the letters 'ABCDE', and which requires a
 checksum.</p>
-<pre class="codehilite"><code class="language-php">namespace My\Barcode;
+<p> <pre class=codehilite><code class=language-php>namespace My\Barcode;
 
 use Zend\Validator\Barcode;
 use Zend\Validator\Barcode\AbstractAdapter;
@@ -836,7 +834,7 @@ if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre>
+}</code></pre></p>
 
 
 
@@ -870,7 +868,7 @@ if ($valid-&gt;isValid($input)) {
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/barcode.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/barcode.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

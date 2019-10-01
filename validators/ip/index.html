@@ -590,20 +590,19 @@ supports the IPv4, IPv6, and IPvFuture definitions.</p>
   literal style (the IP surrounded by brackets). This option defaults to <code>true</code>.</li>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Ip();
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Ip();
 
 if ($validator-&gt;isValid($ip)) {
     // ip appears to be valid
 } else {
     // ip is invalid; print the reasons
-}</code></pre>
-
+}</code></pre></p>
 <blockquote>
-<h3 id="invalid-ip-addresses">Invalid IP addresses</h3>
+<h3>Invalid IP addresses</h3>
 <p>Keep in mind that <code>Zend\Validator\Ip</code> only validates IP addresses. Addresses
 like '<code>mydomain.com</code>' or '<code>192.168.50.1/index.html</code>' are not valid IP
 addresses. They are either hostnames or valid URLs but not IP addresses.</p>
-<h3 id="ipv6ipvfuture-validation">IPv6/IPvFuture validation</h3>
+<h3>IPv6/IPvFuture validation</h3>
 <p><code>Zend\Validator\Ip</code> validates IPv6/IPvFuture addresses using a regex. The
 reason is that the filters and methods from PHP itself don't follow the RFC.
 Many other available classes also don't follow it.</p>
@@ -615,16 +614,15 @@ within this validator.</p>
 <p>To limit <code>Zend\Validator\Ip</code> to one protocol, you can set the options <code>allowipv4</code>
 or <code>allowipv6</code> to <code>false</code>. You can do this either by giving the option to the
 constructor or by using <code>setOptions()</code> afterwards.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\Ip(['allowipv6' =&gt; false]);
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Ip(['allowipv6' =&gt; false]);
 
 if ($validator-&gt;isValid($ip)) {
     // ip appears to be valid ipv4 address
 } else {
     // ip is not an ipv4 address
-}</code></pre>
-
+}</code></pre></p>
 <blockquote>
-<h3 id="default-behaviour">Default behaviour</h3>
+<h3>Default behaviour</h3>
 <p>The default behaviour which <code>Zend\Validator\Ip</code> follows is to allow both
 standards.</p>
 </blockquote>
@@ -661,7 +659,7 @@ standards.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/ip.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/ip.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

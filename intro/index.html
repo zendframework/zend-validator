@@ -591,14 +591,14 @@ are class-dependent; each validation class defines its own set of validation
 failure messages and the unique keys that identify them. Each class also has a
 <code>const</code> definition that matches each identifier for a validation failure cause.</p>
 <blockquote>
-<h3 id="stateful-validators">Stateful validators</h3>
+<h3>Stateful validators</h3>
 <p>The <code>getMessages()</code> methods return validation failure information only for the
 most recent <code>isValid()</code> call. Each call to <code>isValid()</code> clears any messages and
 errors caused by a previous <code>isValid()</code> call, because it's likely that each
 call to <code>isValid()</code> is made for a different input value.</p>
 </blockquote>
 <p>The following example illustrates validation of an e-mail address:</p>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\EmailAddress;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\EmailAddress;
 
 $validator = new EmailAddress();
 
@@ -607,10 +607,9 @@ if ($validator-&gt;isValid($email)) {
 } else {
     // email is invalid; print the reasons
     foreach ($validator-&gt;getMessages() as $messageId =&gt; $message) {
-        printf("Validation failure '%s': %s\n", $messageId, $message);
+        printf(&quot;Validation failure '%s': %s\n&quot;, $messageId, $message);
     }
-}</code></pre>
-
+}</code></pre></p>
 <h2 id="customizing-messages">Customizing messages</h2>
 <p>Validator classes provide a <code>setMessage()</code> method with which you can specify the
 format of a message returned by <code>getMessages()</code> in case of validation failure.
@@ -628,7 +627,7 @@ assumes the message you specify should be used for the first message template
 declared in the validation class. Many validation classes only have one error
 message template defined, so there is no need to specify which message template
 you are changing.</p>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\StringLength;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\StringLength;
 
 $validator = new StringLength(8);
 
@@ -641,42 +640,82 @@ if (! $validator-&gt;isValid('word')) {
     $messages = $validator-&gt;getMessages();
     echo current($messages);
 
-    // "The string 'word' is too short; it must be at least 8 characters"
-}</code></pre>
-
+    // &quot;The string 'word' is too short; it must be at least 8 characters&quot;
+}</code></pre></p>
 <p>You can set multiple messages using the <code>setMessages()</code> method. Its argument is
 an array containing key/message pairs.</p>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\StringLength;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\StringLength;
 
 $validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
 
 $validator-&gt;setMessages([
     StringLength::TOO_SHORT =&gt; 'The string \'%value%\' is too short',
     StringLength::TOO_LONG  =&gt; 'The string \'%value%\' is too long',
-]);</code></pre>
-
+]);</code></pre></p>
 <p>If your application requires even greater flexibility with which it reports
 validation failures, you can access properties by the same name as the message
 tokens supported by a given validation class. The <code>value</code> property is always
 available in a validator; it is the value you specified as the argument of
 <code>isValid()</code>. Other properties may be supported on a case-by-case basis in each
 validation class.</p>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\StringLength;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\StringLength;
 
 $validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
 
 if (! $validator-&gt;isValid('word')) {
     printf(
-        "Word failed: %s; its length is not between %d and %d\n",
+        &quot;Word failed: %s; its length is not between %d and %d\n&quot;,
         $validator-&gt;value,
         $validator-&gt;min,
         $validator-&gt;max
     );
-}</code></pre>
-
+}</code></pre></p>
 <h2 id="translating-messages">Translating messages</h2>
 <blockquote>
-<h3 id="translation-compatibility">Translation compatibility</h3>
+<h3>Installation requirements</h3>
+<p>The translation of validator messages depends on the zend-i18n component, so
+be sure to have it installed before getting started:</p>
+<p><code>bash
+$ composer require zendframework/zend-i18n</code></p>
+</blockquote>
+<p>Validator classes provide a <code>setTranslator()</code> method with which you can specify
+an instance of <code>Zend\Validator\Translator\TranslatorInterface</code> which will
+translate the messages in case of a validation failure. The <code>getTranslator()</code>
+method returns the translator instance. <code>Zend\Mvc\I18n\Translator</code> provides an
+implementation compatible with the validator component.</p>
+<p> <pre class=codehilite><code class=language-php>use Zend\Mvc\I18n\Translator;
+use Zend\Validator\StringLength;
+
+$validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
+$translate = new Translator();
+// configure the translator...
+
+$validator-&gt;setTranslator($translate);</code></pre></p>
+<p>With the static <code>AbstractValidator::setDefaultTranslator()</code> method you can set a
+instance of <code>Zend\Validator\Translator\TranslatorInterface</code> which will be used
+for all validation classes, and can be retrieved with <code>getDefaultTranslator()</code>.
+This prevents the need for setting a translator manually with each validator.</p>
+<p> <pre class=codehilite><code class=language-php>use Zend\Mvc\I18n\Translator;
+use Zend\Validator\AbstractValidator;
+
+$translate = new Translator();
+// configure the translator...
+
+AbstractValidator::setDefaultTranslator($translate);</code></pre></p>
+<p>Sometimes it is necessary to disable the translator within a validator. To
+achieve this you can use the <code>setDisableTranslator()</code> method, which accepts a
+boolean parameter, and <code>isTranslatorDisabled()</code> to get the set value.</p>
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\StringLength;
+
+$validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
+if (! $validator-&gt;isTranslatorDisabled()) {
+    $validator-&gt;setDisableTranslator();
+}</code></pre></p>
+<p>It is also possible to use a translator instead of setting own messages with
+<code>setMessage()</code>. But doing so, you should keep in mind, that the translator works
+also on messages you set your own.</p>
+<blockquote>
+<h3>Translation compatibility</h3>
 <p>In versions 2.0 - 2.1, <code>Zend\Validator\AbstractValidator</code> implemented
 <code>Zend\I18n\Translator\TranslatorAwareInterface</code> and accepted instances of
 <code>Zend\I18n\Translator\Translator</code>. Starting in version 2.2.0, zend-validator
@@ -700,45 +739,6 @@ most developers were getting the translator instance into validators in the
 first place. You will only need to change code if you were manually injecting
 the instance previously.</p>
 </blockquote>
-<p>Validator classes provide a <code>setTranslator()</code> method with which you can specify
-an instance of <code>Zend\Validator\Translator\TranslatorInterface</code> which will
-translate the messages in case of a validation failure. The <code>getTranslator()</code>
-method returns the translator instance. <code>Zend\Mvc\I18n\Translator</code> provides an
-implementation compatible with the validator component.</p>
-<pre class="codehilite"><code class="language-php">use Zend\Mvc\I18n\Translator;
-use Zend\Validator\StringLength;
-
-$validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
-$translate = new Translator();
-// configure the translator...
-
-$validator-&gt;setTranslator($translate);</code></pre>
-
-<p>With the static <code>AbstractValidator::setDefaultTranslator()</code> method you can set a
-instance of <code>Zend\Validator\Translator\TranslatorInterface</code> which will be used
-for all validation classes, and can be retrieved with <code>getDefaultTranslator()</code>.
-This prevents the need for setting a translator manually with each validator.</p>
-<pre class="codehilite"><code class="language-php">use Zend\Mvc\I18n\Translator;
-use Zend\Validator\AbstractValidator;
-
-$translate = new Translator();
-// configure the translator...
-
-AbstractValidator::setDefaultTranslator($translate);</code></pre>
-
-<p>Sometimes it is necessary to disable the translator within a validator. To
-achieve this you can use the <code>setDisableTranslator()</code> method, which accepts a
-boolean parameter, and <code>isTranslatorDisabled()</code> to get the set value.</p>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\StringLength;
-
-$validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
-if (! $validator-&gt;isTranslatorDisabled()) {
-    $validator-&gt;setDisableTranslator();
-}</code></pre>
-
-<p>It is also possible to use a translator instead of setting own messages with
-<code>setMessage()</code>. But doing so, you should keep in mind, that the translator works
-also on messages you set your own.</p>
 
 
 
@@ -772,7 +772,7 @@ also on messages you set your own.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/intro.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/intro.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

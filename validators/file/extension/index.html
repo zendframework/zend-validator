@@ -588,7 +588,7 @@
   sensitively; defaults to <code>false</code> (case-insensitive).</li>
 </ul>
 <h2 id="usage-examples">Usage Examples</h2>
-<pre class="codehilite"><code class="language-php">use Zend\Validator\File\Extension;
+<p> <pre class=codehilite><code class=language-php>use Zend\Validator\File\Extension;
 
 // Allow files with 'php' or 'exe' extensions
 $validator = new Extension('php,exe');
@@ -608,12 +608,10 @@ $validator = new Extension([
 // Perform validation
 if ($validator-&gt;isValid('./myfile.php')) {
     // file is valid
-}</code></pre>
-
+}</code></pre></p>
 <h2 id="public-methods">Public Methods</h2>
-<h3 id="addextension">addExtension</h3>
-<pre class="codehilite"><code class="language-php">addExtension(string|array $options) : void</code></pre>
-
+<h3>addExtension</h3>
+<p> <pre class=codehilite><code class=language-php>addExtension(string|array $options) : void</code></pre></p>
 <p>Add one or more extensions as a comma-separated list, or as an array.</p>
 
 
@@ -648,7 +646,7 @@ if ($validator-&gt;isValid('./myfile.php')) {
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/file/extension.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/file/extension.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

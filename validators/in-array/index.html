@@ -602,7 +602,7 @@ within an array. It is also able to validate multidimensional arrays.</p>
 </li>
 </ul>
 <blockquote>
-<h3 id="use-non-strict-carefully">Use non-strict carefully</h3>
+<h3>Use non-strict carefully</h3>
 <p>Non-strict mode (<code>InArray::COMPARE_NOT_STRICT</code>) may give false positives when
 strings are compared against ints or floats owing to <code>in_array()</code>'s behaviour
 of converting strings to int in such cases. Therefore, <code>'foo'</code> would become
@@ -610,7 +610,7 @@ of converting strings to int in such cases. Therefore, <code>'foo'</code> would 
 </blockquote>
 <h2 id="array-validation">Array validation</h2>
 <p>Basic usage is to provide an array during instantiation:</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\InArray([
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\InArray([
     'haystack' =&gt; ['value1', 'value2',...'valueN'],
 ]);
 
@@ -618,27 +618,25 @@ if ($validator-&gt;isValid('value')) {
     // value found
 } else {
     // no value found
-}</code></pre>
-
+}</code></pre></p>
 <p>This will behave exactly like PHP's <code>in_array()</code> method when passed only a
 needle and haystack.</p>
 <blockquote>
-<h3 id="non-strict-by-default">Non-strict by default</h3>
+<h3>Non-strict by default</h3>
 <p>By default, this validation is not strict, nor can it validate
 multidimensional arrays.</p>
 </blockquote>
 <p>Alternately, you can define the array to validate against after object
 construction by using the <code>setHaystack()</code> method. <code>getHaystack()</code> returns the
 actual set haystack array.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\InArray();
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\InArray();
 $validator-&gt;setHaystack(['value1', 'value2',...'valueN']);
 
 if ($validator-&gt;isValid('value')) {
     // value found
 } else {
     // no value found
-}</code></pre>
-
+}</code></pre></p>
 <h2 id="array-validation-modes">Array validation modes</h2>
 <p>As previously mentioned, there are possible security issues when using the
 default non-strict comparison mode, so rather than restricting the developer,
@@ -648,7 +646,7 @@ middle-ground.</p>
 <code>setStrict</code> method. <code>InArray::COMPARE_STRICT</code> equates to <code>true</code> and
 <code>InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY</code> equates to
 <code>false</code>.</p>
-<pre class="codehilite"><code class="language-php">// defaults to InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY
+<p> <pre class=codehilite><code class=language-php>// defaults to InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY
 $validator = new Zend\Validator\InArray([
     'haystack' =&gt; ['value1', 'value2', /* ... */ 'valueN'],
 ]);
@@ -669,17 +667,16 @@ $validator = new Zend\Validator\InArray([
 
 $validator-&gt;setStrict(InArray::COMPARE_STRICT); 
 $validator-&gt;setStrict(InArray::COMPARE_NOT_STRICT);
-$validator-&gt;setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY);</code></pre>
-
+$validator-&gt;setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY);</code></pre></p>
 <blockquote>
-<h3 id="non-strict-safe-mode-by-default">Non-strict safe-mode by default</h3>
+<h3>Non-strict safe-mode by default</h3>
 <p>Note that the <code>strict</code> setting is per default <code>false</code>.</p>
 </blockquote>
 <h2 id="recursive-array-validation">Recursive array validation</h2>
 <p>In addition to PHP's <code>in_array()</code> method, this validator can also be used to
 validate multidimensional arrays.</p>
 <p>To validate multidimensional arrays you have to set the <code>recursive</code> option.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\InArray([
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\InArray([
     'haystack' =&gt; [
         'firstDimension' =&gt; ['value1', 'value2', / ... */ 'valueN'],
         'secondDimension' =&gt; ['foo1', 'foo2', /* ... */ 'fooN'],
@@ -691,12 +688,11 @@ if ($validator-&gt;isValid('value')) {
     // value found
 } else {
     // no value found
-}</code></pre>
-
+}</code></pre></p>
 <p>Your array will then be validated recursively to see if the given value is
 contained. Additionally you could use <code>setRecursive()</code> to set this option
 afterwards and <code>getRecursive()</code> to retrieve it.</p>
-<pre class="codehilite"><code class="language-php">$validator = new Zend\Validator\InArray([
+<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\InArray([
     'firstDimension' =&gt; ['value1', 'value2', /* ... */ 'valueN'],
     'secondDimension' =&gt; ['foo1', 'foo2', /* ... */ 'fooN'],
 ]);
@@ -707,12 +703,11 @@ if ($validator-&gt;isValid('value')) {
     // value found
 } else {
     // no value found
-}</code></pre>
-
+}</code></pre></p>
 <blockquote>
-<h3 id="default-setting-for-recursion">Default setting for recursion</h3>
+<h3>Default setting for recursion</h3>
 <p>By default, the recursive validation is turned off.</p>
-<h3 id="option-keys-within-the-haystack">Option keys within the haystack</h3>
+<h3>Option keys within the haystack</h3>
 <p>When you are using the keys <code>haystack</code>, <code>strict</code>, or <code>recursive</code> within
 your haystack, then you must wrap the <code>haystack</code> key.</p>
 </blockquote>
@@ -749,7 +744,7 @@ your haystack, then you must wrap the <code>haystack</code> key.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/in-array.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/in-array.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

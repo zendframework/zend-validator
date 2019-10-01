@@ -557,10 +557,6 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#only-supports-number-validation" class="toc__link">Only supports number validation</a>
-                    </li>
-                
-                    <li class="toc__entry">
                         <a href="#supported-options" class="toc__link">Supported options</a>
                     </li>
                 
@@ -582,7 +578,7 @@
 <p><code>Zend\Validator\Between</code> allows you to validate if a given value is between two
 other values.</p>
 <blockquote>
-<h3 id="only-supports-number-validation">Only supports number validation</h3>
+<h3>Only supports number validation</h3>
 <p><code>Zend\Validator\Between</code> supports only the validation of numbers. Strings or
 dates can not be validated with this validator.</p>
 </blockquote>
@@ -597,26 +593,24 @@ dates can not be validated with this validator.</p>
 <h2 id="default-behaviour">Default behaviour</h2>
 <p>Per default, this validator checks if a value is between <code>min</code> and <code>max</code> where
 both border values are allowed as value.</p>
-<pre class="codehilite"><code class="language-php">$valid  = new Zend\Validator\Between(['min' =&gt; 0, 'max' =&gt; 10]);
+<p> <pre class=codehilite><code class=language-php>$valid  = new Zend\Validator\Between(['min' =&gt; 0, 'max' =&gt; 10]);
 $value  = 10;
 $result = $valid-&gt;isValid($value);
-// returns true</code></pre>
-
+// returns true</code></pre></p>
 <p>In the above example, the result is <code>true</code> due to the reason that the default
 search is inclusive of the border values. This means in our case that any value
 from '0' to '10' is allowed; values like '-1' and '11' will return <code>false</code>.</p>
 <h2 id="excluding-border-values">Excluding border values</h2>
 <p>Sometimes it is useful to validate a value by excluding the border values. See
 the following example:</p>
-<pre class="codehilite"><code class="language-php">$valid  = new Zend\Validator\Between([
+<p> <pre class=codehilite><code class=language-php>$valid  = new Zend\Validator\Between([
     'min' =&gt; 0,
     'max' =&gt; 10,
     'inclusive' =&gt; false,
 ]);
 $value  = 10;
 $result = $valid-&gt;isValid($value);
-// returns false</code></pre>
-
+// returns false</code></pre></p>
 <p>The example above is almost identical to our first example, but we now exclue
 the border values; as such, the values '0' and '10' are no longer allowed and
 will return <code>false</code>.</p>
@@ -653,7 +647,7 @@ will return <code>false</code>.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/validators/between.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/doc/book/validators/between.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>
