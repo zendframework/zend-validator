@@ -163,7 +163,7 @@ class Hash extends AbstractValidator
             }
 
             foreach ($hashes as $hash) {
-                if ($filehash == $hash) {
+                if ($filehash === $hash) {
                     return true;
                 }
             }
