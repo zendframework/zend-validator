@@ -48,6 +48,9 @@ All notable changes to this project will be documented in this file, in reverse 
   curly braces in array and string offset access to square brackets
   in order to prevent issues under the upcoming PHP 7.4 release.
 
+- [#231](https://github.com/zendframework/zend-validator/pull/231) fixes validation of input hashes in `Zend\Validator\File\Hash` validator when provided as array.
+  Only string hashes are allowed. If different type is provided `Zend\Validator\Exception\InvalidArgumentException` is thrown.
+
 ## 2.12.0 - 2019-01-30
 
 ### Added
