@@ -57,6 +57,11 @@ class Date extends AbstractValidator
     protected $format = self::FORMAT_DEFAULT;
 
     /**
+     * @var bool
+     */
+    protected $strict = false;
+
+    /**
      * Sets validator options
      *
      * @param  string|array|Traversable $options OPTIONAL
@@ -101,6 +106,32 @@ class Date extends AbstractValidator
     }
 
     /**
+     * @param bool $strict
+     * @return $this
+     */
+    public function setStrict($strict)
+    {
+        if (! is_bool($strict)) {
+            throw new Exception\InvalidArgumentException(sprintf(
+                'Expected boolean value; %s received',
+                is_object($strict) ? get_class($strict) : gettype($strict)
+            ));
+        }
+
+        $this->strict = $strict;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStrict()
+    {
+        return $this->strict;
+    }
+
+    /**
      * Returns true if $value is a DateTime instance or can be converted into one.
      *
      * @param  string|array|int|DateTime $value
@@ -110,8 +141,14 @@ class Date extends AbstractValidator
     {
         $this->setValue($value);
 
-        if (! $this->convertToDateTime($value)) {
+        $date = $this->convertToDateTime($value);
+        if (! $date) {
             $this->error(self::INVALID_DATE);
+            return false;
+        }
+
+        if ($this->isStrict() && $date->format($this->getFormat()) !== $value) {
+            $this->error(self::FALSEFORMAT);
             return false;
         }
 
