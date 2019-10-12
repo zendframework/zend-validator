@@ -1,16 +1,19 @@
 {
     "name": "zendframework/zend-validator",
-    "description": "provides a set of commonly needed validators",
+    "description": "Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "zendframework",
+        "zf",
         "validator"
     ],
-    "homepage": "https://github.com/zendframework/zend-validator",
-    "autoload": {
-        "psr-4": {
-            "Zend\\Validator\\": "src/"
-        }
+    "support": {
+        "docs": "https://docs.zendframework.com/zend-validator/",
+        "issues": "https://github.com/zendframework/zend-validator/issues",
+        "source": "https://github.com/zendframework/zend-validator",
+        "rss": "https://github.com/zendframework/zend-validator/releases.atom",
+        "chat": "https://zendframework-slack.herokuapp.com",
+        "forum": "https://discourse.zendframework.com/c/questions/components"
     },
     "require": {
         "php": "^5.6 || ^7.0",
@@ -43,8 +46,19 @@
         "zendframework/zend-session": "Zend\\Session component, ^2.8; required by the Csrf validator",
         "zendframework/zend-uri": "Zend\\Uri component, required by the Uri and Sitemap\\Loc validators"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Zend\\Validator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ZendTest\\Validator\\": "test/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "2.12.x-dev",
@@ -53,11 +67,6 @@
         "zf": {
             "component": "Zend\\Validator",
             "config-provider": "Zend\\Validator\\ConfigProvider"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "ZendTest\\Validator\\": "test/"
         }
     },
     "scripts": {
