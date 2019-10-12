@@ -117,6 +117,12 @@ class Hash extends AbstractValidator
         }
 
         foreach ($options as $value) {
+            if (! is_string($value)) {
+                throw new Exception\InvalidArgumentException(sprintf(
+                    'Hash must be a string, %s received',
+                    is_object($value) ? get_class($value) : gettype($value)
+                ));
+            }
             $this->options['hash'][$value] = $algorithm;
         }
 

@@ -239,4 +239,18 @@ class HashTest extends TestCase
         $options = $r->getValue($validator);
         $this->assertSame($algorithm, $options['algorithm']);
     }
+
+    /**
+     * @dataProvider invalidHashTypes
+     *
+     * @param mixed $hash
+     */
+    public function testInvalidHashProvidedInArrayFormat($hash)
+    {
+        $validator = new File\Hash('12345');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Hash must be a string');
+        $validator->addHash([$hash]);
+    }
 }
