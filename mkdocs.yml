@@ -1,6 +1,6 @@
-docs_dir: doc/book
-site_dir: doc/html
-pages:
+docs_dir: docs/book
+site_dir: docs/html
+nav:
     - Home: index.md
     - Introduction: intro.md
     - Reference:
