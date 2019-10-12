@@ -6,7 +6,7 @@ given value.
 
 > ### Installation requirements
 >
-> `Zend\Validator\Db\NoRecordExists` and `Zend\Validator\Db\RecordExists` 
+> `Zend\Validator\Db\NoRecordExists` and `Zend\Validator\Db\RecordExists`
 > depends on the zend-db component, so be sure to have it installed before
 > getting started:
 >
