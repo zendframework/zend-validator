@@ -7,7 +7,7 @@ within an array. It is also able to validate multidimensional arrays.
 
 The following options are supported for `Zend\Validator\InArray`:
 
-- `haystack`: Sets the haystack for the validation. 
+- `haystack`: Sets the haystack for the validation.
 - `recursive`: Defines if the validation should be done recursively. This option
   defaults to `false`.
 - `strict`: Three modes of comparison are offered owing to an often overlooked,
@@ -92,7 +92,7 @@ $validator = new Zend\Validator\InArray([
     'strict'   => InArray::COMPARE_STRICT,  // equates to ``true``
 ]);
 
-// set non-strict mode  
+// set non-strict mode
 $validator = new Zend\Validator\InArray([
     'haystack' => ['value1', 'value2', /* ... */ 'valueN'],
     'strict'   => InArray:COMPARE_NOT_STRICT,  // equates to ``false``
@@ -100,7 +100,7 @@ $validator = new Zend\Validator\InArray([
 
 // or
 
-$validator->setStrict(InArray::COMPARE_STRICT); 
+$validator->setStrict(InArray::COMPARE_STRICT);
 $validator->setStrict(InArray::COMPARE_NOT_STRICT);
 $validator->setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY);
 ```
