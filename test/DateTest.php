@@ -77,6 +77,8 @@ class DateTest extends TestCase
             ['06',                      'd',               true,     true],
             [123,                       null,              true,     false],
             [1340677235,                null,              true,     false],
+            [1340677235,                'U',               true,     false],
+            ['1340677235',              'U',               true,     true],
             // 32bit version of php will convert this to double
             [999999999999,              null,              true,     false],
             // double
