@@ -44,7 +44,11 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#277](https://github.com/zendframework/zend-validator/pull/277) fixes `File\Hash` validator in case
+  when the file hash contains only digits.
+
+- [#277](https://github.com/zendframework/zend-validator/pull/277) fixes `File\Hash` validator to match 
+  hash with the given hashing algorithm.
 
 ## 2.12.1 - 2019-10-12
 

@@ -10,9 +10,9 @@
 namespace ZendTest\Validator\File;
 
 use PHPUnit\Framework\TestCase;
-use Zend\Validator\File;
 use ReflectionProperty;
 use Zend\Validator\Exception\InvalidArgumentException;
+use Zend\Validator\File;
 
 /**
  * Hash testbed
@@ -252,5 +252,22 @@ class HashTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Hash must be a string');
         $validator->addHash([$hash]);
+    }
+
+    public function testIntHash()
+    {
+        $validator = new File\Hash('10713230');
+
+        self::assertTrue($validator->isValid(__DIR__ . '/_files/crc32-int.pdf'));
+    }
+
+    public function testHashMustMatchWithTheAlgorithm()
+    {
+        $validator = new File\Hash();
+        // swapped hashes for given algorithms
+        $validator->addHash(['6507f172bceb9ed0cc59246d41569c4d', 'algorithm' => 'crc32']);
+        $validator->addHash(['10713230', 'algorithm' => 'md5']);
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/crc32-int.pdf'));
     }
 }
