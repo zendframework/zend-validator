@@ -167,7 +167,7 @@
 # depending on version magic continues with 0x93453E6139FA (V 4.0)
 # 0x9445376139FA (V 3.90)
 # 0x9445366139FA (V 3.80)
-# this is from source (http://www.adrift.org.uk/) and I have some taf
+# this is from source (http://www.adrift.co/) and I have some taf
 # files, and checked them.
 #0	belong	0x3C423FC9
 #>4	belong	0x6A87C2CF	Adrift game file
@@ -1055,7 +1055,7 @@
 >0	byte		x		GameCube movie,
 >0x34	ubeshort	x		%d x
 >0x36	ubeshort	x		%d,
->0x26	ubeshort	x		%dµs,
+>0x26	ubeshort	x		%dÂµs,
 >0x42	ubeshort	0		no audio
 >0x42	ubeshort	>0		%dHz audio
 
@@ -1612,7 +1612,7 @@
 # AMGC
 0	string	\xad6" AMGC archive data
 # NuLIB
-0	string	NõFélå NuLIB archive data
+0	string	NÃµFÃ©lÃ¥ NuLIB archive data
 # PakLeo
 0	string	LEOLZW PAKLeo archive data
 # ChArc
@@ -1624,7 +1624,7 @@
 # Freeze
 0	string	\x1f\x9f\x4a\x10\x0a Freeze archive data
 # KBoom
-0	string	¨MP¨ KBoom archive data
+0	string	Â¨MPÂ¨ KBoom archive data
 # NSQ, must go after CDC Codec
 0	string	\x76\xff NSQ archive data
 # DPA
@@ -1662,7 +1662,7 @@
 # MP3 (archiver, not lossy audio compression)
 0	string	MP3\x1a MP3-Archiver archive data
 # ZET
-0	string	OZÝ ZET archive data
+0	string	OZÃ ZET archive data
 # TSComp
 0	string	\x65\x5d\x13\x8c\x08\x01\x03\x00 TSComp archive data
 # ARQ
@@ -1693,7 +1693,7 @@
 # Xtreme
 0	string	ULEB\0 Xtreme archive data
 # Pack Magic
-0	string	@â\1\0 Pack Magic archive data
+0	string	@Ã¢\1\0 Pack Magic archive data
 # BTS
 0	belong&0xfeffffff	0x1a034465 BTS archive data
 # ELI 5750
@@ -1829,7 +1829,7 @@
 # XPack Data
 0	string	xpa XPack archive data
 # XPack Single Data
-0	string	Í\ jm XPack single archive data
+0	string	Ã\ jm XPack single archive data
 
 # TODO: missing due to unknown magic/magic at end of file:
 #DWC
@@ -2814,7 +2814,7 @@
 >>12		ulelong		x		\b, sample rate %d
 
 # adlib sound files
-# From Gürkan Sengün <gurkan@linuks.mine.nu>, http://www.linuks.mine.nu
+# From GÃ¼rkan SengÃ¼n <gurkan@linuks.mine.nu>, http://www.linuks.mine.nu
 0    	string		RAWADATA	RdosPlay RAW
 
 1068	string		RoR		AMUSIC Adlib Tracker
@@ -3972,7 +3972,7 @@
 >113	string	x		(%s)
 
 #------------------------------------------------------------------------------
-# Microsoft Xbox executables .xbe (Esa Hyytiä <ehyytia@cc.hut.fi>)
+# Microsoft Xbox executables .xbe (Esa HyytiÃ¤ <ehyytia@cc.hut.fi>)
 0       string          XBEH            XBE, Microsoft Xbox executable
 # probabilistic checks whether signed or not
 >0x0004 ulelong =0x0
@@ -4008,7 +4008,7 @@
 # From: Serge van den Boom <svdb@stack.nl>
 0	string		\x01ZZZZZ\x01	3DO "Opera" file system
 
-# From Gürkan Sengün <gurkan@linuks.mine.nu>, www.linuks.mine.nu
+# From GÃ¼rkan SengÃ¼n <gurkan@linuks.mine.nu>, www.linuks.mine.nu
 0	string		GBS		Nintendo Gameboy Music/Audio Data
 12	string		GameBoy\ Music\ Module	Nintendo Gameboy Music Module
 
@@ -6468,8 +6468,8 @@
 #        10	SS, 8 SPT
 #        11	DS, 8 SPT
 #
-#  11111001	Double density 3� floppy disk, high density 5�
-#  11110000	High density 3� floppy disk
+#  11111001	Double density 3½ floppy disk, high density 5¼
+#  11110000	High density 3½ floppy disk
 #  11111000	Hard disk any format
 #
 
@@ -6887,7 +6887,7 @@
 0	string		OTTO		OpenType font data
 !:mime application/vnd.ms-opentype
 
-# Gürkan Sengün <gurkan@linuks.mine.nu>, www.linuks.mine.nu 
+# GÃ¼rkan SengÃ¼n <gurkan@linuks.mine.nu>, www.linuks.mine.nu 
 0	string		SplineFontDB:	Spline Font Database 
 !:mime application/vnd.font-fontforge-sfd
 >14	string		x		version %s
@@ -8641,7 +8641,7 @@
 >5	byte	0x00		(white background)
 >5	byte	0xFF		(black background)
 
-# Gürkan Sengün <gurkan@linuks.mine.nu>, www.linuks.mine.nu
+# GÃ¼rkan SengÃ¼n <gurkan@linuks.mine.nu>, www.linuks.mine.nu
 # http://www.atarimax.com/jindroush.atari.org/afmtatr.html
 0	leshort	0x0296		Atari ATR image
 
@@ -9039,7 +9039,7 @@
 
 # rom: file(1) magic for BIOS ROM Extensions found in intel machines
 #      mapped into memory between 0xC0000 and 0xFFFFF
-# From Gürkan Sengün <gurkan@linuks.mine.nu>, www.linuks.mine.nu
+# From GÃ¼rkan SengÃ¼n <gurkan@linuks.mine.nu>, www.linuks.mine.nu
 0        beshort         0x55AA       BIOS (ia32) ROM Ext.
 >5       string          USB          USB
 >7       string          LDR          UNDI image
@@ -9504,7 +9504,7 @@
 #
 # Linux kernel boot images, from Albert Cahalan <acahalan@cs.uml.edu>
 # and others such as Axel Kohlmeyer <akohlmey@rincewind.chemie.uni-ulm.de>
-# and Nicol�s Lichtmaier <nick@debian.org>
+# and Nicolás Lichtmaier <nick@debian.org>
 # All known start with: b8 c0 07 8e d8 b8 00 90 8e c0 b9 00 01 29 f6 29
 # Linux kernel boot images (i386 arch) (Wolfram Kleff)
 514	string		HdrS		Linux kernel
@@ -9527,10 +9527,10 @@
 >0x1e3		string	Loading		version 1.3.79 or older
 >0x1e9		string	Loading		from prehistoric times
 
-# System.map files - Nicol�s Lichtmaier <nick@debian.org>
+# System.map files - Nicolás Lichtmaier <nick@debian.org>
 8	search/1	\ A\ _text	Linux kernel symbol map text
 
-# LSM entries - Nicol�s Lichtmaier <nick@debian.org>
+# LSM entries - Nicolás Lichtmaier <nick@debian.org>
 0	search/1	Begin3	Linux Software Map entry text
 0	search/1	Begin4	Linux Software Map entry text (new format)
 
@@ -11718,7 +11718,7 @@
 # natinst:  file(1) magic for National Instruments Code Files
 
 #
-# From <egamez@fcfm.buap.mx> Enrique G�mez-Flores
+# From <egamez@fcfm.buap.mx> Enrique Gámez-Flores
 # version 1
 # Many formats still missing, we use, for the moment LabVIEW
 # We guess VXI format file. VISA, LabWindowsCVI, BridgeVIEW, etc, are missing
@@ -12933,7 +12933,7 @@
 >4	belong	=2		\b, version 2
 
 # Type: Git index file
-# From: Frédéric Brière <fbriere@fbriere.net>
+# From: FrÃ©dÃ©ric BriÃ¨re <fbriere@fbriere.net>
 0	string	DIRC		Git index
 >4	belong	>0		\b, version %d
 >>8	belong	>0		\b, %d entries
@@ -12962,7 +12962,7 @@
 #
 #	http://www.seanet.com/users/matts/riffmci/riffmci.htm
 #
-# AVI section extended by Patrik R�dman <patrik+file-magic@iki.fi>
+# AVI section extended by Patrik Rådman <patrik+file-magic@iki.fi>
 #
 0	string		RIFF		RIFF (little-endian) data
 # RIFF Palette format
@@ -15809,7 +15809,7 @@
 512	string		R\0o\0o\0t\0	Hangul (Korean) Word Processor File 2000
 !:mime	application/x-hwp
 
-# CosmicBook, from Beno�t Rouits
+# CosmicBook, from Benoît Rouits
 0       string  CSBK    Ted Neslson's CosmicBook hypertext file
 
 2       string  EYWR    AmigaWriter file
