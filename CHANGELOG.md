@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- Nothing.
+- [#279](https://github.com/zendframework/zend-validator/pull/279) updates the `magic.mime` file used for file validations.
 
 ### Deprecated
 
