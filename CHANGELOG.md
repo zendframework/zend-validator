@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
+- [#275](https://github.com/zendframework/zend-validator/pull/275) adds a new `strict` option to `Zend\Validator\Date`; when `true`, the value being validated must both be a date AND in the same format as provided via the `format` option.
+
 - [#264](https://github.com/zendframework/zend-validator/pull/264) adds `Zend\Validator\UndisclosedPassword`, which can be used to determine if a password has been exposed in a known data breach as reported on the [Have I Been Pwned?](https://www.haveibeenpwned.com) website. [Documentation](https://docs.zendframework.com/zend-validator/validators/undisclosed-password/)
 
 - [#266](https://github.com/zendframework/zend-validator/pull/266) adds a new option to the `File\Extension` and `File\ExcludeExtension` validators, `allowNonExistentFile`. When set to `true`, the validators will continue validating the extension of the filename given even if the file does not exist. The default is `false`, to preserve backwards compatibility with previous versions.
