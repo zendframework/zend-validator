@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @link      http://github.com/zendframework/zend-validator for the canonical source repository
+ * @copyright Copyright (c) 2019 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
 
 namespace ZendTest\Validator;
 
@@ -10,6 +14,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use ReflectionClass;
 use Zend\Validator\UndisclosedPassword;
 use ZendTest\Validator\TestAsset\HttpClientException;
 
@@ -62,6 +67,16 @@ class UndisclosedPasswordTest extends TestCase
     protected function tearDown()
     {
         $this->httpClient = null;
+    }
+
+    /**
+     * @param string|object $classOrInstance
+     * @return mixed
+     */
+    public function getConstant(string $constant, $classOrInstance)
+    {
+        $r = new ReflectionClass($classOrInstance);
+        return $r->getConstant($constant);
     }
 
     /**
@@ -125,7 +140,10 @@ class UndisclosedPasswordTest extends TestCase
                 $hash = \sha1('zend-validator');
                 return sprintf(
                     '%s:%d',
-                    strtoupper(substr($hash, UndisclosedPassword::HIBP_K_ANONYMITY_HASH_RANGE_LENGTH)),
+                    strtoupper(substr($hash, $this->getConstant(
+                        'HIBP_K_ANONYMITY_HASH_RANGE_LENGTH',
+                        UndisclosedPassword::class
+                    ))),
                     rand(0, 100000)
                 );
             }));
@@ -151,7 +169,10 @@ class UndisclosedPasswordTest extends TestCase
                 $hash = \sha1($password);
                 return sprintf(
                     '%s:%d',
-                    strtoupper(substr($hash, UndisclosedPassword::HIBP_K_ANONYMITY_HASH_RANGE_LENGTH)),
+                    strtoupper(substr($hash, $this->getConstant(
+                        'HIBP_K_ANONYMITY_HASH_RANGE_LENGTH',
+                        UndisclosedPassword::class
+                    ))),
                     rand(0, 100000)
                 );
             }));

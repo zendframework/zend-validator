@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @link      http://github.com/zendframework/zend-validator for the canonical source repository
+ * @copyright Copyright (c) 2019 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
 
 namespace Zend\Validator;
 
@@ -10,16 +14,16 @@ use Psr\Http\Message\ResponseFactoryInterface;
 
 final class UndisclosedPassword extends AbstractValidator
 {
-    const HIBP_API_URI = 'https://api.pwnedpasswords.com';
-    const HIBP_API_REQUEST_TIMEOUT = 300;
-    const HIBP_CLIENT_USER_AGENT_STRING = 'zend-validator';
-    const HIBP_CLIENT_ACCEPT_HEADER = 'application/vnd.haveibeenpwned.v2+json';
-    const HIBP_K_ANONYMITY_HASH_RANGE_LENGTH = 5;
-    const HIBP_K_ANONYMITY_HASH_RANGE_BASE = 0;
-    const SHA1_STRING_LENGTH = 40;
+    private const HIBP_API_URI = 'https://api.pwnedpasswords.com';
+    private const HIBP_API_REQUEST_TIMEOUT = 300;
+    private const HIBP_CLIENT_USER_AGENT_STRING = 'zend-validator';
+    private const HIBP_CLIENT_ACCEPT_HEADER = 'application/vnd.haveibeenpwned.v2+json';
+    private const HIBP_K_ANONYMITY_HASH_RANGE_LENGTH = 5;
+    private const HIBP_K_ANONYMITY_HASH_RANGE_BASE = 0;
+    private const SHA1_STRING_LENGTH = 40;
 
-    const PASSWORD_BREACHED = 'passwordBreached';
-    const NOT_A_STRING = 'wrongInput';
+    private const PASSWORD_BREACHED = 'passwordBreached';
+    private const NOT_A_STRING = 'wrongInput';
 
     protected $messageTemplates = [
         self::PASSWORD_BREACHED =>
