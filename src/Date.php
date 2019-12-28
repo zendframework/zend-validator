@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2019 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -105,28 +105,13 @@ class Date extends AbstractValidator
         return $this;
     }
 
-    /**
-     * @param bool $strict
-     * @return $this
-     */
-    public function setStrict($strict)
+    public function setStrict(bool $strict) : self
     {
-        if (! is_bool($strict)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Expected boolean value; %s received',
-                is_object($strict) ? get_class($strict) : gettype($strict)
-            ));
-        }
-
         $this->strict = $strict;
-
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isStrict()
+    public function isStrict() : bool
     {
         return $this->strict;
     }

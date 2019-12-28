@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2019 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -111,11 +111,8 @@ class DateTest extends TestCase
      * @dataProvider datesDataProvider
      *
      * @param mixed $input
-     * @param string|null $format
-     * @param bool $result
-     * @param bool $resultStrict
      */
-    public function testBasicStrictMode($input, $format, $result, $resultStrict)
+    public function testBasicStrictMode($input, ?string $format, bool $result, bool $resultStrict) : void
     {
         $this->validator->setStrict(true);
         $this->validator->setFormat($format);
