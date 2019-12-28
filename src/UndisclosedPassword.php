@@ -48,10 +48,6 @@ final class UndisclosedPassword extends AbstractValidator
 
     /**
      * PasswordBreach constructor.
-     *
-     * @param ClientInterface $httpClient
-     * @param RequestFactoryInterface $makeHttpRequest
-     * @param ResponseFactoryInterface $makeHttpResponse
      */
     public function __construct(
         ClientInterface $httpClient,
@@ -80,7 +76,7 @@ final class UndisclosedPassword extends AbstractValidator
         return true;
     }
 
-    private function isPwnedPassword($password)
+    private function isPwnedPassword(string $password) : bool
     {
         $sha1Hash = $this->hashPassword($password);
         $rangeHash = $this->getRangeHash($sha1Hash);
@@ -95,7 +91,7 @@ final class UndisclosedPassword extends AbstractValidator
      * @param string $password
      * @return string
      */
-    private function hashPassword($password)
+    private function hashPassword(string $password) : string
     {
         $hashedPassword = \sha1($password);
         return strtoupper($hashedPassword);
@@ -109,7 +105,7 @@ final class UndisclosedPassword extends AbstractValidator
      * @return string
      * @see https://www.troyhunt.com/enhancing-pwned-passwords-privacy-by-exclusively-supporting-anonymity/
      */
-    private function getRangeHash($passwordHash)
+    private function getRangeHash(string $passwordHash) : string
     {
         return substr($passwordHash, self::HIBP_K_ANONYMITY_HASH_RANGE_BASE, self::HIBP_K_ANONYMITY_HASH_RANGE_LENGTH);
     }
@@ -123,7 +119,7 @@ final class UndisclosedPassword extends AbstractValidator
      * @return string
      * @throws ClientExceptionInterface
      */
-    private function retrieveHashList($passwordRange)
+    private function retrieveHashList(string $passwordRange) : string
     {
         $request = $this->makeHttpRequest->createRequest(
             'GET',
@@ -141,7 +137,7 @@ final class UndisclosedPassword extends AbstractValidator
      * @param string $resultStream
      * @return bool
      */
-    private function hashInResponse($sha1Hash, $resultStream)
+    private function hashInResponse(string $sha1Hash, string $resultStream) : bool
     {
         $data = explode("\r\n", $resultStream);
         $hashes = array_filter($data, function ($value) use ($sha1Hash) {
