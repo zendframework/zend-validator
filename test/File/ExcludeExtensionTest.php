@@ -38,6 +38,7 @@ class ExcludeExtensionTest extends TestCase
         $noFileTests = [
             //    Options, isValid Param, Expected value, message
             ['mo', $testFile, false, 'fileExcludeExtensionNotFound'],
+            [['extension' => 'gif', 'allowNonExistentFile' => true], $testFile, true, ''],
         ];
 
         // Dupe data in File Upload format
