@@ -35,6 +35,7 @@ nav:
             - Step: validators/step.md
             - StringLength: validators/string-length.md
             - Timezone: validators/timezone.md
+            - UndisclosedPassword: validators/undisclosed-password.md
             - Uri: validators/uri.md
             - Uuid: validators/uuid.md
         - "File Validators":
