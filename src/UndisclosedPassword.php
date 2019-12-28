@@ -68,11 +68,12 @@ final class UndisclosedPassword extends AbstractValidator
             $this->error(self::NOT_A_STRING);
             return false;
         }
-        $isPwnd = $this->isPwnedPassword($value);
-        if ($isPwnd) {
+
+        if ($this->isPwnedPassword($value)) {
             $this->error(self::PASSWORD_BREACHED);
             return false;
         }
+
         return true;
     }
 
