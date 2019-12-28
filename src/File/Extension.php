@@ -44,6 +44,7 @@ class Extension extends AbstractValidator
     protected $options = [
         'case'      => false,   // Validate case sensitive
         'extension' => '',      // List of extensions
+        'allowNonExistentFile' => false, // Allow validation even if file does not exist
     ];
 
     /**
@@ -171,6 +172,28 @@ class Extension extends AbstractValidator
     }
 
     /**
+     * Returns whether or not to allow validation of non-existent files.
+     *
+     * @return bool
+     */
+    public function getAllowNonExistentFile()
+    {
+        return $this->options['allowNonExistentFile'];
+    }
+
+    /**
+     * Sets the flag indicating whether or not to allow validation of non-existent files.
+     *
+     * @param  bool $flag Whether or not to allow validation of non-existent files.
+     * @return self Provides a fluent interface
+     */
+    public function setAllowNonExistentFile($flag)
+    {
+        $this->options['allowNonExistentFile'] = (bool) $flag;
+        return $this;
+    }
+
+    /**
      * Returns true if and only if the file extension of $value is included in the
      * set extension list
      *
@@ -182,13 +205,15 @@ class Extension extends AbstractValidator
     {
         $fileInfo = $this->getFileInfo($value, $file);
 
-        $this->setValue($fileInfo['filename']);
-
         // Is file readable ?
-        if (empty($fileInfo['file']) || false === is_readable($fileInfo['file'])) {
+        if (! $this->getAllowNonExistentFile()
+            && (empty($fileInfo['file']) || false === is_readable($fileInfo['file']))
+        ) {
             $this->error(self::NOT_FOUND);
             return false;
         }
+
+        $this->setValue($fileInfo['filename']);
 
         $extension  = substr($fileInfo['filename'], strrpos($fileInfo['filename'], '.') + 1);
         $extensions = $this->getExtension();

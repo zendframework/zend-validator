@@ -45,13 +45,17 @@ class ExcludeExtension extends Extension
     {
         $fileInfo = $this->getFileInfo($value, $file);
 
-        $this->setValue($fileInfo['filename']);
-
         // Is file readable ?
-        if (empty($fileInfo['file']) || false === is_readable($fileInfo['file'])) {
+        if (! $this->getAllowNonExistentFile()
+            && (empty($fileInfo['file']) || false === is_readable($fileInfo['file']))
+        ) {
+            if (preg_match('/nofile\.mo$/', $fileInfo['file'])) {
+            }
             $this->error(self::NOT_FOUND);
             return false;
         }
+
+        $this->setValue($fileInfo['filename']);
 
         $extension  = substr($fileInfo['filename'], strrpos($fileInfo['filename'], '.') + 1);
         $extensions = $this->getExtension();
@@ -61,6 +65,8 @@ class ExcludeExtension extends Extension
         } elseif (! $this->getCase()) {
             foreach ($extensions as $ext) {
                 if (strtolower($ext) == strtolower($extension)) {
+                    if (preg_match('/nofile\.mo$/', $fileInfo['file'])) {
+                    }
                     $this->error(self::FALSE_EXTENSION);
                     return false;
                 }

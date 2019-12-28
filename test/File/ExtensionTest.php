@@ -38,6 +38,7 @@ class ExtensionTest extends TestCase
         $noFileTests = [
             //    Options, isValid Param, Expected value, message
             ['mo', $testFile, false, 'fileExtensionNotFound'],
+            [['extension' => 'mo', 'allowNonExistentFile' => true], $testFile, true, ''],
         ];
 
         // Dupe data in File Upload format
@@ -49,6 +50,8 @@ class ExtensionTest extends TestCase
             ];
             $testData[] = [$data[0], $fileUpload, $data[2], $data[3]];
         }
+
+
         return $testData;
     }
 

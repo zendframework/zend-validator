@@ -14,6 +14,9 @@ The following set of options are supported:
   against which to test.
 - `case`: Boolean indicating whether or not extensions should match case
   sensitively; defaults to `false` (case-insensitive).
+- `allowNonExistentFile`: (**Since 2.13.0**) Boolean indicating whether or not
+  to allow validating a filename for a non-existent file. Defaults to `false`
+  (will not validate non-existent files).
 
 ## Usage Examples
 
