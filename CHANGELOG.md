@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.13.0 - TBD
+## 2.13.0 - 2019-12-27
 
 ### Added
 
@@ -25,28 +25,6 @@ All notable changes to this project will be documented in this file, in reverse 
 ### Removed
 
 - [#264](https://github.com/zendframework/zend-validator/pull/264) removes support for PHP versions prior to 7.1.0.
-
-### Fixed
-
-- Nothing.
-
-## 2.12.3 - TBD
-
-### Added
-
-- Nothing.
-
-### Changed
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
 
 ### Fixed
 

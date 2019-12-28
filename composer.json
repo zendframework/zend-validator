@@ -63,8 +63,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.12.x-dev",
-            "dev-develop": "2.13.x-dev"
+            "dev-master": "2.13.x-dev",
+            "dev-develop": "2.14.x-dev"
         },
         "zf": {
             "component": "Zend\\Validator",
