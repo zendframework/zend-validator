@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#266](https://github.com/zendframework/zend-validator/pull/266) adds a new option to the `File\Extension` and `File\ExcludeExtension` validators, `allowNonExistentFile`. When set to `true`, the validators will continue validating the extension of the filename given even if the file does not exist. The default is `false`, to preserve backwards compatibility with previous versions.
 
 ### Changed
 
