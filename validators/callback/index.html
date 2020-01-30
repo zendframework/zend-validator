@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria.">  
-    <link rel="canonical" href="https://docs.zendframework.com/zend-validator/validators/callback/">
+    <link rel="canonical" href="https://docs.zendframework.com/validators/callback/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
     <title>Callback - zend-validator - Zend Framework Docs</title>
 
-    <link rel="stylesheet" href="../../css/styles-5cfabd53ee.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body id="page-top">
 
@@ -286,6 +286,12 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -493,9 +499,9 @@
     <div class="laminas-announcement">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
-                Zend Framework transitions to the Linux Foundation. <a href="https://getlaminas.org">Learn More.</a>
-            </div>
+            <div class="col-xs-12"><strong>
+                This package has moved. Visit its replacement, <a href="https://docs.laminas.dev/laminas-validator/">laminas/laminas-validator.</a>
+            </strong></div>
         </div>
     </div>
 </div>
@@ -595,22 +601,26 @@ validate a given value.</p>
 <h2 id="basic-usage">Basic usage</h2>
 <p>The simplest use case is to pass a function as a callback. Consider the
 following function:</p>
-<p> <pre class=codehilite><code class=language-php>function myMethod($value)
+<pre><code class="language-php">function myMethod($value)
 {
     // some validation
     return true;
-}</code></pre></p>
+}
+</code></pre>
+
 <p>To use it within <code>Zend\Validator\Callback</code>, pass it to the constructor</p>
-<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\Callback('myMethod');
+<pre><code class="language-php">$valid = new Zend\Validator\Callback('myMethod');
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre></p>
+}
+</code></pre>
+
 <h2 id="usage-with-closures">Usage with closures</h2>
 <p>The <code>Callback</code> validator supports any PHP callable, including PHP
 <a href="http://php.net/functions.anonymous">closures</a>.</p>
-<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\Callback(function($value) {
+<pre><code class="language-php">$valid = new Zend\Validator\Callback(function($value) {
     // some validation
     return true;
 });
@@ -619,29 +629,35 @@ if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre></p>
+}
+</code></pre>
+
 <h2 id="usage-with-class-based-callbacks">Usage with class-based callbacks</h2>
 <p>Of course it's also possible to use a class method as callback. Consider the
 following class definition:</p>
-<p> <pre class=codehilite><code class=language-php>class MyClass
+<pre><code class="language-php">class MyClass
 {
     public function myMethod($value)
     {
         // some validation
         return true;
     }
-}</code></pre></p>
+}
+</code></pre>
+
 <p>To use it with the <code>Callback</code> validator, pass a callable using an instance of
 the class:</p>
-<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\Callback([new MyClass, 'myMethod']);
+<pre><code class="language-php">$valid = new Zend\Validator\Callback([new MyClass, 'myMethod']);
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre></p>
+}
+</code></pre>
+
 <p>You may also define a static method as a callback. Consider the following class
 definition and validator usage:</p>
-<p> <pre class=codehilite><code class=language-php>class MyClass
+<pre><code class="language-php">class MyClass
 {
     public static function test($value)
     {
@@ -655,10 +671,12 @@ if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre></p>
+}
+</code></pre>
+
 <p>Finally, you may define the magic method <code>__invoke()</code> in your class. If you do
 so, you can provide a class instance itself as the callback:</p>
-<p> <pre class=codehilite><code class=language-php>class MyClass
+<pre><code class="language-php">class MyClass
 {
     public function __invoke($value)
     {
@@ -672,12 +690,14 @@ if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre></p>
+}
+</code></pre>
+
 <h2 id="adding-options">Adding options</h2>
 <p><code>Zend\Validator\Callback</code> also allows the usage of options which are provided as
 additional arguments to the callback.</p>
 <p>Consider the following class and method definition:</p>
-<p> <pre class=codehilite><code class=language-php>class MyClass
+<pre><code class="language-php">class MyClass
 {
     public static function myMethod($value, $option)
     {
@@ -694,12 +714,14 @@ additional arguments to the callback.</p>
         return true;
     }
 
-}</code></pre></p>
+}
+</code></pre>
+
 <p>There are two ways to inform the validator of additional options: pass them in
 the constructor, or pass them to the <code>setOptions()</code> method.</p>
 <p>To pass them to the constructor, you would need to pass an array containing two
 keys, <code>callback</code> and <code>callbackOptions</code>:</p>
-<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\Callback([
+<pre><code class="language-php">$valid = new Zend\Validator\Callback([
     'callback'        =&gt; [MyClass::class, 'myMethod'],
     'callbackOptions' =&gt; $options,
 ]);
@@ -708,26 +730,32 @@ if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre></p>
+}
+</code></pre>
+
 <p>Otherwise, you may pass them to the validator after instantiation:</p>
-<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\Callback([MyClass::class, 'myMethod']);
+<pre><code class="language-php">$valid = new Zend\Validator\Callback([MyClass::class, 'myMethod']);
 $valid-&gt;setOptions($options);
 
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre></p>
+}
+</code></pre>
+
 <p>When there are additional values given to <code>isValid()</code>, then these values will be
 passed as an additional argument:</p>
-<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\Callback([MyClass::class, 'myMethod']);
+<pre><code class="language-php">$valid = new Zend\Validator\Callback([MyClass::class, 'myMethod']);
 $valid-&gt;setOptions($options);
 
 if ($valid-&gt;isValid($input, $context)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre></p>
+}
+</code></pre>
+
 <p>When making the call to the callback, the value to be validated will always be
 passed as the first argument to the callback followed by all other values given
 to <code>isValid()</code>; all other options will follow it. The amount and type of options
@@ -1006,6 +1034,12 @@ which can be used is not limited.</p>
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -1191,7 +1225,7 @@ which can be used is not limited.</p>
             
             <div class="col-md-9">
                 <h4 class="footer__headline">Copyright</h4>
-                <p>&copy; 2006-2019 by <a href="https://www.zend.com/">Zend</a>, a <a href="https://www.roguewave.com/">Rogue Wave Company</a>.</p>
+                <p>&copy; 2006-2020 by <a href="https://www.zend.com/">Zend</a> by <a href="https://www.perforce.com/">Perforce</a>.</p>
             </div>
 
             
@@ -1199,10 +1233,10 @@ which can be used is not limited.</p>
                 <h4 class="footer__headline">Support</h4>
                 <ul class="support__list">
                     <li class="support__list-item">
-                        <a href="https://discourse.zendframework.com" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
                     </li>
                     <li class="support__list-item">
-                        <a href="https://zendframework-slack.herokuapp.com" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                        <a href="https://laminas.dev/chat/" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
                     </li>
                     <li class="support__list-item">
                         <a href="https://github.com/zendframework" class="support__link" title="Github"><i class="fa fa-github"></i></a>
@@ -1210,27 +1244,28 @@ which can be used is not limited.</p>
                     <li class="support__list-item">
                         <a href="https://twitter.com/zfdevteam" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
                     </li>
-                    <li class="support__list-item">
-                        <a href="https://tinyletter.com/mwopzend" class="support__link" title="Newsletter"><i class="fa fa-envelope"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
-                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </footer>
 
+<nav class="cookie-bar navbar navbar-fixed-bottom navbar-default hidden">
+    <div class="container">
+        <p class="navbar-text">
+            We use cookies to allow you to dismiss dialogs such as the Laminas
+            Project notification.
+        </p>
+        <button type="button" class="cookie-button btn btn-default navbar-btn">Allow Cookies</button>
+    </div>
+</nav>
+
     <script>
         var base_url = '../..',
             siteName = 'zend-validator';
     </script>
-    <script src="../../js/scripts-8d7ae56abf.js"></script>
-        <script src="../../search/main.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="../../search/main.js"></script>
 
     
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">

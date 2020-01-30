@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria.">  
-    <link rel="canonical" href="https://docs.zendframework.com/zend-validator/intro/">
+    <link rel="canonical" href="https://docs.zendframework.com/intro/">
     <link rel="shortcut icon" href="../img/favicon.ico">
 
     <title>Introduction - zend-validator - Zend Framework Docs</title>
 
-    <link rel="stylesheet" href="../css/styles-5cfabd53ee.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body id="page-top">
 
@@ -286,6 +286,12 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../validators/undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../validators/uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -493,9 +499,9 @@
     <div class="laminas-announcement">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
-                Zend Framework transitions to the Linux Foundation. <a href="https://getlaminas.org">Learn More.</a>
-            </div>
+            <div class="col-xs-12"><strong>
+                This package has moved. Visit its replacement, <a href="https://docs.laminas.dev/laminas-validator/">laminas/laminas-validator.</a>
+            </strong></div>
         </div>
     </div>
 </div>
@@ -598,7 +604,7 @@ errors caused by a previous <code>isValid()</code> call, because it's likely tha
 call to <code>isValid()</code> is made for a different input value.</p>
 </blockquote>
 <p>The following example illustrates validation of an e-mail address:</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\Validator\EmailAddress;
+<pre><code class="language-php">use Zend\Validator\EmailAddress;
 
 $validator = new EmailAddress();
 
@@ -609,7 +615,9 @@ if ($validator-&gt;isValid($email)) {
     foreach ($validator-&gt;getMessages() as $messageId =&gt; $message) {
         printf(&quot;Validation failure '%s': %s\n&quot;, $messageId, $message);
     }
-}</code></pre></p>
+}
+</code></pre>
+
 <h2 id="customizing-messages">Customizing messages</h2>
 <p>Validator classes provide a <code>setMessage()</code> method with which you can specify the
 format of a message returned by <code>getMessages()</code> in case of validation failure.
@@ -627,7 +635,7 @@ assumes the message you specify should be used for the first message template
 declared in the validation class. Many validation classes only have one error
 message template defined, so there is no need to specify which message template
 you are changing.</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\Validator\StringLength;
+<pre><code class="language-php">use Zend\Validator\StringLength;
 
 $validator = new StringLength(8);
 
@@ -641,24 +649,28 @@ if (! $validator-&gt;isValid('word')) {
     echo current($messages);
 
     // &quot;The string 'word' is too short; it must be at least 8 characters&quot;
-}</code></pre></p>
+}
+</code></pre>
+
 <p>You can set multiple messages using the <code>setMessages()</code> method. Its argument is
 an array containing key/message pairs.</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\Validator\StringLength;
+<pre><code class="language-php">use Zend\Validator\StringLength;
 
 $validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
 
 $validator-&gt;setMessages([
     StringLength::TOO_SHORT =&gt; 'The string \'%value%\' is too short',
     StringLength::TOO_LONG  =&gt; 'The string \'%value%\' is too long',
-]);</code></pre></p>
+]);
+</code></pre>
+
 <p>If your application requires even greater flexibility with which it reports
 validation failures, you can access properties by the same name as the message
 tokens supported by a given validation class. The <code>value</code> property is always
 available in a validator; it is the value you specified as the argument of
 <code>isValid()</code>. Other properties may be supported on a case-by-case basis in each
 validation class.</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\Validator\StringLength;
+<pre><code class="language-php">use Zend\Validator\StringLength;
 
 $validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
 
@@ -669,49 +681,57 @@ if (! $validator-&gt;isValid('word')) {
         $validator-&gt;min,
         $validator-&gt;max
     );
-}</code></pre></p>
+}
+</code></pre>
+
 <h2 id="translating-messages">Translating messages</h2>
 <blockquote>
 <h3>Installation requirements</h3>
 <p>The translation of validator messages depends on the zend-i18n component, so
 be sure to have it installed before getting started:</p>
-<p><pre class=codehilite><code class=language-bash>
+<pre class=codehilite><code class=language-bash>
 $ composer require zendframework/zend-i18n
-</code></pre></p>
+</code></pre>
 </blockquote>
 <p>Validator classes provide a <code>setTranslator()</code> method with which you can specify
 an instance of <code>Zend\Validator\Translator\TranslatorInterface</code> which will
 translate the messages in case of a validation failure. The <code>getTranslator()</code>
 method returns the translator instance. <code>Zend\Mvc\I18n\Translator</code> provides an
 implementation compatible with the validator component.</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\Mvc\I18n\Translator;
+<pre><code class="language-php">use Zend\Mvc\I18n\Translator;
 use Zend\Validator\StringLength;
 
 $validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
 $translate = new Translator();
 // configure the translator...
 
-$validator-&gt;setTranslator($translate);</code></pre></p>
+$validator-&gt;setTranslator($translate);
+</code></pre>
+
 <p>With the static <code>AbstractValidator::setDefaultTranslator()</code> method you can set a
 instance of <code>Zend\Validator\Translator\TranslatorInterface</code> which will be used
 for all validation classes, and can be retrieved with <code>getDefaultTranslator()</code>.
 This prevents the need for setting a translator manually with each validator.</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\Mvc\I18n\Translator;
+<pre><code class="language-php">use Zend\Mvc\I18n\Translator;
 use Zend\Validator\AbstractValidator;
 
 $translate = new Translator();
 // configure the translator...
 
-AbstractValidator::setDefaultTranslator($translate);</code></pre></p>
+AbstractValidator::setDefaultTranslator($translate);
+</code></pre>
+
 <p>Sometimes it is necessary to disable the translator within a validator. To
 achieve this you can use the <code>setDisableTranslator()</code> method, which accepts a
 boolean parameter, and <code>isTranslatorDisabled()</code> to get the set value.</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\Validator\StringLength;
+<pre><code class="language-php">use Zend\Validator\StringLength;
 
 $validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
 if (! $validator-&gt;isTranslatorDisabled()) {
     $validator-&gt;setDisableTranslator();
-}</code></pre></p>
+}
+</code></pre>
+
 <p>It is also possible to use a translator instead of setting own messages with
 <code>setMessage()</code>. But doing so, you should keep in mind, that the translator works
 also on messages you set your own.</p>
@@ -1014,6 +1034,12 @@ the instance previously.</p>
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../validators/undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../validators/uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -1199,7 +1225,7 @@ the instance previously.</p>
             
             <div class="col-md-9">
                 <h4 class="footer__headline">Copyright</h4>
-                <p>&copy; 2006-2019 by <a href="https://www.zend.com/">Zend</a>, a <a href="https://www.roguewave.com/">Rogue Wave Company</a>.</p>
+                <p>&copy; 2006-2020 by <a href="https://www.zend.com/">Zend</a> by <a href="https://www.perforce.com/">Perforce</a>.</p>
             </div>
 
             
@@ -1207,10 +1233,10 @@ the instance previously.</p>
                 <h4 class="footer__headline">Support</h4>
                 <ul class="support__list">
                     <li class="support__list-item">
-                        <a href="https://discourse.zendframework.com" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
                     </li>
                     <li class="support__list-item">
-                        <a href="https://zendframework-slack.herokuapp.com" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                        <a href="https://laminas.dev/chat/" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
                     </li>
                     <li class="support__list-item">
                         <a href="https://github.com/zendframework" class="support__link" title="Github"><i class="fa fa-github"></i></a>
@@ -1218,27 +1244,28 @@ the instance previously.</p>
                     <li class="support__list-item">
                         <a href="https://twitter.com/zfdevteam" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
                     </li>
-                    <li class="support__list-item">
-                        <a href="https://tinyletter.com/mwopzend" class="support__link" title="Newsletter"><i class="fa fa-envelope"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
-                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </footer>
 
+<nav class="cookie-bar navbar navbar-fixed-bottom navbar-default hidden">
+    <div class="container">
+        <p class="navbar-text">
+            We use cookies to allow you to dismiss dialogs such as the Laminas
+            Project notification.
+        </p>
+        <button type="button" class="cookie-button btn btn-default navbar-btn">Allow Cookies</button>
+    </div>
+</nav>
+
     <script>
         var base_url = '..',
             siteName = 'zend-validator';
     </script>
-    <script src="../js/scripts-8d7ae56abf.js"></script>
-        <script src="../search/main.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="../search/main.js"></script>
 
     
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">

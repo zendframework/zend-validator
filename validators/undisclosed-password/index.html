@@ -7,10 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria.">  
-    <link rel="canonical" href="https://docs.zendframework.com/validators/in-array/">
+    <link rel="canonical" href="https://docs.zendframework.com/validators/undisclosed-password/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
-    <title>InArray - zend-validator - Zend Framework Docs</title>
+    <title>UndisclosedPassword - zend-validator - Zend Framework Docs</title>
 
     <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -213,8 +213,8 @@
 
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">InArray</a>
+    <li class="subnavigation__list-item ">
+        <a href="../in-array/" class="subnavigation__link">InArray</a>
     </li>
 
             
@@ -285,8 +285,8 @@
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">UndisclosedPassword</a>
     </li>
 
             
@@ -537,7 +537,7 @@
                 
             
 
-            <li class="active">InArray</li>
+            <li class="active">UndisclosedPassword</li>
         
     
 </ol>
@@ -563,19 +563,11 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#supported-options" class="toc__link">Supported options</a>
+                        <a href="#basic-usage" class="toc__link">Basic usage</a>
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#array-validation" class="toc__link">Array validation</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#array-validation-modes" class="toc__link">Array validation modes</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#recursive-array-validation" class="toc__link">Recursive array validation</a>
+                        <a href="#a-simple-command-line-example" class="toc__link">A simple command line example</a>
                     </li>
                 
             </ul>
@@ -584,149 +576,83 @@
 
     </div>
 
-    <h1 id="inarray-validator">InArray Validator</h1>
-<p><code>Zend\Validator\InArray</code> allows you to validate if a given value is contained
-within an array. It is also able to validate multidimensional arrays.</p>
-<h2 id="supported-options">Supported options</h2>
-<p>The following options are supported for <code>Zend\Validator\InArray</code>:</p>
+    <h1 id="undisclosed-password-validator">Undisclosed Password Validator</h1>
 <ul>
-<li><code>haystack</code>: Sets the haystack for the validation.</li>
-<li><code>recursive</code>: Defines if the validation should be done recursively. This option
-  defaults to <code>false</code>.</li>
-<li><code>strict</code>: Three modes of comparison are offered owing to an often overlooked,
-  and potentially dangerous security issue when validating string input from
-  user input.<ul>
-<li><code>InArray::COMPARE_STRICT</code>: This is a normal <code>in_array()</code> strict comparison
-  that checks value and type.</li>
-<li><code>InArray::COMPARE_NOT_STRICT</code>: This is a normal <code>in_array()</code> non-strict
-  comparison that checks value only, but not type.</li>
-<li><code>InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILTY</code>: This
-  operates in essentially the same way as <code>InArray::COMPARE_NOT_STRICT</code>,
-  but ensures that strings are not cast to integer during comparison,
-  preventing <code>0 == 'foo43'</code> types of false positives.</li>
+<li><strong>Since 2.13.0</strong></li>
 </ul>
-</li>
+<p><code>Zend\Validator\UndisclosedPassword</code> allows you to validate if a given password was found in data breaches using the service <a href="https://www.haveibeenpwned.com">Have I Been Pwned?</a>, in a secure, anonymous way using <a href="https://www.troyhunt.com/ive-just-launched-pwned-passwords-version-2">K-Anonymity</a> to ensure passwords are not send in full over the wire.</p>
+<blockquote>
+<h3>Installation requirements</h3>
+<p>This validator needs to make a request over HTTP; therefore it requires an HTTP client. The validator provides support only for HTTP clients implementing <a href="https://www.php-fig.org/psr/psr-18/">PSR-18</a> and <a href="https://www.php-fig.org/psr/psr-17/">PSR-17</a> request and response factories.</p>
+<p>To ensure you have these installed before using this validator, run the following:</p>
+<pre class=codehilite><code class=language-bash>
+$ composer require psr/http-client
+$ composer require psr/http-factory
+</code></pre>
+</blockquote>
+<h2 id="basic-usage">Basic usage</h2>
+<p>The validator has three required constructor arguments:</p>
+<ul>
+<li>an HTTP Client that implements <code>Psr\Http\Client\ClientInterface</code></li>
+<li>a <code>Psr\Http\Message\RequestFactoryInterface</code> instance</li>
+<li>a <code>Psr\Http\Message\ResponseFactoryInterface</code> instance</li>
 </ul>
-<blockquote>
-<h3>Use non-strict carefully</h3>
-<p>Non-strict mode (<code>InArray::COMPARE_NOT_STRICT</code>) may give false positives when
-strings are compared against ints or floats owing to <code>in_array()</code>'s behaviour
-of converting strings to int in such cases. Therefore, <code>'foo'</code> would become
-<code>0</code>, <code>'43foo'</code> would become <code>43</code>, while <code>foo43'</code> would also become <code>0</code>.</p>
-</blockquote>
-<h2 id="array-validation">Array validation</h2>
-<p>Basic usage is to provide an array during instantiation:</p>
-<pre><code class="language-php">$validator = new Zend\Validator\InArray([
-    'haystack' =&gt; ['value1', 'value2',...'valueN'],
-]);
+<p>Once you have an instance, you can then pass a password to its <code>isValid()</code> method to determine if it has been disclosed in a known data breach.</p>
+<p>If the password was found via the service, <code>isValid()</code> will return <code>false</code>. If the password was not found, <code>isValid()</code> will return <code>true</code>.</p>
+<pre><code class="language-php">$validator = new Zend\Validator\UndisclosedPassword(
+    $httpClient, // a PSR-18 HttpClientInterface
+    $requestFactory, // a PSR-17 RequestFactoryInterface
+    $responseFactory // a PSR-17 ResponseFactoryInterface
+);
 
-if ($validator-&gt;isValid('value')) {
-    // value found
-} else {
-    // no value found
-}
+$result = $validator-&gt;isValid('password');
+// $result is FALSE because &quot;password&quot; was found in a data breach
+
+$result = $validator-&gt;isValid('8aDk=XiW2E.77tLfuAcB'); 
+// $result is TRUE because &quot;8aDk=XiW2E.77tLfuAcB&quot; was not found in a data breach
 </code></pre>
 
-<p>This will behave exactly like PHP's <code>in_array()</code> method when passed only a
-needle and haystack.</p>
-<blockquote>
-<h3>Non-strict by default</h3>
-<p>By default, this validation is not strict, nor can it validate
-multidimensional arrays.</p>
-</blockquote>
-<p>Alternately, you can define the array to validate against after object
-construction by using the <code>setHaystack()</code> method. <code>getHaystack()</code> returns the
-actual set haystack array.</p>
-<pre><code class="language-php">$validator = new Zend\Validator\InArray();
-$validator-&gt;setHaystack(['value1', 'value2',...'valueN']);
-
-if ($validator-&gt;isValid('value')) {
-    // value found
-} else {
-    // no value found
-}
+<h2 id="a-simple-command-line-example">A simple command line example</h2>
+<p>In this example, I'm using <code>zendframework/zend-diactoros</code> to provide HTTP messages, and <code>php-http/curl-client</code> as the HTTP client. Let's begin with installation of all required packages:</p>
+<pre><code class="language-bash">$ composer require \
+    php-http/message \
+    php-http/message-factory \
+    php-http/discovery \
+    php-http/curl-client \
+    zendframework/zend-diactoros \
+    zendframework/zend-validator
 </code></pre>
 
-<h2 id="array-validation-modes">Array validation modes</h2>
-<p>As previously mentioned, there are possible security issues when using the
-default non-strict comparison mode, so rather than restricting the developer,
-we've chosen to offer both strict and non-strict comparisons, and add a safer
-middle-ground.</p>
-<p>It's possible to set the strict mode at initialisation and afterwards with the
-<code>setStrict</code> method. <code>InArray::COMPARE_STRICT</code> equates to <code>true</code> and
-<code>InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY</code> equates to
-<code>false</code>.</p>
-<pre><code class="language-php">// defaults to InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY
-$validator = new Zend\Validator\InArray([
-    'haystack' =&gt; ['value1', 'value2', /* ... */ 'valueN'],
-]);
+<p>Next, I create a file, <code>undisclosed.php</code>, where I put my code:</p>
+<pre><code class="language-php">&lt;?php
 
-// set strict mode
-$validator = new Zend\Validator\InArray([
-    'haystack' =&gt; ['value1', 'value2', /* ... */ 'valueN'],
-    'strict'   =&gt; InArray::COMPARE_STRICT,  // equates to ``true``
-]);
+namespace Undisclosed;
 
-// set non-strict mode
-$validator = new Zend\Validator\InArray([
-    'haystack' =&gt; ['value1', 'value2', /* ... */ 'valueN'],
-    'strict'   =&gt; InArray:COMPARE_NOT_STRICT,  // equates to ``false``
-]);
+use Http\Client\Curl\Client;
+use Zend\Diactoros\RequestFactory;
+use Zend\Diactoros\ResponseFactory;
+use Zend\Validator\UndisclosedPassword;
 
-// or
+require_once __DIR__ . '/vendor/autoload.php';
 
-$validator-&gt;setStrict(InArray::COMPARE_STRICT);
-$validator-&gt;setStrict(InArray::COMPARE_NOT_STRICT);
-$validator-&gt;setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY);
+
+$requestFactory = new RequestFactory();
+$responseFactory = new ResponseFactory();
+$client = new Client($responseFactory, null);
+
+$undisclosedPassword = new UndisclosedPassword($client, $requestFactory, $responseFactory);
+echo 'Password &quot;password&quot; is ' . ($undisclosedPassword-&gt;isValid('password') ? 'not disclosed' : 'disclosed') . PHP_EOL;
+echo 'Password &quot;NVt3MpvQ&quot; is ' . ($undisclosedPassword-&gt;isValid('NVt3MpvQ') ? 'not disclosed' : 'disclosed') . PHP_EOL;
 </code></pre>
 
-<blockquote>
-<h3>Non-strict safe-mode by default</h3>
-<p>Note that the <code>strict</code> setting is per default <code>false</code>.</p>
-</blockquote>
-<h2 id="recursive-array-validation">Recursive array validation</h2>
-<p>In addition to PHP's <code>in_array()</code> method, this validator can also be used to
-validate multidimensional arrays.</p>
-<p>To validate multidimensional arrays you have to set the <code>recursive</code> option.</p>
-<pre><code class="language-php">$validator = new Zend\Validator\InArray([
-    'haystack' =&gt; [
-        'firstDimension' =&gt; ['value1', 'value2', / ... */ 'valueN'],
-        'secondDimension' =&gt; ['foo1', 'foo2', /* ... */ 'fooN'],
-    ],
-    'recursive' =&gt; true,
-]);
-
-if ($validator-&gt;isValid('value')) {
-    // value found
-} else {
-    // no value found
-}
+<p>To run it, I use the PHP command line interpreter:</p>
+<pre><code class="language-bash">$ php undisclosed.php
 </code></pre>
 
-<p>Your array will then be validated recursively to see if the given value is
-contained. Additionally you could use <code>setRecursive()</code> to set this option
-afterwards and <code>getRecursive()</code> to retrieve it.</p>
-<pre><code class="language-php">$validator = new Zend\Validator\InArray([
-    'firstDimension' =&gt; ['value1', 'value2', /* ... */ 'valueN'],
-    'secondDimension' =&gt; ['foo1', 'foo2', /* ... */ 'fooN'],
-]);
-
-$validator-&gt;setRecursive(true);
-
-if ($validator-&gt;isValid('value')) {
-    // value found
-} else {
-    // no value found
-}
+<p>And it gives me the following output:</p>
+<pre><code class="language-bash">Password &quot;password&quot; is disclosed
+Password &quot;NVt3MpvQ&quot; is not disclosed
 </code></pre>
-
-<blockquote>
-<h3>Default setting for recursion</h3>
-<p>By default, the recursive validation is turned off.</p>
-<h3>Option keys within the haystack</h3>
-<p>When you are using the keys <code>haystack</code>, <code>strict</code>, or <code>recursive</code> within
-your haystack, then you must wrap the <code>haystack</code> key.</p>
-</blockquote>
 
 
 
@@ -737,7 +663,7 @@ your haystack, then you must wrap the <code>haystack</code> key.</p>
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../identical/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../timezone/">
                     <i class="fa fa-chevron-left"></i> Previous
                 </a>
             
@@ -746,7 +672,7 @@ your haystack, then you must wrap the <code>haystack</code> key.</p>
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../ip/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../uri/">
                     Next <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -760,7 +686,7 @@ your haystack, then you must wrap the <code>haystack</code> key.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-validator/edit/master/docs/book/validators/in-array.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-validator/edit/master/docs/book/validators/undisclosed-password.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>
@@ -928,8 +854,8 @@ your haystack, then you must wrap the <code>haystack</code> key.</p>
 
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">InArray</a>
+    <li class="subnavigation__list-item ">
+        <a href="../in-array/" class="subnavigation__link">InArray</a>
     </li>
 
             
@@ -1000,8 +926,8 @@ your haystack, then you must wrap the <code>haystack</code> key.</p>
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">UndisclosedPassword</a>
     </li>
 
             

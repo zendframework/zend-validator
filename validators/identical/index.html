@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria.">  
-    <link rel="canonical" href="https://docs.zendframework.com/zend-validator/validators/identical/">
+    <link rel="canonical" href="https://docs.zendframework.com/validators/identical/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
     <title>Identical - zend-validator - Zend Framework Docs</title>
 
-    <link rel="stylesheet" href="../../css/styles-5cfabd53ee.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body id="page-top">
 
@@ -286,6 +286,12 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -493,9 +499,9 @@
     <div class="laminas-announcement">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
-                Zend Framework transitions to the Linux Foundation. <a href="https://getlaminas.org">Learn More.</a>
-            </div>
+            <div class="col-xs-12"><strong>
+                This package has moved. Visit its replacement, <a href="https://docs.laminas.dev/laminas-validator/">laminas/laminas-validator.</a>
+            </strong></div>
         </div>
     </div>
 </div>
@@ -603,11 +609,13 @@ with a set token.</p>
 <p>To validate if two values are identical, you need to set the original value as
 the token, as demonstrated in the following example:
 token.</p>
-<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\Identical('origin');
+<pre><code class="language-php">$valid = new Zend\Validator\Identical('origin');
 
 if ($valid-&gt;isValid($value)) {
     return true;
-}</code></pre></p>
+}
+</code></pre>
+
 <p>The validation will only then return <code>true</code> when both values are 100% identical.
 In our example, when <code>$value</code> is <code>'origin'</code>.</p>
 <p>You can set the token after instantiation by using the method <code>setToken()</code>.</p>
@@ -615,13 +623,15 @@ In our example, when <code>$value</code> is <code>'origin'</code>.</p>
 <p><code>Zend\Validator\Identical</code> can validate not only strings, but any other variable
 type, such as booleans, integers, floats, arrays, or even objects. As already
 noted, the token and value must be identical.</p>
-<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\Identical(123);
+<pre><code class="language-php">$valid = new Zend\Validator\Identical(123);
 
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre></p>
+}
+</code></pre>
+
 <blockquote>
 <h3>Type comparison</h3>
 <p>You should be aware of the variable type used for validation. This means that
@@ -631,7 +641,7 @@ validation, you must set the <code>strict</code> option to <code>false</code>.</
 <h2 id="form-elements">Form elements</h2>
 <p><code>Zend\Validator\Identical</code> supports the comparison of form elements. This can be
 done by using the element's name as the <code>token</code>:</p>
-<p> <pre class=codehilite><code class=language-php>$form-&gt;add([
+<pre><code class="language-php">$form-&gt;add([
     'name' =&gt; 'elementOne',
     'type' =&gt; 'Password',
 ]);
@@ -646,7 +656,9 @@ $form-&gt;add([
             ],
         ],
     ],
-]);</code></pre></p>
+]);
+</code></pre>
+
 <p>By using the element's name from the first element as the <code>token</code> for the second
 element, the validator validates if the second element is equal with the first
 element. In the case your user does not enter two identical values, you will get
@@ -654,7 +666,7 @@ a validation error.</p>
 <h3>Validating a Value From a Fieldset</h3>
 <p>Sometimes you will need to validate an input that lives inside a fieldset, and
 this can be accomplished as follows:</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\Form\Element;
+<pre><code class="language-php">use Zend\Form\Element;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
 use Zend\InputFilter\Input;
@@ -732,7 +744,9 @@ $inputFilter-&gt;add([
     ],
 ]);
 
-$signUpForm-&gt;setInputFilter($inputFilter);</code></pre></p>
+$signUpForm-&gt;setInputFilter($inputFilter);
+</code></pre>
+
 <blockquote>
 <h4>Use one token per leaf</h4>
 <p>Aways make sure that your token array have just one key per level all the way
@@ -742,13 +756,15 @@ till the leaf, otherwise you can end up with unexpected results.</p>
 <p>As mentioned before, <code>Zend\Validator\Identical</code> validates tokens using strict
 typing. You can change this behaviour by using the <code>strict</code> option. The default
 value for this property is <code>true</code>.</p>
-<p> <pre class=codehilite><code class=language-php>$valid = new Zend\Validator\Identical(['token' =&gt; 123, 'strict' =&gt; false]);
+<pre><code class="language-php">$valid = new Zend\Validator\Identical(['token' =&gt; 123, 'strict' =&gt; false]);
 $input = '123';
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre></p>
+}
+</code></pre>
+
 <p>The difference to the previous example is that the validation returns in this
 case <code>true</code>, even if you compare a integer with string value as long as the
 content is identical but not the type.</p>
@@ -760,25 +776,29 @@ this validator with a <code>Traversable</code> object.</p>
 <p>There is a case which you should be aware of. If you are using an array as
 token, and it contains a <code>token</code> key, you should wrap it within another
 <code>token</code> key. See the examples below to understand this situation.</p>
-<p> <pre class=codehilite><code class=language-php>// This will not validate ['token' =&gt; 123], it will actually validate the
+<pre><code class="language-php">// This will not validate ['token' =&gt; 123], it will actually validate the
 // integer 123
 $valid = new Zend\Validator\Identical(['token' =&gt; 123]);
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre></p>
+}
+</code></pre>
+
 <p>The reason for this special case is that you can configure the token which has
 to be used by giving the <code>token</code> key.</p>
 <p>So, when you are using an array as the token, and it contains one element with a
 <code>token</code> key, then you have to wrap it as shown in the example below:</p>
-<p> <pre class=codehilite><code class=language-php>// Unlike the previous example, this will validate ['token' =&gt; 123]
+<pre><code class="language-php">// Unlike the previous example, this will validate ['token' =&gt; 123]
 $valid = new Zend\Validator\Identical(['token' =&gt; ['token' =&gt; 123]]);
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
-}</code></pre></p>
+}
+</code></pre>
+
 <p>If the array you are willing to validate does not have a <code>token</code> key, you do not
 need to wrap it.</p>
 
@@ -1055,6 +1075,12 @@ need to wrap it.</p>
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -1240,7 +1266,7 @@ need to wrap it.</p>
             
             <div class="col-md-9">
                 <h4 class="footer__headline">Copyright</h4>
-                <p>&copy; 2006-2019 by <a href="https://www.zend.com/">Zend</a>, a <a href="https://www.roguewave.com/">Rogue Wave Company</a>.</p>
+                <p>&copy; 2006-2020 by <a href="https://www.zend.com/">Zend</a> by <a href="https://www.perforce.com/">Perforce</a>.</p>
             </div>
 
             
@@ -1248,10 +1274,10 @@ need to wrap it.</p>
                 <h4 class="footer__headline">Support</h4>
                 <ul class="support__list">
                     <li class="support__list-item">
-                        <a href="https://discourse.zendframework.com" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
                     </li>
                     <li class="support__list-item">
-                        <a href="https://zendframework-slack.herokuapp.com" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                        <a href="https://laminas.dev/chat/" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
                     </li>
                     <li class="support__list-item">
                         <a href="https://github.com/zendframework" class="support__link" title="Github"><i class="fa fa-github"></i></a>
@@ -1259,27 +1285,28 @@ need to wrap it.</p>
                     <li class="support__list-item">
                         <a href="https://twitter.com/zfdevteam" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
                     </li>
-                    <li class="support__list-item">
-                        <a href="https://tinyletter.com/mwopzend" class="support__link" title="Newsletter"><i class="fa fa-envelope"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
-                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </footer>
 
+<nav class="cookie-bar navbar navbar-fixed-bottom navbar-default hidden">
+    <div class="container">
+        <p class="navbar-text">
+            We use cookies to allow you to dismiss dialogs such as the Laminas
+            Project notification.
+        </p>
+        <button type="button" class="cookie-button btn btn-default navbar-btn">Allow Cookies</button>
+    </div>
+</nav>
+
     <script>
         var base_url = '../..',
             siteName = 'zend-validator';
     </script>
-    <script src="../../js/scripts-8d7ae56abf.js"></script>
-        <script src="../../search/main.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="../../search/main.js"></script>
 
     
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">

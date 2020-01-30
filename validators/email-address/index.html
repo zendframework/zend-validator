@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria.">  
-    <link rel="canonical" href="https://docs.zendframework.com/zend-validator/validators/email-address/">
+    <link rel="canonical" href="https://docs.zendframework.com/validators/email-address/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
     <title>EmailAddress - zend-validator - Zend Framework Docs</title>
 
-    <link rel="stylesheet" href="../../css/styles-5cfabd53ee.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body id="page-top">
 
@@ -286,6 +286,12 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -493,9 +499,9 @@
     <div class="laminas-announcement">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
-                Zend Framework transitions to the Linux Foundation. <a href="https://getlaminas.org">Learn More.</a>
-            </div>
+            <div class="col-xs-12"><strong>
+                This package has moved. Visit its replacement, <a href="https://docs.laminas.dev/laminas-validator/">laminas/laminas-validator.</a>
+            </strong></div>
         </div>
     </div>
 </div>
@@ -604,7 +610,7 @@ validator first splits the email address on <code>local-part @ hostname</code> a
 to match these against known specifications for email addresses and hostnames.</p>
 <h2 id="basic-usage">Basic usage</h2>
 <p>A basic example of usage is below:</p>
-<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\EmailAddress();
+<pre><code class="language-php">$validator = new Zend\Validator\EmailAddress();
 
 if ($validator-&gt;isValid($email)) {
     // email appears to be valid
@@ -613,7 +619,9 @@ if ($validator-&gt;isValid($email)) {
     foreach ($validator-&gt;getMessages() as $message) {
         echo &quot;$message\n&quot;;
     }
-}</code></pre></p>
+}
+</code></pre>
+
 <p>This will match the email address <code>$email</code> and on failure populate
 <code>getMessages()</code> with useful error messages.</p>
 <h2 id="supported-options">Supported Options</h2>
@@ -661,8 +669,10 @@ or a <code>\\</code> character in an email address).</p>
 email address, and want to disable validation of the hostname, you can set the
 <code>domain</code> option to <code>false</code>. This forces <code>Zend\Validator\EmailAddress</code> not to
 validate the hostname part of the email address.</p>
-<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\EmailAddress();
-$validator-&gt;setOptions(['domain' =&gt; FALSE]);</code></pre></p>
+<pre><code class="language-php">$validator = new Zend\Validator\EmailAddress();
+$validator-&gt;setOptions(['domain' =&gt; FALSE]);
+</code></pre>
+
 <h2 id="validating-different-types-of-hostnames">Validating different types of hostnames</h2>
 <p>The hostname part of an email address is validated against the <a href="../hostname/">Hostname validator</a>.
 By default only DNS hostnames of the form <code>domain.com</code> are accepted, though if
@@ -671,7 +681,7 @@ you wish you can accept IP addresses and Local hostnames too.</p>
 parameter to indicate the type of hostnames you want to accept. More details are
 included in <code>Zend\Validator\Hostname</code>, though an example of how to accept both
 DNS and Local hostnames appears below:</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\Validator\EmailAddress;
+<pre><code class="language-php">use Zend\Validator\EmailAddress;
 use Zend\Validator\Hostname;
 
 $validator = new EmailAddress( Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL);
@@ -683,7 +693,9 @@ if ($validator-&gt;isValid($email)) {
     foreach ($validator-&gt;getMessages() as $message) {
         echo &quot;$message\n&quot;;
     }
-}</code></pre></p>
+}
+</code></pre>
+
 <h2 id="checking-if-the-hostname-actually-accepts-email">Checking if the hostname actually accepts email</h2>
 <p>Just because an email address is in the correct format, it doesn't necessarily
 mean that email address actually exists. To help solve this problem, you can use
@@ -692,10 +704,12 @@ the email's hostname. This tells you that the hostname accepts email, but
 doesn't tell you the exact email address itself is valid.</p>
 <p>MX checking is not enabled by default. To enable MX checking you can pass a
 second parameter to the <code>Zend\Validator\EmailAddress</code> constructor.</p>
-<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\EmailAddress([
+<pre><code class="language-php">$validator = new Zend\Validator\EmailAddress([
     'allow' =&gt; Zend\Validator\Hostname::ALLOW_DNS,
     'useMxCheck'    =&gt; true,
-]);</code></pre></p>
+]);
+</code></pre>
+
 <p>Alternatively you can either pass <code>true</code> or <code>false</code> to <code>setValidateMx()</code> to
 enable or disable MX validation.</p>
 <p>By enabling this setting, network functions will be used to check for the
@@ -707,11 +721,13 @@ even if they do not provide a MX record. In this case they can provide <code>A</
 <code>A6</code>, or <code>AAAA</code> records. To allow <code>Zend\Validator\EmailAddress</code> to check also
 for these other records, you need to set deep MX validation. This can be done at
 initiation by setting the <code>deep</code> option or by using <code>setOptions()</code>.</p>
-<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\EmailAddress([
+<pre><code class="language-php">$validator = new Zend\Validator\EmailAddress([
     'allow' =&gt; Zend\Validator\Hostname::ALLOW_DNS,
     'useMxCheck'    =&gt; true,
     'useDeepMxCheck'  =&gt; true,
-]);</code></pre></p>
+]);
+</code></pre>
+
 <p>Sometimes it can be useful to get the server's MX information which have been
 used to do further processing. Simply use <code>getMXRecord()</code> after validation. This
 method returns the received MX record including weight and sorted by it.</p>
@@ -731,7 +747,9 @@ exist in some domains. This is known as International Domain Name (IDN) support.
 This is enabled by default, though you can disable this by changing the setting
 via the internal <code>Zend\Validator\Hostname</code> object that exists within
 <code>Zend\Validator\EmailAddress</code>.</p>
-<p> <pre class=codehilite><code class=language-php>$validator-&gt;getHostnameValidator()-&gt;setValidateIdn(false);</code></pre></p>
+<pre><code class="language-php">$validator-&gt;getHostnameValidator()-&gt;setValidateIdn(false);
+</code></pre>
+
 <p>More information on the usage of <code>setValidateIdn()</code> appears in the
 <a href="../hostname/">Hostname documentation</a>.</p>
 <p>Please note IDNs are only validated if you allow DNS hostnames to be validated.</p>
@@ -740,7 +758,9 @@ via the internal <code>Zend\Validator\Hostname</code> object that exists within
 enabled by default, though you can disable this by changing the setting via the
 internal <code>Zend\Validator\Hostname</code> object that exists within
 <code>Zend\Validator\EmailAddress</code>.</p>
-<p> <pre class=codehilite><code class=language-php>$validator-&gt;getHostnameValidator()-&gt;setValidateTld(false);</code></pre></p>
+<pre><code class="language-php">$validator-&gt;getHostnameValidator()-&gt;setValidateTld(false);
+</code></pre>
+
 <p>More information on the usage of <code>setValidateTld()</code> appears in the
 <a href="../hostname/">Hostname documentation</a>.</p>
 <p>Please note TLDs are only validated if you allow DNS hostnames to be validated.</p>
@@ -748,10 +768,11 @@ internal <code>Zend\Validator\Hostname</code> object that exists within
 <p><code>Zend\Validator\EmailAddress</code> makes also use of <code>Zend\Validator\Hostname</code> to
 check the hostname part of a given email address. You can specify messages for
 <code>Zend\Validator\Hostname</code> from within <code>Zend\Validator\EmailAddress</code>.</p>
-<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\EmailAddress();
+<pre><code class="language-php">$validator = new Zend\Validator\EmailAddress();
 $validator-&gt;setMessages([
     Zend\Validator\Hostname::UNKNOWN_TLD =&gt; 'I don\'t know the TLD you gave'
-]);</code></pre></p>
+]);
+</code></pre>
 
 
 
@@ -1026,6 +1047,12 @@ $validator-&gt;setMessages([
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -1211,7 +1238,7 @@ $validator-&gt;setMessages([
             
             <div class="col-md-9">
                 <h4 class="footer__headline">Copyright</h4>
-                <p>&copy; 2006-2019 by <a href="https://www.zend.com/">Zend</a>, a <a href="https://www.roguewave.com/">Rogue Wave Company</a>.</p>
+                <p>&copy; 2006-2020 by <a href="https://www.zend.com/">Zend</a> by <a href="https://www.perforce.com/">Perforce</a>.</p>
             </div>
 
             
@@ -1219,10 +1246,10 @@ $validator-&gt;setMessages([
                 <h4 class="footer__headline">Support</h4>
                 <ul class="support__list">
                     <li class="support__list-item">
-                        <a href="https://discourse.zendframework.com" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
                     </li>
                     <li class="support__list-item">
-                        <a href="https://zendframework-slack.herokuapp.com" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                        <a href="https://laminas.dev/chat/" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
                     </li>
                     <li class="support__list-item">
                         <a href="https://github.com/zendframework" class="support__link" title="Github"><i class="fa fa-github"></i></a>
@@ -1230,27 +1257,28 @@ $validator-&gt;setMessages([
                     <li class="support__list-item">
                         <a href="https://twitter.com/zfdevteam" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
                     </li>
-                    <li class="support__list-item">
-                        <a href="https://tinyletter.com/mwopzend" class="support__link" title="Newsletter"><i class="fa fa-envelope"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
-                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </footer>
 
+<nav class="cookie-bar navbar navbar-fixed-bottom navbar-default hidden">
+    <div class="container">
+        <p class="navbar-text">
+            We use cookies to allow you to dismiss dialogs such as the Laminas
+            Project notification.
+        </p>
+        <button type="button" class="cookie-button btn btn-default navbar-btn">Allow Cookies</button>
+    </div>
+</nav>
+
     <script>
         var base_url = '../..',
             siteName = 'zend-validator';
     </script>
-    <script src="../../js/scripts-8d7ae56abf.js"></script>
-        <script src="../../search/main.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="../../search/main.js"></script>
 
     
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">

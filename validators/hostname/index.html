@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria.">  
-    <link rel="canonical" href="https://docs.zendframework.com/zend-validator/validators/hostname/">
+    <link rel="canonical" href="https://docs.zendframework.com/validators/hostname/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
     <title>Hostname - zend-validator - Zend Framework Docs</title>
 
-    <link rel="stylesheet" href="../../css/styles-5cfabd53ee.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body id="page-top">
 
@@ -286,6 +286,12 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -493,9 +499,9 @@
     <div class="laminas-announcement">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
-                Zend Framework transitions to the Linux Foundation. <a href="https://getlaminas.org">Learn More.</a>
-            </div>
+            <div class="col-xs-12"><strong>
+                This package has moved. Visit its replacement, <a href="https://docs.laminas.dev/laminas-validator/">laminas/laminas-validator.</a>
+            </strong></div>
         </div>
     </div>
 </div>
@@ -599,7 +605,7 @@ Local hostnames (i.e. localhost). By default, only DNS hostnames are matched.</p
 <li><code>tld</code>: Defines if TLDs are validated. This option defaults to <code>true</code>.</li>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
-<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Hostname();
+<pre><code class="language-php">$validator = new Zend\Validator\Hostname();
 
 if ($validator-&gt;isValid($hostname)) {
     // hostname appears to be valid
@@ -608,7 +614,9 @@ if ($validator-&gt;isValid($hostname)) {
     foreach ($validator-&gt;getMessages() as $message) {
         echo &quot;$message\n&quot;;
     }
-}</code></pre></p>
+}
+</code></pre>
+
 <p>This will match the hostname <code>$hostname</code> and on failure populate <code>getMessages()</code>
 with useful error messages.</p>
 <h2 id="validating-different-types-of-hostnames">Validating different types of hostnames</h2>
@@ -633,7 +641,7 @@ which are used by WINS, NetInfo and also local hostnames like those defined
 within your <code>hosts</code> file.</p>
 </blockquote>
 <p>To check for IP addresses only, you can use the example below:</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\Validator\Hostname;
+<pre><code class="language-php">use Zend\Validator\Hostname;
 
 $validator = new Hostname(Hostname::ALLOW_IP);
 
@@ -644,13 +652,17 @@ if ($validator-&gt;isValid($hostname)) {
     foreach ($validator-&gt;getMessages() as $message) {
         echo &quot;$message\n&quot;;
     }
-}</code></pre></p>
+}
+</code></pre>
+
 <p>As well as using <code>ALLOW_ALL</code> to accept all common hostnames types, you can
 combine these types to allow for combinations. For example, to accept DNS and
 Local hostnames:</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\Validator\Hostname;
+<pre><code class="language-php">use Zend\Validator\Hostname;
 
-$validator = new Hostname(Hostname::ALLOW_DNS | Hostname::ALLOW_IP);</code></pre></p>
+$validator = new Hostname(Hostname::ALLOW_DNS | Hostname::ALLOW_IP);
+</code></pre>
+
 <h2 id="validating-international-domains-names">Validating International Domains Names</h2>
 <p>Some Country Code Top Level Domains (ccTLDs), such as 'de' (Germany), support
 international characters in domain names. These are known as International
@@ -662,10 +674,12 @@ IDN validation, either pass a parameter to the <code>Zend\Validator\Hostname</co
 constructor or call the <code>setValidateIdn()</code> method.</p>
 <p>You can disable IDN validation by passing a second parameter to the
 <code>Zend\Validator\Hostname</code> constructor in the following way.</p>
-<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Hostname([
+<pre><code class="language-php">$validator = new Zend\Validator\Hostname([
     'allow' =&gt; Zend\Validator\Hostname::ALLOW_DNS,
     'useIdnCheck'   =&gt; false,
-]);</code></pre></p>
+]);
+</code></pre>
+
 <p>Alternatively you can either pass <code>true</code> or <code>false</code> to <code>setValidateIdn()</code> to
 enable or disable IDN validation. If you are trying to match an IDN hostname
 which isn't currently supported, it is likely it will fail validation if it has
@@ -680,13 +694,15 @@ functionality is not required, it can be disabled in much the same way as
 disabling IDN support. You can disable TLD validation by passing a third
 parameter to the <code>Zend\Validator\Hostname</code> constructor. In the example below we
 are supporting IDN validation via the second parameter.</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\Validator\Hostname;
+<pre><code class="language-php">use Zend\Validator\Hostname;
 
 $validator = new Hostname([
     'allow' =&gt; Hostname::ALLOW_DNS,
     'useIdnCheck'   =&gt; true,
     'useTldCheck'   =&gt; false,
-]);</code></pre></p>
+]);
+</code></pre>
+
 <p>Alternatively you can either pass <code>true</code> or <code>false</code> to <code>setValidateTld()</code> to
 enable or disable TLD validation.</p>
 <p>Please note, TLDs are only validated if you allow DNS hostnames to be validated.</p>
@@ -964,6 +980,12 @@ enable or disable TLD validation.</p>
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -1149,7 +1171,7 @@ enable or disable TLD validation.</p>
             
             <div class="col-md-9">
                 <h4 class="footer__headline">Copyright</h4>
-                <p>&copy; 2006-2019 by <a href="https://www.zend.com/">Zend</a>, a <a href="https://www.roguewave.com/">Rogue Wave Company</a>.</p>
+                <p>&copy; 2006-2020 by <a href="https://www.zend.com/">Zend</a> by <a href="https://www.perforce.com/">Perforce</a>.</p>
             </div>
 
             
@@ -1157,10 +1179,10 @@ enable or disable TLD validation.</p>
                 <h4 class="footer__headline">Support</h4>
                 <ul class="support__list">
                     <li class="support__list-item">
-                        <a href="https://discourse.zendframework.com" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
                     </li>
                     <li class="support__list-item">
-                        <a href="https://zendframework-slack.herokuapp.com" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                        <a href="https://laminas.dev/chat/" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
                     </li>
                     <li class="support__list-item">
                         <a href="https://github.com/zendframework" class="support__link" title="Github"><i class="fa fa-github"></i></a>
@@ -1168,27 +1190,28 @@ enable or disable TLD validation.</p>
                     <li class="support__list-item">
                         <a href="https://twitter.com/zfdevteam" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
                     </li>
-                    <li class="support__list-item">
-                        <a href="https://tinyletter.com/mwopzend" class="support__link" title="Newsletter"><i class="fa fa-envelope"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
-                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </footer>
 
+<nav class="cookie-bar navbar navbar-fixed-bottom navbar-default hidden">
+    <div class="container">
+        <p class="navbar-text">
+            We use cookies to allow you to dismiss dialogs such as the Laminas
+            Project notification.
+        </p>
+        <button type="button" class="cookie-button btn btn-default navbar-btn">Allow Cookies</button>
+    </div>
+</nav>
+
     <script>
         var base_url = '../..',
             siteName = 'zend-validator';
     </script>
-    <script src="../../js/scripts-8d7ae56abf.js"></script>
-        <script src="../../search/main.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="../../search/main.js"></script>
 
     
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">

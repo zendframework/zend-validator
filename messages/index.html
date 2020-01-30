@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria.">  
-    <link rel="canonical" href="https://docs.zendframework.com/zend-validator/messages/">
+    <link rel="canonical" href="https://docs.zendframework.com/messages/">
     <link rel="shortcut icon" href="../img/favicon.ico">
 
     <title>Validation Messages - zend-validator - Zend Framework Docs</title>
 
-    <link rel="stylesheet" href="../css/styles-5cfabd53ee.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body id="page-top">
 
@@ -286,6 +286,12 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../validators/undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../validators/uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -493,9 +499,9 @@
     <div class="laminas-announcement">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
-                Zend Framework transitions to the Linux Foundation. <a href="https://getlaminas.org">Learn More.</a>
-            </div>
+            <div class="col-xs-12"><strong>
+                This package has moved. Visit its replacement, <a href="https://docs.laminas.dev/laminas-validator/">laminas/laminas-validator.</a>
+            </strong></div>
         </div>
     </div>
 </div>
@@ -571,23 +577,29 @@ validator could return to something different.</p>
 <p>Validation messages are defined as constant/template pairs, with the constant
 representing a translation key. Such constants are defined per-class.  Let's
 look into <code>Zend\Validator\GreaterThan</code> for a descriptive example:</p>
-<p> <pre class=codehilite><code class=language-php>protected $messageTemplates = [
+<pre><code class="language-php">protected $messageTemplates = [
     self::NOT_GREATER =&gt; &quot;'%value%' is not greater than '%min%'&quot;,
-];</code></pre></p>
+];
+</code></pre>
+
 <p>The constant <code>self::NOT_GREATER</code> refers to the failure and is used as the
 message key, and the message template itself is used as the value within the
 message array.</p>
 <p>You can retrieve all message templates from a validator by using the
 <code>getMessageTemplates()</code> method. It returns the above array containing all
 messages a validator could return in the case of a failed validation.</p>
-<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\GreaterThan();
-$messages  = $validator-&gt;getMessageTemplates();</code></pre></p>
+<pre><code class="language-php">$validator = new Zend\Validator\GreaterThan();
+$messages  = $validator-&gt;getMessageTemplates();
+</code></pre>
+
 <p>Using the <code>setMessage()</code> method you can set another message to be returned in
 case of the specified failure.</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\Validator\GreaterThan;
+<pre><code class="language-php">use Zend\Validator\GreaterThan;
 
 $validator = new GreaterThan();
-$validator-&gt;setMessage('Please enter a lower value', GreaterThan::NOT_GREATER);</code></pre></p>
+$validator-&gt;setMessage('Please enter a lower value', GreaterThan::NOT_GREATER);
+</code></pre>
+
 <p>The second parameter defines the failure which will be overridden. When you omit
 this parameter, then the given message will be set for all possible failures of
 this validator.</p>
@@ -597,10 +609,12 @@ this validator.</p>
 messages. For your convenience, pre-translated messages are provided in the
 <a href="https://docs.zendframework.com/zend-i18n-resources/">zendframework/zend-i18n-resources</a>
 package:</p>
-<p> <pre class=codehilite><code class=language-bash>$ composer require zendframework/zend-i18n-resources</code></pre></p>
+<pre><code class="language-bash">$ composer require zendframework/zend-i18n-resources
+</code></pre>
+
 <p>To translate all validation messages to German for example, attach a translator
 to <code>Zend\Validator\AbstractValidator</code> using these resource files.</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\I18n\Translator\Resources;
+<pre><code class="language-php">use Zend\I18n\Translator\Resources;
 use Zend\Mvc\I18n\Translator;
 use Zend\Validator\AbstractValidator;
 
@@ -611,7 +625,9 @@ $translator-&gt;addTranslationFilePattern(
     Resources::getPatternForValidator()
 );
 
-AbstractValidator::setDefaultTranslator($translator);</code></pre></p>
+AbstractValidator::setDefaultTranslator($translator);
+</code></pre>
+
 <blockquote>
 <h3>Supported languages</h3>
 <p>The supported languages may not be complete. New languages will be added with
@@ -633,7 +649,9 @@ behaviour.</p>
 Set it to any integer size you need. When the returned message exceeds the set
 size, then the message will be truncated and the string <code>**...**</code> will be added
 instead of the rest of the message.</p>
-<p> <pre class=codehilite><code class=language-php>Zend\Validator\AbstractValidator::setMessageLength(100);</code></pre></p>
+<pre><code class="language-php">Zend\Validator\AbstractValidator::setMessageLength(100);
+</code></pre>
+
 <blockquote>
 <h3>Where is this parameter used?</h3>
 <p>The set message length is used for all validators, even for self defined ones,
@@ -913,6 +931,12 @@ as long as they extend <code>Zend\Validator\AbstractValidator</code>.</p>
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../validators/undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../validators/uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -1098,7 +1122,7 @@ as long as they extend <code>Zend\Validator\AbstractValidator</code>.</p>
             
             <div class="col-md-9">
                 <h4 class="footer__headline">Copyright</h4>
-                <p>&copy; 2006-2019 by <a href="https://www.zend.com/">Zend</a>, a <a href="https://www.roguewave.com/">Rogue Wave Company</a>.</p>
+                <p>&copy; 2006-2020 by <a href="https://www.zend.com/">Zend</a> by <a href="https://www.perforce.com/">Perforce</a>.</p>
             </div>
 
             
@@ -1106,10 +1130,10 @@ as long as they extend <code>Zend\Validator\AbstractValidator</code>.</p>
                 <h4 class="footer__headline">Support</h4>
                 <ul class="support__list">
                     <li class="support__list-item">
-                        <a href="https://discourse.zendframework.com" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
                     </li>
                     <li class="support__list-item">
-                        <a href="https://zendframework-slack.herokuapp.com" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                        <a href="https://laminas.dev/chat/" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
                     </li>
                     <li class="support__list-item">
                         <a href="https://github.com/zendframework" class="support__link" title="Github"><i class="fa fa-github"></i></a>
@@ -1117,27 +1141,28 @@ as long as they extend <code>Zend\Validator\AbstractValidator</code>.</p>
                     <li class="support__list-item">
                         <a href="https://twitter.com/zfdevteam" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
                     </li>
-                    <li class="support__list-item">
-                        <a href="https://tinyletter.com/mwopzend" class="support__link" title="Newsletter"><i class="fa fa-envelope"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
-                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </footer>
 
+<nav class="cookie-bar navbar navbar-fixed-bottom navbar-default hidden">
+    <div class="container">
+        <p class="navbar-text">
+            We use cookies to allow you to dismiss dialogs such as the Laminas
+            Project notification.
+        </p>
+        <button type="button" class="cookie-button btn btn-default navbar-btn">Allow Cookies</button>
+    </div>
+</nav>
+
     <script>
         var base_url = '..',
             siteName = 'zend-validator';
     </script>
-    <script src="../js/scripts-8d7ae56abf.js"></script>
-        <script src="../search/main.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="../search/main.js"></script>
 
     
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">

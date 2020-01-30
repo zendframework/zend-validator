@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria.">  
-    <link rel="canonical" href="https://docs.zendframework.com/zend-validator/validators/is-countable/">
+    <link rel="canonical" href="https://docs.zendframework.com/validators/is-countable/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
     <title>IsCountable - zend-validator - Zend Framework Docs</title>
 
-    <link rel="stylesheet" href="../../css/styles-5cfabd53ee.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body id="page-top">
 
@@ -286,6 +286,12 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -493,9 +499,9 @@
     <div class="laminas-announcement">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
-                Zend Framework transitions to the Linux Foundation. <a href="https://getlaminas.org">Learn More.</a>
-            </div>
+            <div class="col-xs-12"><strong>
+                This package has moved. Visit its replacement, <a href="https://docs.laminas.dev/laminas-validator/">laminas/laminas-validator.</a>
+            </strong></div>
         </div>
     </div>
 </div>
@@ -614,47 +620,55 @@ the validator operates similar to the <a href="../between/">Between validator</a
 <h2 id="default-behaviour">Default behaviour</h2>
 <p>Given no options, the validator simply tests to see that the value may be
 counted (i.e., it's an array or <code>Countable</code> instance):</p>
-<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\IsCountable();
+<pre><code class="language-php">$validator = new Zend\Validator\IsCountable();
 
 $validator-&gt;isValid(10);                    // false; not an array or Countable
 $validator-&gt;isValid([10]);                  // true; value is an array
 $validator-&gt;isValid(new ArrayObject([10])); // true; value is Countable
-$validator-&gt;isValid(new stdClass);          // false; value is not Countable</code></pre></p>
+$validator-&gt;isValid(new stdClass);          // false; value is not Countable
+</code></pre>
+
 <h2 id="specifying-an-exact-count">Specifying an exact count</h2>
 <p>You can also specify an exact count; if the value is countable, and its count
 matches, the the value is valid.</p>
-<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\IsCountable(['count' =&gt; 3]);
+<pre><code class="language-php">$validator = new Zend\Validator\IsCountable(['count' =&gt; 3]);
 
 $validator-&gt;isValid([1, 2, 3]);                  // true; countable, and count is 3
 $validator-&gt;isValid(new ArrayObject([1, 2, 3])); // true; countable, and count is 3
 $validator-&gt;isValid([1]);                        // false; countable, but count is 1
-$validator-&gt;isValid(new ArrayObject([1]));       // false; countable, but count is 1</code></pre></p>
+$validator-&gt;isValid(new ArrayObject([1]));       // false; countable, but count is 1
+</code></pre>
+
 <h2 id="specifying-a-minimum-count">Specifying a minimum count</h2>
 <p>You may specify a minimum count. When you do, the value must be countable, and
 greater than or equal to the minimum count you specify in order to be valid.</p>
-<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\IsCountable(['min' =&gt; 2]);
+<pre><code class="language-php">$validator = new Zend\Validator\IsCountable(['min' =&gt; 2]);
 
 $validator-&gt;isValid([1, 2, 3]);                  // true; countable, and count is 3
 $validator-&gt;isValid(new ArrayObject([1, 2, 3])); // true; countable, and count is 3
 $validator-&gt;isValid([1, 2]);                     // true; countable, and count is 2
 $validator-&gt;isValid(new ArrayObject([1, 2]));    // true; countable, and count is 2
 $validator-&gt;isValid([1]);                        // false; countable, but count is 1
-$validator-&gt;isValid(new ArrayObject([1]));       // false; countable, but count is 1</code></pre></p>
+$validator-&gt;isValid(new ArrayObject([1]));       // false; countable, but count is 1
+</code></pre>
+
 <h2 id="specifying-a-maximum-count">Specifying a maximum count</h2>
 <p>You may specify a maximum count. When you do, the value must be countable, and
 less than or equal to the maximum count you specify in order to be valid.</p>
-<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\IsCountable(['max' =&gt; 2]);
+<pre><code class="language-php">$validator = new Zend\Validator\IsCountable(['max' =&gt; 2]);
 
 $validator-&gt;isValid([1, 2, 3]);                  // false; countable, but count is 3
 $validator-&gt;isValid(new ArrayObject([1, 2, 3])); // false; countable, but count is 3
 $validator-&gt;isValid([1, 2]);                     // true; countable, and count is 2
 $validator-&gt;isValid(new ArrayObject([1, 2]));    // true; countable, and count is 2
 $validator-&gt;isValid([1]);                        // true; countable, and count is 1
-$validator-&gt;isValid(new ArrayObject([1]));       // true; countable, and count is 1</code></pre></p>
+$validator-&gt;isValid(new ArrayObject([1]));       // true; countable, and count is 1
+</code></pre>
+
 <h2 id="specifying-both-minimum-and-maximum">Specifying both minimum and maximum</h2>
 <p>If you specify both a minimum and maximum, the count must be <em>between</em> the two,
 inclusively (i.e., it may be the minimum or maximum, and any value between).</p>
-<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\IsCountable([
+<pre><code class="language-php">$validator = new Zend\Validator\IsCountable([
     'min' =&gt; 3,
     'max' =&gt; 5,
 ]);
@@ -666,7 +680,8 @@ $validator-&gt;isValid(new ArrayObject(range(1, 5))); // true; countable, and co
 $validator-&gt;isValid([1, 2]);                       // false; countable, and count is 2
 $validator-&gt;isValid(new ArrayObject([1, 2]));      // false; countable, and count is 2
 $validator-&gt;isValid(range(1, 6));                  // false; countable, and count is 6
-$validator-&gt;isValid(new ArrayObject(range(1, 6))); // false; countable, and count is 6</code></pre></p>
+$validator-&gt;isValid(new ArrayObject(range(1, 6))); // false; countable, and count is 6
+</code></pre>
 
 
 
@@ -941,6 +956,12 @@ $validator-&gt;isValid(new ArrayObject(range(1, 6))); // false; countable, and c
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -1126,7 +1147,7 @@ $validator-&gt;isValid(new ArrayObject(range(1, 6))); // false; countable, and c
             
             <div class="col-md-9">
                 <h4 class="footer__headline">Copyright</h4>
-                <p>&copy; 2006-2019 by <a href="https://www.zend.com/">Zend</a>, a <a href="https://www.roguewave.com/">Rogue Wave Company</a>.</p>
+                <p>&copy; 2006-2020 by <a href="https://www.zend.com/">Zend</a> by <a href="https://www.perforce.com/">Perforce</a>.</p>
             </div>
 
             
@@ -1134,10 +1155,10 @@ $validator-&gt;isValid(new ArrayObject(range(1, 6))); // false; countable, and c
                 <h4 class="footer__headline">Support</h4>
                 <ul class="support__list">
                     <li class="support__list-item">
-                        <a href="https://discourse.zendframework.com" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
                     </li>
                     <li class="support__list-item">
-                        <a href="https://zendframework-slack.herokuapp.com" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                        <a href="https://laminas.dev/chat/" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
                     </li>
                     <li class="support__list-item">
                         <a href="https://github.com/zendframework" class="support__link" title="Github"><i class="fa fa-github"></i></a>
@@ -1145,27 +1166,28 @@ $validator-&gt;isValid(new ArrayObject(range(1, 6))); // false; countable, and c
                     <li class="support__list-item">
                         <a href="https://twitter.com/zfdevteam" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
                     </li>
-                    <li class="support__list-item">
-                        <a href="https://tinyletter.com/mwopzend" class="support__link" title="Newsletter"><i class="fa fa-envelope"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
-                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </footer>
 
+<nav class="cookie-bar navbar navbar-fixed-bottom navbar-default hidden">
+    <div class="container">
+        <p class="navbar-text">
+            We use cookies to allow you to dismiss dialogs such as the Laminas
+            Project notification.
+        </p>
+        <button type="button" class="cookie-button btn btn-default navbar-btn">Allow Cookies</button>
+    </div>
+</nav>
+
     <script>
         var base_url = '../..',
             siteName = 'zend-validator';
     </script>
-    <script src="../../js/scripts-8d7ae56abf.js"></script>
-        <script src="../../search/main.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="../../search/main.js"></script>
 
     
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">

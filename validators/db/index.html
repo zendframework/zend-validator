@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria.">  
-    <link rel="canonical" href="https://docs.zendframework.com/zend-validator/validators/db/">
+    <link rel="canonical" href="https://docs.zendframework.com/validators/db/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
     <title>Db\RecordExists and Db\NoRecordExists - zend-validator - Zend Framework Docs</title>
 
-    <link rel="stylesheet" href="../../css/styles-5cfabd53ee.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body id="page-top">
 
@@ -286,6 +286,12 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -493,9 +499,9 @@
     <div class="laminas-announcement">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
-                Zend Framework transitions to the Linux Foundation. <a href="https://getlaminas.org">Learn More.</a>
-            </div>
+            <div class="col-xs-12"><strong>
+                This package has moved. Visit its replacement, <a href="https://docs.laminas.dev/laminas-validator/">laminas/laminas-validator.</a>
+            </strong></div>
         </div>
     </div>
 </div>
@@ -591,9 +597,9 @@ given value.</p>
 <p><code>Zend\Validator\Db\NoRecordExists</code> and <code>Zend\Validator\Db\RecordExists</code>
 depends on the zend-db component, so be sure to have it installed before
 getting started:</p>
-<p><pre class=codehilite><code class=language-bash>
+<pre class=codehilite><code class=language-bash>
 $ composer require zendframework/zend-db
-</code></pre></p>
+</code></pre>
 </blockquote>
 <h2 id="supported-options">Supported options</h2>
 <p>The following options are supported for <code>Zend\Validator\Db\NoRecordExists</code> and
@@ -607,7 +613,7 @@ $ composer require zendframework/zend-db
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
 <p>An example of basic usage of the validators:</p>
-<p> <pre class=codehilite><code class=language-php>// Check that the email address exists in the database
+<pre><code class="language-php">// Check that the email address exists in the database
 $validator = new Zend\Validator\Db\RecordExists([
     'table'   =&gt; 'users',
     'field'   =&gt; 'emailaddress',
@@ -621,11 +627,13 @@ if ($validator-&gt;isValid($emailaddress)) {
     foreach ($validator-&gt;getMessages() as $message) {
         echo &quot;$message\n&quot;;
     }
-}</code></pre></p>
+}
+</code></pre>
+
 <p>The above will test that a given email address is in the database table. If no
 record is found containing the value of <code>$emailaddress</code> in the specified column,
 then an error message is displayed.</p>
-<p> <pre class=codehilite><code class=language-php>// Check that the username is not present in the database
+<pre><code class="language-php">// Check that the username is not present in the database
 $validator = new Zend\Validator\Db\NoRecordExists([
     'table'   =&gt; 'users',
     'field'   =&gt; 'username',
@@ -640,7 +648,9 @@ if ($validator-&gt;isValid($username)) {
     foreach ($messages as $message) {
         echo &quot;$message\n&quot;;
     }
-}</code></pre></p>
+}
+</code></pre>
+
 <p>The above will test that a given username is <em>not</em> in the database table. If a
 record is found containing the value of <code>$username</code> in the specified column,
 then an error message is displayed.</p>
@@ -652,7 +662,7 @@ providing a <code>WHERE</code> clause as a string, or an array with the keys <co
 <p>When providing an array for the exclude clause, the <code>!=</code> operator is used, so
 you can check the rest of a table for a value before altering a record (for
 example on a user profile form)</p>
-<p> <pre class=codehilite><code class=language-php>// Check no other users have the username
+<pre><code class="language-php">// Check no other users have the username
 $user_id   = $user-&gt;getId();
 $validator = new Zend\Validator\Db\NoRecordExists([
     'table' =&gt; 'users',
@@ -671,12 +681,14 @@ if ($validator-&gt;isValid($username)) {
     foreach ($messages as $message) {
         echo &quot;$message\n&quot;;
     }
-}</code></pre></p>
+}
+</code></pre>
+
 <p>The above example will check the table to ensure no records other than the one
 where <code>id = $user_id</code> contains the value <code>$username</code>.</p>
 <p>You can also provide a string to the exclude clause so you can use an operator
 other than <code>!=</code>. This can be useful for testing against composite keys.</p>
-<p> <pre class=codehilite><code class=language-php>$email     = 'user@example.com';
+<pre><code class="language-php">$email     = 'user@example.com';
 $clause    = $dbAdapter-&gt;quoteIdentifier('email') . ' = ' . $dbAdapter-&gt;quoteValue($email);
 $validator = new Zend\Validator\Db\RecordExists([
     'table'   =&gt; 'users',
@@ -693,24 +705,28 @@ if ($validator-&gt;isValid($username)) {
     foreach ($messages as $message) {
         echo &quot;$message\n&quot;;
     }
-}</code></pre></p>
+}
+</code></pre>
+
 <p>The above example will check the <code>users</code> table to ensure that only a record with
 both the username <code>$username</code> and with the email <code>$email</code> is valid.</p>
 <h2 id="database-schemas">Database Schemas</h2>
 <p>You can specify a schema within your database for adapters such as PostgreSQL
 and DB/2 by supplying an array with <code>table</code> and <code>schema</code> keys, as demonstrated
 below:</p>
-<p> <pre class=codehilite><code class=language-php>$validator = new Zend\Validator\Db\RecordExists([
+<pre><code class="language-php">$validator = new Zend\Validator\Db\RecordExists([
     'table'  =&gt; 'users',
     'schema' =&gt; 'my',
     'field'  =&gt; 'id',
-]);</code></pre></p>
+]);
+</code></pre>
+
 <h2 id="using-a-select-object">Using a Select object</h2>
 <p>It is also possible to supply the validators with a <code>Zend\Db\Sql\Select</code> object
 in place of options. The validator then uses this object instead of building its
 own. This allows for greater flexibility with selection of records used for
 validation.</p>
-<p> <pre class=codehilite><code class=language-php>use Zend\Db\Sql\Select;
+<pre><code class="language-php">use Zend\Db\Sql\Select;
 use Zend\Validator\Db\RecordExists;
 
 $select = new Select();
@@ -733,7 +749,9 @@ if ($validator-&gt;isValid($username)) {
     foreach ($messages as $message) {
         echo &quot;$message\n&quot;;
     }
-}</code></pre></p>
+}
+</code></pre>
+
 <p>The above example will check the <code>users</code> table to ensure that only a record with
 both the username <code>$username</code> and with the email <code>$email</code> is valid.</p>
 
@@ -1010,6 +1028,12 @@ both the username <code>$username</code> and with the email <code>$email</code> 
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../uri/" class="subnavigation__link">Uri</a>
     </li>
 
@@ -1195,7 +1219,7 @@ both the username <code>$username</code> and with the email <code>$email</code> 
             
             <div class="col-md-9">
                 <h4 class="footer__headline">Copyright</h4>
-                <p>&copy; 2006-2019 by <a href="https://www.zend.com/">Zend</a>, a <a href="https://www.roguewave.com/">Rogue Wave Company</a>.</p>
+                <p>&copy; 2006-2020 by <a href="https://www.zend.com/">Zend</a> by <a href="https://www.perforce.com/">Perforce</a>.</p>
             </div>
 
             
@@ -1203,10 +1227,10 @@ both the username <code>$username</code> and with the email <code>$email</code> 
                 <h4 class="footer__headline">Support</h4>
                 <ul class="support__list">
                     <li class="support__list-item">
-                        <a href="https://discourse.zendframework.com" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
                     </li>
                     <li class="support__list-item">
-                        <a href="https://zendframework-slack.herokuapp.com" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                        <a href="https://laminas.dev/chat/" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
                     </li>
                     <li class="support__list-item">
                         <a href="https://github.com/zendframework" class="support__link" title="Github"><i class="fa fa-github"></i></a>
@@ -1214,27 +1238,28 @@ both the username <code>$username</code> and with the email <code>$email</code> 
                     <li class="support__list-item">
                         <a href="https://twitter.com/zfdevteam" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
                     </li>
-                    <li class="support__list-item">
-                        <a href="https://tinyletter.com/mwopzend" class="support__link" title="Newsletter"><i class="fa fa-envelope"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
-                    </li>
-                    <li class="support__list-item">
-                        <a href="https://framework.zend.com/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
-                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </footer>
 
+<nav class="cookie-bar navbar navbar-fixed-bottom navbar-default hidden">
+    <div class="container">
+        <p class="navbar-text">
+            We use cookies to allow you to dismiss dialogs such as the Laminas
+            Project notification.
+        </p>
+        <button type="button" class="cookie-button btn btn-default navbar-btn">Allow Cookies</button>
+    </div>
+</nav>
+
     <script>
         var base_url = '../..',
             siteName = 'zend-validator';
     </script>
-    <script src="../../js/scripts-8d7ae56abf.js"></script>
-        <script src="../../search/main.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="../../search/main.js"></script>
 
     
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
